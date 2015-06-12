@@ -72,4 +72,4 @@ If you found bug when using BackOn, PLEASE enable **ShowLog**. Because enabling 
 
 To enable **ShowLog**, open DevSettings and enable **ShowLog**.
 
-(I do not guarantee any problems.)
+(I am not responsible for problems.)
