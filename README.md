@@ -35,7 +35,7 @@ $ dpkg -i [/path/to/file]
 Install **Mobile Terminal** or **MTerminal** or **OpenSSH** on your jailbroken iOS device to use command line. And type below command.
 
 ```
-backon
+$ backon
 ```
 
 # Types of build.
@@ -52,7 +52,7 @@ BackOn has DevSettings, simulate the BackOn’s functions. You can open this fun
 
 >- Enter ```ods``` command on BackOn.
 
->- Excute BackOn by this command : ```backon -ods```
+>- Excute BackOn by this command : ```$ backon -ods```
 
 (```ods``` is abbreviation of ‘open DevSettings.')
 
