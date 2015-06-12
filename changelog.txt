@@ -194,3 +194,6 @@ Not working : 복원 기능.
 
 *alpha-49
 -(Fixed) Library 백업에서 all로 백업할 때 BackupAZ 백업 오류 수정. (2차 수정)
+
+*alpha-50
+-(Fixed) OTA 업데이트 다운로드 주소를 GitHub로 이전.
