@@ -1,8 +1,8 @@
 #!/bin/sh
 ##############################################
-# BackOn alpha-50
+# BackOn alpha-51
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=50
+TOOL_BUILD_NUM=51
 ##############################################
 
 function setEnglish(){
@@ -1077,7 +1077,7 @@ function rebootDevice(){
 	quitTool
 }
 
-function prepareUpdatemmm(){
+function prepareUpdate_old(){
 	if [[ -d "/tmp/BackOn/Update" ]]; then
 		rm -rf /tmp/BackOn/Update
 	fi
@@ -1101,7 +1101,7 @@ function prepareUpdatemmm(){
 }
 
 
-function checkUpdatemmm(){
+function checkUpdate_old(){
 	while(true); do
 		ClearKey
 		showLinesA
@@ -1137,7 +1137,7 @@ function checkUpdatemmm(){
 	done
 }
 
-function installUpdatemmm(){
+function installUpdate_old(){
 	echo "${DOWNLOADING} (${UpdateBuildType}-$(cat /tmp/BackOn/Update/build))"
 	if [[ "${ShowLog}" == YES ]]; then
 		wget --no-check-certificate --output-document=/tmp/BackOn/Update/backon.sh "${UPDATE_URL}"
@@ -1170,24 +1170,23 @@ function installUpdate(){
 		rm -rf "/tmp/BackOn/Update"
 	fi
 	mkdir "/tmp/BackOn/Update"
-	cd "/tmp/BackOn/Update"
 	if [[ "${ShowLog}" == YES ]]; then
-		curl -O -L "https://github.com/pookjw/BackOn/archive/master.zip"
+		wget --no-check-certificate --output-document=/tmp/BackOn/Update/master.zip "https://github.com/pookjw/BackOn/archive/master.zip"
 	else
-		curl -O -L "https://github.com/pookjw/BackOn/archive/master.zip" > /dev/null 2>&1
+		wget -q --no-check-certificate --output-document=/tmp/BackOn/Update/master.zip "https://github.com/pookjw/BackOn/archive/master.zip"
 	fi
-	if [[ -f master.zip ]]; then
+	if [[ -f "/tmp/BackOn/Update/master.zip" ]]; then
 		if [[ "${ShowLog}" == YES ]]; then
-			unzip master.zip -d master
+			unzip "/tmp/BackOn/Update/master.zip" -d "/tmp/BackOn/Update/master"
 		else
-			unzip -qq master.zip -d master
+			unzip -qq "/tmp/BackOn/Update/master.zip" -d "/tmp/BackOn/Update/master"
 		fi
-		if [[ ! -d master ]]; then
+		if [[ ! -d "/tmp/BackOn/Update/master/BackOn-master/" ]]; then
 			echo "ERROR!"
 		else
-			cd master
-			chmod +x "${UpdateBuildType}/update-script"
-			"${UpdateBuildType}/update-script"
+			chmod +x "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/update-script"
+			cd "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}"
+			./update-script
 			quitTool_NoClear
 		fi
 	else
