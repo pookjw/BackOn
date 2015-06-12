@@ -65,3 +65,9 @@ Open DevSettings and set these settings.
 >- ForceInstallUpdate : YES
 
 And run **'(16) Check update now.’**
+
+# Before the bug reporting
+
+If you found bug when using BackOn, PLEASE enable **ShowLog**. Because enabling this settings shows command log. And this is very helpful.
+
+To enable **ShowLog**, open DevSettings and enable **ShowLog**.
