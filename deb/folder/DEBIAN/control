@@ -1,0 +1,7 @@
+Package: backon
+Name: BackOn
+Version: 51
+Architecture: iphoneos-arm
+Description: Backup the jailbroken iOS device.
+Section: Utilities
+Depends: zip, unzip, coreutils, coreutils-bin, apt7, rsync, system-cmds, wget

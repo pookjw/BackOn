@@ -1,0 +1,196 @@
+*alhpa-1 (2015-05-14)
+-(Fixed) 코드를 완전히 새로 다시 짰음.
+-(Added) 영어 지원 추가 (한국어/영어 지원, 홈(HOME)에서 언어 변경 가능)
+-(Fixed) UI 변경
+-(Added) ‘개발자 설정’ 추가 (BackOn을 디버깅하는 기능인데 아직 구현된 것은 없음. 입력란에 ods를 입력하면 접근가능.)
+Known bugs : UI에 이상한 부분이 존재함.
+Not working : 백업 기능은 Cydia 데이터 백업 기능을 제외하고 모두 작동 안 함, 복원 기능 작동 안 함, openDevSettings (ods) 작동 안 함, 등등 (이 모든 기능이 아직 구현 안 됨.)
+
+*alpha-2 (2015-05-14)
+-(Added) 홈(Home)에 quit 문구 추가.
+Known bugs : UI에 이상한 부분이 존재함.
+Not working : alpha1 버전과 같음.
+
+*alpha-3 (2015-05-17)
+-(Fixed) 한국어 번역 수정
+-(Fixed) 백업 이름 입력란에서 공백으로 입력할 때 툴을 종료하지 않도록 변경
+-(Fixed) Cydia 데이터 백업 저장 경로 변경
+-(Added) 백업한 파일들 표시하는 기능 추가
+Known bugs : UI에 이상한 부분이 존재함.
+Not working : 일부 백업 기능 작동 안 함, 복원 기능 작동 안 함, 이하 동일.
+
+*alpha-4 (2015-05-23)
+-(Fixed) ‘개발자 설정’을 ‘DevSettings’으로 명칭 변경.
+-(Fixed) 초기 메뉴에서 DevSettings 안내 제거.
+-(Fixed) BackOn을 ‘버전’제에서 ‘빌드’제로 변경. (현재 빌드는 4)
+-(Added) DevSettings 구현 완료.
+-(Added) 모든 백업 기능 구현 완료.
+Known bugs : UI에 이상한 부분이 존재함, 일부 입력란에서 ExitKey 기능이 안 먹음, 언어를 영어로 변경 불가능한 버그.
+Not working : 복원 기능.
+
+*alpha-5 (2015-05-23)
+-(Fixed) 언어를 영어로 변경 불가능했던 버그 수정.
+-(Fixed) 초기 메뉴에서 종료 안내 변경.
+-(Added) DevSettings을 벗어날 때 “Session was done.”이라는 문구를 띄우도록 추가.
+Known bugs : UI에 이상한 부분이 존재함
+Not working : 복원 기능.
+
+*alpha-6
+-(Added) OTA 업데이트 지원. (wget을 필요로 함.)
+Note: 다운로드 받으려는 build type (alpha, beta, stable)을 변경하려면 DevSettings에서 변경 가능. 다만 아직 beta, stable 버전 다운로드는 지원하지 않음.
+-(Fixed) DevSettings에서 몇몇 기능들의 명칭 변경.
+-(Fixed) DevSettings에서 ChangeUpdateURL을 제거하고 UpdateTypeBuild 추가.
+-(Fixed) 버전 표시제를 변경. alpha, beta, stable로 나뉘며 빌드 넘버는 통일되는 걸로.
+-(Added) Library 백업에서 all(모두) 백업할 때 Activator 설정도 백업되도록 추가.
+-(Added) DevSettings에 MakeFakeActivatorFile 기능을 추가.
+-(Fixed) 기본 언어를 영어로 변경.
+Known bugs : UI에 이상한 부분이 존재함
+Not working : 복원 기능.
+
+*alpha-7
+-(Fixed) 업데이트 기능에서 backon.sh 다운로드를 실패하면 에러 메시지를 출력하도록 수정.
+
+*alpha-8
+-(Added) DevSettings에 ClearKey 추가.
+
+*alpha-9
+-(Added) switchLanguage function 추가.
+-(Added) DevSettings에서 언어 스위칭이 가능하도록 변경.
+
+*alpha-10
+-(Added) DevSettings에 setDefaultLanguage 추가.
+
+*alpha-11
+-(Fixed) 툴 업데이트 관련 코드 수정 (1)
+
+*alpha-12
+-(Fixed) 툴 업데이트 관련 코드 수정 (2)
+
+*alpha-13
+-(Fixed) 툴 업데이트 관련 코드 수정 (3)
+
+*alpha-14
+-(Added) checkRoot function 추가. (root로 로그인됐는지 확인하는 기능.)
+-(Added) DevSettings에 checkRoot 과정을 스킵하게 해주는 skipCheckRoot 추가.
+
+*alpha-15
+-(Added) 각 기능마다 ClearKey 코드 적용. (이번 빌드는 UI에서 버그가 많을 수 있음.)
+
+*alpha-16
+-(Fixed) UI 수정 (1)
+-(Fixed) Library 백업에서 아무 것도 백업을 안할 때 백업 저장이 안 되는 버그 수정.
+
+*alpha-17
+-(Fixed) UI 수정 (2)
+
+*alpha-18
+-(Fixed) UI 수정 (3)
+
+*alpha-19
+-(Fixed) UI 수정 (4)
+
+*alpha-20
+-(Added) DevSettings에 업데이트 확인하는 기능 추가.
+
+*alpha-21
+-(Fixed) 불필요 코드 제거.
+-(Fixed) locale 수정.
+
+*alpha-22
+-(Added) update-script 추가.
+
+*alpha-23
+-(Fixed) 백업 이름 지정에서 중복된 백업 이름을 입력했을 때 while loop에 빠지는 버그 수정.
+
+*alpha-24
+-(Fixed) ‘백업된 파일 보기’에서 ShowLog를 활성화시키지 않았을 경우 간략하게 출력하도록 변경.
+
+*alpha-25
+-(Added) Library 백업에서 모두 백업할 때 “백업 중...” 문구가 출력되도록 추가.
+-(Fixed) /tmp/BackOn 폴더 생성 타이밍 변경.
+
+*alpha-26
+-(Added) runUpdateODS 추가.
+
+*alpha-27
+-(Fixed) BackOn 업데이트 설치 방식 변경.
+-(Fixed) DevSettings 버그 수정.
+
+*alpha-28
+-(Added) 복원 일부 기능 추가 (미완성) (1)
+
+*alpha-28
+-(Added) 복원 일부 기능 추가 (미완성) (2)
+-(Fixed) 백업 메뉴에서 "백업을 취소하고 종료”의 명령 키워드를 변경.
+
+*alpha-29
+-(Added) 복원 일부 기능 추가 (미완성) (3)
+
+*alpha-30
+-(Added) 복원 일부 기능 추가 (미완성) (4)
+
+*alpha-31
+-(Added) 복원 기능 구현 완료. (버그 있음.)
+
+*alpha-32
+-(Fixed) 복원 기능 버그 수정 (1)
+
+*alpha-32
+-(Fixed) 복원 기능 버그 수정 (2)
+
+*alpha-33
+-(Fixed) 복원 기능 버그 수정 (3)
+
+*beta-34
+- 첫 beta 빌드 릴리즈.
+
+*alpha-35
+-(Added) SHOW_GUIDE_3 추가.
+
+*beta-36
+- alpha-35와 같음.
+
+*alpha-37
+-(Added) Library 복원에서 755 권한 설정 명령 추가.
+-(Added) 초기 화면에서 “명령어(1, 2, 3, 4, q)를 입력해 주세요.” 문구 추가.
+-(Added) quitTool_NoClear 추가 및 일부 코드에 적용.
+
+*beta-38
+- alpha-37이랑 같음.
+
+*beta-39
+-(Added) coreutils-bin depends 추가.
+
+*alpha-40
+-(Added) Library 백업에서 all을 사용할 때 Filza 백업 제외 처리 추가.
+
+*beta-41
+- alpha-40이랑 같음.
+
+*alpha-42
+-(Added) 복원 기능에서 백업한 Cydia 패키지 목록을 보는 기능 추가.
+-(Fixed) 한국어 문법 수정.
+-(Fixed) 버그 수정.
+
+*alpha-43
+-(Added) Library 백업에서 백업한 파일/폴더 삭제 기능 추가.
+-(Added) 각종 안내 문구 추가.
+-(Fixed) UI 수정.
+
+*alpha-44
+-(Fixed) Library 백업의 백업한 파일/폴더 삭제 기능에서 삭제가 안 되던 버그 수정.
+
+*alpha-45
+-(Fixed) Library 백업의 백업한 파일/폴더 삭제 기능에서 삭제가 안 되던 버그 수정. (2)
+
+*beta-46
+- alpha-45와 같음.
+
+*beta-47
+- .DS_Store 제거 (다음부턴 이런 일 없도록 하겠습니다;;)
+
+*alpha-48
+-(Fixed) Library 백업에서 all로 백업할 때 BackupAZ 백업 오류 수정. (1차 수정)
+
+*alpha-49
+-(Fixed) Library 백업에서 all로 백업할 때 BackupAZ 백업 오류 수정. (2차 수정)

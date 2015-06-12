@@ -1,0 +1,7 @@
+
+#!/bin/sh
+if [[ -d /var/mobile/Library/Preferences/BackOn ]]; then
+	rm -rf /var/mobile/Library/Preferences/BackOn
+	echo “DevSettings files were removed.”
+fi
+exit 0
