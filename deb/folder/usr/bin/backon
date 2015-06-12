@@ -1,8 +1,8 @@
 #!/bin/sh
 ##############################################
-# BackOn beta-51
+# BackOn beta-53
 TOOL_BUILD_TYPE=beta
-TOOL_BUILD_NUM=51
+TOOL_BUILD_NUM=53
 ##############################################
 
 function setEnglish(){
@@ -317,7 +317,7 @@ function openDevSettings(){
 		elif [[ "${ANSWER_D}" == 16 ]]; then
 			saveSettings
 			loadSettings
-			prepareUpdate
+			installUpdate
 		elif [[ "${ANSWER_D}" == l || "${ANSWER_D}" == ls ]]; then
 			ClearKey
 			showLinesA
@@ -1077,7 +1077,7 @@ function rebootDevice(){
 	quitTool
 }
 
-function prepareUpdate(){
+function prepareUpdate_old(){
 	if [[ -d "/tmp/BackOn/Update" ]]; then
 		rm -rf /tmp/BackOn/Update
 	fi
@@ -1101,7 +1101,7 @@ function prepareUpdate(){
 }
 
 
-function checkUpdate(){
+function checkUpdate_old(){
 	while(true); do
 		ClearKey
 		showLinesA
@@ -1137,7 +1137,7 @@ function checkUpdate(){
 	done
 }
 
-function installUpdate(){
+function installUpdate_old(){
 	echo "${DOWNLOADING} (${UpdateBuildType}-$(cat /tmp/BackOn/Update/build))"
 	if [[ "${ShowLog}" == YES ]]; then
 		wget --no-check-certificate --output-document=/tmp/BackOn/Update/backon.sh "${UPDATE_URL}"
@@ -1162,6 +1162,36 @@ function installUpdate(){
 	chmod +x /tmp/BackOn/Update/update-script
 	/tmp/BackOn/Update/update-script
 	quitTool_NoClear
+}
+
+function installUpdate(){
+	echo "${DOWNLOADING}"
+	if [[ -d "/tmp/BackOn/Update" ]]; then
+		rm -rf "/tmp/BackOn/Update"
+	fi
+	mkdir "/tmp/BackOn/Update"
+	if [[ "${ShowLog}" == YES ]]; then
+		wget --no-check-certificate --output-document=/tmp/BackOn/Update/master.zip "https://github.com/pookjw/BackOn/archive/master.zip"
+	else
+		wget -q --no-check-certificate --output-document=/tmp/BackOn/Update/master.zip "https://github.com/pookjw/BackOn/archive/master.zip"
+	fi
+	if [[ -f "/tmp/BackOn/Update/master.zip" ]]; then
+		if [[ "${ShowLog}" == YES ]]; then
+			unzip "/tmp/BackOn/Update/master.zip" -d "/tmp/BackOn/Update/master"
+		else
+			unzip -qq "/tmp/BackOn/Update/master.zip" -d "/tmp/BackOn/Update/master"
+		fi
+		if [[ ! -d "/tmp/BackOn/Update/master/BackOn-master/" ]]; then
+			echo "ERROR!"
+		else
+			chmod +x "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/update-script"
+			cd "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}"
+			./update-script
+			quitTool_NoClear
+		fi
+	else
+		echo "ERROR!"
+	fi
 }
 
 ##############################################
@@ -1225,7 +1255,7 @@ while(true); do
 	elif [[ "${ANSWER_A}" == 3 ]]; then
 		switchLanguage
 	elif [[ "${ANSWER_A}" == 4 ]]; then
-		prepareUpdate
+		installUpdate
 	elif [[ "${ANSWER_A}" == quit || "${ANSWER_A}" == q ]]; then
 		quitTool
 	elif [[ "${ANSWER_A}" == ods ]]; then
