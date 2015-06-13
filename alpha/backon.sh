@@ -1,14 +1,14 @@
 #!/bin/sh
 ##############################################
-# BackOn alpha-55
+# BackOn alpha-56
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=55
+TOOL_BUILD_NUM=56
 ##############################################
 
 function setEnglish(){
 	LANGUAGE="English"
 	NOT_RUN_AS_ROOT="You didn't run as root! Please enter 'su' command and login to root."
-	ENTER_TEXT="Enter command(1, 2, 3, 4, q) that you want to do."
+	ENTER_TEXT="Enter a command(1, 2, 3, 4, q) that you want to do."
 	CREATE_BACKUP="Create backup."
 	RESTORE_FROM_BACKUP="Restore from backup."
 	CHECK_FOR_UPDATES="Check for updates."
@@ -16,7 +16,7 @@ function setEnglish(){
 	DOWNLOADING="Downloading..."
 	INSTALLING="Installing..."
 	RUNNING="Running..."
-	UP_TO_DATE="Up to date!"
+	UP_TO_DATE="Up-to-date!"
 	QUIT="Quit."
 	ENTER_QUIT="Enter 'quit' to quit this menu."
 	ENTER_BACKUP_NAME="Enter backup name which you want to do. (If you want to set backup name to current date and time, enter 'date'.)"
