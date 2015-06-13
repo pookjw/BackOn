@@ -1,8 +1,8 @@
 #!/bin/sh
 ##############################################
-# BackOn alpha-54
+# BackOn alpha-55
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=54
+TOOL_BUILD_NUM=55
 ##############################################
 
 function setEnglish(){
@@ -1082,9 +1082,9 @@ function rebootDevice(){
 }
 
 function installUpdate(){
+	ClearKey
 	local COUNT=0
 	while [[ ! "$COUNT" == 3 ]]; do
-		ClearKey
 		showLinesA
 		echo "${DOWNLOADING}"
 		if [[ -d "/tmp/BackOn/Update" ]]; then
