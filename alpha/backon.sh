@@ -1,8 +1,8 @@
 #!/bin/sh
 ##############################################
-# BackOn alpha-60
+# BackOn alpha-61
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=60
+TOOL_BUILD_NUM=61
 ##############################################
 
 function setEnglish(){
@@ -552,15 +552,16 @@ function quitTool_Error(){
 ##############################################
 
 function defineBackupName(){
-	ClearKey
-	showLinesA
-	echo "${ENTER_BACKUP_NAME}"
-	echo "(${ENTER_QUIT})"
-	showLinesA
 	while(true); do
+		ClearKey
+		showLinesA
+		echo "${ENTER_BACKUP_NAME}"
+		echo "(${ENTER_QUIT})"
+		showLinesA
 		read -p "- " ANSWER_B
 		if [[ -z "${ANSWER_B}" ]]; then
 			echo "${FORM_IS_EMPTY}"
+			showPressAnyKeyToContinue
 		elif [[ "${ANSWER_B}" == ods ]]; then
 			openDevSettings
 		elif [[ "${ANSWER_B}" == q || "${ANSWER_B}" == quit ]]; then
