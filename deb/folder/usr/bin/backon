@@ -1,14 +1,14 @@
 #!/bin/sh
 ##############################################
-# BackOn beta-53
+# BackOn beta-57
 TOOL_BUILD_TYPE=beta
-TOOL_BUILD_NUM=53
+TOOL_BUILD_NUM=57
 ##############################################
 
 function setEnglish(){
 	LANGUAGE="English"
 	NOT_RUN_AS_ROOT="You didn't run as root! Please enter 'su' command and login to root."
-	ENTER_TEXT="Enter command(1, 2, 3, 4, q) that you want to do."
+	ENTER_TEXT="Enter a command(1, 2, 3, 4, q) that you want to do."
 	CREATE_BACKUP="Create backup."
 	RESTORE_FROM_BACKUP="Restore from backup."
 	CHECK_FOR_UPDATES="Check for updates."
@@ -16,7 +16,7 @@ function setEnglish(){
 	DOWNLOADING="Downloading..."
 	INSTALLING="Installing..."
 	RUNNING="Running..."
-	UP_TO_DATE="Up to date!"
+	UP_TO_DATE="Up-to-date!"
 	QUIT="Quit."
 	ENTER_QUIT="Enter 'quit' to quit this menu."
 	ENTER_BACKUP_NAME="Enter backup name which you want to do. (If you want to set backup name to current date and time, enter 'date'.)"
@@ -190,6 +190,7 @@ function openDevSettings(){
 			echo "(15) runUpdateODS : NO"
 		fi
 		echo "(16) Check update now."
+		echo "(17) cp /backon.sh /usr/bin/backon"
 		echo "(l) ls"
 		echo "(s) Save Settings."
 		echo "(d) Disable DevSettings."
@@ -318,6 +319,9 @@ function openDevSettings(){
 			saveSettings
 			loadSettings
 			installUpdate
+		elif [[ "${ANSWER_D}" == 17 ]]; then
+			cp /backon.sh /usr/bin/backon
+			quitTool
 		elif [[ "${ANSWER_D}" == l || "${ANSWER_D}" == ls ]]; then
 			ClearKey
 			showLinesA
@@ -1077,121 +1081,58 @@ function rebootDevice(){
 	quitTool
 }
 
-function prepareUpdate_old(){
-	if [[ -d "/tmp/BackOn/Update" ]]; then
-		rm -rf /tmp/BackOn/Update
-	fi
-	mkdir /tmp/BackOn/Update
-	if [[ "${UpdateBuildType}" == alpha ]]; then
-		UPDATE_INFO_URL="https://dl.dropboxusercontent.com/s/s7e9k0rr5eg6pum/build?dl=0"
-		UPDATE_URL="https://dl.dropboxusercontent.com/s/iy6rz837nxcyoza/backon.sh?dl=0"
-		UPDATE_SCRIPT="https://dl.dropboxusercontent.com/s/3mlra1sqw4aez5k/update-script?dl=0"
-		checkUpdate
-	elif [[ "${UpdateBuildType}" == beta ]]; then
-		UPDATE_INFO_URL="https://dl.dropboxusercontent.com/s/542zirpecuu1zw6/build?dl=0"
-		UPDATE_URL="https://dl.dropboxusercontent.com/s/2qey23bio5rwf7v/backon.sh?dl=0"
-		UPDATE_SCRIPT="https://dl.dropboxusercontent.com/s/xb0bb49apn6bt4o/update-script?dl=0"
-		checkUpdate
-	elif [[ "${UpdateBuildType}" == stable ]]; then
-		UPDATE_INFO_URL="https://dl.dropboxusercontent.com/s/c1chtrm4b74apl1/build?dl=0"
-		UPDATE_URL="https://dl.dropboxusercontent.com/s/sqky31d16hc1y0e/backon.sh?dl=0"
-		UPDATE_SCRIPT="https://dl.dropboxusercontent.com/s/vrqbl9za8mi0dsc/update-script?dl=0"
-		checkUpdate
-	fi
-}
-
-
-function checkUpdate_old(){
-	while(true); do
-		ClearKey
+function installUpdate(){
+	ClearKey
+	local COUNT=0
+	while [[ ! "$COUNT" == 3 ]]; do
 		showLinesA
-		if [[ "${ShowLog}" == YES ]]; then
-			echo "UpdateBuildType : ${UpdateBuildType}"
+		echo "${DOWNLOADING}"
+		if [[ -d "/tmp/BackOn/Update" ]]; then
+			rm -rf "/tmp/BackOn/Update"
 		fi
-		echo "${CHECKING_FOR_UPDATE}"
+		mkdir "/tmp/BackOn/Update"
 		if [[ "${ShowLog}" == YES ]]; then
-			wget --no-check-certificate --output-document=/tmp/BackOn/Update/build "${UPDATE_INFO_URL}"
+			wget --no-check-certificate --output-document=/tmp/BackOn/Update/master.zip "https://github.com/pookjw/BackOn/archive/master.zip"
 		else
-			wget -q --no-check-certificate --output-document=/tmp/BackOn/Update/build "${UPDATE_INFO_URL}"
+			wget -q --no-check-certificate --output-document=/tmp/BackOn/Update/master.zip "https://github.com/pookjw/BackOn/archive/master.zip"
 		fi
-		if [[ ! -f /tmp/BackOn/Update/build || -z "$(cat /tmp/BackOn/Update/build)" ]]; then
-			echo "ERROR!"
-			showLinesA
-			showPressAnyKeyToContinue
-			break
-		fi
-		if [[ "${ShowLog}" == YES ]]; then
-			echo "Downloaded : $(cat /tmp/BackOn/Update/build) / Current : ${TOOL_BUILD_NUM}"
-		fi
-		if [[ "${ForceInstallUpdate}" == YES ]]; then
-			installUpdate
-		else
-			if [ "$(cat /tmp/BackOn/Update/build)" -gt "${TOOL_BUILD_NUM}" ]; then
-				installUpdate
+		PA2CKey
+		if [[ -f "/tmp/BackOn/Update/master.zip" ]]; then
+			if [[ "${ShowLog}" == YES ]]; then
+				unzip "/tmp/BackOn/Update/master.zip" -d "/tmp/BackOn/Update/master"
 			else
-				echo "${UP_TO_DATE}"
-				showPressAnyKeyToContinue
+				unzip -qq "/tmp/BackOn/Update/master.zip" -d "/tmp/BackOn/Update/master"
+			fi
+			if [[ -d "/tmp/BackOn/Update/master/BackOn-master/" ]]; then
+				if [[ -z "$(cat "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/build")" ]]; then
+					echo "ERROR!"
+					break
+				fi
+				if [ ${TOOL_BUILD_NUM} -gt "$(cat "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/build")" ]; then
+					if [[ ! "${ForceInstallUpdate}" == YES ]]; then
+						echo "${UP_TO_DATE}"
+						break
+					fi
+				fi
+				if [[ "${ShowLog} == YES" ]]; then
+					echo "Downloaded : $(cat "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/build") / Current : ${TOOL_BUILD_NUM}"
+				fi
+				echo "${INSTALLING}"
+				chmod +x "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/update-script"
+				cd "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}"
+				./update-script
+				quitTool_NoClear
+			else
+				echo "ERROR!"
 				break
 			fi
+		else
+			echo "ERROR!"
+			break
 		fi
 	done
-}
-
-function installUpdate_old(){
-	echo "${DOWNLOADING} (${UpdateBuildType}-$(cat /tmp/BackOn/Update/build))"
-	if [[ "${ShowLog}" == YES ]]; then
-		wget --no-check-certificate --output-document=/tmp/BackOn/Update/backon.sh "${UPDATE_URL}"
-	else
-		wget -q --no-check-certificate --output-document=/tmp/BackOn/Update/backon.sh "${UPDATE_URL}"
-	fi
-	if [[ ! -f "/tmp/BackOn/Update/backon.sh" || -z "$(cat /tmp/BackOn/Update/backon.sh)" ]]; then
-		echo "ERROR!"
-		break
-	fi
-	if [[ "${ShowLog}" == YES ]]; then
-		wget --no-check-certificate --output-document=/tmp/BackOn/Update/update-script "${UPDATE_SCRIPT}"
-	else
-		wget -q --no-check-certificate --output-document=/tmp/BackOn/Update/update-script "${UPDATE_SCRIPT}"
-	fi
-	if [[ ! -f "/tmp/BackOn/Update/update-script" || -z "$(cat /tmp/BackOn/Update/update-script)" ]]; then
-		echo "ERROR!"
-		break
-	fi
-	PA2CKey
-	echo "${INSTALLING}"
-	chmod +x /tmp/BackOn/Update/update-script
-	/tmp/BackOn/Update/update-script
-	quitTool_NoClear
-}
-
-function installUpdate(){
-	echo "${DOWNLOADING}"
-	if [[ -d "/tmp/BackOn/Update" ]]; then
-		rm -rf "/tmp/BackOn/Update"
-	fi
-	mkdir "/tmp/BackOn/Update"
-	if [[ "${ShowLog}" == YES ]]; then
-		wget --no-check-certificate --output-document=/tmp/BackOn/Update/master.zip "https://github.com/pookjw/BackOn/archive/master.zip"
-	else
-		wget -q --no-check-certificate --output-document=/tmp/BackOn/Update/master.zip "https://github.com/pookjw/BackOn/archive/master.zip"
-	fi
-	if [[ -f "/tmp/BackOn/Update/master.zip" ]]; then
-		if [[ "${ShowLog}" == YES ]]; then
-			unzip "/tmp/BackOn/Update/master.zip" -d "/tmp/BackOn/Update/master"
-		else
-			unzip -qq "/tmp/BackOn/Update/master.zip" -d "/tmp/BackOn/Update/master"
-		fi
-		if [[ ! -d "/tmp/BackOn/Update/master/BackOn-master/" ]]; then
-			echo "ERROR!"
-		else
-			chmod +x "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/update-script"
-			cd "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}"
-			./update-script
-			quitTool_NoClear
-		fi
-	else
-		echo "ERROR!"
-	fi
+	showLinesA
+	showPressAnyKeyToContinue
 }
 
 ##############################################
