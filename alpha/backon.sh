@@ -1,8 +1,8 @@
 #!/bin/sh
 ##############################################
-# BackOn alpha-59
+# BackOn alpha-60
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=59
+TOOL_BUILD_NUM=60
 ##############################################
 
 function setEnglish(){
@@ -76,7 +76,7 @@ function setKorean(){
 	INSTALLING="설치 중..."
 	RUNNING="실행 중..."
 	UP_TO_DATE="이미 최신 버전입니다!"
-	QUIT="종료."
+	QUIT="종료"
 	ENTER_QUIT="'quit'을 입력하면 이 메뉴를 종료합니다."
 	ENTER_BACKUP_NAME="원하는 백업 이름을 입력해 주세요. ('date'를 입력하면 현재 날짜, 시간을 백업 이름으로 지정합니다.)"
 	BACKUP_CANCELED="입력란이 비었기 때문에 백업을 취소합니다."
@@ -95,7 +95,7 @@ function setKorean(){
 	BACKING_UP="백업 중..."
 	ENTER_BACKUP_PATH="백업 파일의 경로를 입력해 주세요."
 	NOT_BACKON_BACKUP="이것은 BackOn의 백업 파일이 아닙니다."
-	DONE="완료."
+	DONE="완료"
 	YES="예"
 	NO="아니오"
 	BACKUPED_CYDIA_PACKAGES_LIST="Cydia 패키지 목록"
@@ -106,7 +106,7 @@ function setKorean(){
 	RESTORE_CYDIA_DATA="Cydia 소스, 패키지 복원"
 	RESTORE_SHOW_CYDIA_LIST="백업한 Cydia 패키지 목록 보기"
 	RESTORE_LIBRARY="Library 복원"
-	REBOOT="재부팅."
+	REBOOT="재부팅"
 	RESTORING="복원 중..."
 	SHOW_GUIDE_3="백업을 원하는 폴더/파일의 이름을 입력하시면 백업됩니다. 'all'을 입력하면 모두 백업할 수 있습니다. 'delete' 명령어로 백업한 백업 파일을 삭제할 수 있습니다."
 	SHOW_GUIDE_4="삭제를 원하는 폴더/파일의 이름을 입력하시면 됩니다. 'all'을 입력하면 모두 지울 수 있습니다."
