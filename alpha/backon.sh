@@ -1,8 +1,8 @@
 #!/bin/sh
 ##############################################
-# BackOn alpha-56
+# BackOn alpha-58
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=56
+TOOL_BUILD_NUM=58
 ##############################################
 
 function setEnglish(){
@@ -1108,7 +1108,7 @@ function installUpdate(){
 					echo "ERROR!"
 					break
 				fi
-				if [ ${TOOL_BUILD_NUM} -gt "$(cat "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/build")" ]; then
+				if [ ${TOOL_BUILD_NUM} -ge "$(cat "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/build")" ]; then
 					if [[ ! "${ForceInstallUpdate}" == YES ]]; then
 						echo "${UP_TO_DATE}"
 						break
