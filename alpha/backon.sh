@@ -1,8 +1,8 @@
 #!/bin/sh
 ##############################################
-# BackOn alpha-61
+# BackOn alpha-62
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=61
+TOOL_BUILD_NUM=62
 ##############################################
 
 function setEnglish(){
@@ -541,6 +541,13 @@ function quitTool_NoClear(){
 	exit 0
 }
 
+function quitTool_NoClear_Error(){
+	if [[ -d /tmp/BackOn ]]; then
+		rm -rf /tmp/BackOn
+	fi
+	exit 1
+}
+
 function quitTool_Error(){
 	ClearKey
 	if [[ -d /tmp/BackOn ]]; then
@@ -589,6 +596,7 @@ function defineBackupName(){
 			mkdir "/tmp/BackOn/${ANSWER_B}"
 			if [[ ! -d "/tmp/BackOn/${ANSWER_B}" ]]; then
 				echo "ERROR"
+				quitTool_NoClear_Error
 			else
 				BACKUP_NAME="${ANSWER_B}"
 				break
@@ -845,7 +853,7 @@ function saveBackup(){
 		fi
 		if [[ ! -f "${BackupPath}/${ANSWER_B}.zip" ]]; then
 			echo "ERROR!"
-			quitTool_NoClear
+			quitTool_NoClear_Error
 		fi
 		echo "${SUCCEED_SAVE_BACKUP} (${BackupPath}/${ANSWER_B}.zip)"
 		showLinesA
