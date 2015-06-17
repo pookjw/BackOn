@@ -1,8 +1,8 @@
 #!/bin/sh
 ##############################################
-# BackOn beta-57
+# BackOn beta-63
 TOOL_BUILD_TYPE=beta
-TOOL_BUILD_NUM=57
+TOOL_BUILD_NUM=63
 ##############################################
 
 function setEnglish(){
@@ -76,7 +76,7 @@ function setKorean(){
 	INSTALLING="설치 중..."
 	RUNNING="실행 중..."
 	UP_TO_DATE="이미 최신 버전입니다!"
-	QUIT="종료."
+	QUIT="종료"
 	ENTER_QUIT="'quit'을 입력하면 이 메뉴를 종료합니다."
 	ENTER_BACKUP_NAME="원하는 백업 이름을 입력해 주세요. ('date'를 입력하면 현재 날짜, 시간을 백업 이름으로 지정합니다.)"
 	BACKUP_CANCELED="입력란이 비었기 때문에 백업을 취소합니다."
@@ -95,7 +95,7 @@ function setKorean(){
 	BACKING_UP="백업 중..."
 	ENTER_BACKUP_PATH="백업 파일의 경로를 입력해 주세요."
 	NOT_BACKON_BACKUP="이것은 BackOn의 백업 파일이 아닙니다."
-	DONE="완료."
+	DONE="완료"
 	YES="예"
 	NO="아니오"
 	BACKUPED_CYDIA_PACKAGES_LIST="Cydia 패키지 목록"
@@ -106,7 +106,7 @@ function setKorean(){
 	RESTORE_CYDIA_DATA="Cydia 소스, 패키지 복원"
 	RESTORE_SHOW_CYDIA_LIST="백업한 Cydia 패키지 목록 보기"
 	RESTORE_LIBRARY="Library 복원"
-	REBOOT="재부팅."
+	REBOOT="재부팅"
 	RESTORING="복원 중..."
 	SHOW_GUIDE_3="백업을 원하는 폴더/파일의 이름을 입력하시면 백업됩니다. 'all'을 입력하면 모두 백업할 수 있습니다. 'delete' 명령어로 백업한 백업 파일을 삭제할 수 있습니다."
 	SHOW_GUIDE_4="삭제를 원하는 폴더/파일의 이름을 입력하시면 됩니다. 'all'을 입력하면 모두 지울 수 있습니다."
@@ -541,6 +541,13 @@ function quitTool_NoClear(){
 	exit 0
 }
 
+function quitTool_NoClear_Error(){
+	if [[ -d /tmp/BackOn ]]; then
+		rm -rf /tmp/BackOn
+	fi
+	exit 1
+}
+
 function quitTool_Error(){
 	ClearKey
 	if [[ -d /tmp/BackOn ]]; then
@@ -552,15 +559,16 @@ function quitTool_Error(){
 ##############################################
 
 function defineBackupName(){
-	ClearKey
-	showLinesA
-	echo "${ENTER_BACKUP_NAME}"
-	echo "(${ENTER_QUIT})"
-	showLinesA
 	while(true); do
+		ClearKey
+		showLinesA
+		echo "${ENTER_BACKUP_NAME}"
+		echo "(${ENTER_QUIT})"
+		showLinesA
 		read -p "- " ANSWER_B
 		if [[ -z "${ANSWER_B}" ]]; then
 			echo "${FORM_IS_EMPTY}"
+			showPressAnyKeyToContinue
 		elif [[ "${ANSWER_B}" == ods ]]; then
 			openDevSettings
 		elif [[ "${ANSWER_B}" == q || "${ANSWER_B}" == quit ]]; then
@@ -588,6 +596,7 @@ function defineBackupName(){
 			mkdir "/tmp/BackOn/${ANSWER_B}"
 			if [[ ! -d "/tmp/BackOn/${ANSWER_B}" ]]; then
 				echo "ERROR"
+				quitTool_NoClear_Error
 			else
 				BACKUP_NAME="${ANSWER_B}"
 				break
@@ -844,7 +853,7 @@ function saveBackup(){
 		fi
 		if [[ ! -f "${BackupPath}/${ANSWER_B}.zip" ]]; then
 			echo "ERROR!"
-			quitTool_NoClear
+			quitTool_NoClear_Error
 		fi
 		echo "${SUCCEED_SAVE_BACKUP} (${BackupPath}/${ANSWER_B}.zip)"
 		showLinesA
@@ -1108,7 +1117,7 @@ function installUpdate(){
 					echo "ERROR!"
 					break
 				fi
-				if [ ${TOOL_BUILD_NUM} -gt "$(cat "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/build")" ]; then
+				if [ ${TOOL_BUILD_NUM} -ge "$(cat "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/build")" ]; then
 					if [[ ! "${ForceInstallUpdate}" == YES ]]; then
 						echo "${UP_TO_DATE}"
 						break
@@ -1116,6 +1125,7 @@ function installUpdate(){
 				fi
 				if [[ "${ShowLog} == YES" ]]; then
 					echo "Downloaded : $(cat "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/build") / Current : ${TOOL_BUILD_NUM}"
+					PA2CKey
 				fi
 				echo "${INSTALLING}"
 				chmod +x "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/update-script"
@@ -1172,7 +1182,7 @@ while(true); do
 		defineBackupName
 		if [[ "${ShowLog}" == YES ]]; then
 			echo "${WILL_CREATE_BACKUP_NAME} : ${BACKUP_NAME}"
-			showPressAnyKeyToContinue
+			PA2CKey
 		fi
 		showInitialBackupMenu
 	elif [[ "${ANSWER_A}" == 2 ]]; then
