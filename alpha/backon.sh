@@ -1,8 +1,8 @@
 #!/bin/sh
 ##############################################
-# BackOn alpha-58
+# BackOn alpha-59
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=58
+TOOL_BUILD_NUM=59
 ##############################################
 
 function setEnglish(){
@@ -1116,6 +1116,7 @@ function installUpdate(){
 				fi
 				if [[ "${ShowLog} == YES" ]]; then
 					echo "Downloaded : $(cat "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/build") / Current : ${TOOL_BUILD_NUM}"
+					PA2CKey
 				fi
 				echo "${INSTALLING}"
 				chmod +x "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/update-script"
@@ -1172,7 +1173,7 @@ while(true); do
 		defineBackupName
 		if [[ "${ShowLog}" == YES ]]; then
 			echo "${WILL_CREATE_BACKUP_NAME} : ${BACKUP_NAME}"
-			showPressAnyKeyToContinue
+			PA2CKey
 		fi
 		showInitialBackupMenu
 	elif [[ "${ANSWER_A}" == 2 ]]; then
