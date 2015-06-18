@@ -1,8 +1,8 @@
 #!/bin/sh
 ##############################################
-# BackOn alpha-62
+# BackOn alpha-64
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=62
+TOOL_BUILD_NUM=64
 ##############################################
 
 function setEnglish(){
@@ -707,6 +707,9 @@ function backupLibrary(){
 					showPressAnyKeyToContinue
 				else
 					while(true); do
+						if [[ -z "$(ls "/tmp/BackOn/${BACKUP_NAME}/Library")" ]]; then
+							break
+						fi
 						ClearKey
 						showLinesA
 						echo "${SHOW_INFO_4}"
