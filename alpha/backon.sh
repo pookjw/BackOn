@@ -1,8 +1,8 @@
 #!/bin/sh
 ##############################################
-# BackOn alpha-64
+# BackOn alpha-65
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=64
+TOOL_BUILD_NUM=65
 ##############################################
 
 function setEnglish(){
@@ -34,6 +34,7 @@ function setEnglish(){
 	DISCARD_BACKUP="Discard backup."
 	SAVE_BACKUP="Save backup."
 	BACKING_UP="Backing up..."
+	REMOVING="Removing..."
 	ENTER_BACKUP_PATH="Enter backup file path which you saved."
 	NOT_BACKON_BACKUP="This is not a BackOn's backup."
 	DONE="Done."
@@ -93,6 +94,7 @@ function setKorean(){
 	DISCARD_BACKUP="백업을 취소하고 종료"
 	SAVE_BACKUP="백업을 저장"
 	BACKING_UP="백업 중..."
+	REMOVING="삭제 중..."
 	ENTER_BACKUP_PATH="백업 파일의 경로를 입력해 주세요."
 	NOT_BACKON_BACKUP="이것은 BackOn의 백업 파일이 아닙니다."
 	DONE="완료"
@@ -363,8 +365,7 @@ function openDevSettings(){
 		elif [[ -z "${ANSWER_D}" ]]; then
 			:
 		else
-			echo "${NOT_SUPPORTED_FUNCTION}"
-			showPressAnyKeyToContinue
+			showNotSupportedFunction
 		fi
 	done
 }
@@ -487,12 +488,16 @@ function showPressAnyKeyToContinue(){
 	read -s -n 1 -p "${PRESS_ANY_KEY_TO_CONTINUE}"
 }
 
+function showNotSupportedFunction(){
+	echo "${NOT_SUPPORTED_FUNCTION}"
+	showPressAnyKeyToContinue
+}
+
 function ExitKey(){
 	if [[ "${EnableExitKey}" == YES ]]; then
 		quitTool
 	else
-		echo "${NOT_SUPPORTED_FUNCTION}"
-		showPressAnyKeyToContinue
+		showNotSupportedFunction
 	fi
 }
 
@@ -636,8 +641,7 @@ function showInitialBackupMenu(){
 		elif [[ -z "${ANSWER_C}" ]]; then
 			:
 		else
-			echo "${NOT_SUPPORTED_FUNCTION}"
-			showPressAnyKeyToContinue
+			showNotSupportedFunction
 		fi
 	done
 }
@@ -702,53 +706,63 @@ function backupLibrary(){
 				echo "${DONE}"
 				showPressAnyKeyToContinue
 			elif [[ "${ANSWER_E}" == delete ]]; then
-				if [[ -z "$(ls "/tmp/BackOn/${BACKUP_NAME}/Library")" ]]; then
-					echo "${NOTHING_TO_DELETE}"
-					showPressAnyKeyToContinue
-				else
-					while(true); do
-						if [[ -z "$(ls "/tmp/BackOn/${BACKUP_NAME}/Library")" ]]; then
-							break
-						fi
+				while(true); do
+					if [[ -z "$(ls "/tmp/BackOn/${BACKUP_NAME}/Library")" ]]; then
 						ClearKey
 						showLinesA
 						echo "${SHOW_INFO_4}"
 						showLinesB
-						if [[ "${ShowLog}" == YES ]]; then
-							ls -l "/tmp/BackOn/${BACKUP_NAME}/Library"
-						else
-							ls "/tmp/BackOn/${BACKUP_NAME}/Library"
-						fi
-						showLinesB
-						echo "(${ENTER_QUIT})"
-						echo "(${SHOW_GUIDE_4})"
+						echo "${NOTHING_TO_DELETE}"
 						showLinesA
-						read -p "- " ANSWER_J
+						showPressAnyKeyToContinue
+						break
+					fi
+					ClearKey
+					showLinesA
+					echo "${SHOW_INFO_4}"
+					showLinesB
+					if [[ "${ShowLog}" == YES ]]; then
+						ls -l "/tmp/BackOn/${BACKUP_NAME}/Library"
+					else
+						ls "/tmp/BackOn/${BACKUP_NAME}/Library"
+					fi
+					showLinesB
+					echo "(${ENTER_QUIT})"
+					echo "(${SHOW_GUIDE_4})"
+					showLinesA
+					read -p "- " ANSWER_J
 
-						if [[ -z "${ANSWER_J}" ]]; then
-							:
+					if [[ -z "${ANSWER_J}" ]]; then
+						:
+					else
+						if [[ "${ANSWER_J}" == all ]]; then
+							echo "${REMOVING}"
+							rm -rf "/tmp/BackOn/${BACKUP_NAME}/Library"
+							mkdir "/tmp/BackOn/${BACKUP_NAME}/Library"
+							echo "${DONE}"
+							showPressAnyKeyToContinue
+						elif [[ "${ANSWER_J}" == q || "${ANSWER_J}" == quit ]]; then
+							break
+						elif  [[ "${ANSWER_J}" == ods ]]; then
+							openDevSettings
+						elif [[ "${ANSWER_J}" == exit ]]; then
+							ExitKey
+						elif [[ -f "/tmp/BackOn/${BACKUP_NAME}/Library/${ANSWER_J}" ]]; then
+							echo "${REMOVING}"
+							rm "/tmp/BackOn/${BACKUP_NAME}/Library/${ANSWER_J}"
+							echo "${DONE}"
+							showPressAnyKeyToContinue
+						elif [[ -d "/tmp/BackOn/${BACKUP_NAME}/Library/${ANSWER_J}" ]]; then
+							echo "${REMOVING}"
+							rm -rf "/tmp/BackOn/${BACKUP_NAME}/Library/${ANSWER_J}"
+							echo "${DONE}"
+							showPressAnyKeyToContinue
 						else
-							if [[ "${ANSWER_J}" == all ]]; then
-								rm -rf "/tmp/BackOn/${BACKUP_NAME}/Library"
-								mkdir "/tmp/BackOn/${BACKUP_NAME}/Library"
-								break
-							elif [[ "${ANSWER_J}" == q || "${ANSWER_J}" == quit ]]; then
-								break
-							elif  [[ "${ANSWER_J}" == ods ]]; then
-								openDevSettings
-							elif [[ "${ANSWER_J}" == exit ]]; then
-								ExitKey
-							elif [[ -f "/tmp/BackOn/${BACKUP_NAME}/Library/${ANSWER_J}" ]]; then
-								rm "/tmp/BackOn/${BACKUP_NAME}/Library/${ANSWER_J}"
-							elif [[ -d "/tmp/BackOn/${BACKUP_NAME}/Library/${ANSWER_J}" ]]; then
-								rm -rf "/tmp/BackOn/${BACKUP_NAME}/Library/${ANSWER_J}"
-							else
-								echo "${NOT_SUCH_FILE_OR_DIRECTORY}"
-								PRESS_ANY_KEY_TO_CONTINUE
-							fi
+							echo "${NOT_SUCH_FILE_OR_DIRECTORY}"
+							PRESS_ANY_KEY_TO_CONTINUE
 						fi
-					done
-				fi
+					fi
+				done
 			elif [[ "${ANSWER_E}" == Preferences ]]; then
 				if [[ "${ShowLog}" == YES ]]; then
 					echo "Special backup."
@@ -957,11 +971,23 @@ function showInitialRestoreMenu(){
 		read -p "- " ANSWER_H
 
 		if [[ "${ANSWER_H}" == 1 ]]; then
-			restoreCydia
+			if [[ "${RestoreCydiaIsAvailable}" == YES ]]; then
+				restoreCydia
+			else
+				showNotSupportedFunction
+			fi
 		elif [[ "${ANSWER_H}" == 2 ]]; then
-			showBackupedFilesRestore
+			if [[ "${RestoreCydiaIsAvailable}" == YES ]]; then
+				showBackupedFilesRestore
+			else
+				showNotSupportedFunction
+			fi
 		elif [[ "${ANSWER_H}" == 3 ]]; then
-			restoreLibrary
+			if [[ "${RestoreLibraryIsAvailable}" == YES ]]; then
+				restoreLibrary
+			else
+				showNotSupportedFunction
+			fi
 		elif [[ "${ANSWER_H}" == 4 ]]; then
 			rebootDevice
 		elif [[ "${ANSWER_H}" == q || "${ANSWER_H}" == quit ]]; then
@@ -973,8 +999,7 @@ function showInitialRestoreMenu(){
 		elif [[ -z "${ANSWER_H}" ]]; then
 			:
 		else
-			echo "${NOT_SUPPORTED_FUNCTION}"
-			showPressAnyKeyToContinue
+			showNotSupportedFunction
 		fi
 	done
 }
@@ -1219,7 +1244,6 @@ while(true); do
 	elif [[ -z "${ANSWER_A}" ]]; then
 		:
 	else
-		echo "${NOT_SUPPORTED_FUNCTION}"
-		showPressAnyKeyToContinue
+		showNotSupportedFunction
 	fi
 done
