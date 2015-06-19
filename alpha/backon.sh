@@ -1,8 +1,8 @@
 #!/bin/sh
 ##############################################
-# BackOn alpha-65
+# BackOn alpha-67
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=65
+TOOL_BUILD_NUM=67
 ##############################################
 
 function setEnglish(){
@@ -1151,7 +1151,7 @@ function installUpdate(){
 						break
 					fi
 				fi
-				if [[ "${ShowLog} == YES" ]]; then
+				if [[ "${ShowLog}" == YES ]]; then
 					echo "Downloaded : $(cat "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/build") / Current : ${TOOL_BUILD_NUM}"
 					PA2CKey
 				fi
