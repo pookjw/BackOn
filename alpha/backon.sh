@@ -1,13 +1,13 @@
 #!/bin/sh
 ##############################################
-# BackOn alpha-67
+# BackOn alpha-68
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=67
+TOOL_BUILD_NUM=68
 ##############################################
 
 function setEnglish(){
 	LANGUAGE="English"
-	NOT_RUN_AS_ROOT="You didn't run as root! Please enter 'su' command and login to root."
+	NOT_RUN_AS_ROOT="You didn't run as root! Please enter root password. (Initial password is 'alpine')"
 	ENTER_TEXT="Enter a command(1, 2, 3, 4, q) that you want to do."
 	CREATE_BACKUP="Create backup."
 	RESTORE_FROM_BACKUP="Restore from backup."
@@ -67,7 +67,7 @@ function setEnglish(){
 
 function setKorean(){
 	LANGUAGE="Korean"
-	NOT_RUN_AS_ROOT="root로 로그인되지 않았습니다! 'su' 명령어를 입력해서 root로 로그인해 주세요."
+	NOT_RUN_AS_ROOT="root로 로그인되지 않았습니다! root 비밀번호를 입력해 주세요. (초기 비밀번호는 'alpine'입니다.)"
 	ENTER_TEXT="명령어(1, 2, 3, 4, q)를 입력해 주세요."
 	CREATE_BACKUP="백업 생성"
 	RESTORE_FROM_BACKUP="백업에서 복원"
@@ -518,6 +518,11 @@ function checkRoot(){
 	if [[ ! "${skipCheckRoot}" == YES ]]; then
 		if [ "$(id -u)" != "0" ]; then
 			echo "${NOT_RUN_AS_ROOT}"
+			if [[ "${InitialRunDevSettings}" == YES ]]; then
+				su -c "backon -ods"
+			else
+				su -c "backon"
+			fi
 			quitTool_NoClear
 		fi
 	fi
@@ -1185,6 +1190,7 @@ else
 	setEnglish
 fi
 if [[ "${1}" == "-ods" ]]; then
+	InitialRunDevSettings=YES
 	openDevSettings
 fi
 checkRoot
