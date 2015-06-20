@@ -1,8 +1,8 @@
 #!/bin/sh
 ##############################################
-# BackOn alpha-68
+# BackOn alpha-69
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=68
+TOOL_BUILD_NUM=69
 ##############################################
 
 function setEnglish(){
@@ -151,16 +151,7 @@ function openDevSettings(){
 		elif [[ "${SkipRestore}" == NO ]]; then
 			echo "(4) SkipRestore : NO"
 		fi
-		if [[ "${SkipCheckInstalledPackage}" == YES ]]; then
-			echo "(5) SkipCheckInstalledPackage : YES"
-		elif [[ "${SkipCheckInstalledPackage}" == NO ]]; then
-			echo "(5) SkipCheckInstalledPackage : NO"
-		fi
-		if [[ "${SkipCheckOSVer}" == YES ]]; then
-			echo "(5) SkipCheckOSVer : YES"
-		elif [[ "${SkipCheckOSVer}" == NO ]]; then
-			echo "(5) SkipCheckOSVer : NO"
-		fi
+		echo "(5) UpdateURL : ${UpdateURL}"
 		echo "(6) OSVer : ${OSVer}"
 		if [[ "${MakeFakeActivatorFile}" == YES ]]; then
 			echo "(7) MakeFakeActivatorFile : YES"
@@ -224,10 +215,9 @@ function openDevSettings(){
 				SkipRestore=YES
 			fi
 		elif [[ "${ANSWER_D}" == 5 ]]; then
-			if [[ "${SkipCheckInstalledPackage}" == YES ]]; then
-				SkipCheckInstalledPackage=NO
-			elif [[ "${SkipCheckInstalledPackage}" == NO ]]; then
-				SkipCheckInstalledPackage=YES
+			read -p "Query : " UpdateURL
+			if [[ -z "${UpdateURL}" ]]; then
+				UpdateURL="https://github.com/pookjw/BackOn/archive/master.zip"
 			fi
 		elif [[ "${ANSWER_D}" == 6 ]]; then
 			read -p "Query : " OSVer
@@ -379,7 +369,7 @@ function saveSettings(){
 	echo "${ShowLog}" >> /var/mobile/Library/Preferences/BackOn/ShowLog
 	echo "${ShowPA2C}" >> /var/mobile/Library/Preferences/BackOn/ShowPA2C
 	echo "${SkipRestore}" >> /var/mobile/Library/Preferences/BackOn/SkipRestore
-	echo "${SkipCheckInstalledPackage}" >> /var/mobile/Library/Preferences/BackOn/SkipCheckInstalledPackage
+	echo "${UpdateURL}" >> /var/mobile/Library/Preferences/BackOn/UpdateURL
 	echo "${OSVer}" >> /var/mobile/Library/Preferences/BackOn/OSVer
 	echo "${UpdateBuildType}" >> /var/mobile/Library/Preferences/BackOn/UpdateBuildType
 	echo "${ForceInstallUpdate}" >> /var/mobile/Library/Preferences/BackOn/ForceInstallUpdate
@@ -412,10 +402,10 @@ function loadSettings(){
 	else
 		SkipRestore=NO
 	fi
-	if [[ -f "/var/mobile/Library/Preferences/BackOn/SkipCheckInstalledPackage" ]]; then
-		SkipCheckInstalledPackage="$(cat "/var/mobile/Library/Preferences/BackOn/SkipCheckInstalledPackage")"
+	if [[ -f "/var/mobile/Library/Preferences/BackOn/UpdateURL" ]]; then
+		UpdateURL="$(cat "/var/mobile/Library/Preferences/BackOn/UpdateURL")"
 	else
-		SkipCheckInstalledPackage=NO
+		UpdateURL="https://github.com/pookjw/BackOn/archive/master.zip"
 	fi
 	if [[ -f "/var/mobile/Library/Preferences/BackOn/OSVer" ]]; then
 		OSVer="$(cat "/var/mobile/Library/Preferences/BackOn/OSVer")"
@@ -1134,9 +1124,9 @@ function installUpdate(){
 		fi
 		mkdir "/tmp/BackOn/Update"
 		if [[ "${ShowLog}" == YES ]]; then
-			wget --no-check-certificate --output-document=/tmp/BackOn/Update/master.zip "https://github.com/pookjw/BackOn/archive/master.zip"
+			wget --no-check-certificate --output-document=/tmp/BackOn/Update/master.zip "${UpdateURL}"
 		else
-			wget -q --no-check-certificate --output-document=/tmp/BackOn/Update/master.zip "https://github.com/pookjw/BackOn/archive/master.zip"
+			wget -q --no-check-certificate --output-document=/tmp/BackOn/Update/master.zip "${UpdateURL}"
 		fi
 		PA2CKey
 		if [[ -f "/tmp/BackOn/Update/master.zip" ]]; then
