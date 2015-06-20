@@ -1,8 +1,8 @@
 #!/bin/sh
 ##############################################
-# BackOn alpha-69
+# BackOn alpha-70
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=69
+TOOL_BUILD_NUM=70
 ##############################################
 
 function setEnglish(){
@@ -53,16 +53,16 @@ function setEnglish(){
 	SHOW_GUIDE_3="Enter file/folder name that you want to backup. If you want to backup all of files, enter 'all' command. Enter 'delete' command to delete backuped backup."
 	SHOW_GUIDE_4="Enter file/folder name that you want to delete backup. If you want to delete all of backup files, enter 'all' command."
 	SHOW_GUIDE_10="Enter file/folder name that you want to restore. If you want to restore all of files, enter 'all' command."
-	SHOW_INFO_1="HOME > Backup Menu"
-	SHOW_INFO_2="HOME > Backup Menu > Backup Cydia sources and packages list"
-	SHOW_INFO_3="HOME > Backup Menu > Backup Library"
-	SHOW_INFO_4="HOME > Backup Menu > Backup Library > Delete backup"
-	SHOW_INFO_5="HOME > Backup Menu > Show backuped file(s)"
-	SHOW_INFO_6="HOME > Backup Menu > Save backup"
-	SHOW_INFO_7="HOME > Restore Menu"
-	SHOW_INFO_8="HOME > Restore Menu > Restore Cydia sources and packages list"
-	SHOW_INFO_9="HOME > Restore Menu > Show backuped Cydia packages list."
-	SHOW_INFO_10="HOME > Restore Menu > Restore Library"
+	SHOW_INFO_1="Backup Menu"
+	SHOW_INFO_2="Backup Menu > Backup Cydia sources and packages list"
+	SHOW_INFO_3="Backup Menu > Backup Library"
+	SHOW_INFO_4="Backup Menu > Backup Library > Delete backup"
+	SHOW_INFO_5="Backup Menu > Show backuped file(s)"
+	SHOW_INFO_6="Backup Menu > Save backup"
+	SHOW_INFO_7="Restore Menu"
+	SHOW_INFO_8="Restore Menu > Restore Cydia sources and packages list"
+	SHOW_INFO_9="Restore Menu > Show backuped Cydia packages list."
+	SHOW_INFO_10="Restore Menu > Restore Library"
 }
 
 function setKorean(){
@@ -113,16 +113,16 @@ function setKorean(){
 	SHOW_GUIDE_3="백업을 원하는 폴더/파일의 이름을 입력하시면 백업됩니다. 'all'을 입력하면 모두 백업할 수 있습니다. 'delete' 명령어로 백업한 백업 파일을 삭제할 수 있습니다."
 	SHOW_GUIDE_4="삭제를 원하는 폴더/파일의 이름을 입력하시면 됩니다. 'all'을 입력하면 모두 지울 수 있습니다."
 	SHOW_GUIDE_10="복원을 원하는 폴더/파일의 이름을 입력하시면 복원됩니다. 'all'을 입력하면 모두 복원할 수 있습니다."
-	SHOW_INFO_1="홈 > 백업 메뉴"
-	SHOW_INFO_2="홈 > 백업 메뉴 > Cydia 소스, 패키지 목록을 백업"
-	SHOW_INFO_3="홈 > 백업 메뉴 > Library 백업"
-	SHOW_INFO_4="홈 > 백업 메뉴 > Library 백업 > 백업 삭제"
-	SHOW_INFO_5="홈 > 백업 메뉴 > 백업한 파일 표시"
-	SHOW_INFO_6="홈 > 백업 메뉴 > 백업을 저장"
-	SHOW_INFO_7="홈 > 복원 메뉴"
-	SHOW_INFO_8="홈 > 복원 메뉴 > Cydia 소스, 패키지 복원"
-	SHOW_INFO_9="홈 > 복원 메뉴 > 백업한 Cydia 패키지 목록 보기"
-	SHOW_INFO_10="홈 > 복원 메뉴 > Library 복원"
+	SHOW_INFO_1="백업 메뉴"
+	SHOW_INFO_2="백업 메뉴 > Cydia 소스, 패키지 목록을 백업"
+	SHOW_INFO_3="백업 메뉴 > Library 백업"
+	SHOW_INFO_4="백업 메뉴 > Library 백업 > 백업 삭제"
+	SHOW_INFO_5="백업 메뉴 > 백업한 파일 표시"
+	SHOW_INFO_6="백업 메뉴 > 백업을 저장"
+	SHOW_INFO_7="복원 메뉴"
+	SHOW_INFO_8="복원 메뉴 > Cydia 소스, 패키지 복원"
+	SHOW_INFO_9="복원 메뉴 > 백업한 Cydia 패키지 목록 보기"
+	SHOW_INFO_10="복원 메뉴 > Library 복원"
 }
 
 function openDevSettings(){
