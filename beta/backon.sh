@@ -1,13 +1,13 @@
 #!/bin/sh
 ##############################################
-# BackOn beta-66
+# BackOn beta-72
 TOOL_BUILD_TYPE=beta
-TOOL_BUILD_NUM=66
+TOOL_BUILD_NUM=72
 ##############################################
 
 function setEnglish(){
 	LANGUAGE="English"
-	NOT_RUN_AS_ROOT="You didn't run as root! Please enter 'su' command and login to root."
+	NOT_RUN_AS_ROOT="You didn't run as root! Please enter root password. (Initial password is 'alpine')"
 	ENTER_TEXT="Enter a command(1, 2, 3, 4, q) that you want to do."
 	CREATE_BACKUP="Create backup."
 	RESTORE_FROM_BACKUP="Restore from backup."
@@ -53,21 +53,21 @@ function setEnglish(){
 	SHOW_GUIDE_3="Enter file/folder name that you want to backup. If you want to backup all of files, enter 'all' command. Enter 'delete' command to delete backuped backup."
 	SHOW_GUIDE_4="Enter file/folder name that you want to delete backup. If you want to delete all of backup files, enter 'all' command."
 	SHOW_GUIDE_10="Enter file/folder name that you want to restore. If you want to restore all of files, enter 'all' command."
-	SHOW_INFO_1="HOME > Backup Menu"
-	SHOW_INFO_2="HOME > Backup Menu > Backup Cydia sources and packages list"
-	SHOW_INFO_3="HOME > Backup Menu > Backup Library"
-	SHOW_INFO_4="HOME > Backup Menu > Backup Library > Delete backup"
-	SHOW_INFO_5="HOME > Backup Menu > Show backuped file(s)"
-	SHOW_INFO_6="HOME > Backup Menu > Save backup"
-	SHOW_INFO_7="HOME > Restore Menu"
-	SHOW_INFO_8="HOME > Restore Menu > Restore Cydia sources and packages list"
-	SHOW_INFO_9="HOME > Restore Menu > Show backuped Cydia packages list."
-	SHOW_INFO_10="HOME > Restore Menu > Restore Library"
+	SHOW_INFO_1="Backup Menu"
+	SHOW_INFO_2="Backup Menu > Backup Cydia sources and packages list"
+	SHOW_INFO_3="Backup Menu > Backup Library"
+	SHOW_INFO_4="Backup Menu > Backup Library > Delete backup"
+	SHOW_INFO_5="Backup Menu > Show backuped file(s)"
+	SHOW_INFO_6="Backup Menu > Save backup"
+	SHOW_INFO_7="Restore Menu"
+	SHOW_INFO_8="Restore Menu > Restore Cydia sources and packages list"
+	SHOW_INFO_9="Restore Menu > Show backuped Cydia packages list."
+	SHOW_INFO_10="Restore Menu > Restore Library"
 }
 
 function setKorean(){
 	LANGUAGE="Korean"
-	NOT_RUN_AS_ROOT="root로 로그인되지 않았습니다! 'su' 명령어를 입력해서 root로 로그인해 주세요."
+	NOT_RUN_AS_ROOT="root로 로그인되지 않았습니다! root 비밀번호를 입력해 주세요. (초기 비밀번호는 'alpine'입니다.)"
 	ENTER_TEXT="명령어(1, 2, 3, 4, q)를 입력해 주세요."
 	CREATE_BACKUP="백업 생성"
 	RESTORE_FROM_BACKUP="백업에서 복원"
@@ -113,16 +113,16 @@ function setKorean(){
 	SHOW_GUIDE_3="백업을 원하는 폴더/파일의 이름을 입력하시면 백업됩니다. 'all'을 입력하면 모두 백업할 수 있습니다. 'delete' 명령어로 백업한 백업 파일을 삭제할 수 있습니다."
 	SHOW_GUIDE_4="삭제를 원하는 폴더/파일의 이름을 입력하시면 됩니다. 'all'을 입력하면 모두 지울 수 있습니다."
 	SHOW_GUIDE_10="복원을 원하는 폴더/파일의 이름을 입력하시면 복원됩니다. 'all'을 입력하면 모두 복원할 수 있습니다."
-	SHOW_INFO_1="홈 > 백업 메뉴"
-	SHOW_INFO_2="홈 > 백업 메뉴 > Cydia 소스, 패키지 목록을 백업"
-	SHOW_INFO_3="홈 > 백업 메뉴 > Library 백업"
-	SHOW_INFO_4="홈 > 백업 메뉴 > Library 백업 > 백업 삭제"
-	SHOW_INFO_5="홈 > 백업 메뉴 > 백업한 파일 표시"
-	SHOW_INFO_6="홈 > 백업 메뉴 > 백업을 저장"
-	SHOW_INFO_7="홈 > 복원 메뉴"
-	SHOW_INFO_8="홈 > 복원 메뉴 > Cydia 소스, 패키지 복원"
-	SHOW_INFO_9="홈 > 복원 메뉴 > 백업한 Cydia 패키지 목록 보기"
-	SHOW_INFO_10="홈 > 복원 메뉴 > Library 복원"
+	SHOW_INFO_1="백업 메뉴"
+	SHOW_INFO_2="백업 메뉴 > Cydia 소스, 패키지 목록을 백업"
+	SHOW_INFO_3="백업 메뉴 > Library 백업"
+	SHOW_INFO_4="백업 메뉴 > Library 백업 > 백업 삭제"
+	SHOW_INFO_5="백업 메뉴 > 백업한 파일 표시"
+	SHOW_INFO_6="백업 메뉴 > 백업을 저장"
+	SHOW_INFO_7="복원 메뉴"
+	SHOW_INFO_8="복원 메뉴 > Cydia 소스, 패키지 복원"
+	SHOW_INFO_9="복원 메뉴 > 백업한 Cydia 패키지 목록 보기"
+	SHOW_INFO_10="복원 메뉴 > Library 복원"
 }
 
 function openDevSettings(){
@@ -151,16 +151,7 @@ function openDevSettings(){
 		elif [[ "${SkipRestore}" == NO ]]; then
 			echo "(4) SkipRestore : NO"
 		fi
-		if [[ "${SkipCheckInstalledPackage}" == YES ]]; then
-			echo "(5) SkipCheckInstalledPackage : YES"
-		elif [[ "${SkipCheckInstalledPackage}" == NO ]]; then
-			echo "(5) SkipCheckInstalledPackage : NO"
-		fi
-		if [[ "${SkipCheckOSVer}" == YES ]]; then
-			echo "(5) SkipCheckOSVer : YES"
-		elif [[ "${SkipCheckOSVer}" == NO ]]; then
-			echo "(5) SkipCheckOSVer : NO"
-		fi
+		echo "(5) UpdateURL : ${UpdateURL}"
 		echo "(6) OSVer : ${OSVer}"
 		if [[ "${MakeFakeActivatorFile}" == YES ]]; then
 			echo "(7) MakeFakeActivatorFile : YES"
@@ -224,10 +215,9 @@ function openDevSettings(){
 				SkipRestore=YES
 			fi
 		elif [[ "${ANSWER_D}" == 5 ]]; then
-			if [[ "${SkipCheckInstalledPackage}" == YES ]]; then
-				SkipCheckInstalledPackage=NO
-			elif [[ "${SkipCheckInstalledPackage}" == NO ]]; then
-				SkipCheckInstalledPackage=YES
+			read -p "Query : " UpdateURL
+			if [[ -z "${UpdateURL}" ]]; then
+				UpdateURL="https://github.com/pookjw/BackOn/archive/master.zip"
 			fi
 		elif [[ "${ANSWER_D}" == 6 ]]; then
 			read -p "Query : " OSVer
@@ -322,6 +312,8 @@ function openDevSettings(){
 			loadSettings
 			installUpdate
 		elif [[ "${ANSWER_D}" == 17 ]]; then
+			saveSettings
+			loadSettings
 			cp /backon.sh /usr/bin/backon
 			quitTool
 		elif [[ "${ANSWER_D}" == l || "${ANSWER_D}" == ls ]]; then
@@ -379,7 +371,7 @@ function saveSettings(){
 	echo "${ShowLog}" >> /var/mobile/Library/Preferences/BackOn/ShowLog
 	echo "${ShowPA2C}" >> /var/mobile/Library/Preferences/BackOn/ShowPA2C
 	echo "${SkipRestore}" >> /var/mobile/Library/Preferences/BackOn/SkipRestore
-	echo "${SkipCheckInstalledPackage}" >> /var/mobile/Library/Preferences/BackOn/SkipCheckInstalledPackage
+	echo "${UpdateURL}" >> /var/mobile/Library/Preferences/BackOn/UpdateURL
 	echo "${OSVer}" >> /var/mobile/Library/Preferences/BackOn/OSVer
 	echo "${UpdateBuildType}" >> /var/mobile/Library/Preferences/BackOn/UpdateBuildType
 	echo "${ForceInstallUpdate}" >> /var/mobile/Library/Preferences/BackOn/ForceInstallUpdate
@@ -412,10 +404,10 @@ function loadSettings(){
 	else
 		SkipRestore=NO
 	fi
-	if [[ -f "/var/mobile/Library/Preferences/BackOn/SkipCheckInstalledPackage" ]]; then
-		SkipCheckInstalledPackage="$(cat "/var/mobile/Library/Preferences/BackOn/SkipCheckInstalledPackage")"
+	if [[ -f "/var/mobile/Library/Preferences/BackOn/UpdateURL" ]]; then
+		UpdateURL="$(cat "/var/mobile/Library/Preferences/BackOn/UpdateURL")"
 	else
-		SkipCheckInstalledPackage=NO
+		UpdateURL="https://github.com/pookjw/BackOn/archive/master.zip"
 	fi
 	if [[ -f "/var/mobile/Library/Preferences/BackOn/OSVer" ]]; then
 		OSVer="$(cat "/var/mobile/Library/Preferences/BackOn/OSVer")"
@@ -518,6 +510,11 @@ function checkRoot(){
 	if [[ ! "${skipCheckRoot}" == YES ]]; then
 		if [ "$(id -u)" != "0" ]; then
 			echo "${NOT_RUN_AS_ROOT}"
+			if [[ "${InitialRunDevSettings}" == YES ]]; then
+				su -c "backon -ods"
+			else
+				su -c "backon"
+			fi
 			quitTool_NoClear
 		fi
 	fi
@@ -1129,9 +1126,9 @@ function installUpdate(){
 		fi
 		mkdir "/tmp/BackOn/Update"
 		if [[ "${ShowLog}" == YES ]]; then
-			wget --no-check-certificate --output-document=/tmp/BackOn/Update/master.zip "https://github.com/pookjw/BackOn/archive/master.zip"
+			wget --no-check-certificate --output-document=/tmp/BackOn/Update/master.zip "${UpdateURL}"
 		else
-			wget -q --no-check-certificate --output-document=/tmp/BackOn/Update/master.zip "https://github.com/pookjw/BackOn/archive/master.zip"
+			wget -q --no-check-certificate --output-document=/tmp/BackOn/Update/master.zip "${UpdateURL}"
 		fi
 		PA2CKey
 		if [[ -f "/tmp/BackOn/Update/master.zip" ]]; then
@@ -1151,7 +1148,7 @@ function installUpdate(){
 						break
 					fi
 				fi
-				if [[ "${ShowLog} == YES" ]]; then
+				if [[ "${ShowLog}" == YES ]]; then
 					echo "Downloaded : $(cat "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/build") / Current : ${TOOL_BUILD_NUM}"
 					PA2CKey
 				fi
@@ -1185,6 +1182,7 @@ else
 	setEnglish
 fi
 if [[ "${1}" == "-ods" ]]; then
+	InitialRunDevSettings=YES
 	openDevSettings
 fi
 checkRoot
