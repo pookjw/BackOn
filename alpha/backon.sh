@@ -1,8 +1,8 @@
 #!/bin/sh
 ##############################################
-# BackOn alpha-70
+# BackOn alpha-71
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=70
+TOOL_BUILD_NUM=71
 ##############################################
 
 function setEnglish(){
@@ -312,6 +312,8 @@ function openDevSettings(){
 			loadSettings
 			installUpdate
 		elif [[ "${ANSWER_D}" == 17 ]]; then
+			saveSettings
+			loadSettings
 			cp /backon.sh /usr/bin/backon
 			quitTool
 		elif [[ "${ANSWER_D}" == l || "${ANSWER_D}" == ls ]]; then
