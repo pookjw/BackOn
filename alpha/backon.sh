@@ -1,8 +1,8 @@
 #!/bin/sh
 ##############################################
-# BackOn alpha-77
+# BackOn alpha-80
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=77
+TOOL_BUILD_NUM=80
 ##############################################
 
 function setEnglish(){
@@ -897,7 +897,7 @@ function defineBackupPath(){
 		showLinesA
 		read -p "- " ANSWER_F
 
-		if [[ "${ANSWER_F}" == xbackup ]]; then
+		if [[ "${ANSWER_F}" == xBackup || "${ANSWER_F}" == xbackup ]]; then
 			if [[ -f "/var/mobile/Library/xBackup/Backups/backup.bk.zip" ]]; then
 				ToRestoreBackupPath="/var/mobile/Library/xBackup/Backups/backup.bk.zip"
 				break
