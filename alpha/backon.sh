@@ -1,8 +1,8 @@
 #!/bin/sh
 ##############################################
-# BackOn alpha-71
+# BackOn alpha-75
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=71
+TOOL_BUILD_NUM=75
 ##############################################
 
 function setEnglish(){
@@ -23,7 +23,8 @@ function setEnglish(){
 	BACKUP_CANCELED="Backup was canceled due to form was empty."
 	FORM_IS_EMPTY="Form is empty."
 	NOT_SUPPORTED_FUNCTION="Not supported function."
-	NOT_SUCH_FILE_OR_DIRECTORY="No such file or directory"
+	NO_SUCH_FILE_OR_DIRECTORY="No such file or directory."
+	NO_SUCH_FILE="No such file."
 	NOTHING_TO_BACKUP="Nothing to backup!"
 	NOTHING_TO_DELETE="Nothing to delete!"
 	PRESS_ANY_KEY_TO_CONTINUE="Press any key to continue..."
@@ -35,7 +36,7 @@ function setEnglish(){
 	SAVE_BACKUP="Save backup."
 	BACKING_UP="Backing up..."
 	REMOVING="Removing..."
-	ENTER_BACKUP_PATH="Enter backup file path which you saved."
+	ENTER_BACKUP_PATH="Enter backup file path which you saved. (Enter 'xbackup' command to restore xBackup's backup file.)"
 	NOT_BACKON_BACKUP="This is not a BackOn's backup."
 	DONE="Done."
 	YES="YES"
@@ -83,7 +84,8 @@ function setKorean(){
 	BACKUP_CANCELED="입력란이 비었기 때문에 백업을 취소합니다."
 	FORM_IS_EMPTY="입력란이 비었습니다."
 	NOT_SUPPORTED_FUNCTION="지원되지 않는 기능입니다."
-	NOT_SUCH_FILE_OR_DIRECTORY="존재하지 않는 파일이나 폴더입니다."
+	NO_SUCH_FILE_OR_DIRECTORY="존재하지 않는 파일이나 폴더입니다."
+	NO_SUCH_FILE="존재하지 않는 파일입니다."
 	NOTHING_TO_BACKUP="백업할 파일이 없습니다!"
 	NOTHING_TO_DELETE="지울 백업 파일이 없습니다!"
 	PRESS_ANY_KEY_TO_CONTINUE="계속하려면 아무 키나 누르십시오..."
@@ -95,7 +97,7 @@ function setKorean(){
 	SAVE_BACKUP="백업을 저장"
 	BACKING_UP="백업 중..."
 	REMOVING="삭제 중..."
-	ENTER_BACKUP_PATH="백업 파일의 경로를 입력해 주세요."
+	ENTER_BACKUP_PATH="백업 파일의 경로를 입력해 주세요. ('xbakcup' 명령어를 입력하시면 xBackup의 백업 파일을 복원합니다.)"
 	NOT_BACKON_BACKUP="이것은 BackOn의 백업 파일이 아닙니다."
 	DONE="완료"
 	YES="예"
@@ -755,7 +757,7 @@ function backupLibrary(){
 							echo "${DONE}"
 							showPressAnyKeyToContinue
 						else
-							echo "${NOT_SUCH_FILE_OR_DIRECTORY}"
+							echo "${NO_SUCH_FILE_OR_DIRECTORY}"
 							PRESS_ANY_KEY_TO_CONTINUE
 						fi
 					fi
@@ -795,7 +797,7 @@ function backupLibrary(){
 				echo "${DONE}"
 				showPressAnyKeyToContinue
 			else
-				echo "${NOT_SUCH_FILE_OR_DIRECTORY} : ${ANSWER_E}"
+				echo "${NO_SUCH_FILE_OR_DIRECTORY} : ${ANSWER_E}"
 				showPressAnyKeyToContinue
 			fi
 		fi
@@ -884,7 +886,15 @@ function defineBackupPath(){
 		showLinesA
 		read -p "- " ANSWER_F
 
-		if [[ "${ANSWER_F}" == ods ]]; then
+		if [[ "${ANSWER_F}" == xbackup ]]; then
+			if [[ -f "/var/mobile/Library/xBackup/Backups/backup.bk.zip" ]]; then
+				ToRestoreBackupPath="/var/mobile/Library/xBackup/Backups/backup.bk.zip"
+				break
+			else
+				echo "${NO_SUCH_FILE}"
+				showPressAnyKeyToContinue
+			fi
+		elif [[ "${ANSWER_F}" == ods ]]; then
 			openDevSettings
 		elif [[ "${ANSWER_F}" == exit ]]; then
 			ExitKey
@@ -910,7 +920,7 @@ function defineBackupPath(){
 				ToRestoreBackupPath="${BackupPath}/${ANSWER_F}.zip"
 				break
 			else
-				echo "${NOT_SUCH_FILE_OR_DIRECTORY}"
+				echo "${NO_SUCH_FILE}"
 				showPressAnyKeyToContinue
 			fi
 		fi
@@ -937,6 +947,53 @@ function convertOldBackup(){
 			mv "/tmp/BackOn/Restore/${File}" "/tmp/BackOn/Restore/Cydia/${File}"
 		fi
 	done
+}
+
+function convertxBackup(){
+	if [[ -d "/tmp/BackOn/Restore/var" ]]; then
+		if [[ "${ShowLog}" == YES ]]; then
+			echo "Running convertxBackup... (xBackup)"
+		fi
+		if [[ -f "/tmp/BackOn/Restore/var/mobile/Library/xBackup/Backups/backup.bk" ]]; then
+			echo "Converting backup.bk..."
+			if [[ ! -d "/tmp/BackOn/Restore/Cydia" ]]; then
+				mkdir "/tmp/BackOn/Restore/Cydia"
+			fi
+			mv "/tmp/BackOn/Restore/var/mobile/Library/xBackup/Backups/backup.bk" "/tmp/BackOn/Restore/Cydia/apt.txt"
+		fi
+		if [[ -f "/tmp/BackOn/Restore/var/mobile/Library/xBackup/Backups/backup.bk.list" ]]; then
+			echo "Converting backup.bk.list..."
+			if [[ ! -d "/tmp/BackOn/Restore/Cydia" ]]; then
+				mkdir "/tmp/BackOn/Restore/Cydia"
+			fi
+			mv "/tmp/BackOn/Restore/var/mobile/Library/xBackup/Backups/backup.bk.list" "/tmp/BackOn/Restore/Cydia/cydia.list"
+		fi
+		if [[ -f "/tmp/BackOn/Restore/var/mobile/Library/xBackup/Backups/backup.bk.meta" ]]; then
+			echo "Converting backup.bk.meta..."
+			if [[ ! -d "/tmp/BackOn/Restore/Cydia" ]]; then
+				mkdir "/tmp/BackOn/Restore/Cydia"
+			fi
+			mv "/tmp/BackOn/Restore/var/mobile/Library/xBackup/Backups/backup.bk.meta" "/tmp/BackOn/Restore/Cydia/metadata.plist"
+		fi
+		if [[ -f "/tmp/BackOn/Restore/var/mobile/Library/xBackup/Backups/backup.bk.icon" ]]; then
+			echo "Converting backup.bk.icon..."
+			if [[ ! -d "/tmp/BackOn/Restore/Library" ]]; then
+				mkdir "/tmp/BackOn/Restore/Library"
+			fi
+			if [[ ! -d "/tmp/BackOn/Restore/Library/SpringBoard" ]]; then
+				mkdir "/tmp/BackOn/Restore/Library/SpringBoard"
+			fi
+			mv "/tmp/BackOn/Restore/var/mobile/Library/xBackup/Backups/backup.bk.icon" "/tmp/BackOn/Restore/Library/SpringBoard/IconState.plist"
+		fi
+		if [[ -d "/tmp/BackOn/Restore/var/mobile/Library/xBackup/Backups/backup.bk.prefs" ]]; then
+			echo "Converting backup.bk.prefs..."
+			if [[ ! -d "/tmp/BackOn/Restore/Library" ]]; then
+				mkdir "/tmp/BackOn/Restore/Library"
+			fi
+			mv "/tmp/BackOn/Restore/var/mobile/Library/xBackup/Backups/backup.bk.prefs" "/tmp/BackOn/Restore/Library/Preferences"
+		fi
+		rm -rf "/tmp/BackOn/Restore/var"
+	fi
 }
 
 function showInitialRestoreMenu(){
@@ -1014,10 +1071,12 @@ function restoreCydia(){
 			echo "Restoring : sources.list.d"
 		fi
 		cp "/tmp/BackOn/Restore/Cydia/cydia.list" "/etc/apt/sources.list.d"
+		chmod 755 "/etc/apt/sources.list.d"
 		if [[ "${ShowLog}" == YES ]]; then
 			echo "Restoring : metadata.plist"
 		fi
 		cp "/tmp/BackOn/Restore/Cydia/metadata.plist" "/var/lib/cydia"
+		chmod 755 "/var/lib/cydia/metadata.plist"
 		PA2CKey
 		if [[ "${ShowLog}" == YES ]]; then
 			apt-get update
@@ -1103,7 +1162,7 @@ function restoreLibrary(){
 				showPressAnyKeyToContinue
 			fi
 		else
-			echo "${NOT_SUCH_FILE_OR_DIRECTORY}"
+			echo "${NO_SUCH_FILE_OR_DIRECTORY}"
 			showPressAnyKeyToContinue
 		fi
 	done
@@ -1190,6 +1249,7 @@ while(true); do
 	ClearKey
 	showLinesA
 	echo "BackOn ${TOOL_BUILD_TYPE}-${TOOL_BUILD_NUM} - ${LANGUAGE}"
+	showLinesB
 	echo "(1) ${CREATE_BACKUP}"
 	echo "(2) ${RESTORE_FROM_BACKUP}"
 	if [[ "${LANGUAGE}" == English ]]; then
@@ -1222,6 +1282,7 @@ while(true); do
 		fi
 		mkdir /tmp/BackOn/Restore
 		unzipBackup
+		convertxBackup
 		convertOldBackup
 		PA2CKey
 		if [[ ! -d /tmp/BackOn/Restore/Cydia && ! -d /tmp/BackOn/Restore/Library ]]; then
