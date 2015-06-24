@@ -1,8 +1,8 @@
 #!/bin/sh
 ##############################################
-# BackOn alpha-75
+# BackOn alpha-76
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=75
+TOOL_BUILD_NUM=76
 ##############################################
 
 function setEnglish(){
@@ -955,28 +955,36 @@ function convertxBackup(){
 			echo "Running convertxBackup... (xBackup)"
 		fi
 		if [[ -f "/tmp/BackOn/Restore/var/mobile/Library/xBackup/Backups/backup.bk" ]]; then
-			echo "Converting backup.bk..."
+			if [[ "${ShowLog}" == YES ]]; then
+				echo "Converting backup.bk..."
+			fi
 			if [[ ! -d "/tmp/BackOn/Restore/Cydia" ]]; then
 				mkdir "/tmp/BackOn/Restore/Cydia"
 			fi
 			mv "/tmp/BackOn/Restore/var/mobile/Library/xBackup/Backups/backup.bk" "/tmp/BackOn/Restore/Cydia/apt.txt"
 		fi
 		if [[ -f "/tmp/BackOn/Restore/var/mobile/Library/xBackup/Backups/backup.bk.list" ]]; then
-			echo "Converting backup.bk.list..."
+			if [[ "${ShowLog}" == YES ]]; then
+				echo "Converting backup.bk.list..."
+			fi
 			if [[ ! -d "/tmp/BackOn/Restore/Cydia" ]]; then
 				mkdir "/tmp/BackOn/Restore/Cydia"
 			fi
 			mv "/tmp/BackOn/Restore/var/mobile/Library/xBackup/Backups/backup.bk.list" "/tmp/BackOn/Restore/Cydia/cydia.list"
 		fi
 		if [[ -f "/tmp/BackOn/Restore/var/mobile/Library/xBackup/Backups/backup.bk.meta" ]]; then
-			echo "Converting backup.bk.meta..."
+			if [[ "${ShowLog}" == YES ]]; then
+				echo "Converting backup.bk.meta..."
+			fi
 			if [[ ! -d "/tmp/BackOn/Restore/Cydia" ]]; then
 				mkdir "/tmp/BackOn/Restore/Cydia"
 			fi
 			mv "/tmp/BackOn/Restore/var/mobile/Library/xBackup/Backups/backup.bk.meta" "/tmp/BackOn/Restore/Cydia/metadata.plist"
 		fi
 		if [[ -f "/tmp/BackOn/Restore/var/mobile/Library/xBackup/Backups/backup.bk.icon" ]]; then
-			echo "Converting backup.bk.icon..."
+			if [[ "${ShowLog}" == YES ]]; then
+				echo "Converting backup.bk.icon..."
+			fi
 			if [[ ! -d "/tmp/BackOn/Restore/Library" ]]; then
 				mkdir "/tmp/BackOn/Restore/Library"
 			fi
@@ -986,7 +994,9 @@ function convertxBackup(){
 			mv "/tmp/BackOn/Restore/var/mobile/Library/xBackup/Backups/backup.bk.icon" "/tmp/BackOn/Restore/Library/SpringBoard/IconState.plist"
 		fi
 		if [[ -d "/tmp/BackOn/Restore/var/mobile/Library/xBackup/Backups/backup.bk.prefs" ]]; then
-			echo "Converting backup.bk.prefs..."
+			if [[ "${ShowLog}" == YES ]]; then
+				echo "Converting backup.bk.prefs..."
+			fi
 			if [[ ! -d "/tmp/BackOn/Restore/Library" ]]; then
 				mkdir "/tmp/BackOn/Restore/Library"
 			fi
