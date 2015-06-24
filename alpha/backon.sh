@@ -1,8 +1,8 @@
 #!/bin/sh
 ##############################################
-# BackOn alpha-76
+# BackOn alpha-77
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=76
+TOOL_BUILD_NUM=77
 ##############################################
 
 function setEnglish(){
@@ -530,6 +530,16 @@ function switchLanguage(){
 	fi
 }
 
+function killMobileCydia(){
+	ps cax | grep MobileCydia > /dev/null
+	if [ $? -eq 0 ]; then
+		if [[ "${ShowLog}" == YES ]]; then
+			echo "Killing MobileCydia..."
+		fi
+		killall -9 MobileCydia
+	fi
+}
+
 function quitTool(){
 	ClearKey
 	if [[ -d /tmp/BackOn ]]; then
@@ -655,6 +665,7 @@ function backupCydiaData(){
 		rm -rf "/tmp/BackOn/${BACKUP_NAME}/Cydia"
 	fi
 	mkdir "/tmp/BackOn/${BACKUP_NAME}/Cydia"
+	killMobileCydia
 	dpkg --get-selections > "/tmp/BackOn/${BACKUP_NAME}/Cydia/apt.txt"
 	cp /etc/apt/sources.list.d/cydia.list "/tmp/BackOn/${BACKUP_NAME}/Cydia"
 	cp /var/lib/cydia/metadata.plist "/tmp/BackOn/${BACKUP_NAME}/Cydia"
@@ -1076,6 +1087,7 @@ function restoreCydia(){
 	if [[ "${SkipRestore}" == YES ]]; then
 		echo "Skipped."
 	else
+		killMobileCydia
 		echo "${RESTORING}"
 		if [[ "${ShowLog}" == YES ]]; then
 			echo "Restoring : sources.list.d"
