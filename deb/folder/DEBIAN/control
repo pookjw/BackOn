@@ -1,7 +1,7 @@
 Package: com.myrepospace.pookjw.backon
 Name: BackOn
-Version: 74
+Version: 78
 Architecture: iphoneos-arm
 Description: Backup jailbroken iOS device.
 Section: Utilities
-Depends: zip, unzip, coreutils, coreutils-bin, apt7, rsync, system-cmds, wget
+Depends: zip, unzip, coreutils, coreutils-bin, apt7, rsync, system-cmds, wget, adv-cmds
