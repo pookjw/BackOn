@@ -1,8 +1,8 @@
 #!/bin/sh
 ##############################################
-# BackOn beta-78
+# BackOn beta-79
 TOOL_BUILD_TYPE=beta
-TOOL_BUILD_NUM=78
+TOOL_BUILD_NUM=79
 ##############################################
 
 function setEnglish(){
