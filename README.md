@@ -12,6 +12,8 @@ Backup jailbroken iOS devices.
 
 >- Backup & Restore Library. (/var/mobile/Library)
 
+>- Supports restorting xBackup's backup file.
+
 >- Supports English and Korean! (Language switching available.)
 
 >- and so on…
