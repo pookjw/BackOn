@@ -1,8 +1,8 @@
 #!/bin/sh
 ##############################################
-# BackOn alpha-84
+# BackOn alpha-85
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=84
+TOOL_BUILD_NUM=85
 ##############################################
 
 function setEnglish(){
@@ -50,7 +50,7 @@ function setEnglish(){
 	RESTORE_CYDIA_DATA="Restore Cydia sources and packages list."
 	RESTORE_SHOW_CYDIA_LIST="Show backuped Cydia packages list."
 	RESTORE_LIBRARY="Restore Library."
-	REBOOT="Reboot with wiping Caches."
+	REBOOT="Reboot."
 	RESTORING="Restoring..."
 	SHOW_GUIDE_3="Enter file/folder name that you want to backup. If you want to backup all of files, enter 'all' command. Enter 'delete' command to delete backuped backup."
 	SHOW_GUIDE_4="Enter file/folder name that you want to delete backup. If you want to delete all of backup files, enter 'all' command."
@@ -112,7 +112,7 @@ function setKorean(){
 	RESTORE_CYDIA_DATA="Cydia 소스, 패키지 복원"
 	RESTORE_SHOW_CYDIA_LIST="백업한 Cydia 패키지 목록 보기"
 	RESTORE_LIBRARY="Library 복원"
-	REBOOT="재부팅 (캐시도 제거됩니다.)"
+	REBOOT="재부팅"
 	RESTORING="복원 중..."
 	SHOW_GUIDE_3="백업을 원하는 폴더/파일의 이름을 입력하시면 백업됩니다. 'all'을 입력하면 모두 백업할 수 있습니다. 'delete' 명령어로 백업한 백업 파일을 삭제할 수 있습니다."
 	SHOW_GUIDE_4="삭제를 원하는 폴더/파일의 이름을 입력하시면 됩니다. 'all'을 입력하면 모두 지울 수 있습니다."
@@ -1193,7 +1193,6 @@ function restoreLibrary(){
 }
 
 function rebootDevice(){
-	rm -rf /var/mobile/Library/Caches
 	reboot
 	quitTool
 }
