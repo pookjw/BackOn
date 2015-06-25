@@ -1,8 +1,8 @@
 #!/bin/sh
 ##############################################
-# BackOn alpha-82
+# BackOn alpha-83
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=82
+TOOL_BUILD_NUM=83
 ##############################################
 
 function setEnglish(){
@@ -135,10 +135,10 @@ function openDevSettings(){
 		showLinesA
 		echo "DevSettings"
 		showLinesB
-		if [[ "${EnableExitKey}" == YES ]]; then
-			echo "(1) EnableExitKey : YES"
-		elif [[ "${EnableExitKey}" == NO ]]; then
-			echo "(1) EnableExitKey : NO"
+		if [[ "${ExitKey}" == YES ]]; then
+			echo "(1) ExitKey : YES"
+		elif [[ "${ExitKey}" == NO ]]; then
+			echo "(1) ExitKey : NO"
 		fi
 		if [[ "${ShowLog}" == YES ]]; then
 			echo "(2) ShowLog : YES"
@@ -195,10 +195,10 @@ function openDevSettings(){
 		read -p "- " ANSWER_D
 
 		if [[ "${ANSWER_D}" == 1 ]]; then
-			if [[ "${EnableExitKey}" == YES ]]; then
-				EnableExitKey=NO
-			elif [[ "${EnableExitKey}" == NO ]]; then
-				EnableExitKey=YES
+			if [[ "${ExitKey}" == YES ]]; then
+				ExitKey=NO
+			elif [[ "${ExitKey}" == NO ]]; then
+				ExitKey=YES
 			fi
 		elif [[ "${ANSWER_D}" == 2 ]]; then
 			if [[ "${ShowLog}" == YES ]]; then
@@ -371,7 +371,7 @@ function saveSettings(){
 		rm -rf /var/mobile/Library/Preferences/BackOn
 	fi
 	mkdir /var/mobile/Library/Preferences/BackOn
-	echo "${EnableExitKey}" >> /var/mobile/Library/Preferences/BackOn/EnableExitKey
+	echo "${ExitKey}" >> /var/mobile/Library/Preferences/BackOn/ExitKey
 	echo "${ShowLog}" >> /var/mobile/Library/Preferences/BackOn/ShowLog
 	echo "${ShowPA2C}" >> /var/mobile/Library/Preferences/BackOn/ShowPA2C
 	echo "${SkipRestore}" >> /var/mobile/Library/Preferences/BackOn/SkipRestore
@@ -388,10 +388,10 @@ function saveSettings(){
 
 
 function loadSettings(){
-	if [[ -f "/var/mobile/Library/Preferences/BackOn/EnableExitKey" ]]; then
-		EnableExitKey="$(cat "/var/mobile/Library/Preferences/BackOn/EnableExitKey")"
+	if [[ -f "/var/mobile/Library/Preferences/BackOn/ExitKey" ]]; then
+		ExitKey="$(cat "/var/mobile/Library/Preferences/BackOn/ExitKey")"
 	else
-		EnableExitKey=NO
+		ExitKey=NO
 	fi
 	if [[ -f "/var/mobile/Library/Preferences/BackOn/ShowLog" ]]; then
 		ShowLog="$(cat "/var/mobile/Library/Preferences/BackOn/ShowLog")"
@@ -490,7 +490,7 @@ function showNotSupportedFunction(){
 }
 
 function ExitKey(){
-	if [[ "${EnableExitKey}" == YES ]]; then
+	if [[ "${ExitKey}" == YES ]]; then
 		quitTool
 	else
 		showNotSupportedFunction
