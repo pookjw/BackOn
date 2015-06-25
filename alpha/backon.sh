@@ -1,8 +1,8 @@
 #!/bin/sh
 ##############################################
-# BackOn alpha-83
+# BackOn alpha-84
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=83
+TOOL_BUILD_NUM=84
 ##############################################
 
 function setEnglish(){
@@ -133,27 +133,27 @@ function openDevSettings(){
 	while(true); do
 		ClearKey
 		showLinesA
-		echo "DevSettings"
+		echo "DevSettings - ${TOOL_BUILD_TYPE}-${TOOL_BUILD_NUM}"
 		showLinesB
 		if [[ "${ExitKey}" == YES ]]; then
 			echo "(1) ExitKey : YES"
 		elif [[ "${ExitKey}" == NO ]]; then
 			echo "(1) ExitKey : NO"
 		fi
-		if [[ "${ShowLog}" == YES ]]; then
-			echo "(2) ShowLog : YES"
-		elif [[ "${ShowLog}" == NO ]]; then
-			echo "(2) ShowLog : NO"
+		if [[ "${showLog}" == YES ]]; then
+			echo "(2) showLog : YES"
+		elif [[ "${showLog}" == NO ]]; then
+			echo "(2) showLog : NO"
 		fi
-		if [[ "${ShowPA2C}" == YES ]]; then
-			echo "(3) ShowPA2C : YES"
-		elif [[ "${ShowPA2C}" == NO ]]; then
-			echo "(3) ShowPA2C : NO"
+		if [[ "${showPA2C}" == YES ]]; then
+			echo "(3) showPA2C : YES"
+		elif [[ "${showPA2C}" == NO ]]; then
+			echo "(3) showPA2C : NO"
 		fi
-		if [[ "${SkipRestore}" == YES ]]; then
-			echo "(4) SkipRestore : YES"
-		elif [[ "${SkipRestore}" == NO ]]; then
-			echo "(4) SkipRestore : NO"
+		if [[ "${skipRestore}" == YES ]]; then
+			echo "(4) skipRestore : YES"
+		elif [[ "${skipRestore}" == NO ]]; then
+			echo "(4) skipRestore : NO"
 		fi
 		echo "(5) UpdateURL : ${UpdateURL}"
 		echo "(6) OSVer : ${OSVer}"
@@ -201,22 +201,22 @@ function openDevSettings(){
 				ExitKey=YES
 			fi
 		elif [[ "${ANSWER_D}" == 2 ]]; then
-			if [[ "${ShowLog}" == YES ]]; then
-				ShowLog=NO
-			elif [[ "${ShowLog}" == NO ]]; then
-				ShowLog=YES
+			if [[ "${showLog}" == YES ]]; then
+				showLog=NO
+			elif [[ "${showLog}" == NO ]]; then
+				showLog=YES
 			fi
 		elif [[ "${ANSWER_D}" == 3 ]]; then
-			if [[ "${ShowPA2C}" == YES ]]; then
-				ShowPA2C=NO
-			elif [[ "${ShowPA2C}" == NO ]]; then
-				ShowPA2C=YES
+			if [[ "${showPA2C}" == YES ]]; then
+				showPA2C=NO
+			elif [[ "${showPA2C}" == NO ]]; then
+				showPA2C=YES
 			fi
 		elif [[ "${ANSWER_D}" == 4 ]]; then
-			if [[ "${SkipRestore}" == YES ]]; then
-				SkipRestore=NO
-			elif [[ "${SkipRestore}" == NO ]]; then
-				SkipRestore=YES
+			if [[ "${skipRestore}" == YES ]]; then
+				skipRestore=NO
+			elif [[ "${skipRestore}" == NO ]]; then
+				skipRestore=YES
 			fi
 		elif [[ "${ANSWER_D}" == 5 ]]; then
 			read -p "Query : " UpdateURL
@@ -372,9 +372,9 @@ function saveSettings(){
 	fi
 	mkdir /var/mobile/Library/Preferences/BackOn
 	echo "${ExitKey}" >> /var/mobile/Library/Preferences/BackOn/ExitKey
-	echo "${ShowLog}" >> /var/mobile/Library/Preferences/BackOn/ShowLog
-	echo "${ShowPA2C}" >> /var/mobile/Library/Preferences/BackOn/ShowPA2C
-	echo "${SkipRestore}" >> /var/mobile/Library/Preferences/BackOn/SkipRestore
+	echo "${showLog}" >> /var/mobile/Library/Preferences/BackOn/showLog
+	echo "${showPA2C}" >> /var/mobile/Library/Preferences/BackOn/showPA2C
+	echo "${skipRestore}" >> /var/mobile/Library/Preferences/BackOn/skipRestore
 	echo "${UpdateURL}" >> /var/mobile/Library/Preferences/BackOn/UpdateURL
 	echo "${OSVer}" >> /var/mobile/Library/Preferences/BackOn/OSVer
 	echo "${UpdateBuildType}" >> /var/mobile/Library/Preferences/BackOn/UpdateBuildType
@@ -393,20 +393,20 @@ function loadSettings(){
 	else
 		ExitKey=NO
 	fi
-	if [[ -f "/var/mobile/Library/Preferences/BackOn/ShowLog" ]]; then
-		ShowLog="$(cat "/var/mobile/Library/Preferences/BackOn/ShowLog")"
+	if [[ -f "/var/mobile/Library/Preferences/BackOn/showLog" ]]; then
+		showLog="$(cat "/var/mobile/Library/Preferences/BackOn/showLog")"
 	else
-		ShowLog=NO
+		showLog=NO
 	fi
-	if [[ -f "/var/mobile/Library/Preferences/BackOn/ShowPA2C" ]]; then
-		ShowPA2C="$(cat "/var/mobile/Library/Preferences/BackOn/ShowPA2C")"
+	if [[ -f "/var/mobile/Library/Preferences/BackOn/showPA2C" ]]; then
+		showPA2C="$(cat "/var/mobile/Library/Preferences/BackOn/showPA2C")"
 	else
-		ShowPA2C=NO
+		showPA2C=NO
 	fi
-	if [[ -f "/var/mobile/Library/Preferences/BackOn/SkipRestore" ]]; then
-		SkipRestore="$(cat "/var/mobile/Library/Preferences/BackOn/SkipRestore")"
+	if [[ -f "/var/mobile/Library/Preferences/BackOn/skipRestore" ]]; then
+		skipRestore="$(cat "/var/mobile/Library/Preferences/BackOn/skipRestore")"
 	else
-		SkipRestore=NO
+		skipRestore=NO
 	fi
 	if [[ -f "/var/mobile/Library/Preferences/BackOn/UpdateURL" ]]; then
 		UpdateURL="$(cat "/var/mobile/Library/Preferences/BackOn/UpdateURL")"
@@ -498,7 +498,7 @@ function ExitKey(){
 }
 
 function PA2CKey(){
-	if [[ "${ShowPA2C}" == YES ]]; then
+	if [[ "${showPA2C}" == YES ]]; then
 		showPressAnyKeyToContinue
 		echo
 	fi
@@ -535,7 +535,7 @@ function switchLanguage(){
 function killMobileCydia(){
 	ps cax | grep MobileCydia > /dev/null
 	if [ $? -eq 0 ]; then
-		if [[ "${ShowLog}" == YES ]]; then
+		if [[ "${showLog}" == YES ]]; then
 			echo "Killing MobileCydia..."
 		fi
 		killall -9 MobileCydia
@@ -685,7 +685,7 @@ function backupLibrary(){
 		showLinesA
 		echo "${SHOW_INFO_3}"
 		showLinesB
-		if [[ "${ShowLog}" == YES ]]; then
+		if [[ "${showLog}" == YES ]]; then
 			ls -l /var/mobile/Library
 		else
 			ls /var/mobile/Library
@@ -701,7 +701,7 @@ function backupLibrary(){
 		else
 			if [[ "${ANSWER_E}" == all ]]; then
 				echo "${BACKING_UP}"
-				if [[ "${ShowLog}" == YES ]]; then
+				if [[ "${showLog}" == YES ]]; then
 					rsync -av --exclude="Caches" --exclude="Filza" --exclude="Preferences/BackupAZ" /var/mobile/Library/* "/tmp/BackOn/${BACKUP_NAME}/Library"
 				else
 					rsync -q -av --exclude="Caches" --exclude="Filza" --exclude="Preferences/BackupAZ" /var/mobile/Library/* "/tmp/BackOn/${BACKUP_NAME}/Library"
@@ -711,7 +711,7 @@ function backupLibrary(){
 						mkdir "/tmp/BackOn/${BACKUP_NAME}/Library/Caches"
 					fi
 					cp /var/mobile/Library/Caches/libactivator.plist "/tmp/BackOn/${BACKUP_NAME}/Library/Caches"
-					if [[ "${ShowLog}" == YES ]]; then
+					if [[ "${showLog}" == YES ]]; then
 						echo "Backuped libactivator.plist."
 					fi
 				fi
@@ -733,7 +733,7 @@ function backupLibrary(){
 					showLinesA
 					echo "${SHOW_INFO_4}"
 					showLinesB
-					if [[ "${ShowLog}" == YES ]]; then
+					if [[ "${showLog}" == YES ]]; then
 						ls -l "/tmp/BackOn/${BACKUP_NAME}/Library"
 					else
 						ls "/tmp/BackOn/${BACKUP_NAME}/Library"
@@ -776,14 +776,14 @@ function backupLibrary(){
 					fi
 				done
 			elif [[ "${ANSWER_E}" == Preferences ]]; then
-				if [[ "${ShowLog}" == YES ]]; then
+				if [[ "${showLog}" == YES ]]; then
 					echo "Special backup."
 				fi
 				echo "${BACKING_UP}"
 				if [[ ! -d "/tmp/BackOn/${BACKUP_NAME}/Library/Preferences" ]]; then
 					mkdir "/tmp/BackOn/${BACKUP_NAME}/Library/Preferences"
 				fi
-				if [[ "${ShowLog}" == YES ]]; then
+				if [[ "${showLog}" == YES ]]; then
 					rsync -av --exclude="BackupAZ" /var/mobile/Library/Preferences/* "/tmp/BackOn/${BACKUP_NAME}/Library/Preferences"
 				else
 					rsync -q -av --exclude="BackupAZ" /var/mobile/Library/Preferences/* "/tmp/BackOn/${BACKUP_NAME}/Library/Preferences"
@@ -840,12 +840,12 @@ function showBackupedFilesBackup(){
 	if [[ -d "/tmp/BackOn/${BACKUP_NAME}/Library" ]]; then
 		echo "${BACKUPED_LIBRARY} : ${YES}"
 		showLinesB
-		if [[ "${ShowLog}" == YES ]]; then
+		if [[ "${showLog}" == YES ]]; then
 			ls -l "/tmp/BackOn/$BACKUP_NAME/Library"
 		else
 			ls "/tmp/BackOn/$BACKUP_NAME/Library"
 		fi
-		if [[ "${ShowLog}" == YES ]]; then
+		if [[ "${showLog}" == YES ]]; then
 			if [[ -d "/tmp/BackOn/$BACKUP_NAME/Library/Caches" ]]; then
 				showLinesB
 				ls -l "/tmp/BackOn/$BACKUP_NAME/Library/Caches"
@@ -873,7 +873,7 @@ function saveBackup(){
 		echo "${TOOL_BUILD_NUM}" >> info/ToolBuildNum
 		echo "${TOOL_BUILD_TYPE}" >> info/ToolBuildType
 		echo "${OSVer}" >> info/OSVersion
-		if [[ "${ShowLog}" == YES ]]; then
+		if [[ "${showLog}" == YES ]]; then
 			echo "${BACKING_UP}"
 			zip -r "${BackupPath}/${ANSWER_B}.zip" *
 		else
@@ -941,7 +941,7 @@ function defineBackupPath(){
 }
 
 function unzipBackup(){
-	if [[ "${ShowLog}" == YES ]]; then
+	if [[ "${showLog}" == YES ]]; then
 		unzip "${ToRestoreBackupPath}" -d /tmp/BackOn/Restore
 	else
 		unzip -qq "${ToRestoreBackupPath}" -d /tmp/BackOn/Restore
@@ -951,7 +951,7 @@ function unzipBackup(){
 function convertOldBackup(){
 	for File in "apt.txt" "cydia.list" "metadata.plist"; do
 		if [[ -f "/tmp/BackOn/Restore/${File}" ]]; then
-			if [[ "${ShowLog}" == YES ]]; then
+			if [[ "${showLog}" == YES ]]; then
 				echo "Converting ${File}..."
 			fi
 			if [[ ! -d "/tmp/BackOn/Restore/Cydia" ]]; then
@@ -964,11 +964,11 @@ function convertOldBackup(){
 
 function convertxBackup(){
 	if [[ -d "/tmp/BackOn/Restore/var" ]]; then
-		if [[ "${ShowLog}" == YES ]]; then
+		if [[ "${showLog}" == YES ]]; then
 			echo "Running convertxBackup... (xBackup)"
 		fi
 		if [[ -f "/tmp/BackOn/Restore/var/mobile/Library/xBackup/Backups/backup.bk" ]]; then
-			if [[ "${ShowLog}" == YES ]]; then
+			if [[ "${showLog}" == YES ]]; then
 				echo "Converting backup.bk..."
 			fi
 			if [[ ! -d "/tmp/BackOn/Restore/Cydia" ]]; then
@@ -977,7 +977,7 @@ function convertxBackup(){
 			mv "/tmp/BackOn/Restore/var/mobile/Library/xBackup/Backups/backup.bk" "/tmp/BackOn/Restore/Cydia/apt.txt"
 		fi
 		if [[ -f "/tmp/BackOn/Restore/var/mobile/Library/xBackup/Backups/backup.bk.list" ]]; then
-			if [[ "${ShowLog}" == YES ]]; then
+			if [[ "${showLog}" == YES ]]; then
 				echo "Converting backup.bk.list..."
 			fi
 			if [[ ! -d "/tmp/BackOn/Restore/Cydia" ]]; then
@@ -986,7 +986,7 @@ function convertxBackup(){
 			mv "/tmp/BackOn/Restore/var/mobile/Library/xBackup/Backups/backup.bk.list" "/tmp/BackOn/Restore/Cydia/cydia.list"
 		fi
 		if [[ -f "/tmp/BackOn/Restore/var/mobile/Library/xBackup/Backups/backup.bk.meta" ]]; then
-			if [[ "${ShowLog}" == YES ]]; then
+			if [[ "${showLog}" == YES ]]; then
 				echo "Converting backup.bk.meta..."
 			fi
 			if [[ ! -d "/tmp/BackOn/Restore/Cydia" ]]; then
@@ -995,7 +995,7 @@ function convertxBackup(){
 			mv "/tmp/BackOn/Restore/var/mobile/Library/xBackup/Backups/backup.bk.meta" "/tmp/BackOn/Restore/Cydia/metadata.plist"
 		fi
 		if [[ -f "/tmp/BackOn/Restore/var/mobile/Library/xBackup/Backups/backup.bk.icon" ]]; then
-			if [[ "${ShowLog}" == YES ]]; then
+			if [[ "${showLog}" == YES ]]; then
 				echo "Converting backup.bk.icon..."
 			fi
 			if [[ ! -d "/tmp/BackOn/Restore/Library" ]]; then
@@ -1007,7 +1007,7 @@ function convertxBackup(){
 			mv "/tmp/BackOn/Restore/var/mobile/Library/xBackup/Backups/backup.bk.icon" "/tmp/BackOn/Restore/Library/SpringBoard/IconState.plist"
 		fi
 		if [[ -d "/tmp/BackOn/Restore/var/mobile/Library/xBackup/Backups/backup.bk.prefs" ]]; then
-			if [[ "${ShowLog}" == YES ]]; then
+			if [[ "${showLog}" == YES ]]; then
 				echo "Converting backup.bk.prefs..."
 			fi
 			if [[ ! -d "/tmp/BackOn/Restore/Library" ]]; then
@@ -1086,23 +1086,23 @@ function restoreCydia(){
 	showLinesA
 	echo "${SHOW_INFO_8}"
 	showLinesB
-	if [[ "${SkipRestore}" == YES ]]; then
+	if [[ "${skipRestore}" == YES ]]; then
 		echo "Skipped."
 	else
 		killMobileCydia
 		echo "${RESTORING}"
-		if [[ "${ShowLog}" == YES ]]; then
+		if [[ "${showLog}" == YES ]]; then
 			echo "Restoring : sources.list.d"
 		fi
 		cp "/tmp/BackOn/Restore/Cydia/cydia.list" "/etc/apt/sources.list.d"
 		chmod 755 "/etc/apt/sources.list.d"
-		if [[ "${ShowLog}" == YES ]]; then
+		if [[ "${showLog}" == YES ]]; then
 			echo "Restoring : metadata.plist"
 		fi
 		cp "/tmp/BackOn/Restore/Cydia/metadata.plist" "/var/lib/cydia"
 		chmod 755 "/var/lib/cydia/metadata.plist"
 		PA2CKey
-		if [[ "${ShowLog}" == YES ]]; then
+		if [[ "${showLog}" == YES ]]; then
 			apt-get update
 			dpkg --set-selections < "/tmp/BackOn/Restore/Cydia/apt.txt"
 			apt-get -y --force-yes -u dselect-upgrade
@@ -1133,7 +1133,7 @@ function restoreLibrary(){
 		showLinesA
 		echo "${SHOW_INFO_10}"
 		showLinesB
-		if [[ "${ShowLog}" == YES ]]; then
+		if [[ "${showLog}" == YES ]]; then
 			ls -l "/tmp/BackOn/Restore/Library"
 		else
 			ls "/tmp/BackOn/Restore/Library"
@@ -1151,7 +1151,7 @@ function restoreLibrary(){
 		elif [[ "${ANSWER_I}" == exit ]]; then
 			ExitKey
 		elif [[ "${ANSWER_I}" == all ]]; then
-			if [[ "${SkipRestore}" == YES ]]; then
+			if [[ "${skipRestore}" == YES ]]; then
 				echo "Skipped."
 				showPressAnyKeyToContinue
 			else
@@ -1164,7 +1164,7 @@ function restoreLibrary(){
 		elif [[ -z "${ANSWER_I}" ]]; then
 			:
 		elif [[ -f "/tmp/BackOn/Restore/Library/${ANSWER_I}" ]]; then
-			if [[ "${SkipRestore}" == YES ]]; then
+			if [[ "${skipRestore}" == YES ]]; then
 				echo "Skipped"
 				showPressAnyKeyToContinue
 			else
@@ -1175,7 +1175,7 @@ function restoreLibrary(){
 				showPressAnyKeyToContinue
 			fi
 		elif [[ -d "/tmp/BackOn/Restore/Library/${ANSWER_I}" ]]; then
-			if [[ "${SkipRestore}" == YES ]]; then
+			if [[ "${skipRestore}" == YES ]]; then
 				echo "Skipped"
 				showPressAnyKeyToContinue
 			else
@@ -1208,14 +1208,14 @@ function installUpdate(){
 			rm -rf "/tmp/BackOn/Update"
 		fi
 		mkdir "/tmp/BackOn/Update"
-		if [[ "${ShowLog}" == YES ]]; then
+		if [[ "${showLog}" == YES ]]; then
 			wget --no-check-certificate --output-document=/tmp/BackOn/Update/master.zip "${UpdateURL}"
 		else
 			wget -q --no-check-certificate --output-document=/tmp/BackOn/Update/master.zip "${UpdateURL}"
 		fi
 		PA2CKey
 		if [[ -f "/tmp/BackOn/Update/master.zip" ]]; then
-			if [[ "${ShowLog}" == YES ]]; then
+			if [[ "${showLog}" == YES ]]; then
 				unzip "/tmp/BackOn/Update/master.zip" -d "/tmp/BackOn/Update/master"
 			else
 				unzip -qq "/tmp/BackOn/Update/master.zip" -d "/tmp/BackOn/Update/master"
@@ -1231,7 +1231,7 @@ function installUpdate(){
 						break
 					fi
 				fi
-				if [[ "${ShowLog}" == YES ]]; then
+				if [[ "${showLog}" == YES ]]; then
 					echo "Downloaded : $(cat "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/build") / Current : ${TOOL_BUILD_NUM}"
 					PA2CKey
 				fi
@@ -1290,14 +1290,14 @@ while(true); do
 
 	if [[ "${ANSWER_A}" == 1 ]]; then
 		defineBackupName
-		if [[ "${ShowLog}" == YES ]]; then
+		if [[ "${showLog}" == YES ]]; then
 			echo "${WILL_CREATE_BACKUP_NAME} : ${BACKUP_NAME}"
 			PA2CKey
 		fi
 		showInitialBackupMenu
 	elif [[ "${ANSWER_A}" == 2 ]]; then
 		defineBackupPath
-		if [[ "${ShowLog}" == YES ]]; then
+		if [[ "${showLog}" == YES ]]; then
 			echo "Recognized backup file path : ${ToRestoreBackupPath}"
 			showPressAnyKeyToContinue
 		fi
