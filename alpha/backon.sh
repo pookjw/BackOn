@@ -1,8 +1,8 @@
 #!/bin/sh
 ##############################################
-# BackOn alpha-80
+# BackOn alpha-81
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=80
+TOOL_BUILD_NUM=81
 ##############################################
 
 function setEnglish(){
@@ -24,6 +24,7 @@ function setEnglish(){
 	FORM_IS_EMPTY="Form is empty."
 	NOT_SUPPORTED_FUNCTION="Not supported function."
 	NO_SUCH_FILE_OR_DIRECTORY="No such file or directory."
+	NO_SUCH_XBACKUP="I can't find xBackup's backup file. (/var/mobile/Library/xBackup/Backups/backup.bk.zip)"
 	NO_SUCH_FILE="No such file."
 	NOTHING_TO_BACKUP="Nothing to backup!"
 	NOTHING_TO_DELETE="Nothing to delete!"
@@ -86,6 +87,7 @@ function setKorean(){
 	NOT_SUPPORTED_FUNCTION="지원되지 않는 기능입니다."
 	NO_SUCH_FILE_OR_DIRECTORY="존재하지 않는 파일이나 폴더입니다."
 	NO_SUCH_FILE="존재하지 않는 파일입니다."
+	NO_SUCH_XBACKUP="xBackup의 백업 파일을 찾을 수 없습니다! (/var/mobile/Library/xBackup/Backups/backup.bk.zip)"
 	NOTHING_TO_BACKUP="백업할 파일이 없습니다!"
 	NOTHING_TO_DELETE="지울 백업 파일이 없습니다!"
 	PRESS_ANY_KEY_TO_CONTINUE="계속하려면 아무 키나 누르십시오..."
@@ -902,7 +904,7 @@ function defineBackupPath(){
 				ToRestoreBackupPath="/var/mobile/Library/xBackup/Backups/backup.bk.zip"
 				break
 			else
-				echo "${NO_SUCH_FILE}"
+				echo "${NO_SUCH_XBACKUP}"
 				showPressAnyKeyToContinue
 			fi
 		elif [[ "${ANSWER_F}" == ods ]]; then
