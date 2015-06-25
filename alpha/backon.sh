@@ -1,8 +1,8 @@
 #!/bin/sh
 ##############################################
-# BackOn alpha-81
+# BackOn alpha-82
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=81
+TOOL_BUILD_NUM=82
 ##############################################
 
 function setEnglish(){
@@ -20,12 +20,12 @@ function setEnglish(){
 	QUIT="Quit."
 	ENTER_QUIT="Enter 'quit' to quit this menu."
 	ENTER_BACKUP_NAME="Enter backup name which you want to do. (If you want to set backup name to current date and time, enter 'date'.)"
-	BACKUP_CANCELED="Backup was canceled due to form was empty."
+	BACKUP_CANCELED="Backup was canceled because form was empty."
 	FORM_IS_EMPTY="Form is empty."
 	NOT_SUPPORTED_FUNCTION="Not supported function."
 	NO_SUCH_FILE_OR_DIRECTORY="No such file or directory."
-	NO_SUCH_XBACKUP="I can't find xBackup's backup file. (/var/mobile/Library/xBackup/Backups/backup.bk.zip)"
 	NO_SUCH_FILE="No such file."
+	NO_SUCH_XBACKUP="I can't find xBackup's backup file. (/var/mobile/Library/xBackup/Backups/backup.bk.zip)"
 	NOTHING_TO_BACKUP="Nothing to backup!"
 	NOTHING_TO_DELETE="Nothing to delete!"
 	PRESS_ANY_KEY_TO_CONTINUE="Press any key to continue..."
@@ -50,7 +50,7 @@ function setEnglish(){
 	RESTORE_CYDIA_DATA="Restore Cydia sources and packages list."
 	RESTORE_SHOW_CYDIA_LIST="Show backuped Cydia packages list."
 	RESTORE_LIBRARY="Restore Library."
-	REBOOT="Reboot."
+	REBOOT="Reboot with wiping Caches."
 	RESTORING="Restoring..."
 	SHOW_GUIDE_3="Enter file/folder name that you want to backup. If you want to backup all of files, enter 'all' command. Enter 'delete' command to delete backuped backup."
 	SHOW_GUIDE_4="Enter file/folder name that you want to delete backup. If you want to delete all of backup files, enter 'all' command."
@@ -112,7 +112,7 @@ function setKorean(){
 	RESTORE_CYDIA_DATA="Cydia 소스, 패키지 복원"
 	RESTORE_SHOW_CYDIA_LIST="백업한 Cydia 패키지 목록 보기"
 	RESTORE_LIBRARY="Library 복원"
-	REBOOT="재부팅"
+	REBOOT="재부팅 (캐시도 제거됩니다.)"
 	RESTORING="복원 중..."
 	SHOW_GUIDE_3="백업을 원하는 폴더/파일의 이름을 입력하시면 백업됩니다. 'all'을 입력하면 모두 백업할 수 있습니다. 'delete' 명령어로 백업한 백업 파일을 삭제할 수 있습니다."
 	SHOW_GUIDE_4="삭제를 원하는 폴더/파일의 이름을 입력하시면 됩니다. 'all'을 입력하면 모두 지울 수 있습니다."
@@ -232,7 +232,7 @@ function openDevSettings(){
 			if [[ "${MakeFakeActivatorFile}" == YES ]]; then
 				rm /var/mobile/Library/Caches/libactivator.plist
 				MakeFakeActivatorFile=NO
-			elif [[ "${SkipCheckInstalledPackage}" == NO ]]; then
+			elif [[ "${MakeFakeActivatorFile}" == NO ]]; then
 				touch /var/mobile/Library/Caches/libactivator.plist
 				MakeFakeActivatorFile=YES
 			fi
