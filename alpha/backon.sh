@@ -1,8 +1,8 @@
 #!/bin/sh
 ##############################################
-# BackOn alpha-85
+# BackOn alpha-87
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=85
+TOOL_BUILD_NUM=87
 ##############################################
 
 function setEnglish(){
@@ -550,6 +550,14 @@ function quitTool(){
 	exit 0
 }
 
+function quitTool_Error(){
+	ClearKey
+	if [[ -d /tmp/BackOn ]]; then
+		rm -rf /tmp/BackOn
+	fi
+	exit 1
+}
+
 function quitTool_NoClear(){
 	if [[ -d /tmp/BackOn ]]; then
 		rm -rf /tmp/BackOn
@@ -558,14 +566,6 @@ function quitTool_NoClear(){
 }
 
 function quitTool_NoClear_Error(){
-	if [[ -d /tmp/BackOn ]]; then
-		rm -rf /tmp/BackOn
-	fi
-	exit 1
-}
-
-function quitTool_Error(){
-	ClearKey
 	if [[ -d /tmp/BackOn ]]; then
 		rm -rf /tmp/BackOn
 	fi
@@ -1253,10 +1253,6 @@ function installUpdate(){
 }
 
 ##############################################
-if [[ -d /tmp/BackOn ]]; then
-	rm -rf /tmp/BackOn
-fi
-mkdir /tmp/BackOn
 loadSettings
 if [[ "${setDefaultLanguage}" == Korean ]]; then
 	setKorean
@@ -1268,6 +1264,10 @@ if [[ "${1}" == "-ods" ]]; then
 	openDevSettings
 fi
 checkRoot
+if [[ -d /tmp/BackOn ]]; then
+	rm -rf /tmp/BackOn
+fi
+mkdir /tmp/BackOn
 while(true); do
 	ClearKey
 	showLinesA
@@ -1310,7 +1310,7 @@ while(true); do
 		PA2CKey
 		if [[ ! -d /tmp/BackOn/Restore/Cydia && ! -d /tmp/BackOn/Restore/Library ]]; then
 			echo "${NOT_BACKON_BACKUP}"
-			quitTool_Error
+			quitTool_NoClear_Error
 		fi
 		showInitialRestoreMenu
 	elif [[ "${ANSWER_A}" == 3 ]]; then
