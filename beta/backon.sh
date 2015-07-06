@@ -1,8 +1,8 @@
 #!/bin/sh
 ##############################################
-# BackOn beta-88
+# BackOn beta-92
 TOOL_BUILD_TYPE=beta
-TOOL_BUILD_NUM=88
+TOOL_BUILD_NUM=92
 ##############################################
 
 function setEnglish(){
@@ -670,7 +670,12 @@ function backupCydiaData(){
 	killMobileCydia
 	dpkg --get-selections > "/tmp/BackOn/${BACKUP_NAME}/Cydia/apt.txt"
 	cp /etc/apt/sources.list.d/cydia.list "/tmp/BackOn/${BACKUP_NAME}/Cydia"
-	cp /var/lib/cydia/metadata.plist "/tmp/BackOn/${BACKUP_NAME}/Cydia"
+	if [[ -f /var/lib/cydia/metadata.plist ]]; then
+		cp /var/lib/cydia/metadata.plist "/tmp/BackOn/${BACKUP_NAME}/Cydia/metadata.cb0"
+	fi
+	if [[ -f /var/mobile/Library/Cydia/metadata.cb0 ]]; then
+		cp /var/mobile/Library/Cydia/metadata.cb0 "/tmp/BackOn/${BACKUP_NAME}/Cydia"
+	fi
 	echo "${DONE}"
 	showLinesA
 	showPressAnyKeyToContinue
@@ -702,9 +707,9 @@ function backupLibrary(){
 			if [[ "${ANSWER_E}" == all ]]; then
 				echo "${BACKING_UP}"
 				if [[ "${showLog}" == YES ]]; then
-					rsync -av --exclude="Caches" --exclude="Filza" --exclude="Preferences/BackupAZ" /var/mobile/Library/* "/tmp/BackOn/${BACKUP_NAME}/Library"
+					rsync -av --exclude="Assets" --exclude="Caches" --exclude="Filza" --exclude="Preferences/BackupAZ" /var/mobile/Library/* "/tmp/BackOn/${BACKUP_NAME}/Library"
 				else
-					rsync -q -av --exclude="Caches" --exclude="Filza" --exclude="Preferences/BackupAZ" /var/mobile/Library/* "/tmp/BackOn/${BACKUP_NAME}/Library"
+					rsync -q -av --exclude="Assets" --exclude="Caches" --exclude="Filza" --exclude="Preferences/BackupAZ" /var/mobile/Library/* "/tmp/BackOn/${BACKUP_NAME}/Library"
 				fi
 				if [[ -f "/var/mobile/Library/Caches/libactivator.plist" ]]; then
 					if [[ ! -d "/tmp/BackOn/${BACKUP_NAME}/Library/Caches" ]]; then
@@ -832,7 +837,7 @@ function showBackupedFilesBackup(){
 	else
 		echo "${BACKUPED_CYDIA_SOURCE} : ${NO}"
 	fi
-	if [[ -f "/tmp/BackOn/${BACKUP_NAME}/Cydia/metadata.plist" ]]; then
+	if [[ -f "/tmp/BackOn/${BACKUP_NAME}/Cydia/metadata.cb0" ]]; then
 		echo "${BACKUPED_CYDIA_METADATA} : ${YES}"
 	else
 		echo "${BACKUPED_CYDIA_METADATA} : ${NO}"
@@ -960,6 +965,12 @@ function convertOldBackup(){
 			mv "/tmp/BackOn/Restore/${File}" "/tmp/BackOn/Restore/Cydia/${File}"
 		fi
 	done
+	if [[ -f "/tmp/BackOn/Restore/Cydia/metadata.plist" ]]; then
+		if [[ "${showLog}" == YES ]]; then
+			echo "Converting metadata.cb0..."
+		fi
+		mv "/tmp/BackOn/Restore/Cydia/metadata.plist" "/tmp/BackOn/Restore/Cydia/metadata.cb0"
+	fi
 }
 
 function convertxBackup(){
@@ -992,7 +1003,7 @@ function convertxBackup(){
 			if [[ ! -d "/tmp/BackOn/Restore/Cydia" ]]; then
 				mkdir "/tmp/BackOn/Restore/Cydia"
 			fi
-			mv "/tmp/BackOn/Restore/var/mobile/Library/xBackup/Backups/backup.bk.meta" "/tmp/BackOn/Restore/Cydia/metadata.plist"
+			mv "/tmp/BackOn/Restore/var/mobile/Library/xBackup/Backups/backup.bk.meta" "/tmp/BackOn/Restore/Cydia/metadata.cb0"
 		fi
 		if [[ -f "/tmp/BackOn/Restore/var/mobile/Library/xBackup/Backups/backup.bk.icon" ]]; then
 			if [[ "${showLog}" == YES ]]; then
@@ -1097,10 +1108,10 @@ function restoreCydia(){
 		cp "/tmp/BackOn/Restore/Cydia/cydia.list" "/etc/apt/sources.list.d"
 		chmod 755 "/etc/apt/sources.list.d"
 		if [[ "${showLog}" == YES ]]; then
-			echo "Restoring : metadata.plist"
+			echo "Restoring : metadata.cb0"
 		fi
-		cp "/tmp/BackOn/Restore/Cydia/metadata.plist" "/var/lib/cydia"
-		chmod 755 "/var/lib/cydia/metadata.plist"
+		cp "/tmp/BackOn/Restore/Cydia/metadata.cb0" "/var/mobile/Library/Cydia"
+		chmod 755 "/var/mobile/Library/Cydia/metadata.cb0"
 		PA2CKey
 		if [[ "${showLog}" == YES ]]; then
 			apt-get update
