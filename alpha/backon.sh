@@ -1,8 +1,8 @@
 #!/bin/sh
 ##############################################
-# BackOn alpha-90
+# BackOn alpha-91
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=90
+TOOL_BUILD_NUM=91
 ##############################################
 
 function setEnglish(){
@@ -966,6 +966,9 @@ function convertOldBackup(){
 		fi
 	done
 	if [[ -f "/tmp/BackOn/Restore/Cydia/metadata.plist" ]]; then
+		if [[ "${showLog}" == YES ]]; then
+			echo "Converting metadata.cb0..."
+		fi
 		mv "/tmp/BackOn/Restore/Cydia/metadata.plist" "/tmp/BackOn/Restore/Cydia/metadata.cb0"
 	fi
 }
@@ -1105,7 +1108,7 @@ function restoreCydia(){
 		cp "/tmp/BackOn/Restore/Cydia/cydia.list" "/etc/apt/sources.list.d"
 		chmod 755 "/etc/apt/sources.list.d"
 		if [[ "${showLog}" == YES ]]; then
-			echo "Restoring : metadata.plist"
+			echo "Restoring : metadata.cb0"
 		fi
 		cp "/tmp/BackOn/Restore/Cydia/metadata.cb0" "/var/mobile/Library/Cydia"
 		chmod 755 "/var/mobile/Library/Cydia/metadata.cb0"
