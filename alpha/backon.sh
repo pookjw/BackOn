@@ -1,8 +1,8 @@
 #!/bin/sh
 ##############################################
-# BackOn alpha-87
+# BackOn alpha-89
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=87
+TOOL_BUILD_NUM=89
 ##############################################
 
 function setEnglish(){
@@ -670,7 +670,12 @@ function backupCydiaData(){
 	killMobileCydia
 	dpkg --get-selections > "/tmp/BackOn/${BACKUP_NAME}/Cydia/apt.txt"
 	cp /etc/apt/sources.list.d/cydia.list "/tmp/BackOn/${BACKUP_NAME}/Cydia"
-	cp /var/lib/cydia/metadata.plist "/tmp/BackOn/${BACKUP_NAME}/Cydia"
+	if [[ -f /var/lib/cydia/metadata.plist ]]; then
+		cp /var/lib/cydia/metadata.plist "/tmp/BackOn/${BACKUP_NAME}/Cydia/metadata.cb0"
+	fi
+	if [[ -f /var/mobile/Library/Cydia/metadata.cb0 ]]; then
+		cp /var/mobile/Library/Cydia/metadata.cb0 "/tmp/BackOn/${BACKUP_NAME}/Cydia"
+	fi
 	echo "${DONE}"
 	showLinesA
 	showPressAnyKeyToContinue
@@ -960,6 +965,9 @@ function convertOldBackup(){
 			mv "/tmp/BackOn/Restore/${File}" "/tmp/BackOn/Restore/Cydia/${File}"
 		fi
 	done
+	if [[ -f "/tmp/BackOn/Restore/Cydia/metadata.plist" ]]; then
+		mv "/tmp/BackOn/Restore/Cydia/metadata.plist" "/tmp/BackOn/Restore/Cydia/metadata.cb0"
+	fi
 }
 
 function convertxBackup(){
@@ -992,7 +1000,7 @@ function convertxBackup(){
 			if [[ ! -d "/tmp/BackOn/Restore/Cydia" ]]; then
 				mkdir "/tmp/BackOn/Restore/Cydia"
 			fi
-			mv "/tmp/BackOn/Restore/var/mobile/Library/xBackup/Backups/backup.bk.meta" "/tmp/BackOn/Restore/Cydia/metadata.plist"
+			mv "/tmp/BackOn/Restore/var/mobile/Library/xBackup/Backups/backup.bk.meta" "/tmp/BackOn/Restore/Cydia/metadata.cb0"
 		fi
 		if [[ -f "/tmp/BackOn/Restore/var/mobile/Library/xBackup/Backups/backup.bk.icon" ]]; then
 			if [[ "${showLog}" == YES ]]; then
@@ -1099,8 +1107,8 @@ function restoreCydia(){
 		if [[ "${showLog}" == YES ]]; then
 			echo "Restoring : metadata.plist"
 		fi
-		cp "/tmp/BackOn/Restore/Cydia/metadata.plist" "/var/lib/cydia"
-		chmod 755 "/var/lib/cydia/metadata.plist"
+		cp "/tmp/BackOn/Restore/Cydia/metadata.cb0" "/var/mobile/Library/Cydia"
+		chmod 755 "/var/mobile/Library/Cydia/metadata.cb0"
 		PA2CKey
 		if [[ "${showLog}" == YES ]]; then
 			apt-get update
