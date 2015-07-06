@@ -1,8 +1,8 @@
 #!/bin/sh
 ##############################################
-# BackOn alpha-89
+# BackOn alpha-90
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=89
+TOOL_BUILD_NUM=90
 ##############################################
 
 function setEnglish(){
@@ -707,9 +707,9 @@ function backupLibrary(){
 			if [[ "${ANSWER_E}" == all ]]; then
 				echo "${BACKING_UP}"
 				if [[ "${showLog}" == YES ]]; then
-					rsync -av --exclude="Caches" --exclude="Filza" --exclude="Preferences/BackupAZ" /var/mobile/Library/* "/tmp/BackOn/${BACKUP_NAME}/Library"
+					rsync -av --exclude="Assets" --exclude="Caches" --exclude="Filza" --exclude="Preferences/BackupAZ" /var/mobile/Library/* "/tmp/BackOn/${BACKUP_NAME}/Library"
 				else
-					rsync -q -av --exclude="Caches" --exclude="Filza" --exclude="Preferences/BackupAZ" /var/mobile/Library/* "/tmp/BackOn/${BACKUP_NAME}/Library"
+					rsync -q -av --exclude="Assets" --exclude="Caches" --exclude="Filza" --exclude="Preferences/BackupAZ" /var/mobile/Library/* "/tmp/BackOn/${BACKUP_NAME}/Library"
 				fi
 				if [[ -f "/var/mobile/Library/Caches/libactivator.plist" ]]; then
 					if [[ ! -d "/tmp/BackOn/${BACKUP_NAME}/Library/Caches" ]]; then
@@ -837,7 +837,7 @@ function showBackupedFilesBackup(){
 	else
 		echo "${BACKUPED_CYDIA_SOURCE} : ${NO}"
 	fi
-	if [[ -f "/tmp/BackOn/${BACKUP_NAME}/Cydia/metadata.plist" ]]; then
+	if [[ -f "/tmp/BackOn/${BACKUP_NAME}/Cydia/metadata.cb0" ]]; then
 		echo "${BACKUPED_CYDIA_METADATA} : ${YES}"
 	else
 		echo "${BACKUPED_CYDIA_METADATA} : ${NO}"
