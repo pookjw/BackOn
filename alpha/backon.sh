@@ -1,8 +1,8 @@
 #!/bin/sh
 ##############################################
-# BackOn alpha-91
+# BackOn alpha-94
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=91
+TOOL_BUILD_NUM=94
 ##############################################
 
 function setEnglish(){
@@ -188,6 +188,7 @@ function openDevSettings(){
 		fi
 		echo "(16) Check update now."
 		echo "(17) cp /backon.sh /usr/bin/backon"
+		echo "(18) setTestFunction"
 		echo "(l) ls"
 		echo "(s) Save Settings."
 		echo "(d) Disable DevSettings."
@@ -320,6 +321,8 @@ function openDevSettings(){
 			loadSettings
 			cp /backon.sh /usr/bin/backon
 			quitTool
+		elif [[ "${ANSWER_D}" == 18 ]]; then
+			:
 		elif [[ "${ANSWER_D}" == l || "${ANSWER_D}" == ls ]]; then
 			ClearKey
 			showLinesA
