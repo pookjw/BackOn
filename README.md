@@ -29,7 +29,7 @@ Download deb file from [Here](https://github.com/pookjw/BackOn/tree/master/deb) 
 How to install deb command (requires installed APT 0.7 Strict on your iOS device.)
 
 ```
-$ dpkg -i **/path/to/file**
+$ dpkg -i /path/to/file
 ```
 
 # How to run
