@@ -1,8 +1,8 @@
 #!/bin/sh
 ##############################################
-# BackOn alpha-94
+# BackOn alpha-95
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=94
+TOOL_BUILD_NUM=95
 ##############################################
 
 function setEnglish(){
@@ -36,7 +36,9 @@ function setEnglish(){
 	DISCARD_BACKUP="Discard backup."
 	SAVE_BACKUP="Save backup."
 	BACKING_UP="Backing up..."
+	SAVING="Saving..."
 	REMOVING="Removing..."
+	UNPACKING="Unpacking..."
 	ENTER_BACKUP_PATH="Enter backup file path which you saved. (Enter 'xbackup' command to restore xBackup's backup file.)"
 	NOT_BACKON_BACKUP="This is not a BackOn's backup."
 	DONE="Done."
@@ -98,7 +100,9 @@ function setKorean(){
 	DISCARD_BACKUP="백업을 취소하고 종료"
 	SAVE_BACKUP="백업을 저장"
 	BACKING_UP="백업 중..."
+	SAVING="저장 중..."
 	REMOVING="삭제 중..."
+	UNPACKING="압축해제 중..."
 	ENTER_BACKUP_PATH="백업 파일의 경로를 입력해 주세요. ('xbakcup' 명령어를 입력하시면 xBackup의 백업 파일을 복원합니다.)"
 	NOT_BACKON_BACKUP="이것은 BackOn의 백업 파일이 아닙니다."
 	DONE="완료"
@@ -881,11 +885,10 @@ function saveBackup(){
 		echo "${TOOL_BUILD_NUM}" >> info/ToolBuildNum
 		echo "${TOOL_BUILD_TYPE}" >> info/ToolBuildType
 		echo "${OSVer}" >> info/OSVersion
+		echo "${SAVING}"
 		if [[ "${showLog}" == YES ]]; then
-			echo "${BACKING_UP}"
 			zip -r "${BackupPath}/${ANSWER_B}.zip" *
 		else
-			echo "${BACKING_UP}"
 			zip -q -r "${BackupPath}/${ANSWER_B}.zip" *
 		fi
 		if [[ ! -f "${BackupPath}/${ANSWER_B}.zip" ]]; then
@@ -949,6 +952,7 @@ function defineBackupPath(){
 }
 
 function unzipBackup(){
+	echo "${UNPACKING}"
 	if [[ "${showLog}" == YES ]]; then
 		unzip "${ToRestoreBackupPath}" -d /tmp/BackOn/Restore
 	else
