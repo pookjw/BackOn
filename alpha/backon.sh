@@ -1,8 +1,8 @@
 #!/bin/sh
 ##############################################
-# BackOn alpha-96
+# BackOn alpha-99
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=96
+TOOL_BUILD_NUM=99
 ##############################################
 
 function setEnglish(){
@@ -489,6 +489,7 @@ function showLinesB(){
 
 function showPressAnyKeyToContinue(){
 	read -s -n 1 -p "${PRESS_ANY_KEY_TO_CONTINUE}"
+	echo
 }
 
 function showNotSupportedFunction(){
@@ -507,7 +508,6 @@ function ExitKey(){
 function PA2CKey(){
 	if [[ "${showPA2C}" == YES ]]; then
 		showPressAnyKeyToContinue
-		echo
 	fi
 }
 
