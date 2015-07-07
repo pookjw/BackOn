@@ -22,15 +22,8 @@ Backup jailbroken iOS devices.
 
 >- A Jailbroken iOS device that is connected on internet.
 
-# How to install
-
-Download deb file from [Here](https://github.com/pookjw/BackOn/tree/master/deb) or add this Cydia source : **http://cydia.myrepospace.com/pookjw**
-
-How to install deb command (requires installed APT 0.7 Strict on your iOS device.)
-
-```
-$ dpkg -i /path/to/file
-```
+# How to install (writing...)
+(...)
 
 # How to run
 
