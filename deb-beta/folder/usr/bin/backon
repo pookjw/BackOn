@@ -1,8 +1,8 @@
 #!/bin/sh
 ##############################################
-# BackOn beta-93
+# BackOn beta-97
 TOOL_BUILD_TYPE=beta
-TOOL_BUILD_NUM=93
+TOOL_BUILD_NUM=97
 ##############################################
 
 function setEnglish(){
@@ -36,7 +36,9 @@ function setEnglish(){
 	DISCARD_BACKUP="Discard backup."
 	SAVE_BACKUP="Save backup."
 	BACKING_UP="Backing up..."
+	SAVING="Saving..."
 	REMOVING="Removing..."
+	UNPACKING="Unpacking..."
 	ENTER_BACKUP_PATH="Enter backup file path which you saved. (Enter 'xbackup' command to restore xBackup's backup file.)"
 	NOT_BACKON_BACKUP="This is not a BackOn's backup."
 	DONE="Done."
@@ -92,13 +94,15 @@ function setKorean(){
 	NOTHING_TO_DELETE="지울 백업 파일이 없습니다!"
 	PRESS_ANY_KEY_TO_CONTINUE="계속하려면 아무 키나 누르십시오..."
 	WILL_CREATE_BACKUP_NAME="백업 이름"
-	BACKUP_CYDIA_DATA="Cydia 소스, 패키지 백업"
+	BACKUP_CYDIA_DATA="Cydia 소스, 패키지를 백업"
 	BACKUP_LIBRARY="Library 백업"
 	SHOW_BACKUPED_FILES="백업한 파일 보기"
 	DISCARD_BACKUP="백업을 취소하고 종료"
 	SAVE_BACKUP="백업을 저장"
 	BACKING_UP="백업 중..."
+	SAVING="저장 중..."
 	REMOVING="삭제 중..."
+	UNPACKING="압축해제 중..."
 	ENTER_BACKUP_PATH="백업 파일의 경로를 입력해 주세요. ('xbakcup' 명령어를 입력하시면 xBackup의 백업 파일을 복원합니다.)"
 	NOT_BACKON_BACKUP="이것은 BackOn의 백업 파일이 아닙니다."
 	DONE="완료"
@@ -188,6 +192,7 @@ function openDevSettings(){
 		fi
 		echo "(16) Check update now."
 		echo "(17) cp /backon.sh /usr/bin/backon"
+		echo "(18) setTestFunction"
 		echo "(l) ls"
 		echo "(s) Save Settings."
 		echo "(d) Disable DevSettings."
@@ -320,6 +325,8 @@ function openDevSettings(){
 			loadSettings
 			cp /backon.sh /usr/bin/backon
 			quitTool
+		elif [[ "${ANSWER_D}" == 18 ]]; then
+			:
 		elif [[ "${ANSWER_D}" == l || "${ANSWER_D}" == ls ]]; then
 			ClearKey
 			showLinesA
@@ -396,7 +403,7 @@ function loadSettings(){
 	if [[ -f "/var/mobile/Library/Preferences/BackOn/showLog" ]]; then
 		showLog="$(cat "/var/mobile/Library/Preferences/BackOn/showLog")"
 	else
-		showLog=NO
+		showLog=YES
 	fi
 	if [[ -f "/var/mobile/Library/Preferences/BackOn/showPA2C" ]]; then
 		showPA2C="$(cat "/var/mobile/Library/Preferences/BackOn/showPA2C")"
@@ -878,11 +885,10 @@ function saveBackup(){
 		echo "${TOOL_BUILD_NUM}" >> info/ToolBuildNum
 		echo "${TOOL_BUILD_TYPE}" >> info/ToolBuildType
 		echo "${OSVer}" >> info/OSVersion
+		echo "${SAVING}"
 		if [[ "${showLog}" == YES ]]; then
-			echo "${BACKING_UP}"
 			zip -r "${BackupPath}/${ANSWER_B}.zip" *
 		else
-			echo "${BACKING_UP}"
 			zip -q -r "${BackupPath}/${ANSWER_B}.zip" *
 		fi
 		if [[ ! -f "${BackupPath}/${ANSWER_B}.zip" ]]; then
@@ -946,6 +952,7 @@ function defineBackupPath(){
 }
 
 function unzipBackup(){
+	echo "${UNPACKING}"
 	if [[ "${showLog}" == YES ]]; then
 		unzip "${ToRestoreBackupPath}" -d /tmp/BackOn/Restore
 	else
