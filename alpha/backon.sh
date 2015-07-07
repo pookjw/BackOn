@@ -1,8 +1,8 @@
 #!/bin/sh
 ##############################################
-# BackOn alpha-95
+# BackOn alpha-96
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=95
+TOOL_BUILD_NUM=96
 ##############################################
 
 function setEnglish(){
@@ -403,7 +403,7 @@ function loadSettings(){
 	if [[ -f "/var/mobile/Library/Preferences/BackOn/showLog" ]]; then
 		showLog="$(cat "/var/mobile/Library/Preferences/BackOn/showLog")"
 	else
-		showLog=NO
+		showLog=YES
 	fi
 	if [[ -f "/var/mobile/Library/Preferences/BackOn/showPA2C" ]]; then
 		showPA2C="$(cat "/var/mobile/Library/Preferences/BackOn/showPA2C")"
