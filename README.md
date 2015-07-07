@@ -39,7 +39,7 @@ $ backon
 
 >- beta : Slightly stable to use.
 
->- stable : Stable to use. (Not released yet.)
+>- stable : Stable to use.
 
 # About DevSettings
 
