@@ -51,11 +51,11 @@ BackOn has DevSettings, which simulates the BackOn’s functions. You can open t
 
 (```ods``` is abbreviation of ‘open DevSettings.')
 
-# How to receive ‘alpha’ build
+# How to receive ‘alpha’, 'beta' build
 
 Open DevSettings and set these settings.
 
->- UpdateBuildType : alpha
+>- UpdateBuildType : **alpha** or **beta**
 
 >- ForceInstallUpdate : YES
 
