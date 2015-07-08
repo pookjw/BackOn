@@ -1,8 +1,0 @@
-cp backon.sh /usr/bin/backon
-chmod +x /usr/bin/backon
-if [[ -f /var/mobile/Library/Preferences/BackOn/runUpdateODS ]]; then
-	if [[ "$(cat "/var/mobile/Library/Preferences/BackOn/runUpdateODS")" == YES ]]; then
-		backon -ods; exit 0
-	fi
-fi
-backon; exit 0

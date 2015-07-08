@@ -1,7 +1,0 @@
-Package: backon
-Name: BackOn
-Version: 98
-Architecture: iphoneos-arm
-Description: Backup jailbroken iOS device.
-Section: Utilities
-Depends: zip, unzip, coreutils, coreutils-bin, apt7, rsync, system-cmds, wget, adv-cmds
