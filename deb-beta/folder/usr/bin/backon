@@ -1,8 +1,8 @@
 #!/bin/sh
 ##############################################
-# BackOn beta-97
+# BackOn beta-104
 TOOL_BUILD_TYPE=beta
-TOOL_BUILD_NUM=97
+TOOL_BUILD_NUM=104
 ##############################################
 
 function setEnglish(){
@@ -137,67 +137,74 @@ function openDevSettings(){
 	while(true); do
 		ClearKey
 		showLinesA
-		echo "DevSettings - ${TOOL_BUILD_TYPE}-${TOOL_BUILD_NUM}"
+		echo -e "DevSettings - ${TOOL_BUILD_TYPE}-${TOOL_BUILD_NUM}"
 		showLinesB
 		if [[ "${ExitKey}" == YES ]]; then
-			echo "(1) ExitKey : YES"
+			echo -e "(1) ExitKey : YES"
 		elif [[ "${ExitKey}" == NO ]]; then
-			echo "(1) ExitKey : NO"
+			echo -e "(1) ExitKey : NO"
 		fi
 		if [[ "${showLog}" == YES ]]; then
-			echo "(2) showLog : YES"
+			echo -e "(2) showLog : YES"
 		elif [[ "${showLog}" == NO ]]; then
-			echo "(2) showLog : NO"
+			echo -e "(2) showLog : NO"
 		fi
 		if [[ "${showPA2C}" == YES ]]; then
-			echo "(3) showPA2C : YES"
+			echo -e "(3) showPA2C : YES"
 		elif [[ "${showPA2C}" == NO ]]; then
-			echo "(3) showPA2C : NO"
+			echo -e "(3) showPA2C : NO"
 		fi
 		if [[ "${skipRestore}" == YES ]]; then
-			echo "(4) skipRestore : YES"
+			echo -e "(4) skipRestore : YES"
 		elif [[ "${skipRestore}" == NO ]]; then
-			echo "(4) skipRestore : NO"
+			echo -e "(4) skipRestore : NO"
 		fi
-		echo "(5) UpdateURL : ${UpdateURL}"
-		echo "(6) OSVer : ${OSVer}"
+		echo -e "(5) UpdateURL : ${UpdateURL}"
+		echo -e "(6) OSVer : ${OSVer}"
 		if [[ "${MakeFakeActivatorFile}" == YES ]]; then
-			echo "(7) MakeFakeActivatorFile : YES"
+			echo -e "(7) MakeFakeActivatorFile : YES"
 		elif [[ "${MakeFakeActivatorFile}" == NO ]]; then
-			echo "(7) MakeFakeActivatorFile : NO"
+			echo -e "(7) MakeFakeActivatorFile : NO"
 		fi
-		echo "(8) UpdateBuildType : ${UpdateBuildType}"
+		echo -e "(8) UpdateBuildType : ${UpdateBuildType}"
 		if [[ "${ForceInstallUpdate}" == YES ]]; then
-			echo "(9) ForceInstallUpdate : YES"
+			echo -e "(9) ForceInstallUpdate : YES"
 		elif [[ "${ForceInstallUpdate}" == NO ]]; then
-			echo "(9) ForceInstallUpdate : NO"
+			echo -e "(9) ForceInstallUpdate : NO"
 		fi
-		echo "(10) BackupPath : ${BackupPath}"
+		echo -e "(10) BackupPath : ${BackupPath}"
 		if [[ "${ClearKey}" == YES ]]; then
-			echo "(11) ClearKey : YES"
+			echo -e "(11) ClearKey : YES"
 		elif [[ "${ClearKey}" == NO ]]; then
-			echo "(11) ClearKey : NO"
+			echo -e "(11) ClearKey : NO"
 		fi
-		echo "(12) switchLanguage (Current : ${LANGUAGE})"
-		echo "(13) setDefaultLanguage : ${setDefaultLanguage}"
+		echo -e "(12) switchLanguage (Current : ${LANGUAGE})"
+		echo -e "(13) setDefaultLanguage : ${setDefaultLanguage}"
 		if [[ "${skipCheckRoot}" == YES ]]; then
-			echo "(14) skipCheckRoot : YES"
+			echo -e "(14) skipCheckRoot : YES"
 		elif [[ "${skipCheckRoot}" == NO ]]; then
-			echo "(14) skipCheckRoot : NO"
+			echo -e "(14) skipCheckRoot : NO"
 		fi
 		if [[ "${runUpdateODS}" == YES ]]; then
-			echo "(15) runUpdateODS : YES"
+			echo -e "(15) runUpdateODS : YES"
 		elif [[ "${runUpdateODS}" == NO ]]; then
-			echo "(15) runUpdateODS : NO"
+			echo -e "(15) runUpdateODS : NO"
 		fi
-		echo "(16) Check update now."
-		echo "(17) cp /backon.sh /usr/bin/backon"
-		echo "(18) setTestFunction"
-		echo "(l) ls"
-		echo "(s) Save Settings."
-		echo "(d) Disable DevSettings."
+		echo -e "(16) Check update now."
+		echo -e "(17) cp /backon.sh /usr/bin/backon"
+		echo -e "(18) setTestFunction"
+		if [[ "${applyColorScheme}" == YES ]]; then
+			echo -e "(19) applyColorScheme : YES"
+		elif [[ "${applyColorScheme}" == NO ]]; then
+			echo -e "(19) applyColorScheme : NO"
+		fi
+		echo -e "(l) ls"
+		echo -e "(s) Save Settings."
+		echo -e "(d) Disable DevSettings."
 		showLinesA
+		applyLightCyan
 		read -p "- " ANSWER_D
+		applyNoColor
 
 		if [[ "${ANSWER_D}" == 1 ]]; then
 			if [[ "${ExitKey}" == YES ]]; then
@@ -224,12 +231,16 @@ function openDevSettings(){
 				skipRestore=YES
 			fi
 		elif [[ "${ANSWER_D}" == 5 ]]; then
+			applyLightCyan
 			read -p "Query : " UpdateURL
+			applyNoColor
 			if [[ -z "${UpdateURL}" ]]; then
 				UpdateURL="https://github.com/pookjw/BackOn/archive/master.zip"
 			fi
 		elif [[ "${ANSWER_D}" == 6 ]]; then
+			applyLightCyan
 			read -p "Query : " OSVer
+			applyNoColor
 			if [[ -z "${OSVer}" ]]; then
 				OSVer="$(sw_vers -productVersion)"
 			fi
@@ -245,11 +256,13 @@ function openDevSettings(){
 			while(true); do
 				ClearKey
 				showLinesA
-				echo "(1) alpha"
-				echo "(2) beta"
-				echo "(3) stable"
+				echo -e "(1) alpha"
+				echo -e "(2) beta"
+				echo -e "(3) stable"
 				showLinesA
+				applyLightCyan
 				read -p "- " ANSWER_E
+				applyNoColor
 
 				if [[ "${ANSWER_E}" == 1 ]]; then
 					UpdateBuildType=alpha
@@ -271,7 +284,9 @@ function openDevSettings(){
 				ForceInstallUpdate=YES
 			fi
 		elif [[ "${ANSWER_D}" == 10 ]]; then
+			applyLightCyan
 			read -p "Query : " BackupPath
+			applyNoColor
 			if [[ ! -d "${BackupPath}" || -z "${BackupPath}" ]]; then
 				BackupPath=/var/mobile/Media
 			fi
@@ -287,10 +302,12 @@ function openDevSettings(){
 			while(true); do
 				ClearKey
 				showLinesA
-				echo "(1) English"
-				echo "(2) Korean (한국어)"
+				echo -e "(1) English"
+				echo -e "(2) Korean (한국어)"
 				showLinesA
+				applyLightCyan
 				read -p "- " ANSWER_G
+				applyNoColor
 
 				if [[ "${ANSWER_G}" == 1 ]]; then
 					setDefaultLanguage=English
@@ -327,36 +344,42 @@ function openDevSettings(){
 			quitTool
 		elif [[ "${ANSWER_D}" == 18 ]]; then
 			:
+		elif [[ "${ANSWER_D}" == 19 ]]; then
+			if [[ "${applyColorScheme}" == YES ]]; then
+				applyColorScheme=NO
+			elif [[ "${applyColorScheme}" == NO ]]; then
+				applyColorScheme=YES
+			fi
 		elif [[ "${ANSWER_D}" == l || "${ANSWER_D}" == ls ]]; then
 			ClearKey
 			showLinesA
-			echo "/tmp/BackOn/"
+			echo -e "/tmp/BackOn/"
 			ls -l "/tmp/BackOn"
-			echo -e "\n/tmp/BackOn/Cydia"
+			echo -e -e "\n/tmp/BackOn/Cydia"
 			ls -l "/tmp/BackOn/Cydia"
-			echo -e "\n/tmp/BackOn/Library"
+			echo -e -e "\n/tmp/BackOn/Library"
 			ls -l "/tmp/BackOn/Library"
-			echo -e "\n/tmp/BackOn/${BACKUP_NAME}"
+			echo -e -e "\n/tmp/BackOn/${BACKUP_NAME}"
 			ls -l "/tmp/BackOn/${BACKUP_NAME}"
-			echo -e "\n/tmp/BackOn/${BACKUP_NAME}/Cydia"
+			echo -e -e "\n/tmp/BackOn/${BACKUP_NAME}/Cydia"
 			ls -l "/tmp/BackOn/${BACKUP_NAME}/Cydia"
-			echo -e "\n/tmp/BackOn/${BACKUP_NAME}/Library"
+			echo -e -e "\n/tmp/BackOn/${BACKUP_NAME}/Library"
 			ls -l "/tmp/BackOn/${BACKUP_NAME}/Library"
-			echo -e "\n/tmp/BackOn/${BACKUP_NAME}/Library/Caches"
+			echo -e -e "\n/tmp/BackOn/${BACKUP_NAME}/Library/Caches"
 			ls -l "/tmp/BackOn/${BACKUP_NAME}/Library/Caches"
-			echo -e "\n/tmp/BackOn/Restore"
+			echo -e -e "\n/tmp/BackOn/Restore"
 			ls -l "/tmp/BackOn/Restore"
-			echo -e "\n/tmp/BackOn/Restore/Cydia"
+			echo -e -e "\n/tmp/BackOn/Restore/Cydia"
 			ls -l "/tmp/BackOn/Restore/Cydia"
-			echo -e "\n/tmp/BackOn/Restore/Library"
+			echo -e -e "\n/tmp/BackOn/Restore/Library"
 			ls -l "/tmp/BackOn/Restore/Library"
-			echo -e "\n/tmp/BackOn/Restore/info"
+			echo -e -e "\n/tmp/BackOn/Restore/info"
 			ls -l "/tmp/BackOn/Restore/info"
 			showLinesA
 			showPressAnyKeyToContinue
 		elif [[ "${ANSWER_D}" == save ||  "${ANSWER_D}" == s ]]; then
 			saveSettings
-			echo "Session was done."
+			echo -e "Session was done."
 			loadSettings
 			break
 		elif [[ "${ANSWER_D}" == disable || "${ANSWER_D}" == d ]]; then
@@ -378,19 +401,20 @@ function saveSettings(){
 		rm -rf /var/mobile/Library/Preferences/BackOn
 	fi
 	mkdir /var/mobile/Library/Preferences/BackOn
-	echo "${ExitKey}" >> /var/mobile/Library/Preferences/BackOn/ExitKey
-	echo "${showLog}" >> /var/mobile/Library/Preferences/BackOn/showLog
-	echo "${showPA2C}" >> /var/mobile/Library/Preferences/BackOn/showPA2C
-	echo "${skipRestore}" >> /var/mobile/Library/Preferences/BackOn/skipRestore
-	echo "${UpdateURL}" >> /var/mobile/Library/Preferences/BackOn/UpdateURL
-	echo "${OSVer}" >> /var/mobile/Library/Preferences/BackOn/OSVer
-	echo "${UpdateBuildType}" >> /var/mobile/Library/Preferences/BackOn/UpdateBuildType
-	echo "${ForceInstallUpdate}" >> /var/mobile/Library/Preferences/BackOn/ForceInstallUpdate
-	echo "${BackupPath}" >> /var/mobile/Library/Preferences/BackOn/BackupPath
-	echo "${ClearKey}" >> /var/mobile/Library/Preferences/BackOn/ClearKey
-	echo "${setDefaultLanguage}" >> /var/mobile/Library/Preferences/BackOn/setDefaultLanguage
-	echo "${skipCheckRoot}" >> /var/mobile/Library/Preferences/BackOn/skipCheckRoot
-	echo "${runUpdateODS}" >> /var/mobile/Library/Preferences/BackOn/runUpdateODS
+	echo -e "${ExitKey}" >> /var/mobile/Library/Preferences/BackOn/ExitKey
+	echo -e "${showLog}" >> /var/mobile/Library/Preferences/BackOn/showLog
+	echo -e "${showPA2C}" >> /var/mobile/Library/Preferences/BackOn/showPA2C
+	echo -e "${skipRestore}" >> /var/mobile/Library/Preferences/BackOn/skipRestore
+	echo -e "${UpdateURL}" >> /var/mobile/Library/Preferences/BackOn/UpdateURL
+	echo -e "${OSVer}" >> /var/mobile/Library/Preferences/BackOn/OSVer
+	echo -e "${UpdateBuildType}" >> /var/mobile/Library/Preferences/BackOn/UpdateBuildType
+	echo -e "${ForceInstallUpdate}" >> /var/mobile/Library/Preferences/BackOn/ForceInstallUpdate
+	echo -e "${BackupPath}" >> /var/mobile/Library/Preferences/BackOn/BackupPath
+	echo -e "${ClearKey}" >> /var/mobile/Library/Preferences/BackOn/ClearKey
+	echo -e "${setDefaultLanguage}" >> /var/mobile/Library/Preferences/BackOn/setDefaultLanguage
+	echo -e "${skipCheckRoot}" >> /var/mobile/Library/Preferences/BackOn/skipCheckRoot
+	echo -e "${runUpdateODS}" >> /var/mobile/Library/Preferences/BackOn/runUpdateODS
+	echo -e "${applyColorScheme}" >> /var/mobile/Library/Preferences/BackOn/applyColorScheme
 }
 
 
@@ -465,34 +489,68 @@ function loadSettings(){
 	else
 		runUpdateODS=NO
 	fi
+	if [[ -f "/var/mobile/Library/Preferences/BackOn/applyColorScheme" ]]; then
+		applyColorScheme="$(cat "/var/mobile/Library/Preferences/BackOn/applyColorScheme")"
+	else
+		applyColorScheme=YES
+	fi
 }
 
 function showLinesA(){
 	PRINTED_COUNTS=0
 	COLS=`tput cols`
 	while [[ ! ${PRINTED_COUNTS} == $COLS ]]; do
-   		echo -n "*"
+   		echo -e -n "*"
  		PRINTED_COUNTS=$(($PRINTED_COUNTS+1))
 	done
-	echo
+	echo -e
 }
 
 function showLinesB(){
 	PRINTED_COUNTS=0
 	COLS=`tput cols`
 	while [[ ! ${PRINTED_COUNTS} == $COLS ]]; do
-   		echo -n "-"
+   		echo -e -n "-"
  		PRINTED_COUNTS=$((${PRINTED_COUNTS}+1))
 	done
-	echo
+	echo -e
+}
+
+function applyRed(){
+	if [[ "${applyColorScheme}" == YES ]]; then
+		echo -e -n "\033[0;31m"
+	fi
+}
+
+function applyLightGreen(){
+	if [[ "${applyColorScheme}" == YES ]]; then
+		echo -e -n "\033[1;35m"
+	fi
+}
+
+function applyLightCyan(){
+	if [[ "${applyColorScheme}" == YES ]]; then
+		echo -e -n "\033[1;36m"
+	fi
+}
+
+function applyNoColor(){
+	if [[ "${applyColorScheme}" == YES ]]; then
+		echo -e -n "\033[0m"
+	fi
 }
 
 function showPressAnyKeyToContinue(){
+	applyLightCyan
 	read -s -n 1 -p "${PRESS_ANY_KEY_TO_CONTINUE}"
+	applyNoColor
+	echo -e
 }
 
 function showNotSupportedFunction(){
-	echo "${NOT_SUPPORTED_FUNCTION}"
+	applyRed
+	echo -e "${NOT_SUPPORTED_FUNCTION}"
+	applyNoColor
 	showPressAnyKeyToContinue
 }
 
@@ -507,7 +565,6 @@ function ExitKey(){
 function PA2CKey(){
 	if [[ "${showPA2C}" == YES ]]; then
 		showPressAnyKeyToContinue
-		echo
 	fi
 }
 
@@ -520,7 +577,9 @@ function ClearKey(){
 function checkRoot(){
 	if [[ ! "${skipCheckRoot}" == YES ]]; then
 		if [ "$(id -u)" != "0" ]; then
-			echo "${NOT_RUN_AS_ROOT}"
+			applyRed
+			echo -e "${NOT_RUN_AS_ROOT}"
+			applyLightCyan
 			if [[ "${InitialRunDevSettings}" == YES ]]; then
 				su -c "backon -ods"
 			else
@@ -543,7 +602,9 @@ function killMobileCydia(){
 	ps cax | grep MobileCydia > /dev/null
 	if [ $? -eq 0 ]; then
 		if [[ "${showLog}" == YES ]]; then
-			echo "Killing MobileCydia..."
+			applyLightGreen
+			echo -e "Killing MobileCydia..."
+			applyNoColor
 		fi
 		killall -9 MobileCydia
 	fi
@@ -551,6 +612,7 @@ function killMobileCydia(){
 
 function quitTool(){
 	ClearKey
+	applyNoColor
 	if [[ -d /tmp/BackOn ]]; then
 		rm -rf /tmp/BackOn
 	fi
@@ -559,6 +621,7 @@ function quitTool(){
 
 function quitTool_Error(){
 	ClearKey
+	applyNoColor
 	if [[ -d /tmp/BackOn ]]; then
 		rm -rf /tmp/BackOn
 	fi
@@ -566,6 +629,7 @@ function quitTool_Error(){
 }
 
 function quitTool_NoClear(){
+	applyNoColor
 	if [[ -d /tmp/BackOn ]]; then
 		rm -rf /tmp/BackOn
 	fi
@@ -573,6 +637,7 @@ function quitTool_NoClear(){
 }
 
 function quitTool_NoClear_Error(){
+	applyNoColor
 	if [[ -d /tmp/BackOn ]]; then
 		rm -rf /tmp/BackOn
 	fi
@@ -585,12 +650,16 @@ function defineBackupName(){
 	while(true); do
 		ClearKey
 		showLinesA
-		echo "${ENTER_BACKUP_NAME}"
-		echo "(${ENTER_QUIT})"
+		echo -e "${ENTER_BACKUP_NAME}"
+		echo -e "(${ENTER_QUIT})"
 		showLinesA
+		applyLightCyan
 		read -p "- " ANSWER_B
+		applyNoColor
 		if [[ -z "${ANSWER_B}" ]]; then
-			echo "${FORM_IS_EMPTY}"
+			applyRed
+			echo -e "${FORM_IS_EMPTY}"
+			applyNoColor
 			showPressAnyKeyToContinue
 		elif [[ "${ANSWER_B}" == ods ]]; then
 			openDevSettings
@@ -618,7 +687,9 @@ function defineBackupName(){
 			fi
 			mkdir "/tmp/BackOn/${ANSWER_B}"
 			if [[ ! -d "/tmp/BackOn/${ANSWER_B}" ]]; then
-				echo "ERROR"
+				applyRed
+				echo -e "ERROR"
+				applyNoColor
 				quitTool_NoClear_Error
 			else
 				BACKUP_NAME="${ANSWER_B}"
@@ -632,15 +703,17 @@ function showInitialBackupMenu(){
 	while(true); do
 		ClearKey
 		showLinesA
-		echo "${SHOW_INFO_1}"
+		echo -e "${SHOW_INFO_1}"
 		showLinesB
-		echo "(1) ${BACKUP_CYDIA_DATA}"
-		echo "(2) ${BACKUP_LIBRARY}"
-		echo "(3) ${SHOW_BACKUPED_FILES}"
-		echo "(q) ${DISCARD_BACKUP}"
-		echo "(s) ${SAVE_BACKUP}"
+		echo -e "(1) ${BACKUP_CYDIA_DATA}"
+		echo -e "(2) ${BACKUP_LIBRARY}"
+		echo -e "(3) ${SHOW_BACKUPED_FILES}"
+		echo -e "(q) ${DISCARD_BACKUP}"
+		echo -e "(s) ${SAVE_BACKUP}"
 		showLinesA
+		applyLightCyan
 		read -p "- " ANSWER_C
+		applyNoColor
 
 		if [[ "${ANSWER_C}" == 1 ]]; then
 			backupCydiaData
@@ -667,9 +740,9 @@ function showInitialBackupMenu(){
 function backupCydiaData(){
 	ClearKey
 	showLinesA
-	echo "${SHOW_INFO_2}"
+	echo -e "${SHOW_INFO_2}"
 	showLinesB
-	echo "${BACKING_UP}"
+	echo -e "${BACKING_UP}"
 	if [[ -d "/tmp/BackOn/${BACKUP_NAME}/Cydia" ]]; then
 		rm -rf "/tmp/BackOn/${BACKUP_NAME}/Cydia"
 	fi
@@ -683,7 +756,7 @@ function backupCydiaData(){
 	if [[ -f /var/mobile/Library/Cydia/metadata.cb0 ]]; then
 		cp /var/mobile/Library/Cydia/metadata.cb0 "/tmp/BackOn/${BACKUP_NAME}/Cydia"
 	fi
-	echo "${DONE}"
+	echo -e "${DONE}"
 	showLinesA
 	showPressAnyKeyToContinue
 }
@@ -695,7 +768,7 @@ function backupLibrary(){
 	while(true); do
 		ClearKey
 		showLinesA
-		echo "${SHOW_INFO_3}"
+		echo -e "${SHOW_INFO_3}"
 		showLinesB
 		if [[ "${showLog}" == YES ]]; then
 			ls -l /var/mobile/Library
@@ -703,18 +776,22 @@ function backupLibrary(){
 			ls /var/mobile/Library
 		fi
 		showLinesB
-		echo "(${ENTER_QUIT})"
-		echo "(${SHOW_GUIDE_3})"
+		echo -e "(${ENTER_QUIT})"
+		echo -e "(${SHOW_GUIDE_3})"
 		showLinesA
+		applyLightCyan
 		read -p "- " ANSWER_E
+		applyNoColor
 
 		if [[ -z "${ANSWER_E}" ]]; then
 			:
 		else
 			if [[ "${ANSWER_E}" == all ]]; then
-				echo "${BACKING_UP}"
+				echo -e "${BACKING_UP}"
 				if [[ "${showLog}" == YES ]]; then
+					applyLightGreen
 					rsync -av --exclude="Assets" --exclude="Caches" --exclude="Filza" --exclude="Preferences/BackupAZ" /var/mobile/Library/* "/tmp/BackOn/${BACKUP_NAME}/Library"
+					applyNoColor
 				else
 					rsync -q -av --exclude="Assets" --exclude="Caches" --exclude="Filza" --exclude="Preferences/BackupAZ" /var/mobile/Library/* "/tmp/BackOn/${BACKUP_NAME}/Library"
 				fi
@@ -724,26 +801,28 @@ function backupLibrary(){
 					fi
 					cp /var/mobile/Library/Caches/libactivator.plist "/tmp/BackOn/${BACKUP_NAME}/Library/Caches"
 					if [[ "${showLog}" == YES ]]; then
-						echo "Backuped libactivator.plist."
+						applyLightGreen
+						echo -e "Backuped libactivator.plist."
+						applyNoColor
 					fi
 				fi
-				echo "${DONE}"
+				echo -e "${DONE}"
 				showPressAnyKeyToContinue
 			elif [[ "${ANSWER_E}" == delete ]]; then
 				while(true); do
 					if [[ -z "$(ls "/tmp/BackOn/${BACKUP_NAME}/Library")" ]]; then
 						ClearKey
 						showLinesA
-						echo "${SHOW_INFO_4}"
+						echo -e "${SHOW_INFO_4}"
 						showLinesB
-						echo "${NOTHING_TO_DELETE}"
+						echo -e "${NOTHING_TO_DELETE}"
 						showLinesA
 						showPressAnyKeyToContinue
 						break
 					fi
 					ClearKey
 					showLinesA
-					echo "${SHOW_INFO_4}"
+					echo -e "${SHOW_INFO_4}"
 					showLinesB
 					if [[ "${showLog}" == YES ]]; then
 						ls -l "/tmp/BackOn/${BACKUP_NAME}/Library"
@@ -751,19 +830,21 @@ function backupLibrary(){
 						ls "/tmp/BackOn/${BACKUP_NAME}/Library"
 					fi
 					showLinesB
-					echo "(${ENTER_QUIT})"
-					echo "(${SHOW_GUIDE_4})"
+					echo -e "(${ENTER_QUIT})"
+					echo -e "(${SHOW_GUIDE_4})"
 					showLinesA
+					applyLightCyan
 					read -p "- " ANSWER_J
+					applyNoColor
 
 					if [[ -z "${ANSWER_J}" ]]; then
 						:
 					else
 						if [[ "${ANSWER_J}" == all ]]; then
-							echo "${REMOVING}"
+							echo -e "${REMOVING}"
 							rm -rf "/tmp/BackOn/${BACKUP_NAME}/Library"
 							mkdir "/tmp/BackOn/${BACKUP_NAME}/Library"
-							echo "${DONE}"
+							echo -e "${DONE}"
 							showPressAnyKeyToContinue
 						elif [[ "${ANSWER_J}" == q || "${ANSWER_J}" == quit ]]; then
 							break
@@ -772,35 +853,41 @@ function backupLibrary(){
 						elif [[ "${ANSWER_J}" == exit ]]; then
 							ExitKey
 						elif [[ -f "/tmp/BackOn/${BACKUP_NAME}/Library/${ANSWER_J}" ]]; then
-							echo "${REMOVING}"
+							echo -e "${REMOVING}"
 							rm "/tmp/BackOn/${BACKUP_NAME}/Library/${ANSWER_J}"
-							echo "${DONE}"
+							echo -e "${DONE}"
 							showPressAnyKeyToContinue
 						elif [[ -d "/tmp/BackOn/${BACKUP_NAME}/Library/${ANSWER_J}" ]]; then
-							echo "${REMOVING}"
+							echo -e "${REMOVING}"
 							rm -rf "/tmp/BackOn/${BACKUP_NAME}/Library/${ANSWER_J}"
-							echo "${DONE}"
+							echo -e "${DONE}"
 							showPressAnyKeyToContinue
 						else
-							echo "${NO_SUCH_FILE_OR_DIRECTORY}"
+							applyRed
+							echo -e "${NO_SUCH_FILE_OR_DIRECTORY}"
+							applyNoColor
 							PRESS_ANY_KEY_TO_CONTINUE
 						fi
 					fi
 				done
 			elif [[ "${ANSWER_E}" == Preferences ]]; then
 				if [[ "${showLog}" == YES ]]; then
-					echo "Special backup."
+					applyLightGreen
+					echo -e "Special backup."
+					applyNoColor
 				fi
-				echo "${BACKING_UP}"
+				echo -e "${BACKING_UP}"
 				if [[ ! -d "/tmp/BackOn/${BACKUP_NAME}/Library/Preferences" ]]; then
 					mkdir "/tmp/BackOn/${BACKUP_NAME}/Library/Preferences"
 				fi
 				if [[ "${showLog}" == YES ]]; then
+					applyLightGreen
 					rsync -av --exclude="BackupAZ" /var/mobile/Library/Preferences/* "/tmp/BackOn/${BACKUP_NAME}/Library/Preferences"
+					applyNoColor
 				else
 					rsync -q -av --exclude="BackupAZ" /var/mobile/Library/Preferences/* "/tmp/BackOn/${BACKUP_NAME}/Library/Preferences"
 				fi
-				echo "${DONE}"
+				echo -e "${DONE}"
 				showPressAnyKeyToContinue
 			elif [[ "${ANSWER_E}" == quit || "${ANSWER_E}" == q ]]; then
 				if [[ -z "$(ls "/tmp/BackOn/${BACKUP_NAME}/Library")" ]]; then
@@ -812,17 +899,19 @@ function backupLibrary(){
 			elif [[ "${ANSWER_E}" == exit ]]; then
 				ExitKey
 			elif [[ -f "/var/mobile/Library/${ANSWER_E}" ]]; then
-				echo "${BACKING_UP}"
+				echo -e "${BACKING_UP}"
 				cp "/var/mobile/Library/${ANSWER_E}" "/tmp/BackOn/${BACKUP_NAME}/Library"
-				echo "${DONE}"
+				echo -e "${DONE}"
 				showPressAnyKeyToContinue
 			elif [[ -d "/var/mobile/Library/${ANSWER_E}" ]]; then
-				echo "${BACKING_UP}"
+				echo -e "${BACKING_UP}"
 				cp -r "/var/mobile/Library/${ANSWER_E}" "/tmp/BackOn/${BACKUP_NAME}/Library"
-				echo "${DONE}"
+				echo -e "${DONE}"
 				showPressAnyKeyToContinue
 			else
-				echo "${NO_SUCH_FILE_OR_DIRECTORY} : ${ANSWER_E}"
+				applyRed
+				echo -e "${NO_SUCH_FILE_OR_DIRECTORY} : ${ANSWER_E}"
+				applyNoColor
 				showPressAnyKeyToContinue
 			fi
 		fi
@@ -832,25 +921,25 @@ function backupLibrary(){
 function showBackupedFilesBackup(){
 	ClearKey
 	showLinesA
-	echo "${SHOW_INFO_5}"
+	echo -e "${SHOW_INFO_5}"
 	showLinesB
 	if [[ -f "/tmp/BackOn/${BACKUP_NAME}/Cydia/apt.txt" ]]; then
-		echo "${BACKUPED_CYDIA_PACKAGES_LIST} : ${YES}"
+		echo -e "${BACKUPED_CYDIA_PACKAGES_LIST} : ${YES}"
 	else
-		echo "${BACKUPED_CYDIA_PACKAGES_LIST} : ${NO}"
+		echo -e "${BACKUPED_CYDIA_PACKAGES_LIST} : ${NO}"
 	fi
 	if [[ -f "/tmp/BackOn/${BACKUP_NAME}/Cydia/cydia.list" ]]; then
-		echo "${BACKUPED_CYDIA_SOURCE} : ${YES}"
+		echo -e "${BACKUPED_CYDIA_SOURCE} : ${YES}"
 	else
-		echo "${BACKUPED_CYDIA_SOURCE} : ${NO}"
+		echo -e "${BACKUPED_CYDIA_SOURCE} : ${NO}"
 	fi
 	if [[ -f "/tmp/BackOn/${BACKUP_NAME}/Cydia/metadata.cb0" ]]; then
-		echo "${BACKUPED_CYDIA_METADATA} : ${YES}"
+		echo -e "${BACKUPED_CYDIA_METADATA} : ${YES}"
 	else
-		echo "${BACKUPED_CYDIA_METADATA} : ${NO}"
+		echo -e "${BACKUPED_CYDIA_METADATA} : ${NO}"
 	fi
 	if [[ -d "/tmp/BackOn/${BACKUP_NAME}/Library" ]]; then
-		echo "${BACKUPED_LIBRARY} : ${YES}"
+		echo -e "${BACKUPED_LIBRARY} : ${YES}"
 		showLinesB
 		if [[ "${showLog}" == YES ]]; then
 			ls -l "/tmp/BackOn/$BACKUP_NAME/Library"
@@ -864,7 +953,7 @@ function showBackupedFilesBackup(){
 			fi
 		fi
 	else
-		echo "${BACKUP_LIBRARY} : ${NO}"
+		echo -e "${BACKUP_LIBRARY} : ${NO}"
 	fi
 	showLinesA
 	showPressAnyKeyToContinue
@@ -873,29 +962,35 @@ function showBackupedFilesBackup(){
 function saveBackup(){
 	ClearKey
 	showLinesA
-	echo "${SHOW_INFO_6}"
+	echo -e "${SHOW_INFO_6}"
 	showLinesB
 	if [[ -z "$(ls /tmp/BackOn/${BACKUP_NAME})" ]]; then
-		echo "${NOTHING_TO_BACKUP}"
+		applyRed
+		echo -e "${NOTHING_TO_BACKUP}"
+		applyNoColor
 		showLinesA
 		showPressAnyKeyToContinue
 	else
 		cd /tmp/BackOn/$BACKUP_NAME
 		mkdir info
-		echo "${TOOL_BUILD_NUM}" >> info/ToolBuildNum
-		echo "${TOOL_BUILD_TYPE}" >> info/ToolBuildType
-		echo "${OSVer}" >> info/OSVersion
-		echo "${SAVING}"
+		echo -e "${TOOL_BUILD_NUM}" >> info/ToolBuildNum
+		echo -e "${TOOL_BUILD_TYPE}" >> info/ToolBuildType
+		echo -e "${OSVer}" >> info/OSVersion
+		echo -e "${SAVING}"
 		if [[ "${showLog}" == YES ]]; then
+			applyLightGreen
 			zip -r "${BackupPath}/${ANSWER_B}.zip" *
+			applyNoColor
 		else
 			zip -q -r "${BackupPath}/${ANSWER_B}.zip" *
 		fi
 		if [[ ! -f "${BackupPath}/${ANSWER_B}.zip" ]]; then
-			echo "ERROR!"
+			applyRed
+			echo -e "ERROR!"
+			applyNoColor
 			quitTool_NoClear_Error
 		fi
-		echo "${SUCCEED_SAVE_BACKUP} (${BackupPath}/${ANSWER_B}.zip)"
+		echo -e "${SUCCEED_SAVE_BACKUP} (${BackupPath}/${ANSWER_B}.zip)"
 		showLinesA
 		quitTool_NoClear
 	fi
@@ -905,17 +1000,21 @@ function defineBackupPath(){
 	while(true); do
 		ClearKey
 		showLinesA
-		echo "${ENTER_BACKUP_PATH}"
-		echo "(${ENTER_QUIT})"
+		echo -e "${ENTER_BACKUP_PATH}"
+		echo -e "(${ENTER_QUIT})"
 		showLinesA
+		applyLightCyan
 		read -p "- " ANSWER_F
+		applyNoColor
 
 		if [[ "${ANSWER_F}" == xBackup || "${ANSWER_F}" == xbackup ]]; then
 			if [[ -f "/var/mobile/Library/xBackup/Backups/backup.bk.zip" ]]; then
 				ToRestoreBackupPath="/var/mobile/Library/xBackup/Backups/backup.bk.zip"
 				break
 			else
-				echo "${NO_SUCH_XBACKUP}"
+				applyRed
+				echo -e "${NO_SUCH_XBACKUP}"
+				applyNoColor
 				showPressAnyKeyToContinue
 			fi
 		elif [[ "${ANSWER_F}" == ods ]]; then
@@ -944,7 +1043,9 @@ function defineBackupPath(){
 				ToRestoreBackupPath="${BackupPath}/${ANSWER_F}.zip"
 				break
 			else
-				echo "${NO_SUCH_FILE}"
+				applyRed
+				echo -e "${NO_SUCH_FILE}"
+				applyNoColor
 				showPressAnyKeyToContinue
 			fi
 		fi
@@ -952,9 +1053,11 @@ function defineBackupPath(){
 }
 
 function unzipBackup(){
-	echo "${UNPACKING}"
+	echo -e "${UNPACKING}"
 	if [[ "${showLog}" == YES ]]; then
+		applyLightGreen
 		unzip "${ToRestoreBackupPath}" -d /tmp/BackOn/Restore
+		applyNoColor
 	else
 		unzip -qq "${ToRestoreBackupPath}" -d /tmp/BackOn/Restore
 	fi
@@ -964,7 +1067,9 @@ function convertOldBackup(){
 	for File in "apt.txt" "cydia.list" "metadata.plist"; do
 		if [[ -f "/tmp/BackOn/Restore/${File}" ]]; then
 			if [[ "${showLog}" == YES ]]; then
-				echo "Converting ${File}..."
+				applyLightGreen
+				echo -e "Converting ${File}..."
+				applyNoColor
 			fi
 			if [[ ! -d "/tmp/BackOn/Restore/Cydia" ]]; then
 				mkdir /tmp/BackOn/Restore/Cydia
@@ -974,7 +1079,9 @@ function convertOldBackup(){
 	done
 	if [[ -f "/tmp/BackOn/Restore/Cydia/metadata.plist" ]]; then
 		if [[ "${showLog}" == YES ]]; then
-			echo "Converting metadata.cb0..."
+			applyLightGreen
+			echo -e "Converting metadata.cb0..."
+			applyNoColor
 		fi
 		mv "/tmp/BackOn/Restore/Cydia/metadata.plist" "/tmp/BackOn/Restore/Cydia/metadata.cb0"
 	fi
@@ -983,11 +1090,15 @@ function convertOldBackup(){
 function convertxBackup(){
 	if [[ -d "/tmp/BackOn/Restore/var" ]]; then
 		if [[ "${showLog}" == YES ]]; then
-			echo "Running convertxBackup... (xBackup)"
+			applyLightGreen
+			echo -e "Running convertxBackup... (xBackup)"
+			applyNoColor
 		fi
 		if [[ -f "/tmp/BackOn/Restore/var/mobile/Library/xBackup/Backups/backup.bk" ]]; then
 			if [[ "${showLog}" == YES ]]; then
-				echo "Converting backup.bk..."
+				applyLightGreen
+				echo -e "Converting backup.bk..."
+				applyNoColor
 			fi
 			if [[ ! -d "/tmp/BackOn/Restore/Cydia" ]]; then
 				mkdir "/tmp/BackOn/Restore/Cydia"
@@ -996,7 +1107,9 @@ function convertxBackup(){
 		fi
 		if [[ -f "/tmp/BackOn/Restore/var/mobile/Library/xBackup/Backups/backup.bk.list" ]]; then
 			if [[ "${showLog}" == YES ]]; then
-				echo "Converting backup.bk.list..."
+				applyLightGreen
+				echo -e "Converting backup.bk.list..."
+				applyNoColor
 			fi
 			if [[ ! -d "/tmp/BackOn/Restore/Cydia" ]]; then
 				mkdir "/tmp/BackOn/Restore/Cydia"
@@ -1005,7 +1118,9 @@ function convertxBackup(){
 		fi
 		if [[ -f "/tmp/BackOn/Restore/var/mobile/Library/xBackup/Backups/backup.bk.meta" ]]; then
 			if [[ "${showLog}" == YES ]]; then
-				echo "Converting backup.bk.meta..."
+				applyLightGreen
+				echo -e "Converting backup.bk.meta..."
+				applyNoColor
 			fi
 			if [[ ! -d "/tmp/BackOn/Restore/Cydia" ]]; then
 				mkdir "/tmp/BackOn/Restore/Cydia"
@@ -1014,7 +1129,9 @@ function convertxBackup(){
 		fi
 		if [[ -f "/tmp/BackOn/Restore/var/mobile/Library/xBackup/Backups/backup.bk.icon" ]]; then
 			if [[ "${showLog}" == YES ]]; then
-				echo "Converting backup.bk.icon..."
+				applyLightGreen
+				echo -e "Converting backup.bk.icon..."
+				applyNoColor
 			fi
 			if [[ ! -d "/tmp/BackOn/Restore/Library" ]]; then
 				mkdir "/tmp/BackOn/Restore/Library"
@@ -1026,7 +1143,9 @@ function convertxBackup(){
 		fi
 		if [[ -d "/tmp/BackOn/Restore/var/mobile/Library/xBackup/Backups/backup.bk.prefs" ]]; then
 			if [[ "${showLog}" == YES ]]; then
-				echo "Converting backup.bk.prefs..."
+				applyLightGreen
+				echo -e "Converting backup.bk.prefs..."
+				applyNoColor
 			fi
 			if [[ ! -d "/tmp/BackOn/Restore/Library" ]]; then
 				mkdir "/tmp/BackOn/Restore/Library"
@@ -1051,19 +1170,21 @@ function showInitialRestoreMenu(){
 		fi
 		ClearKey
 		showLinesA
-		echo "${SHOW_INFO_7}"
+		echo -e "${SHOW_INFO_7}"
 		showLinesB
 		if [[ "${RestoreCydiaIsAvailable}" == YES ]]; then
-			echo "(1) ${RESTORE_CYDIA_DATA}"
-			echo "(2) ${RESTORE_SHOW_CYDIA_LIST}"
+			echo -e "(1) ${RESTORE_CYDIA_DATA}"
+			echo -e "(2) ${RESTORE_SHOW_CYDIA_LIST}"
 		fi
 		if [[ "${RestoreLibraryIsAvailable}" == YES ]]; then
-			echo "(3) ${RESTORE_LIBRARY}"
+			echo -e "(3) ${RESTORE_LIBRARY}"
 		fi
-		echo "(4) ${REBOOT}"
-		echo "(q) ${QUIT}"
+		echo -e "(4) ${REBOOT}"
+		echo -e "(q) ${QUIT}"
 		showLinesA
+		applyLightCyan
 		read -p "- " ANSWER_H
+		applyNoColor
 
 		if [[ "${ANSWER_H}" == 1 ]]; then
 			if [[ "${RestoreCydiaIsAvailable}" == YES ]]; then
@@ -1102,35 +1223,41 @@ function showInitialRestoreMenu(){
 function restoreCydia(){
 	ClearKey
 	showLinesA
-	echo "${SHOW_INFO_8}"
+	echo -e "${SHOW_INFO_8}"
 	showLinesB
 	if [[ "${skipRestore}" == YES ]]; then
-		echo "Skipped."
+		echo -e "Skipped."
 	else
 		killMobileCydia
-		echo "${RESTORING}"
+		echo -e "${RESTORING}"
 		if [[ "${showLog}" == YES ]]; then
-			echo "Restoring : sources.list.d"
+			applyLightGreen
+			echo -e "Restoring : sources.list.d"
+			applyNoColor
 		fi
 		cp "/tmp/BackOn/Restore/Cydia/cydia.list" "/etc/apt/sources.list.d"
 		chmod 755 "/etc/apt/sources.list.d"
 		if [[ "${showLog}" == YES ]]; then
-			echo "Restoring : metadata.cb0"
+			applyLightGreen
+			echo -e "Restoring : metadata.cb0"
+			applyNoColor
 		fi
 		cp "/tmp/BackOn/Restore/Cydia/metadata.cb0" "/var/mobile/Library/Cydia"
 		chmod 755 "/var/mobile/Library/Cydia/metadata.cb0"
 		PA2CKey
 		if [[ "${showLog}" == YES ]]; then
+			applyLightGreen
 			apt-get update
 			dpkg --set-selections < "/tmp/BackOn/Restore/Cydia/apt.txt"
 			apt-get -y --force-yes -u dselect-upgrade
+			applyNoColor
 		else
 			apt-get update > /dev/null 2>&1
 			dpkg --set-selections < "/tmp/BackOn/Restore/Cydia/apt.txt"
 			apt-get -y --force-yes -u dselect-upgrade > /dev/null 2>&1
 		fi
 	fi
-	echo "${DONE}"
+	echo -e "${DONE}"
 	showLinesA
 	showPressAnyKeyToContinue
 }
@@ -1138,7 +1265,7 @@ function restoreCydia(){
 function showBackupedFilesRestore(){
 	ClearKey
 	showLinesA
-	echo "${SHOW_INFO_9}"
+	echo -e "${SHOW_INFO_9}"
 	showLinesB
 	cat "/tmp/BackOn/Restore/Cydia/apt.txt"
 	showLinesA
@@ -1149,7 +1276,7 @@ function restoreLibrary(){
 	while(true); do
 		ClearKey
 		showLinesA
-		echo "${SHOW_INFO_10}"
+		echo -e "${SHOW_INFO_10}"
 		showLinesB
 		if [[ "${showLog}" == YES ]]; then
 			ls -l "/tmp/BackOn/Restore/Library"
@@ -1157,10 +1284,12 @@ function restoreLibrary(){
 			ls "/tmp/BackOn/Restore/Library"
 		fi
 		showLinesB
-		echo "(${SHOW_GUIDE_10})"
-		echo "(${ENTER_QUIT})"
+		echo -e "(${SHOW_GUIDE_10})"
+		echo -e "(${ENTER_QUIT})"
 		showLinesA
+		applyLightCyan
 		read -p "- " ANSWER_I
+		applyNoColor
 
 		if [[ "${ANSWER_I}" == ods ]]; then
 			openDevSettings
@@ -1170,41 +1299,43 @@ function restoreLibrary(){
 			ExitKey
 		elif [[ "${ANSWER_I}" == all ]]; then
 			if [[ "${skipRestore}" == YES ]]; then
-				echo "Skipped."
+				echo -e "Skipped."
 				showPressAnyKeyToContinue
 			else
-				echo "${RESTORING}"
+				echo -e "${RESTORING}"
 				cp -r /tmp/BackOn/Restore/Library/* "/var/mobile/Library"
 				chmod -R 755 /var/mobile/Library
-				echo "${DONE}"
+				echo -e "${DONE}"
 				showPressAnyKeyToContinue
 			fi
 		elif [[ -z "${ANSWER_I}" ]]; then
 			:
 		elif [[ -f "/tmp/BackOn/Restore/Library/${ANSWER_I}" ]]; then
 			if [[ "${skipRestore}" == YES ]]; then
-				echo "Skipped"
+				echo -e "Skipped"
 				showPressAnyKeyToContinue
 			else
-				echo "${RESTORING}"
+				echo -e "${RESTORING}"
 				cp "/tmp/BackOn/Restore/Library/${ANSWER_I}" "/var/mobile/Library"
 				chmod -R 755 "/var/mobile/Library/${ANSWER_I}"
-				echo "${DONE}"
+				echo -e "${DONE}"
 				showPressAnyKeyToContinue
 			fi
 		elif [[ -d "/tmp/BackOn/Restore/Library/${ANSWER_I}" ]]; then
 			if [[ "${skipRestore}" == YES ]]; then
-				echo "Skipped"
+				echo -e "Skipped"
 				showPressAnyKeyToContinue
 			else
-				echo "${RESTORING}"
+				echo -e "${RESTORING}"
 				cp -r "/tmp/BackOn/Restore/Library/${ANSWER_I}" "/var/mobile/Library"
 				chmod -R 755 "/var/mobile/Library/${ANSWER_I}"
-				echo "${DONE}"
+				echo -e "${DONE}"
 				showPressAnyKeyToContinue
 			fi
 		else
-			echo "${NO_SUCH_FILE_OR_DIRECTORY}"
+			applyRed
+			echo -e "${NO_SUCH_FILE_OR_DIRECTORY}"
+			applyNoColor
 			showPressAnyKeyToContinue
 		fi
 	done
@@ -1220,49 +1351,59 @@ function installUpdate(){
 	local COUNT=0
 	while [[ ! "$COUNT" == 3 ]]; do
 		showLinesA
-		echo "${DOWNLOADING}"
+		echo -e "${DOWNLOADING}"
 		if [[ -d "/tmp/BackOn/Update" ]]; then
 			rm -rf "/tmp/BackOn/Update"
 		fi
 		mkdir "/tmp/BackOn/Update"
 		if [[ "${showLog}" == YES ]]; then
+			applyLightGreen
 			wget --no-check-certificate --output-document=/tmp/BackOn/Update/master.zip "${UpdateURL}"
+			applyNoColor
 		else
 			wget -q --no-check-certificate --output-document=/tmp/BackOn/Update/master.zip "${UpdateURL}"
 		fi
 		PA2CKey
 		if [[ -f "/tmp/BackOn/Update/master.zip" ]]; then
 			if [[ "${showLog}" == YES ]]; then
+				applyLightGreen
 				unzip "/tmp/BackOn/Update/master.zip" -d "/tmp/BackOn/Update/master"
+				applyNoColor
 			else
 				unzip -qq "/tmp/BackOn/Update/master.zip" -d "/tmp/BackOn/Update/master"
 			fi
 			if [[ -d "/tmp/BackOn/Update/master/BackOn-master/" ]]; then
 				if [[ -z "$(cat "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/build")" ]]; then
-					echo "ERROR!"
+					echo -e "ERROR!"
 					break
 				fi
 				if [ ${TOOL_BUILD_NUM} -ge "$(cat "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/build")" ]; then
 					if [[ ! "${ForceInstallUpdate}" == YES ]]; then
-						echo "${UP_TO_DATE}"
+						echo -e "${UP_TO_DATE}"
 						break
 					fi
 				fi
 				if [[ "${showLog}" == YES ]]; then
-					echo "Downloaded : $(cat "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/build") / Current : ${TOOL_BUILD_NUM}"
+					applyLightGreen
+					echo -e "Downloaded : $(cat "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/build") / Current : ${TOOL_BUILD_NUM}"
+					applyNoColor
 					PA2CKey
 				fi
-				echo "${INSTALLING}"
+				echo -e "${INSTALLING}"
 				chmod +x "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/update-script"
 				cd "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}"
 				./update-script
 				quitTool_NoClear
 			else
-				echo "ERROR!"
+				applyRed
+				echo -e "ERROR!"
+				applyNoColor
 				break
 			fi
 		else
-			echo "ERROR!"
+			applyRed
+			echo -e "ERROR!"
+			applyNoColor
 			break
 		fi
 	done
@@ -1271,6 +1412,7 @@ function installUpdate(){
 }
 
 ##############################################
+applyNoColor
 loadSettings
 if [[ "${setDefaultLanguage}" == Korean ]]; then
 	setKorean
@@ -1289,33 +1431,39 @@ mkdir /tmp/BackOn
 while(true); do
 	ClearKey
 	showLinesA
-	echo "BackOn ${TOOL_BUILD_TYPE}-${TOOL_BUILD_NUM} - ${LANGUAGE}"
+	echo -e "BackOn ${TOOL_BUILD_TYPE}-${TOOL_BUILD_NUM} - ${LANGUAGE}"
 	showLinesB
-	echo "(1) ${CREATE_BACKUP}"
-	echo "(2) ${RESTORE_FROM_BACKUP}"
+	echo -e "(1) ${CREATE_BACKUP}"
+	echo -e "(2) ${RESTORE_FROM_BACKUP}"
 	if [[ "${LANGUAGE}" == English ]]; then
-		echo "(3) 한국어로 변경 (Change to Korean)"
+		echo -e "(3) 한국어로 변경 (Change to Korean)"
 	elif [[ "${LANGUAGE}" == Korean ]]; then
-		echo "(3) Change to English."
+		echo -e "(3) Change to English."
 	fi
-	echo "(4) ${CHECK_FOR_UPDATES}"
-	echo "(q) ${QUIT}"
+	echo -e "(4) ${CHECK_FOR_UPDATES}"
+	echo -e "(q) ${QUIT}"
 	showLinesB
-	echo "(${ENTER_TEXT})"
+	echo -e "(${ENTER_TEXT})"
 	showLinesA
+	applyLightCyan
 	read -p "- " ANSWER_A
+	applyNoColor
 
 	if [[ "${ANSWER_A}" == 1 ]]; then
 		defineBackupName
 		if [[ "${showLog}" == YES ]]; then
-			echo "${WILL_CREATE_BACKUP_NAME} : ${BACKUP_NAME}"
+			applyLightGreen
+			echo -e "${WILL_CREATE_BACKUP_NAME} : ${BACKUP_NAME}"
+			applyNoColor
 			PA2CKey
 		fi
 		showInitialBackupMenu
 	elif [[ "${ANSWER_A}" == 2 ]]; then
 		defineBackupPath
 		if [[ "${showLog}" == YES ]]; then
-			echo "Recognized backup file path : ${ToRestoreBackupPath}"
+			applyLightGreen
+			echo -e "Recognized backup file path : ${ToRestoreBackupPath}"
+			applyNoColor
 			showPressAnyKeyToContinue
 		fi
 		if [[ -d "/tmp/BackOn/Restore" ]]; then
@@ -1327,7 +1475,9 @@ while(true); do
 		convertOldBackup
 		PA2CKey
 		if [[ ! -d /tmp/BackOn/Restore/Cydia && ! -d /tmp/BackOn/Restore/Library ]]; then
-			echo "${NOT_BACKON_BACKUP}"
+			applyRed
+			echo -e "${NOT_BACKON_BACKUP}"
+			applyNoColor
 			quitTool_NoClear_Error
 		fi
 		showInitialRestoreMenu
