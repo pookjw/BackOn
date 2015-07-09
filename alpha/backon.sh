@@ -1,8 +1,8 @@
 #!/bin/sh
 ##############################################
-# BackOn alpha-101
+# BackOn alpha-102
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=101
+TOOL_BUILD_NUM=102
 ##############################################
 
 function setEnglish(){
@@ -504,7 +504,7 @@ function applyRed(){
 }
 
 function applyLightGreen(){
-	echo -e -n "\033[1;32m"
+	echo -e -n "\033[1;35m"
 }
 
 function applyLightCyan(){
