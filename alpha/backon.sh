@@ -1,8 +1,8 @@
 #!/bin/sh
 ##############################################
-# BackOn alpha-102
+# BackOn alpha-103
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=102
+TOOL_BUILD_NUM=103
 ##############################################
 
 function setEnglish(){
@@ -193,6 +193,11 @@ function openDevSettings(){
 		echo -e "(16) Check update now."
 		echo -e "(17) cp /backon.sh /usr/bin/backon"
 		echo -e "(18) setTestFunction"
+		if [[ "${applyColorScheme}" == YES ]]; then
+			echo -e "(19) applyColorScheme : YES"
+		elif [[ "${applyColorScheme}" == NO ]]; then
+			echo -e "(19) applyColorScheme : NO"
+		fi
 		echo -e "(l) ls"
 		echo -e "(s) Save Settings."
 		echo -e "(d) Disable DevSettings."
@@ -339,6 +344,12 @@ function openDevSettings(){
 			quitTool
 		elif [[ "${ANSWER_D}" == 18 ]]; then
 			:
+		elif [[ "${ANSWER_D}" == 19 ]]; then
+			if [[ "${applyColorScheme}" == YES ]]; then
+				applyColorScheme=NO
+			elif [[ "${applyColorScheme}" == NO ]]; then
+				applyColorScheme=YES
+			fi
 		elif [[ "${ANSWER_D}" == l || "${ANSWER_D}" == ls ]]; then
 			ClearKey
 			showLinesA
@@ -403,6 +414,7 @@ function saveSettings(){
 	echo -e "${setDefaultLanguage}" >> /var/mobile/Library/Preferences/BackOn/setDefaultLanguage
 	echo -e "${skipCheckRoot}" >> /var/mobile/Library/Preferences/BackOn/skipCheckRoot
 	echo -e "${runUpdateODS}" >> /var/mobile/Library/Preferences/BackOn/runUpdateODS
+	echo -e "${applyColorScheme}" >> /var/mobile/Library/Preferences/BackOn/applyColorScheme
 }
 
 
@@ -477,6 +489,11 @@ function loadSettings(){
 	else
 		runUpdateODS=NO
 	fi
+	if [[ -f "/var/mobile/Library/Preferences/BackOn/applyColorScheme" ]]; then
+		applyColorScheme="$(cat "/var/mobile/Library/Preferences/BackOn/applyColorScheme")"
+	else
+		applyColorScheme=YES
+	fi
 }
 
 function showLinesA(){
@@ -500,19 +517,27 @@ function showLinesB(){
 }
 
 function applyRed(){
-	echo -e -n "\033[0;31m"
+	if [[ "${applyColorScheme}" == YES ]]; then
+		echo -e -n "\033[0;31m"
+	fi
 }
 
 function applyLightGreen(){
-	echo -e -n "\033[1;35m"
+	if [[ "${applyColorScheme}" == YES ]]; then
+		echo -e -n "\033[1;35m"
+	fi
 }
 
 function applyLightCyan(){
-	echo -e -n "\033[1;36m"
+	if [[ "${applyColorScheme}" == YES ]]; then
+		echo -e -n "\033[1;36m"
+	fi
 }
 
 function applyNoColor(){
-	echo -e -n "\033[0m"
+	if [[ "${applyColorScheme}" == YES ]]; then
+		echo -e -n "\033[0m"
+	fi
 }
 
 function showPressAnyKeyToContinue(){
