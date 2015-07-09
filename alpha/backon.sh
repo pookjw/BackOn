@@ -1,8 +1,8 @@
 #!/bin/sh
 ##############################################
-# BackOn alpha-100
+# BackOn alpha-101
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=100
+TOOL_BUILD_NUM=101
 ##############################################
 
 function setEnglish(){
@@ -577,7 +577,9 @@ function killMobileCydia(){
 	ps cax | grep MobileCydia > /dev/null
 	if [ $? -eq 0 ]; then
 		if [[ "${showLog}" == YES ]]; then
+			applyLightGreen
 			echo -e "Killing MobileCydia..."
+			applyNoColor
 		fi
 		killall -9 MobileCydia
 	fi
@@ -762,7 +764,9 @@ function backupLibrary(){
 			if [[ "${ANSWER_E}" == all ]]; then
 				echo -e "${BACKING_UP}"
 				if [[ "${showLog}" == YES ]]; then
+					applyLightGreen
 					rsync -av --exclude="Assets" --exclude="Caches" --exclude="Filza" --exclude="Preferences/BackupAZ" /var/mobile/Library/* "/tmp/BackOn/${BACKUP_NAME}/Library"
+					applyNoColor
 				else
 					rsync -q -av --exclude="Assets" --exclude="Caches" --exclude="Filza" --exclude="Preferences/BackupAZ" /var/mobile/Library/* "/tmp/BackOn/${BACKUP_NAME}/Library"
 				fi
@@ -772,7 +776,9 @@ function backupLibrary(){
 					fi
 					cp /var/mobile/Library/Caches/libactivator.plist "/tmp/BackOn/${BACKUP_NAME}/Library/Caches"
 					if [[ "${showLog}" == YES ]]; then
+						applyLightGreen
 						echo -e "Backuped libactivator.plist."
+						applyNoColor
 					fi
 				fi
 				echo -e "${DONE}"
@@ -841,14 +847,18 @@ function backupLibrary(){
 				done
 			elif [[ "${ANSWER_E}" == Preferences ]]; then
 				if [[ "${showLog}" == YES ]]; then
+					applyLightGreen
 					echo -e "Special backup."
+					applyNoColor
 				fi
 				echo -e "${BACKING_UP}"
 				if [[ ! -d "/tmp/BackOn/${BACKUP_NAME}/Library/Preferences" ]]; then
 					mkdir "/tmp/BackOn/${BACKUP_NAME}/Library/Preferences"
 				fi
 				if [[ "${showLog}" == YES ]]; then
+					applyLightGreen
 					rsync -av --exclude="BackupAZ" /var/mobile/Library/Preferences/* "/tmp/BackOn/${BACKUP_NAME}/Library/Preferences"
+					applyNoColor
 				else
 					rsync -q -av --exclude="BackupAZ" /var/mobile/Library/Preferences/* "/tmp/BackOn/${BACKUP_NAME}/Library/Preferences"
 				fi
@@ -943,7 +953,9 @@ function saveBackup(){
 		echo -e "${OSVer}" >> info/OSVersion
 		echo -e "${SAVING}"
 		if [[ "${showLog}" == YES ]]; then
+			applyLightGreen
 			zip -r "${BackupPath}/${ANSWER_B}.zip" *
+			applyNoColor
 		else
 			zip -q -r "${BackupPath}/${ANSWER_B}.zip" *
 		fi
@@ -1018,7 +1030,9 @@ function defineBackupPath(){
 function unzipBackup(){
 	echo -e "${UNPACKING}"
 	if [[ "${showLog}" == YES ]]; then
+		applyLightGreen
 		unzip "${ToRestoreBackupPath}" -d /tmp/BackOn/Restore
+		applyNoColor
 	else
 		unzip -qq "${ToRestoreBackupPath}" -d /tmp/BackOn/Restore
 	fi
@@ -1028,7 +1042,9 @@ function convertOldBackup(){
 	for File in "apt.txt" "cydia.list" "metadata.plist"; do
 		if [[ -f "/tmp/BackOn/Restore/${File}" ]]; then
 			if [[ "${showLog}" == YES ]]; then
+				applyLightGreen
 				echo -e "Converting ${File}..."
+				applyNoColor
 			fi
 			if [[ ! -d "/tmp/BackOn/Restore/Cydia" ]]; then
 				mkdir /tmp/BackOn/Restore/Cydia
@@ -1038,7 +1054,9 @@ function convertOldBackup(){
 	done
 	if [[ -f "/tmp/BackOn/Restore/Cydia/metadata.plist" ]]; then
 		if [[ "${showLog}" == YES ]]; then
+			applyLightGreen
 			echo -e "Converting metadata.cb0..."
+			applyNoColor
 		fi
 		mv "/tmp/BackOn/Restore/Cydia/metadata.plist" "/tmp/BackOn/Restore/Cydia/metadata.cb0"
 	fi
@@ -1047,11 +1065,15 @@ function convertOldBackup(){
 function convertxBackup(){
 	if [[ -d "/tmp/BackOn/Restore/var" ]]; then
 		if [[ "${showLog}" == YES ]]; then
+			applyLightGreen
 			echo -e "Running convertxBackup... (xBackup)"
+			applyNoColor
 		fi
 		if [[ -f "/tmp/BackOn/Restore/var/mobile/Library/xBackup/Backups/backup.bk" ]]; then
 			if [[ "${showLog}" == YES ]]; then
+				applyLightGreen
 				echo -e "Converting backup.bk..."
+				applyNoColor
 			fi
 			if [[ ! -d "/tmp/BackOn/Restore/Cydia" ]]; then
 				mkdir "/tmp/BackOn/Restore/Cydia"
@@ -1060,7 +1082,9 @@ function convertxBackup(){
 		fi
 		if [[ -f "/tmp/BackOn/Restore/var/mobile/Library/xBackup/Backups/backup.bk.list" ]]; then
 			if [[ "${showLog}" == YES ]]; then
+				applyLightGreen
 				echo -e "Converting backup.bk.list..."
+				applyNoColor
 			fi
 			if [[ ! -d "/tmp/BackOn/Restore/Cydia" ]]; then
 				mkdir "/tmp/BackOn/Restore/Cydia"
@@ -1069,7 +1093,9 @@ function convertxBackup(){
 		fi
 		if [[ -f "/tmp/BackOn/Restore/var/mobile/Library/xBackup/Backups/backup.bk.meta" ]]; then
 			if [[ "${showLog}" == YES ]]; then
+				applyLightGreen
 				echo -e "Converting backup.bk.meta..."
+				applyNoColor
 			fi
 			if [[ ! -d "/tmp/BackOn/Restore/Cydia" ]]; then
 				mkdir "/tmp/BackOn/Restore/Cydia"
@@ -1078,7 +1104,9 @@ function convertxBackup(){
 		fi
 		if [[ -f "/tmp/BackOn/Restore/var/mobile/Library/xBackup/Backups/backup.bk.icon" ]]; then
 			if [[ "${showLog}" == YES ]]; then
+				applyLightGreen
 				echo -e "Converting backup.bk.icon..."
+				applyNoColor
 			fi
 			if [[ ! -d "/tmp/BackOn/Restore/Library" ]]; then
 				mkdir "/tmp/BackOn/Restore/Library"
@@ -1090,7 +1118,9 @@ function convertxBackup(){
 		fi
 		if [[ -d "/tmp/BackOn/Restore/var/mobile/Library/xBackup/Backups/backup.bk.prefs" ]]; then
 			if [[ "${showLog}" == YES ]]; then
+				applyLightGreen
 				echo -e "Converting backup.bk.prefs..."
+				applyNoColor
 			fi
 			if [[ ! -d "/tmp/BackOn/Restore/Library" ]]; then
 				mkdir "/tmp/BackOn/Restore/Library"
@@ -1176,20 +1206,26 @@ function restoreCydia(){
 		killMobileCydia
 		echo -e "${RESTORING}"
 		if [[ "${showLog}" == YES ]]; then
+			applyLightGreen
 			echo -e "Restoring : sources.list.d"
+			applyNoColor
 		fi
 		cp "/tmp/BackOn/Restore/Cydia/cydia.list" "/etc/apt/sources.list.d"
 		chmod 755 "/etc/apt/sources.list.d"
 		if [[ "${showLog}" == YES ]]; then
+			applyLightGreen
 			echo -e "Restoring : metadata.cb0"
+			applyNoColor
 		fi
 		cp "/tmp/BackOn/Restore/Cydia/metadata.cb0" "/var/mobile/Library/Cydia"
 		chmod 755 "/var/mobile/Library/Cydia/metadata.cb0"
 		PA2CKey
 		if [[ "${showLog}" == YES ]]; then
+			applyLightGreen
 			apt-get update
 			dpkg --set-selections < "/tmp/BackOn/Restore/Cydia/apt.txt"
 			apt-get -y --force-yes -u dselect-upgrade
+			applyNoColor
 		else
 			apt-get update > /dev/null 2>&1
 			dpkg --set-selections < "/tmp/BackOn/Restore/Cydia/apt.txt"
@@ -1296,14 +1332,18 @@ function installUpdate(){
 		fi
 		mkdir "/tmp/BackOn/Update"
 		if [[ "${showLog}" == YES ]]; then
+			applyLightGreen
 			wget --no-check-certificate --output-document=/tmp/BackOn/Update/master.zip "${UpdateURL}"
+			applyNoColor
 		else
 			wget -q --no-check-certificate --output-document=/tmp/BackOn/Update/master.zip "${UpdateURL}"
 		fi
 		PA2CKey
 		if [[ -f "/tmp/BackOn/Update/master.zip" ]]; then
 			if [[ "${showLog}" == YES ]]; then
+				applyLightGreen
 				unzip "/tmp/BackOn/Update/master.zip" -d "/tmp/BackOn/Update/master"
+				applyNoColor
 			else
 				unzip -qq "/tmp/BackOn/Update/master.zip" -d "/tmp/BackOn/Update/master"
 			fi
@@ -1319,7 +1359,9 @@ function installUpdate(){
 					fi
 				fi
 				if [[ "${showLog}" == YES ]]; then
+					applyLightGreen
 					echo -e "Downloaded : $(cat "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/build") / Current : ${TOOL_BUILD_NUM}"
+					applyNoColor
 					PA2CKey
 				fi
 				echo -e "${INSTALLING}"
@@ -1385,14 +1427,18 @@ while(true); do
 	if [[ "${ANSWER_A}" == 1 ]]; then
 		defineBackupName
 		if [[ "${showLog}" == YES ]]; then
+			applyLightGreen
 			echo -e "${WILL_CREATE_BACKUP_NAME} : ${BACKUP_NAME}"
+			applyNoColor
 			PA2CKey
 		fi
 		showInitialBackupMenu
 	elif [[ "${ANSWER_A}" == 2 ]]; then
 		defineBackupPath
 		if [[ "${showLog}" == YES ]]; then
+			applyLightGreen
 			echo -e "Recognized backup file path : ${ToRestoreBackupPath}"
+			applyNoColor
 			showPressAnyKeyToContinue
 		fi
 		if [[ -d "/tmp/BackOn/Restore" ]]; then
