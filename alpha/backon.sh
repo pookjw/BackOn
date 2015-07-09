@@ -1,8 +1,8 @@
 #!/bin/sh
 ##############################################
-# BackOn alpha-103
+# BackOn alpha-105
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=103
+TOOL_BUILD_NUM=105
 ##############################################
 
 function setEnglish(){
@@ -579,7 +579,7 @@ function checkRoot(){
 		if [ "$(id -u)" != "0" ]; then
 			applyRed
 			echo -e "${NOT_RUN_AS_ROOT}"
-			applyLightCyan
+			applyNoColor
 			if [[ "${InitialRunDevSettings}" == YES ]]; then
 				su -c "backon -ods"
 			else
@@ -1412,7 +1412,6 @@ function installUpdate(){
 }
 
 ##############################################
-applyNoColor
 loadSettings
 if [[ "${setDefaultLanguage}" == Korean ]]; then
 	setKorean
