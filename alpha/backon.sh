@@ -1,8 +1,8 @@
 #!/bin/sh
 ##############################################
-# BackOn alpha-109
+# BackOn alpha-110
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=109
+TOOL_BUILD_NUM=110
 ##############################################
 
 function setEnglish(){
@@ -39,6 +39,7 @@ function setEnglish(){
 	SAVING="Saving..."
 	REMOVING="Removing..."
 	UNPACKING="Unpacking..."
+	CLOSING_TOOL="Closing tool..."
 	ENTER_BACKUP_PATH="Enter backup file path which you saved. (Enter 'xbackup' command to restore xBackup's backup file.)"
 	NOT_BACKON_BACKUP="This is not a BackOn's backup."
 	DONE="Done."
@@ -103,6 +104,7 @@ function setKorean(){
 	SAVING="저장 중..."
 	REMOVING="삭제 중..."
 	UNPACKING="압축해제 중..."
+	CLOSING_TOOL="툴 종료 중..."
 	ENTER_BACKUP_PATH="백업 파일의 경로를 입력해 주세요. ('xbakcup' 명령어를 입력하시면 xBackup의 백업 파일을 복원합니다.)"
 	NOT_BACKON_BACKUP="이것은 BackOn의 백업 파일이 아닙니다."
 	DONE="완료"
@@ -639,6 +641,7 @@ function quitTool(){
 	ClearKey
 	applyNoColor
 	if [[ -d /tmp/BackOn ]]; then
+		echo "${CLOSING_TOOL}"
 		rm -rf /tmp/BackOn
 	fi
 	exit 0
@@ -648,6 +651,7 @@ function quitTool_Error(){
 	ClearKey
 	applyNoColor
 	if [[ -d /tmp/BackOn ]]; then
+		echo "${CLOSING_TOOL}"
 		rm -rf /tmp/BackOn
 	fi
 	exit 1
@@ -656,6 +660,7 @@ function quitTool_Error(){
 function quitTool_NoClear(){
 	applyNoColor
 	if [[ -d /tmp/BackOn ]]; then
+		echo "${CLOSING_TOOL}"
 		rm -rf /tmp/BackOn
 	fi
 	exit 0
@@ -664,6 +669,7 @@ function quitTool_NoClear(){
 function quitTool_NoClear_Error(){
 	applyNoColor
 	if [[ -d /tmp/BackOn ]]; then
+		echo "${CLOSING_TOOL}"
 		rm -rf /tmp/BackOn
 	fi
 	exit 1
