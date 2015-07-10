@@ -1,8 +1,8 @@
 #!/bin/sh
 ##############################################
-# BackOn alpha-105
+# BackOn alpha-107
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=105
+TOOL_BUILD_NUM=107
 ##############################################
 
 function setEnglish(){
@@ -198,6 +198,11 @@ function openDevSettings(){
 		elif [[ "${applyColorScheme}" == NO ]]; then
 			echo -e "(19) applyColorScheme : NO"
 		fi
+		if [[ "${DynamicLine}" == YES ]]; then
+			echo -e "(20) DynamicLine : YES"
+		elif [[ "${DynamicLine}" == NO ]]; then
+			echo -e "(20) DynamicLine : NO"
+		fi
 		echo -e "(l) ls"
 		echo -e "(s) Save Settings."
 		echo -e "(d) Disable DevSettings."
@@ -350,6 +355,12 @@ function openDevSettings(){
 			elif [[ "${applyColorScheme}" == NO ]]; then
 				applyColorScheme=YES
 			fi
+		elif [[ "${ANSWER_D}" == 20 ]]; then
+			if [[ "${DynamicLine}" == YES ]]; then
+				DynamicLine=NO
+			elif [[ "${DynamicLine}" == NO ]]; then
+				DynamicLine=YES
+			fi
 		elif [[ "${ANSWER_D}" == l || "${ANSWER_D}" == ls ]]; then
 			ClearKey
 			showLinesA
@@ -415,6 +426,7 @@ function saveSettings(){
 	echo -e "${skipCheckRoot}" >> /var/mobile/Library/Preferences/BackOn/skipCheckRoot
 	echo -e "${runUpdateODS}" >> /var/mobile/Library/Preferences/BackOn/runUpdateODS
 	echo -e "${applyColorScheme}" >> /var/mobile/Library/Preferences/BackOn/applyColorScheme
+	echo -e "${DynamicLine}" >> /var/mobile/Library/Preferences/BackOn/DynamicLine
 }
 
 
@@ -494,26 +506,39 @@ function loadSettings(){
 	else
 		applyColorScheme=YES
 	fi
+	if [[ -f "/var/mobile/Library/Preferences/BackOn/DynamicLine" ]]; then
+		DynamicLine="$(cat "/var/mobile/Library/Preferences/BackOn/DynamicLine")"
+	else
+		DynamicLine=YES
+	fi
 }
 
 function showLinesA(){
-	PRINTED_COUNTS=0
-	COLS=`tput cols`
-	while [[ ! ${PRINTED_COUNTS} == $COLS ]]; do
-   		echo -e -n "*"
- 		PRINTED_COUNTS=$(($PRINTED_COUNTS+1))
-	done
-	echo -e
+	if [[ "${DynamicLine}" == YES ]]; then
+		PRINTED_COUNTS=0
+		COLS=`tput cols`
+		while [[ ! ${PRINTED_COUNTS} == $COLS ]]; do
+	   		echo -e -n "*"
+	 		PRINTED_COUNTS=$(($PRINTED_COUNTS+1))
+		done
+		echo -e
+	else
+		echo "***************"
+	fi
 }
 
 function showLinesB(){
-	PRINTED_COUNTS=0
-	COLS=`tput cols`
-	while [[ ! ${PRINTED_COUNTS} == $COLS ]]; do
-   		echo -e -n "-"
- 		PRINTED_COUNTS=$((${PRINTED_COUNTS}+1))
-	done
-	echo -e
+	if [[ "${DynamicLine}" == YES ]]; then
+		PRINTED_COUNTS=0
+		COLS=`tput cols`
+		while [[ ! ${PRINTED_COUNTS} == $COLS ]]; do
+	   		echo -e -n "-"
+	 		PRINTED_COUNTS=$((${PRINTED_COUNTS}+1))
+		done
+		echo -e
+	else
+		echo "---------------"
+	fi
 }
 
 function applyRed(){
