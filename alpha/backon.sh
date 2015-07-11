@@ -1,8 +1,8 @@
 #!/bin/sh
 ##############################################
-# BackOn alpha-117
+# BackOn alpha-118
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=117
+TOOL_BUILD_NUM=118
 ##############################################
 
 function setEnglish(){
@@ -1438,7 +1438,7 @@ function installUpdate(){
 }
 
 ##############################################
-"${1}"="${command1}"
+command1="${1}"
 loadSettings
 if [[ "${setDefaultLanguage}" == Korean ]]; then
 	setKorean
