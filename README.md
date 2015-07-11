@@ -43,11 +43,9 @@ $ backon
 
 # About DevSettings
 
-BackOn has DevSettings, which simulates the BackOn’s functions. You can open this function (DevSettings) with these two methods.
+BackOn has DevSettings, which simulates the BackOn’s functions. You can open this function (DevSettings) with this methods.
 
 >- Enter ```ods``` command on BackOn.
-
->- Excute BackOn by this command : ```$ backon -ods```
 
 (```ods``` is abbreviation of ‘open DevSettings.')
 

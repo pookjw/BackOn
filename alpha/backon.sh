@@ -1,8 +1,8 @@
 #!/bin/sh
 ##############################################
-# BackOn alpha-115
+# BackOn alpha-116
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=115
+TOOL_BUILD_NUM=116
 ##############################################
 
 function setEnglish(){
@@ -581,6 +581,8 @@ function ClearKey(){
 }
 
 function checkRoot(){
+	echo "${1}"
+	echo "$1"
 	if [[ ! "${1}" == "--skip-checkRoot" ]]; then
 		if [ "$(id -u)" != "0" ]; then
 			applyRed
