@@ -1,8 +1,8 @@
 #!/bin/sh
 ##############################################
-# BackOn alpha-110
+# BackOn alpha-111
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=110
+TOOL_BUILD_NUM=111
 ##############################################
 
 function setEnglish(){
@@ -50,6 +50,7 @@ function setEnglish(){
 	BACKUPED_CYDIA_METADATA="Cydia metadata"
 	BACKUPED_LIBRARY="Library"
 	SUCCEED_SAVE_BACKUP="Succeed to save backup!"
+	OSVER_IS_NOT_MATCHING="Backup's iOS Version is not matching with current iOS Version. It will cause problem."
 	RESTORE_CYDIA_DATA="Restore Cydia sources and packages list."
 	RESTORE_SHOW_CYDIA_LIST="Show backuped Cydia packages list."
 	RESTORE_LIBRARY="Restore Library."
@@ -115,6 +116,7 @@ function setKorean(){
 	BACKUPED_CYDIA_METADATA="Cydia metadata"
 	BACKUPED_LIBRARY="Library"
 	SUCCEED_SAVE_BACKUP="백업에 성공했습니다!"
+	OSVER_IS_NOT_MATCHING="백업할 때의 iOS 버전이 현재 기기의 iOS 버전과 일치하지 않습니다. 이것은 문제를 야기할 수 있습니다."
 	RESTORE_CYDIA_DATA="Cydia 소스, 패키지 복원"
 	RESTORE_SHOW_CYDIA_LIST="백업한 Cydia 패키지 목록 보기"
 	RESTORE_LIBRARY="Library 복원"
@@ -1116,6 +1118,14 @@ function convertOldBackup(){
 		fi
 		mv "/tmp/BackOn/Restore/Cydia/metadata.plist" "/tmp/BackOn/Restore/Cydia/metadata.cb0"
 	fi
+	if [[ -f "/tmp/BackOn/Restore/info/ios_version" ]]; then
+		if [[ "${showLog}" == YES ]]; then
+			applyPurple
+			echo -e "Converting ios_version..."
+			applyNoColor
+		fi
+		mv "/tmp/BackOn/Restore/info/ios_version" "/tmp/BackOn/Restore/info/OSVersion"
+	fi
 }
 
 function convertxBackup(){
@@ -1184,6 +1194,18 @@ function convertxBackup(){
 			mv "/tmp/BackOn/Restore/var/mobile/Library/xBackup/Backups/backup.bk.prefs" "/tmp/BackOn/Restore/Library/Preferences"
 		fi
 		rm -rf "/tmp/BackOn/Restore/var"
+	fi
+}
+
+function checkiOSVerMatching(){
+	if [[ -f "/tmp/BackOn/Restore/info/OSVersion" ]]; then
+		if [[ ! "${OSVer}" == "$(cat "/tmp/BackOn/Restore/info/OSVersion")" ]]; then
+			ClearKey
+			showLinesA
+			echo "${OSVER_IS_NOT_MATCHING}"
+			showLinesA
+			showPressAnyKeyToContinue
+		fi
 	fi
 }
 
