@@ -1,8 +1,8 @@
 #!/bin/sh
 ##############################################
-# BackOn alpha-112
+# BackOn alpha-113
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=112
+TOOL_BUILD_NUM=113
 ##############################################
 
 function setEnglish(){
@@ -421,7 +421,6 @@ function saveSettings(){
 	echo -e "${showPA2C}" >> /var/mobile/Library/Preferences/BackOn/showPA2C
 	echo -e "${skipRestore}" >> /var/mobile/Library/Preferences/BackOn/skipRestore
 	echo -e "${UpdateURL}" >> /var/mobile/Library/Preferences/BackOn/UpdateURL
-	echo -e "${OSVer}" >> /var/mobile/Library/Preferences/BackOn/OSVer
 	echo -e "${UpdateBuildType}" >> /var/mobile/Library/Preferences/BackOn/UpdateBuildType
 	echo -e "${ForceInstallUpdate}" >> /var/mobile/Library/Preferences/BackOn/ForceInstallUpdate
 	echo -e "${BackupPath}" >> /var/mobile/Library/Preferences/BackOn/BackupPath
@@ -459,11 +458,6 @@ function loadSettings(){
 		UpdateURL="$(cat "/var/mobile/Library/Preferences/BackOn/UpdateURL")"
 	else
 		UpdateURL="https://github.com/pookjw/BackOn/archive/master.zip"
-	fi
-	if [[ -f "/var/mobile/Library/Preferences/BackOn/OSVer" ]]; then
-		OSVer="$(cat "/var/mobile/Library/Preferences/BackOn/OSVer")"
-	else
-		OSVer="$(sw_vers -productVersion)"
 	fi
 	if [[ -f "/var/mobile/Library/Caches/libactivator.plist" ]]; then
 		MakeFakeActivatorFile=YES
