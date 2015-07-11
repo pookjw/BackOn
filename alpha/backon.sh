@@ -1,8 +1,8 @@
 #!/bin/sh
 ##############################################
-# BackOn alpha-113
+# BackOn alpha-114
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=113
+TOOL_BUILD_NUM=114
 ##############################################
 
 function setEnglish(){
@@ -1474,6 +1474,7 @@ if [[ -d /tmp/BackOn ]]; then
 	rm -rf /tmp/BackOn
 fi
 mkdir /tmp/BackOn
+OSVer="$(sw_vers -productVersion)"
 while(true); do
 	ClearKey
 	showLinesA
