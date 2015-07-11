@@ -1,8 +1,8 @@
 #!/bin/sh
 ##############################################
-# BackOn alpha-116
+# BackOn alpha-117
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=116
+TOOL_BUILD_NUM=117
 ##############################################
 
 function setEnglish(){
@@ -581,9 +581,7 @@ function ClearKey(){
 }
 
 function checkRoot(){
-	echo "${1}"
-	echo "$1"
-	if [[ ! "${1}" == "--skip-checkRoot" ]]; then
+	if [[ ! "${command1}" == "--skip-checkRoot" ]]; then
 		if [ "$(id -u)" != "0" ]; then
 			applyRed
 			echo -e "${NOT_RUN_AS_ROOT}"
@@ -1440,6 +1438,7 @@ function installUpdate(){
 }
 
 ##############################################
+"${1}"="${command1}"
 loadSettings
 if [[ "${setDefaultLanguage}" == Korean ]]; then
 	setKorean
