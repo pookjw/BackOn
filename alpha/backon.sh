@@ -1,8 +1,8 @@
 #!/bin/sh
 ##############################################
-# BackOn alpha-111
+# BackOn alpha-112
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=111
+TOOL_BUILD_NUM=112
 ##############################################
 
 function setEnglish(){
@@ -1532,6 +1532,7 @@ while(true); do
 			applyNoColor
 			quitTool_NoClear_Error
 		fi
+		checkiOSVerMatching
 		showInitialRestoreMenu
 	elif [[ "${ANSWER_A}" == 3 ]]; then
 		switchLanguage
