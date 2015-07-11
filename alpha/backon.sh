@@ -1,8 +1,8 @@
 #!/bin/sh
 ##############################################
-# BackOn alpha-114
+# BackOn alpha-115
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=114
+TOOL_BUILD_NUM=115
 ##############################################
 
 function setEnglish(){
@@ -184,11 +184,6 @@ function openDevSettings(){
 		fi
 		echo -e "(12) switchLanguage (Current : ${LANGUAGE})"
 		echo -e "(13) setDefaultLanguage : ${setDefaultLanguage}"
-		if [[ "${skipCheckRoot}" == YES ]]; then
-			echo -e "(14) skipCheckRoot : YES"
-		elif [[ "${skipCheckRoot}" == NO ]]; then
-			echo -e "(14) skipCheckRoot : NO"
-		fi
 		if [[ "${runUpdateODS}" == YES ]]; then
 			echo -e "(15) runUpdateODS : YES"
 		elif [[ "${runUpdateODS}" == NO ]]; then
@@ -330,12 +325,6 @@ function openDevSettings(){
 					break
 				fi
 			done
-		elif [[ "${ANSWER_D}" == 14 ]]; then
-			if [[ "${skipCheckRoot}" == YES ]]; then
-				skipCheckRoot=NO
-			elif [[ "${skipCheckRoot}" == NO ]]; then
-				skipCheckRoot=YES
-			fi
 		elif [[ "${ANSWER_D}" == 15 ]]; then
 			if [[ "${runUpdateODS}" == YES ]]; then
 				runUpdateODS=NO
@@ -426,7 +415,6 @@ function saveSettings(){
 	echo -e "${BackupPath}" >> /var/mobile/Library/Preferences/BackOn/BackupPath
 	echo -e "${ClearKey}" >> /var/mobile/Library/Preferences/BackOn/ClearKey
 	echo -e "${setDefaultLanguage}" >> /var/mobile/Library/Preferences/BackOn/setDefaultLanguage
-	echo -e "${skipCheckRoot}" >> /var/mobile/Library/Preferences/BackOn/skipCheckRoot
 	echo -e "${runUpdateODS}" >> /var/mobile/Library/Preferences/BackOn/runUpdateODS
 	echo -e "${applyColorScheme}" >> /var/mobile/Library/Preferences/BackOn/applyColorScheme
 	echo -e "${DynamicLine}" >> /var/mobile/Library/Preferences/BackOn/DynamicLine
@@ -488,11 +476,6 @@ function loadSettings(){
 		setDefaultLanguage="$(cat "/var/mobile/Library/Preferences/BackOn/setDefaultLanguage")"
 	else
 		setDefaultLanguage=English
-	fi
-	if [[ -f "/var/mobile/Library/Preferences/BackOn/skipCheckRoot" ]]; then
-		skipCheckRoot="$(cat "/var/mobile/Library/Preferences/BackOn/skipCheckRoot")"
-	else
-		skipCheckRoot=NO
 	fi
 	if [[ -f "/var/mobile/Library/Preferences/BackOn/runUpdateODS" ]]; then
 		runUpdateODS="$(cat "/var/mobile/Library/Preferences/BackOn/runUpdateODS")"
@@ -598,16 +581,12 @@ function ClearKey(){
 }
 
 function checkRoot(){
-	if [[ ! "${skipCheckRoot}" == YES ]]; then
+	if [[ ! "${1}" == "--skip-checkRoot" ]]; then
 		if [ "$(id -u)" != "0" ]; then
 			applyRed
 			echo -e "${NOT_RUN_AS_ROOT}"
 			applyNoColor
-			if [[ "${InitialRunDevSettings}" == YES ]]; then
-				su -c "backon -ods"
-			else
-				su -c "backon"
-			fi
+			su -c "backon"
 			quitTool_NoClear
 		fi
 	fi
@@ -1464,10 +1443,6 @@ if [[ "${setDefaultLanguage}" == Korean ]]; then
 	setKorean
 else
 	setEnglish
-fi
-if [[ "${1}" == "-ods" ]]; then
-	InitialRunDevSettings=YES
-	openDevSettings
 fi
 checkRoot
 if [[ -d /tmp/BackOn ]]; then
