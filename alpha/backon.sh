@@ -1,13 +1,14 @@
 #!/bin/sh
 ##############################################
-# BackOn alpha-120
+# BackOn alpha-121
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=120
+TOOL_BUILD_NUM=121
 ##############################################
 
 function setEnglish(){
 	LANGUAGE="English"
 	NOT_RUN_AS_ROOT="You didn't run as root! Please enter root password. (Initial password is 'alpine')"
+	NOT_IOS="This is not iOS."
 	ENTER_TEXT="Enter a command(1, 2, 3, 4, q) that you want to do."
 	CREATE_BACKUP="Create backup."
 	RESTORE_FROM_BACKUP="Restore from backup."
@@ -74,6 +75,7 @@ function setEnglish(){
 function setKorean(){
 	LANGUAGE="Korean"
 	NOT_RUN_AS_ROOT="root로 로그인되지 않았습니다! root 비밀번호를 입력해 주세요. (초기 비밀번호는 'alpine'입니다.)"
+	NOT_IOS="실행된 기기는 iOS가 아닙니다."
 	ENTER_TEXT="명령어(1, 2, 3, 4, q)를 입력해 주세요."
 	CREATE_BACKUP="백업 생성"
 	RESTORE_FROM_BACKUP="백업에서 복원"
@@ -581,13 +583,24 @@ function ClearKey(){
 }
 
 function checkRoot(){
-	if [[ ! "${command1}" == "--skip-checkRoot" ]]; then
-		if [ "$(id -u)" != "0" ]; then
+	if [[ ! "${command1}" == "--skip-check" ]]; then
+		if [[ ! "$(id -u)" == "0" ]]; then
 			applyRed
 			echo -e "${NOT_RUN_AS_ROOT}"
 			applyNoColor
 			su -c "backon"
 			quitTool_NoClear
+		fi
+	fi
+}
+
+function checkOS(){
+	if [[ ! "${command1}" == "--skip-check" ]]; then
+		if [[ ! "$(sw_vers -productName)" == "iPhone OS" ]]; then
+			applyRed
+			echo "${NOT_IOS}"
+			applyNoColor
+			quitTool_NoClear_Error
 		fi
 	fi
 }
@@ -1439,18 +1452,21 @@ function installUpdate(){
 
 ##############################################
 command1="${1}"
+checkRoot
 loadSettings
+if [[ -d "/var/mobile/Library/Preferences/BackOn" ]]; then
+	saveSettings
+fi
+OSVer="$(sw_vers -productVersion)"
 if [[ "${setDefaultLanguage}" == Korean ]]; then
 	setKorean
 else
 	setEnglish
 fi
-checkRoot
-if [[ -d /tmp/BackOn ]]; then
-	rm -rf /tmp/BackOn
+if [[ -d "/tmp/BackOn" ]]; then
+	rm -rf "/tmp/BackOn"
 fi
 mkdir /tmp/BackOn
-OSVer="$(sw_vers -productVersion)"
 while(true); do
 	ClearKey
 	showLinesA
