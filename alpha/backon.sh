@@ -1,8 +1,8 @@
 #!/bin/sh
 ##############################################
-# BackOn alpha-122
+# BackOn alpha-123
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=122
+TOOL_BUILD_NUM=123
 ##############################################
 
 function setEnglish(){
@@ -384,13 +384,14 @@ function openDevSettings(){
 			showLinesA
 			showPressAnyKeyToContinue
 		elif [[ "${ANSWER_D}" == save ||  "${ANSWER_D}" == s ]]; then
-			saveSettings
 			echo -e "Session was done."
+			saveSettings
 			loadSettings
 			break
 		elif [[ "${ANSWER_D}" == disable || "${ANSWER_D}" == d ]]; then
 			rm -rf /var/mobile/Library/Preferences/BackOn
 			loadSettings
+
 			break
 		elif [[ "${ANSWER_D}" == exit ]]; then
 			ExitKey
@@ -424,6 +425,11 @@ function saveSettings(){
 
 
 function loadSettings(){
+	if [[ -d "/var/mobile/Library/Preferences/BackOn" ]]; then
+		enabledODS=YES
+	else
+		enabledODS=NO
+	fi
 	if [[ -f "/var/mobile/Library/Preferences/BackOn/ExitKey" ]]; then
 		ExitKey="$(cat "/var/mobile/Library/Preferences/BackOn/ExitKey")"
 	else
@@ -1481,6 +1487,9 @@ while(true); do
 		echo -e "(3) Change to English."
 	fi
 	echo -e "(4) ${CHECK_FOR_UPDATES}"
+	if [[ "${enabledODS}" == YES ]]; then
+		echo "(ods) Open DevSettings."
+	fi
 	echo -e "(q) ${QUIT}"
 	showLinesB
 	echo -e "(${ENTER_TEXT})"
