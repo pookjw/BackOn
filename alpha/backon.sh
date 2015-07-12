@@ -1,8 +1,8 @@
 #!/bin/sh
 ##############################################
-# BackOn alpha-121
+# BackOn alpha-122
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=121
+TOOL_BUILD_NUM=122
 ##############################################
 
 function setEnglish(){
@@ -598,7 +598,7 @@ function checkOS(){
 	if [[ ! "${command1}" == "--skip-check" ]]; then
 		if [[ ! "$(sw_vers -productName)" == "iPhone OS" ]]; then
 			applyRed
-			echo "${NOT_IOS}"
+			echo -e "${NOT_IOS}"
 			applyNoColor
 			quitTool_NoClear_Error
 		fi
@@ -1451,18 +1451,19 @@ function installUpdate(){
 }
 
 ##############################################
-command1="${1}"
-checkRoot
 loadSettings
-if [[ -d "/var/mobile/Library/Preferences/BackOn" ]]; then
-	saveSettings
-fi
-OSVer="$(sw_vers -productVersion)"
 if [[ "${setDefaultLanguage}" == Korean ]]; then
 	setKorean
 else
 	setEnglish
 fi
+command1="${1}"
+checkOS
+checkRoot
+if [[ -d "/var/mobile/Library/Preferences/BackOn" ]]; then
+	saveSettings
+fi
+OSVer="$(sw_vers -productVersion)"
 if [[ -d "/tmp/BackOn" ]]; then
 	rm -rf "/tmp/BackOn"
 fi
