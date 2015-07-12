@@ -1,13 +1,14 @@
 #!/bin/sh
 ##############################################
-# BackOn beta-106
+# BackOn beta-125
 TOOL_BUILD_TYPE=beta
-TOOL_BUILD_NUM=106
+TOOL_BUILD_NUM=125
 ##############################################
 
 function setEnglish(){
 	LANGUAGE="English"
 	NOT_RUN_AS_ROOT="You didn't run as root! Please enter root password. (Initial password is 'alpine')"
+	NOT_IOS="This is not iOS."
 	ENTER_TEXT="Enter a command(1, 2, 3, 4, q) that you want to do."
 	CREATE_BACKUP="Create backup."
 	RESTORE_FROM_BACKUP="Restore from backup."
@@ -39,6 +40,7 @@ function setEnglish(){
 	SAVING="Saving..."
 	REMOVING="Removing..."
 	UNPACKING="Unpacking..."
+	CLOSING_TOOL="Closing tool..."
 	ENTER_BACKUP_PATH="Enter backup file path which you saved. (Enter 'xbackup' command to restore xBackup's backup file.)"
 	NOT_BACKON_BACKUP="This is not a BackOn's backup."
 	DONE="Done."
@@ -49,6 +51,7 @@ function setEnglish(){
 	BACKUPED_CYDIA_METADATA="Cydia metadata"
 	BACKUPED_LIBRARY="Library"
 	SUCCEED_SAVE_BACKUP="Succeed to save backup!"
+	OSVER_IS_NOT_MATCHING="Backup's iOS Version is not matching with current iOS Version. It will cause problem."
 	RESTORE_CYDIA_DATA="Restore Cydia sources and packages list."
 	RESTORE_SHOW_CYDIA_LIST="Show backuped Cydia packages list."
 	RESTORE_LIBRARY="Restore Library."
@@ -72,6 +75,7 @@ function setEnglish(){
 function setKorean(){
 	LANGUAGE="Korean"
 	NOT_RUN_AS_ROOT="root로 로그인되지 않았습니다! root 비밀번호를 입력해 주세요. (초기 비밀번호는 'alpine'입니다.)"
+	NOT_IOS="실행된 기기는 iOS가 아닙니다."
 	ENTER_TEXT="명령어(1, 2, 3, 4, q)를 입력해 주세요."
 	CREATE_BACKUP="백업 생성"
 	RESTORE_FROM_BACKUP="백업에서 복원"
@@ -103,6 +107,7 @@ function setKorean(){
 	SAVING="저장 중..."
 	REMOVING="삭제 중..."
 	UNPACKING="압축해제 중..."
+	CLOSING_TOOL="툴 종료 중..."
 	ENTER_BACKUP_PATH="백업 파일의 경로를 입력해 주세요. ('xbakcup' 명령어를 입력하시면 xBackup의 백업 파일을 복원합니다.)"
 	NOT_BACKON_BACKUP="이것은 BackOn의 백업 파일이 아닙니다."
 	DONE="완료"
@@ -113,6 +118,7 @@ function setKorean(){
 	BACKUPED_CYDIA_METADATA="Cydia metadata"
 	BACKUPED_LIBRARY="Library"
 	SUCCEED_SAVE_BACKUP="백업에 성공했습니다!"
+	OSVER_IS_NOT_MATCHING="백업할 때의 iOS 버전이 현재 기기의 iOS 버전과 일치하지 않습니다. 이것은 문제를 야기할 수 있습니다."
 	RESTORE_CYDIA_DATA="Cydia 소스, 패키지 복원"
 	RESTORE_SHOW_CYDIA_LIST="백업한 Cydia 패키지 목록 보기"
 	RESTORE_LIBRARY="Library 복원"
@@ -180,11 +186,6 @@ function openDevSettings(){
 		fi
 		echo -e "(12) switchLanguage (Current : ${LANGUAGE})"
 		echo -e "(13) setDefaultLanguage : ${setDefaultLanguage}"
-		if [[ "${skipCheckRoot}" == YES ]]; then
-			echo -e "(14) skipCheckRoot : YES"
-		elif [[ "${skipCheckRoot}" == NO ]]; then
-			echo -e "(14) skipCheckRoot : NO"
-		fi
 		if [[ "${runUpdateODS}" == YES ]]; then
 			echo -e "(15) runUpdateODS : YES"
 		elif [[ "${runUpdateODS}" == NO ]]; then
@@ -197,6 +198,11 @@ function openDevSettings(){
 			echo -e "(19) applyColorScheme : YES"
 		elif [[ "${applyColorScheme}" == NO ]]; then
 			echo -e "(19) applyColorScheme : NO"
+		fi
+		if [[ "${DynamicLine}" == YES ]]; then
+			echo -e "(20) DynamicLine : YES"
+		elif [[ "${DynamicLine}" == NO ]]; then
+			echo -e "(20) DynamicLine : NO"
 		fi
 		echo -e "(l) ls"
 		echo -e "(s) Save Settings."
@@ -321,12 +327,6 @@ function openDevSettings(){
 					break
 				fi
 			done
-		elif [[ "${ANSWER_D}" == 14 ]]; then
-			if [[ "${skipCheckRoot}" == YES ]]; then
-				skipCheckRoot=NO
-			elif [[ "${skipCheckRoot}" == NO ]]; then
-				skipCheckRoot=YES
-			fi
 		elif [[ "${ANSWER_D}" == 15 ]]; then
 			if [[ "${runUpdateODS}" == YES ]]; then
 				runUpdateODS=NO
@@ -349,6 +349,12 @@ function openDevSettings(){
 				applyColorScheme=NO
 			elif [[ "${applyColorScheme}" == NO ]]; then
 				applyColorScheme=YES
+			fi
+		elif [[ "${ANSWER_D}" == 20 ]]; then
+			if [[ "${DynamicLine}" == YES ]]; then
+				DynamicLine=NO
+			elif [[ "${DynamicLine}" == NO ]]; then
+				DynamicLine=YES
 			fi
 		elif [[ "${ANSWER_D}" == l || "${ANSWER_D}" == ls ]]; then
 			ClearKey
@@ -378,13 +384,14 @@ function openDevSettings(){
 			showLinesA
 			showPressAnyKeyToContinue
 		elif [[ "${ANSWER_D}" == save ||  "${ANSWER_D}" == s ]]; then
-			saveSettings
 			echo -e "Session was done."
+			saveSettings
 			loadSettings
 			break
 		elif [[ "${ANSWER_D}" == disable || "${ANSWER_D}" == d ]]; then
 			rm -rf /var/mobile/Library/Preferences/BackOn
 			loadSettings
+
 			break
 		elif [[ "${ANSWER_D}" == exit ]]; then
 			ExitKey
@@ -406,19 +413,23 @@ function saveSettings(){
 	echo -e "${showPA2C}" >> /var/mobile/Library/Preferences/BackOn/showPA2C
 	echo -e "${skipRestore}" >> /var/mobile/Library/Preferences/BackOn/skipRestore
 	echo -e "${UpdateURL}" >> /var/mobile/Library/Preferences/BackOn/UpdateURL
-	echo -e "${OSVer}" >> /var/mobile/Library/Preferences/BackOn/OSVer
 	echo -e "${UpdateBuildType}" >> /var/mobile/Library/Preferences/BackOn/UpdateBuildType
 	echo -e "${ForceInstallUpdate}" >> /var/mobile/Library/Preferences/BackOn/ForceInstallUpdate
 	echo -e "${BackupPath}" >> /var/mobile/Library/Preferences/BackOn/BackupPath
 	echo -e "${ClearKey}" >> /var/mobile/Library/Preferences/BackOn/ClearKey
 	echo -e "${setDefaultLanguage}" >> /var/mobile/Library/Preferences/BackOn/setDefaultLanguage
-	echo -e "${skipCheckRoot}" >> /var/mobile/Library/Preferences/BackOn/skipCheckRoot
 	echo -e "${runUpdateODS}" >> /var/mobile/Library/Preferences/BackOn/runUpdateODS
 	echo -e "${applyColorScheme}" >> /var/mobile/Library/Preferences/BackOn/applyColorScheme
+	echo -e "${DynamicLine}" >> /var/mobile/Library/Preferences/BackOn/DynamicLine
 }
 
 
 function loadSettings(){
+	if [[ -d "/var/mobile/Library/Preferences/BackOn" ]]; then
+		enabledODS=YES
+	else
+		enabledODS=NO
+	fi
 	if [[ -f "/var/mobile/Library/Preferences/BackOn/ExitKey" ]]; then
 		ExitKey="$(cat "/var/mobile/Library/Preferences/BackOn/ExitKey")"
 	else
@@ -427,7 +438,11 @@ function loadSettings(){
 	if [[ -f "/var/mobile/Library/Preferences/BackOn/showLog" ]]; then
 		showLog="$(cat "/var/mobile/Library/Preferences/BackOn/showLog")"
 	else
-		showLog=YES
+		if [[ "${TOOL_BUILD_TYPE}" == alpha ]]; then
+			showLog=YES
+		else
+			showLog=NO
+		fi
 	fi
 	if [[ -f "/var/mobile/Library/Preferences/BackOn/showPA2C" ]]; then
 		showPA2C="$(cat "/var/mobile/Library/Preferences/BackOn/showPA2C")"
@@ -443,11 +458,6 @@ function loadSettings(){
 		UpdateURL="$(cat "/var/mobile/Library/Preferences/BackOn/UpdateURL")"
 	else
 		UpdateURL="https://github.com/pookjw/BackOn/archive/master.zip"
-	fi
-	if [[ -f "/var/mobile/Library/Preferences/BackOn/OSVer" ]]; then
-		OSVer="$(cat "/var/mobile/Library/Preferences/BackOn/OSVer")"
-	else
-		OSVer="$(sw_vers -productVersion)"
 	fi
 	if [[ -f "/var/mobile/Library/Caches/libactivator.plist" ]]; then
 		MakeFakeActivatorFile=YES
@@ -479,11 +489,6 @@ function loadSettings(){
 	else
 		setDefaultLanguage=English
 	fi
-	if [[ -f "/var/mobile/Library/Preferences/BackOn/skipCheckRoot" ]]; then
-		skipCheckRoot="$(cat "/var/mobile/Library/Preferences/BackOn/skipCheckRoot")"
-	else
-		skipCheckRoot=NO
-	fi
 	if [[ -f "/var/mobile/Library/Preferences/BackOn/runUpdateODS" ]]; then
 		runUpdateODS="$(cat "/var/mobile/Library/Preferences/BackOn/runUpdateODS")"
 	else
@@ -494,26 +499,39 @@ function loadSettings(){
 	else
 		applyColorScheme=YES
 	fi
+	if [[ -f "/var/mobile/Library/Preferences/BackOn/DynamicLine" ]]; then
+		DynamicLine="$(cat "/var/mobile/Library/Preferences/BackOn/DynamicLine")"
+	else
+		DynamicLine=YES
+	fi
 }
 
 function showLinesA(){
-	PRINTED_COUNTS=0
-	COLS=`tput cols`
-	while [[ ! ${PRINTED_COUNTS} == $COLS ]]; do
-   		echo -e -n "*"
- 		PRINTED_COUNTS=$(($PRINTED_COUNTS+1))
-	done
-	echo -e
+	if [[ "${DynamicLine}" == YES ]]; then
+		PRINTED_COUNTS=0
+		COLS=`tput cols`
+		while [[ ! ${PRINTED_COUNTS} == $COLS ]]; do
+	   		echo -e -n "*"
+	 		PRINTED_COUNTS=$(($PRINTED_COUNTS+1))
+		done
+		echo -e
+	else
+		echo "***************"
+	fi
 }
 
 function showLinesB(){
-	PRINTED_COUNTS=0
-	COLS=`tput cols`
-	while [[ ! ${PRINTED_COUNTS} == $COLS ]]; do
-   		echo -e -n "-"
- 		PRINTED_COUNTS=$((${PRINTED_COUNTS}+1))
-	done
-	echo -e
+	if [[ "${DynamicLine}" == YES ]]; then
+		PRINTED_COUNTS=0
+		COLS=`tput cols`
+		while [[ ! ${PRINTED_COUNTS} == $COLS ]]; do
+	   		echo -e -n "-"
+	 		PRINTED_COUNTS=$((${PRINTED_COUNTS}+1))
+		done
+		echo -e
+	else
+		echo "---------------"
+	fi
 }
 
 function applyRed(){
@@ -522,7 +540,7 @@ function applyRed(){
 	fi
 }
 
-function applyLightGreen(){
+function applyPurple(){
 	if [[ "${applyColorScheme}" == YES ]]; then
 		echo -e -n "\033[1;35m"
 	fi
@@ -575,17 +593,24 @@ function ClearKey(){
 }
 
 function checkRoot(){
-	if [[ ! "${skipCheckRoot}" == YES ]]; then
-		if [ "$(id -u)" != "0" ]; then
+	if [[ ! "${command1}" == "--skip-check" ]]; then
+		if [[ ! "$(id -u)" == "0" ]]; then
 			applyRed
 			echo -e "${NOT_RUN_AS_ROOT}"
 			applyNoColor
-			if [[ "${InitialRunDevSettings}" == YES ]]; then
-				su -c "backon -ods"
-			else
-				su -c "backon"
-			fi
+			su -c "backon"
 			quitTool_NoClear
+		fi
+	fi
+}
+
+function checkOS(){
+	if [[ ! "${command1}" == "--skip-check" ]]; then
+		if [[ ! "$(sw_vers -productName)" == "iPhone OS" ]]; then
+			applyRed
+			echo -e "${NOT_IOS}"
+			applyNoColor
+			quitTool_NoClear_Error
 		fi
 	fi
 }
@@ -602,7 +627,7 @@ function killMobileCydia(){
 	ps cax | grep MobileCydia > /dev/null
 	if [ $? -eq 0 ]; then
 		if [[ "${showLog}" == YES ]]; then
-			applyLightGreen
+			applyPurple
 			echo -e "Killing MobileCydia..."
 			applyNoColor
 		fi
@@ -614,6 +639,7 @@ function quitTool(){
 	ClearKey
 	applyNoColor
 	if [[ -d /tmp/BackOn ]]; then
+		echo "${CLOSING_TOOL}"
 		rm -rf /tmp/BackOn
 	fi
 	exit 0
@@ -623,6 +649,7 @@ function quitTool_Error(){
 	ClearKey
 	applyNoColor
 	if [[ -d /tmp/BackOn ]]; then
+		echo "${CLOSING_TOOL}"
 		rm -rf /tmp/BackOn
 	fi
 	exit 1
@@ -631,6 +658,7 @@ function quitTool_Error(){
 function quitTool_NoClear(){
 	applyNoColor
 	if [[ -d /tmp/BackOn ]]; then
+		echo "${CLOSING_TOOL}"
 		rm -rf /tmp/BackOn
 	fi
 	exit 0
@@ -639,6 +667,7 @@ function quitTool_NoClear(){
 function quitTool_NoClear_Error(){
 	applyNoColor
 	if [[ -d /tmp/BackOn ]]; then
+		echo "${CLOSING_TOOL}"
 		rm -rf /tmp/BackOn
 	fi
 	exit 1
@@ -789,7 +818,7 @@ function backupLibrary(){
 			if [[ "${ANSWER_E}" == all ]]; then
 				echo -e "${BACKING_UP}"
 				if [[ "${showLog}" == YES ]]; then
-					applyLightGreen
+					applyPurple
 					rsync -av --exclude="Assets" --exclude="Caches" --exclude="Filza" --exclude="Preferences/BackupAZ" /var/mobile/Library/* "/tmp/BackOn/${BACKUP_NAME}/Library"
 					applyNoColor
 				else
@@ -801,7 +830,7 @@ function backupLibrary(){
 					fi
 					cp /var/mobile/Library/Caches/libactivator.plist "/tmp/BackOn/${BACKUP_NAME}/Library/Caches"
 					if [[ "${showLog}" == YES ]]; then
-						applyLightGreen
+						applyPurple
 						echo -e "Backuped libactivator.plist."
 						applyNoColor
 					fi
@@ -872,7 +901,7 @@ function backupLibrary(){
 				done
 			elif [[ "${ANSWER_E}" == Preferences ]]; then
 				if [[ "${showLog}" == YES ]]; then
-					applyLightGreen
+					applyPurple
 					echo -e "Special backup."
 					applyNoColor
 				fi
@@ -881,7 +910,7 @@ function backupLibrary(){
 					mkdir "/tmp/BackOn/${BACKUP_NAME}/Library/Preferences"
 				fi
 				if [[ "${showLog}" == YES ]]; then
-					applyLightGreen
+					applyPurple
 					rsync -av --exclude="BackupAZ" /var/mobile/Library/Preferences/* "/tmp/BackOn/${BACKUP_NAME}/Library/Preferences"
 					applyNoColor
 				else
@@ -978,7 +1007,7 @@ function saveBackup(){
 		echo -e "${OSVer}" >> info/OSVersion
 		echo -e "${SAVING}"
 		if [[ "${showLog}" == YES ]]; then
-			applyLightGreen
+			applyPurple
 			zip -r "${BackupPath}/${ANSWER_B}.zip" *
 			applyNoColor
 		else
@@ -1055,7 +1084,7 @@ function defineBackupPath(){
 function unzipBackup(){
 	echo -e "${UNPACKING}"
 	if [[ "${showLog}" == YES ]]; then
-		applyLightGreen
+		applyPurple
 		unzip "${ToRestoreBackupPath}" -d /tmp/BackOn/Restore
 		applyNoColor
 	else
@@ -1067,7 +1096,7 @@ function convertOldBackup(){
 	for File in "apt.txt" "cydia.list" "metadata.plist"; do
 		if [[ -f "/tmp/BackOn/Restore/${File}" ]]; then
 			if [[ "${showLog}" == YES ]]; then
-				applyLightGreen
+				applyPurple
 				echo -e "Converting ${File}..."
 				applyNoColor
 			fi
@@ -1079,24 +1108,32 @@ function convertOldBackup(){
 	done
 	if [[ -f "/tmp/BackOn/Restore/Cydia/metadata.plist" ]]; then
 		if [[ "${showLog}" == YES ]]; then
-			applyLightGreen
+			applyPurple
 			echo -e "Converting metadata.cb0..."
 			applyNoColor
 		fi
 		mv "/tmp/BackOn/Restore/Cydia/metadata.plist" "/tmp/BackOn/Restore/Cydia/metadata.cb0"
+	fi
+	if [[ -f "/tmp/BackOn/Restore/info/ios_version" ]]; then
+		if [[ "${showLog}" == YES ]]; then
+			applyPurple
+			echo -e "Converting ios_version..."
+			applyNoColor
+		fi
+		mv "/tmp/BackOn/Restore/info/ios_version" "/tmp/BackOn/Restore/info/OSVersion"
 	fi
 }
 
 function convertxBackup(){
 	if [[ -d "/tmp/BackOn/Restore/var" ]]; then
 		if [[ "${showLog}" == YES ]]; then
-			applyLightGreen
+			applyPurple
 			echo -e "Running convertxBackup... (xBackup)"
 			applyNoColor
 		fi
 		if [[ -f "/tmp/BackOn/Restore/var/mobile/Library/xBackup/Backups/backup.bk" ]]; then
 			if [[ "${showLog}" == YES ]]; then
-				applyLightGreen
+				applyPurple
 				echo -e "Converting backup.bk..."
 				applyNoColor
 			fi
@@ -1107,7 +1144,7 @@ function convertxBackup(){
 		fi
 		if [[ -f "/tmp/BackOn/Restore/var/mobile/Library/xBackup/Backups/backup.bk.list" ]]; then
 			if [[ "${showLog}" == YES ]]; then
-				applyLightGreen
+				applyPurple
 				echo -e "Converting backup.bk.list..."
 				applyNoColor
 			fi
@@ -1118,7 +1155,7 @@ function convertxBackup(){
 		fi
 		if [[ -f "/tmp/BackOn/Restore/var/mobile/Library/xBackup/Backups/backup.bk.meta" ]]; then
 			if [[ "${showLog}" == YES ]]; then
-				applyLightGreen
+				applyPurple
 				echo -e "Converting backup.bk.meta..."
 				applyNoColor
 			fi
@@ -1129,7 +1166,7 @@ function convertxBackup(){
 		fi
 		if [[ -f "/tmp/BackOn/Restore/var/mobile/Library/xBackup/Backups/backup.bk.icon" ]]; then
 			if [[ "${showLog}" == YES ]]; then
-				applyLightGreen
+				applyPurple
 				echo -e "Converting backup.bk.icon..."
 				applyNoColor
 			fi
@@ -1143,7 +1180,7 @@ function convertxBackup(){
 		fi
 		if [[ -d "/tmp/BackOn/Restore/var/mobile/Library/xBackup/Backups/backup.bk.prefs" ]]; then
 			if [[ "${showLog}" == YES ]]; then
-				applyLightGreen
+				applyPurple
 				echo -e "Converting backup.bk.prefs..."
 				applyNoColor
 			fi
@@ -1153,6 +1190,18 @@ function convertxBackup(){
 			mv "/tmp/BackOn/Restore/var/mobile/Library/xBackup/Backups/backup.bk.prefs" "/tmp/BackOn/Restore/Library/Preferences"
 		fi
 		rm -rf "/tmp/BackOn/Restore/var"
+	fi
+}
+
+function checkiOSVerMatching(){
+	if [[ -f "/tmp/BackOn/Restore/info/OSVersion" ]]; then
+		if [[ ! "${OSVer}" == "$(cat "/tmp/BackOn/Restore/info/OSVersion")" ]]; then
+			ClearKey
+			showLinesA
+			echo "${OSVER_IS_NOT_MATCHING}"
+			showLinesA
+			showPressAnyKeyToContinue
+		fi
 	fi
 }
 
@@ -1231,14 +1280,14 @@ function restoreCydia(){
 		killMobileCydia
 		echo -e "${RESTORING}"
 		if [[ "${showLog}" == YES ]]; then
-			applyLightGreen
+			applyPurple
 			echo -e "Restoring : sources.list.d"
 			applyNoColor
 		fi
 		cp "/tmp/BackOn/Restore/Cydia/cydia.list" "/etc/apt/sources.list.d"
 		chmod 755 "/etc/apt/sources.list.d"
 		if [[ "${showLog}" == YES ]]; then
-			applyLightGreen
+			applyPurple
 			echo -e "Restoring : metadata.cb0"
 			applyNoColor
 		fi
@@ -1246,7 +1295,7 @@ function restoreCydia(){
 		chmod 755 "/var/mobile/Library/Cydia/metadata.cb0"
 		PA2CKey
 		if [[ "${showLog}" == YES ]]; then
-			applyLightGreen
+			applyPurple
 			apt-get update
 			dpkg --set-selections < "/tmp/BackOn/Restore/Cydia/apt.txt"
 			apt-get -y --force-yes -u dselect-upgrade
@@ -1357,7 +1406,7 @@ function installUpdate(){
 		fi
 		mkdir "/tmp/BackOn/Update"
 		if [[ "${showLog}" == YES ]]; then
-			applyLightGreen
+			applyPurple
 			wget --no-check-certificate --output-document=/tmp/BackOn/Update/master.zip "${UpdateURL}"
 			applyNoColor
 		else
@@ -1366,7 +1415,7 @@ function installUpdate(){
 		PA2CKey
 		if [[ -f "/tmp/BackOn/Update/master.zip" ]]; then
 			if [[ "${showLog}" == YES ]]; then
-				applyLightGreen
+				applyPurple
 				unzip "/tmp/BackOn/Update/master.zip" -d "/tmp/BackOn/Update/master"
 				applyNoColor
 			else
@@ -1384,7 +1433,7 @@ function installUpdate(){
 					fi
 				fi
 				if [[ "${showLog}" == YES ]]; then
-					applyLightGreen
+					applyPurple
 					echo -e "Downloaded : $(cat "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/build") / Current : ${TOOL_BUILD_NUM}"
 					applyNoColor
 					PA2CKey
@@ -1418,13 +1467,15 @@ if [[ "${setDefaultLanguage}" == Korean ]]; then
 else
 	setEnglish
 fi
-if [[ "${1}" == "-ods" ]]; then
-	InitialRunDevSettings=YES
-	openDevSettings
-fi
+command1="${1}"
+checkOS
 checkRoot
-if [[ -d /tmp/BackOn ]]; then
-	rm -rf /tmp/BackOn
+if [[ -d "/var/mobile/Library/Preferences/BackOn" ]]; then
+	saveSettings
+fi
+OSVer="$(sw_vers -productVersion)"
+if [[ -d "/tmp/BackOn" ]]; then
+	rm -rf "/tmp/BackOn"
 fi
 mkdir /tmp/BackOn
 while(true); do
@@ -1440,6 +1491,9 @@ while(true); do
 		echo -e "(3) Change to English."
 	fi
 	echo -e "(4) ${CHECK_FOR_UPDATES}"
+	if [[ "${enabledODS}" == YES ]]; then
+		echo "(ods) Open DevSettings."
+	fi
 	echo -e "(q) ${QUIT}"
 	showLinesB
 	echo -e "(${ENTER_TEXT})"
@@ -1451,7 +1505,7 @@ while(true); do
 	if [[ "${ANSWER_A}" == 1 ]]; then
 		defineBackupName
 		if [[ "${showLog}" == YES ]]; then
-			applyLightGreen
+			applyPurple
 			echo -e "${WILL_CREATE_BACKUP_NAME} : ${BACKUP_NAME}"
 			applyNoColor
 			PA2CKey
@@ -1460,7 +1514,7 @@ while(true); do
 	elif [[ "${ANSWER_A}" == 2 ]]; then
 		defineBackupPath
 		if [[ "${showLog}" == YES ]]; then
-			applyLightGreen
+			applyPurple
 			echo -e "Recognized backup file path : ${ToRestoreBackupPath}"
 			applyNoColor
 			showPressAnyKeyToContinue
@@ -1479,6 +1533,7 @@ while(true); do
 			applyNoColor
 			quitTool_NoClear_Error
 		fi
+		checkiOSVerMatching
 		showInitialRestoreMenu
 	elif [[ "${ANSWER_A}" == 3 ]]; then
 		switchLanguage
