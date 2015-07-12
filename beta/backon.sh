@@ -1,8 +1,8 @@
 #!/bin/sh
 ##############################################
-# BackOn beta-125
+# BackOn beta-126
 TOOL_BUILD_TYPE=beta
-TOOL_BUILD_NUM=125
+TOOL_BUILD_NUM=126
 ##############################################
 
 function setEnglish(){
@@ -1117,7 +1117,7 @@ function convertOldBackup(){
 	if [[ -f "/tmp/BackOn/Restore/info/ios_version" ]]; then
 		if [[ "${showLog}" == YES ]]; then
 			applyPurple
-			echo -e "Converting ios_version..."
+			echo -e "Converting OSVersion..."
 			applyNoColor
 		fi
 		mv "/tmp/BackOn/Restore/info/ios_version" "/tmp/BackOn/Restore/info/OSVersion"
