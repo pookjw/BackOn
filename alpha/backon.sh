@@ -1,5 +1,9 @@
 #!/bin/sh
 ##############################################
+# Kim Jinwoo - pookjw
+# kidjinwoo@me.com
+# GitHub : https://github.com/pookjw
+##############################################
 # BackOn alpha-128
 TOOL_BUILD_TYPE=alpha
 TOOL_BUILD_NUM=128

@@ -1,8 +1,12 @@
 #!/bin/sh
 ##############################################
-# BackOn beta-127
+# Kim Jinwoo - pookjw
+# kidjinwoo@me.com
+# GitHub : https://github.com/pookjw
+##############################################
+# BackOn beta-129
 TOOL_BUILD_TYPE=beta
-TOOL_BUILD_NUM=127
+TOOL_BUILD_NUM=129
 ##############################################
 
 function setEnglish(){
@@ -593,25 +597,25 @@ function ClearKey(){
 }
 
 function checkRoot(){
-	if [[ ! "${command1}" == "--skip-check" ]]; then
-		if [[ ! "$(id -u)" == "0" ]]; then
-			applyRed
-			echo -e "${NOT_RUN_AS_ROOT}"
-			applyNoColor
+	if [[ ! "$(id -u)" == "0" ]]; then
+		applyRed
+		echo -e "${NOT_RUN_AS_ROOT}"
+		applyNoColor
+		if [[ -z "${command1}" ]]; then
 			su -c "backon"
-			quitTool_NoClear
+		else
+			su -c "backon ${command1}"
 		fi
+		quitTool_NoClear
 	fi
 }
 
 function checkOS(){
-	if [[ ! "${command1}" == "--skip-check" ]]; then
-		if [[ ! "$(sw_vers -productName)" == "iPhone OS" ]]; then
-			applyRed
-			echo -e "${NOT_IOS}"
-			applyNoColor
-			quitTool_NoClear_Error
-		fi
+	if [[ ! "$(sw_vers -productName)" == "iPhone OS" ]]; then
+		applyRed
+		echo -e "${NOT_IOS}"
+		applyNoColor
+		quitTool_NoClear_Error
 	fi
 }
 
@@ -1478,6 +1482,9 @@ if [[ -d "/tmp/BackOn" ]]; then
 	rm -rf "/tmp/BackOn"
 fi
 mkdir /tmp/BackOn
+if [[ "${1}" == "-ods" ]]; then
+	openDevSettings
+fi
 while(true); do
 	ClearKey
 	showLinesA
