@@ -1,8 +1,8 @@
 #!/bin/sh
 ##############################################
-# BackOn alpha-124
+# BackOn alpha-128
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=124
+TOOL_BUILD_NUM=128
 ##############################################
 
 function setEnglish(){
@@ -593,25 +593,25 @@ function ClearKey(){
 }
 
 function checkRoot(){
-	if [[ ! "${command1}" == "--skip-check" ]]; then
-		if [[ ! "$(id -u)" == "0" ]]; then
-			applyRed
-			echo -e "${NOT_RUN_AS_ROOT}"
-			applyNoColor
+	if [[ ! "$(id -u)" == "0" ]]; then
+		applyRed
+		echo -e "${NOT_RUN_AS_ROOT}"
+		applyNoColor
+		if [[ -z "${command1}" ]]; then
 			su -c "backon"
-			quitTool_NoClear
+		else
+			su -c "backon ${command1}"
 		fi
+		quitTool_NoClear
 	fi
 }
 
 function checkOS(){
-	if [[ ! "${command1}" == "--skip-check" ]]; then
-		if [[ ! "$(sw_vers -productName)" == "iPhone OS" ]]; then
-			applyRed
-			echo -e "${NOT_IOS}"
-			applyNoColor
-			quitTool_NoClear_Error
-		fi
+	if [[ ! "$(sw_vers -productName)" == "iPhone OS" ]]; then
+		applyRed
+		echo -e "${NOT_IOS}"
+		applyNoColor
+		quitTool_NoClear_Error
 	fi
 }
 
@@ -1117,7 +1117,7 @@ function convertOldBackup(){
 	if [[ -f "/tmp/BackOn/Restore/info/ios_version" ]]; then
 		if [[ "${showLog}" == YES ]]; then
 			applyPurple
-			echo -e "Converting ios_version..."
+			echo -e "Converting OSVersion..."
 			applyNoColor
 		fi
 		mv "/tmp/BackOn/Restore/info/ios_version" "/tmp/BackOn/Restore/info/OSVersion"
@@ -1478,6 +1478,9 @@ if [[ -d "/tmp/BackOn" ]]; then
 	rm -rf "/tmp/BackOn"
 fi
 mkdir /tmp/BackOn
+if [[ "${1}" == "-ods" ]]; then
+	openDevSettings
+fi
 while(true); do
 	ClearKey
 	showLinesA
