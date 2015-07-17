@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-134
+# BackOn alpha-135
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=134
+TOOL_BUILD_NUM=135
 ##############################################
 
 function setEnglish(){
@@ -76,7 +76,7 @@ function setEnglish(){
 	SHOW_INFO_8="Restore Menu > Restore Cydia sources and packages list"
 	SHOW_INFO_9="Restore Menu > Show backuped Cydia packages list."
 	SHOW_INFO_10="Restore Menu > Restore Library"
-	SHOW_INFO_11="Restore Menu > Restore all of Library."
+	SHOW_INFO_11="Restore Menu > Restore Library > Restore all of Library."
 }
 
 function setKorean(){
@@ -146,7 +146,7 @@ function setKorean(){
 	SHOW_INFO_8="복원 메뉴 > Cydia 소스, 패키지 복원"
 	SHOW_INFO_9="복원 메뉴 > 백업한 Cydia 패키지 목록 보기"
 	SHOW_INFO_10="복원 메뉴 > Library 복원"
-	SHOW_INFO_11="복원 메뉴 > Library 모두 복원"
+	SHOW_INFO_11="복원 메뉴 > Library 복원 > Library 모두 복원"
 }
 
 function openDevSettings(){
