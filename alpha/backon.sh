@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-130
+# BackOn alpha-132
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=130
+TOOL_BUILD_NUM=132
 ##############################################
 
 function setEnglish(){
@@ -50,6 +50,7 @@ function setEnglish(){
 	DONE="Done."
 	YES="YES"
 	NO="NO"
+	CANCELED="Canceled"
 	BACKUPED_CYDIA_PACKAGES_LIST="Cydia packages list"
 	BACKUPED_CYDIA_SOURCE="Cydia source"
 	BACKUPED_CYDIA_METADATA="Cydia metadata"
@@ -61,6 +62,7 @@ function setEnglish(){
 	RESTORE_LIBRARY="Restore Library."
 	REBOOT="Reboot."
 	RESTORING="Restoring..."
+	RESTORING_ALL_IS_NOT_RECOMMENDED="Restoring all Library files is not recommended bacause it may causes boot-loop. Are you sure to continue? (yes/no)"
 	SHOW_GUIDE_3="Enter file/folder name that you want to backup. If you want to backup all of files, enter 'all' command. Enter 'delete' command to delete backuped backup."
 	SHOW_GUIDE_4="Enter file/folder name that you want to delete backup. If you want to delete all of backup files, enter 'all' command."
 	SHOW_GUIDE_10="Enter file/folder name that you want to restore. If you want to restore all of files, enter 'all' command."
@@ -74,6 +76,7 @@ function setEnglish(){
 	SHOW_INFO_8="Restore Menu > Restore Cydia sources and packages list"
 	SHOW_INFO_9="Restore Menu > Show backuped Cydia packages list."
 	SHOW_INFO_10="Restore Menu > Restore Library"
+	SHOW_INFO_11="Restore Menu > Restore all of Library."
 }
 
 function setKorean(){
@@ -117,6 +120,7 @@ function setKorean(){
 	DONE="완료"
 	YES="예"
 	NO="아니오"
+	CANCELED="취소되었습니다."
 	BACKUPED_CYDIA_PACKAGES_LIST="Cydia 패키지 목록"
 	BACKUPED_CYDIA_SOURCE="Cydia 소스"
 	BACKUPED_CYDIA_METADATA="Cydia metadata"
@@ -128,6 +132,7 @@ function setKorean(){
 	RESTORE_LIBRARY="Library 복원"
 	REBOOT="재부팅"
 	RESTORING="복원 중..."
+	RESTORING_ALL_IS_NOT_RECOMMENDED="Library를 모두 복원하는 것은 무한사과 (부팅불가)의 위험이 있기 때문에 추천하지 않습니다. 복원하시겠습니까? (yes/no)"
 	SHOW_GUIDE_3="백업을 원하는 폴더/파일의 이름을 입력하시면 백업됩니다. 'all'을 입력하면 모두 백업할 수 있습니다. 'delete' 명령어로 백업한 백업 파일을 삭제할 수 있습니다."
 	SHOW_GUIDE_4="삭제를 원하는 폴더/파일의 이름을 입력하시면 됩니다. 'all'을 입력하면 모두 지울 수 있습니다."
 	SHOW_GUIDE_10="복원을 원하는 폴더/파일의 이름을 입력하시면 복원됩니다. 'all'을 입력하면 모두 복원할 수 있습니다."
@@ -141,6 +146,7 @@ function setKorean(){
 	SHOW_INFO_8="복원 메뉴 > Cydia 소스, 패키지 복원"
 	SHOW_INFO_9="복원 메뉴 > 백업한 Cydia 패키지 목록 보기"
 	SHOW_INFO_10="복원 메뉴 > Library 복원"
+	SHOW_INFO_11="복원 메뉴 > Library 모두 복원"
 }
 
 function openDevSettings(){
@@ -1345,16 +1351,36 @@ function restoreLibrary(){
 		elif [[ "${ANSWER_I}" == exit ]]; then
 			ExitKey
 		elif [[ "${ANSWER_I}" == all ]]; then
-			if [[ "${skipRestore}" == YES ]]; then
-				echo -e "Skipped."
-				showPressAnyKeyToContinue
-			else
-				echo -e "${RESTORING}"
-				cp -r /tmp/BackOn/Restore/Library/* "/var/mobile/Library"
-				chmod -R 755 /var/mobile/Library
-				echo -e "${DONE}"
-				showPressAnyKeyToContinue
-			fi
+			while(true); do
+				ClearKey
+				showLinesA
+				echo -e "${SHOW_INFO_11}"
+				showLinesB
+				echo -e "${RESTORING_ALL_IS_NOT_RECOMMENDED}"
+				showLinesA
+				applyLightCyan
+				read -p "- " ANSWER_K
+				applyNoColor
+
+				if [[ "${ANSWER_K}" == yes ]]; then
+					if [[ "${skipRestore}" == YES ]]; then
+						echo -e "Skipped."
+						showPressAnyKeyToContinue
+					else
+						echo -e "${RESTORING}"
+						cp -r /tmp/BackOn/Restore/Library/* "/var/mobile/Library"
+						chmod -R 755 /var/mobile/Library
+						echo -e "${DONE}"
+						showPressAnyKeyToContinue
+					fi
+				elif [[ "${ANSWER_K}" == no ]]; then
+					echo "${CANCELED}"
+					showPressAnyKeyToContinue
+					break
+				else
+					showNotSupportedFunction
+				fi
+			done
 		elif [[ -z "${ANSWER_I}" ]]; then
 			:
 		elif [[ -f "/tmp/BackOn/Restore/Library/${ANSWER_I}" ]]; then
