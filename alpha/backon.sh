@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-132
+# BackOn alpha-133
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=132
+TOOL_BUILD_NUM=133
 ##############################################
 
 function setEnglish(){
@@ -1373,6 +1373,7 @@ function restoreLibrary(){
 						echo -e "${DONE}"
 						showPressAnyKeyToContinue
 					fi
+					break
 				elif [[ "${ANSWER_K}" == no ]]; then
 					echo "${CANCELED}"
 					showPressAnyKeyToContinue
