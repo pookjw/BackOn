@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-128
+# BackOn alpha-130
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=128
+TOOL_BUILD_NUM=130
 ##############################################
 
 function setEnglish(){
@@ -416,7 +416,6 @@ function saveSettings(){
 	echo -e "${showLog}" >> /var/mobile/Library/Preferences/BackOn/showLog
 	echo -e "${showPA2C}" >> /var/mobile/Library/Preferences/BackOn/showPA2C
 	echo -e "${skipRestore}" >> /var/mobile/Library/Preferences/BackOn/skipRestore
-	echo -e "${UpdateURL}" >> /var/mobile/Library/Preferences/BackOn/UpdateURL
 	echo -e "${UpdateBuildType}" >> /var/mobile/Library/Preferences/BackOn/UpdateBuildType
 	echo -e "${ForceInstallUpdate}" >> /var/mobile/Library/Preferences/BackOn/ForceInstallUpdate
 	echo -e "${BackupPath}" >> /var/mobile/Library/Preferences/BackOn/BackupPath
@@ -457,11 +456,6 @@ function loadSettings(){
 		skipRestore="$(cat "/var/mobile/Library/Preferences/BackOn/skipRestore")"
 	else
 		skipRestore=NO
-	fi
-	if [[ -f "/var/mobile/Library/Preferences/BackOn/UpdateURL" ]]; then
-		UpdateURL="$(cat "/var/mobile/Library/Preferences/BackOn/UpdateURL")"
-	else
-		UpdateURL="https://github.com/pookjw/BackOn/archive/master.zip"
 	fi
 	if [[ -f "/var/mobile/Library/Caches/libactivator.plist" ]]; then
 		MakeFakeActivatorFile=YES
@@ -1478,6 +1472,7 @@ if [[ -d "/var/mobile/Library/Preferences/BackOn" ]]; then
 	saveSettings
 fi
 OSVer="$(sw_vers -productVersion)"
+UpdateURL="https://github.com/pookjw/BackOn/archive/master.zip"
 if [[ -d "/tmp/BackOn" ]]; then
 	rm -rf "/tmp/BackOn"
 fi
