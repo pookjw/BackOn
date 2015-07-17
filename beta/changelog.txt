@@ -1,0 +1,5 @@
+*beta-131
+-(Fixed) UpdateURL과 관련한 보안 문제 수정.
+이전 버전에서는 /var/mobile/Library/Preferences/BackOn/UpdateURL 파일에 악성 바이너리의 다운로드 링크가 포함된 zip을 기록해놓고 BackOn의 업데이트 기능을 실행하면 악성 바이너리가 바로 자동으로 실행되어 문제가 있다고 판단하여 /var/mobile/Library/Preferences/BackOn/UpdateURL를 지웠습니다.
+따라서 DevSettings에서 UpdateURL 변경은 여전히 가능하나, BackOn을 재실행하면 해당 값은 초기화됩니다.
+아직까지 악용사례는 없지만 혹시나 해서 수정했습니다.
