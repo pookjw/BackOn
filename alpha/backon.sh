@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-133
+# BackOn alpha-134
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=133
+TOOL_BUILD_NUM=134
 ##############################################
 
 function setEnglish(){
@@ -1374,10 +1374,14 @@ function restoreLibrary(){
 						showPressAnyKeyToContinue
 					fi
 					break
-				elif [[ "${ANSWER_K}" == no ]]; then
+				elif [[ "${ANSWER_K}" == no || "${ANSWER_K}" == quit || "${ANSWER_K}" == q ]]; then
 					echo "${CANCELED}"
 					showPressAnyKeyToContinue
 					break
+				elif [[ "${ANSWER_K}" == ods ]]; then
+					openDevSettings
+				elif [[ "${ANSWER_K}" == exit ]]; then
+					ExitKey
 				else
 					showNotSupportedFunction
 				fi
