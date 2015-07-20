@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-138
+# BackOn alpha-139
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=138
+TOOL_BUILD_NUM=139
 ##############################################
 
 function setEnglish(){
@@ -386,14 +386,14 @@ function openDevSettings(){
 			ls -l "/tmp/BackOn/Cydia"
 			echo -e -e "\n/tmp/BackOn/Library"
 			ls -l "/tmp/BackOn/Library"
-			echo -e -e "\n/tmp/BackOn/${BACKUP_NAME}"
-			ls -l "/tmp/BackOn/${BACKUP_NAME}"
-			echo -e -e "\n/tmp/BackOn/${BACKUP_NAME}/Cydia"
-			ls -l "/tmp/BackOn/${BACKUP_NAME}/Cydia"
-			echo -e -e "\n/tmp/BackOn/${BACKUP_NAME}/Library"
-			ls -l "/tmp/BackOn/${BACKUP_NAME}/Library"
-			echo -e -e "\n/tmp/BackOn/${BACKUP_NAME}/Library/Caches"
-			ls -l "/tmp/BackOn/${BACKUP_NAME}/Library/Caches"
+			echo -e -e "\n/tmp/BackOn/Backup/${BACKUP_NAME}"
+			ls -l "/tmp/BackOn/Backup/${BACKUP_NAME}"
+			echo -e -e "\n/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia"
+			ls -l "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia"
+			echo -e -e "\n/tmp/BackOn/Backup/${BACKUP_NAME}/Library"
+			ls -l "/tmp/BackOn/Backup/${BACKUP_NAME}/Library"
+			echo -e -e "\n/tmp/BackOn/Backup/${BACKUP_NAME}/Library/Caches"
+			ls -l "/tmp/BackOn/Backup/${BACKUP_NAME}/Library/Caches"
 			echo -e -e "\n/tmp/BackOn/Restore"
 			ls -l "/tmp/BackOn/Restore"
 			echo -e -e "\n/tmp/BackOn/Restore/Cydia"
@@ -793,18 +793,18 @@ function backupCydiaData(){
 	echo -e "${SHOW_INFO_2}"
 	showLinesB
 	echo -e "${BACKING_UP}"
-	if [[ -d "/tmp/BackOn/${BACKUP_NAME}/Cydia" ]]; then
-		rm -rf "/tmp/BackOn/${BACKUP_NAME}/Cydia"
+	if [[ -d "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia" ]]; then
+		rm -rf "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia"
 	fi
-	mkdir "/tmp/BackOn/${BACKUP_NAME}/Cydia"
+	mkdir "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia"
 	killMobileCydia
-	dpkg --get-selections > "/tmp/BackOn/${BACKUP_NAME}/Cydia/apt.txt"
-	cp /etc/apt/sources.list.d/cydia.list "/tmp/BackOn/${BACKUP_NAME}/Cydia"
+	dpkg --get-selections > "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia/apt.txt"
+	cp /etc/apt/sources.list.d/cydia.list "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia"
 	if [[ -f /var/lib/cydia/metadata.plist ]]; then
-		cp /var/lib/cydia/metadata.plist "/tmp/BackOn/${BACKUP_NAME}/Cydia/metadata.cb0"
+		cp /var/lib/cydia/metadata.plist "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia/metadata.cb0"
 	fi
 	if [[ -f /var/mobile/Library/Cydia/metadata.cb0 ]]; then
-		cp /var/mobile/Library/Cydia/metadata.cb0 "/tmp/BackOn/${BACKUP_NAME}/Cydia"
+		cp /var/mobile/Library/Cydia/metadata.cb0 "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia"
 	fi
 	echo -e "${DONE}"
 	showLinesA
@@ -812,8 +812,8 @@ function backupCydiaData(){
 }
 
 function backupLibrary(){
-	if [[ ! -d "/tmp/BackOn/${BACKUP_NAME}/Library" ]]; then
-		mkdir "/tmp/BackOn/${BACKUP_NAME}/Library"
+	if [[ ! -d "/tmp/BackOn/Backup/${BACKUP_NAME}/Library" ]]; then
+		mkdir "/tmp/BackOn/Backup/${BACKUP_NAME}/Library"
 	fi
 	while(true); do
 		ClearKey
@@ -840,16 +840,16 @@ function backupLibrary(){
 				echo -e "${BACKING_UP}"
 				if [[ "${showLog}" == YES ]]; then
 					applyPurple
-					rsync -av --exclude="Assets" --exclude="Caches" --exclude="Filza" --exclude="Preferences/BackupAZ" /var/mobile/Library/* "/tmp/BackOn/${BACKUP_NAME}/Library"
+					rsync -av --exclude="Assets" --exclude="Caches" --exclude="Filza" --exclude="Preferences/BackupAZ" /var/mobile/Library/* "/tmp/BackOn/Backup/${BACKUP_NAME}/Library"
 					applyNoColor
 				else
-					rsync -q -av --exclude="Assets" --exclude="Caches" --exclude="Filza" --exclude="Preferences/BackupAZ" /var/mobile/Library/* "/tmp/BackOn/${BACKUP_NAME}/Library"
+					rsync -q -av --exclude="Assets" --exclude="Caches" --exclude="Filza" --exclude="Preferences/BackupAZ" /var/mobile/Library/* "/tmp/BackOn/Backup/${BACKUP_NAME}/Library"
 				fi
 				if [[ -f "/var/mobile/Library/Caches/libactivator.plist" ]]; then
-					if [[ ! -d "/tmp/BackOn/${BACKUP_NAME}/Library/Caches" ]]; then
-						mkdir "/tmp/BackOn/${BACKUP_NAME}/Library/Caches"
+					if [[ ! -d "/tmp/BackOn/Backup/${BACKUP_NAME}/Library/Caches" ]]; then
+						mkdir "/tmp/BackOn/Backup/${BACKUP_NAME}/Library/Caches"
 					fi
-					cp /var/mobile/Library/Caches/libactivator.plist "/tmp/BackOn/${BACKUP_NAME}/Library/Caches"
+					cp /var/mobile/Library/Caches/libactivator.plist "/tmp/BackOn/Backup/${BACKUP_NAME}/Library/Caches"
 					if [[ "${showLog}" == YES ]]; then
 						applyPurple
 						echo -e "Backuped libactivator.plist."
@@ -860,7 +860,7 @@ function backupLibrary(){
 				showPressAnyKeyToContinue
 			elif [[ "${ANSWER_E}" == delete ]]; then
 				while(true); do
-					if [[ -z "$(ls "/tmp/BackOn/${BACKUP_NAME}/Library")" ]]; then
+					if [[ -z "$(ls "/tmp/BackOn/Backup/${BACKUP_NAME}/Library")" ]]; then
 						ClearKey
 						showLinesA
 						echo -e "${SHOW_INFO_4}"
@@ -875,9 +875,9 @@ function backupLibrary(){
 					echo -e "${SHOW_INFO_4}"
 					showLinesB
 					if [[ "${detailFileListView}" == YES ]]; then
-						ls -l "/tmp/BackOn/${BACKUP_NAME}/Library"
+						ls -l "/tmp/BackOn/Backup/${BACKUP_NAME}/Library"
 					else
-						ls "/tmp/BackOn/${BACKUP_NAME}/Library"
+						ls "/tmp/BackOn/Backup/${BACKUP_NAME}/Library"
 					fi
 					showLinesB
 					echo -e "(${ENTER_QUIT})"
@@ -892,8 +892,8 @@ function backupLibrary(){
 					else
 						if [[ "${ANSWER_J}" == all ]]; then
 							echo -e "${REMOVING}"
-							rm -rf "/tmp/BackOn/${BACKUP_NAME}/Library"
-							mkdir "/tmp/BackOn/${BACKUP_NAME}/Library"
+							rm -rf "/tmp/BackOn/Backup/${BACKUP_NAME}/Library"
+							mkdir "/tmp/BackOn/Backup/${BACKUP_NAME}/Library"
 							echo -e "${DONE}"
 							showPressAnyKeyToContinue
 						elif [[ "${ANSWER_J}" == q || "${ANSWER_J}" == quit ]]; then
@@ -902,14 +902,14 @@ function backupLibrary(){
 							openDevSettings
 						elif [[ "${ANSWER_J}" == exit ]]; then
 							ExitKey
-						elif [[ -f "/tmp/BackOn/${BACKUP_NAME}/Library/${ANSWER_J}" ]]; then
+						elif [[ -f "/tmp/BackOn/Backup/${BACKUP_NAME}/Library/${ANSWER_J}" ]]; then
 							echo -e "${REMOVING}"
-							rm "/tmp/BackOn/${BACKUP_NAME}/Library/${ANSWER_J}"
+							rm "/tmp/BackOn/Backup/${BACKUP_NAME}/Library/${ANSWER_J}"
 							echo -e "${DONE}"
 							showPressAnyKeyToContinue
-						elif [[ -d "/tmp/BackOn/${BACKUP_NAME}/Library/${ANSWER_J}" ]]; then
+						elif [[ -d "/tmp/BackOn/Backup/${BACKUP_NAME}/Library/${ANSWER_J}" ]]; then
 							echo -e "${REMOVING}"
-							rm -rf "/tmp/BackOn/${BACKUP_NAME}/Library/${ANSWER_J}"
+							rm -rf "/tmp/BackOn/Backup/${BACKUP_NAME}/Library/${ANSWER_J}"
 							echo -e "${DONE}"
 							showPressAnyKeyToContinue
 						else
@@ -927,21 +927,21 @@ function backupLibrary(){
 					applyNoColor
 				fi
 				echo -e "${BACKING_UP}"
-				if [[ ! -d "/tmp/BackOn/${BACKUP_NAME}/Library/Preferences" ]]; then
-					mkdir "/tmp/BackOn/${BACKUP_NAME}/Library/Preferences"
+				if [[ ! -d "/tmp/BackOn/Backup/${BACKUP_NAME}/Library/Preferences" ]]; then
+					mkdir "/tmp/BackOn/Backup/${BACKUP_NAME}/Library/Preferences"
 				fi
 				if [[ "${showLog}" == YES ]]; then
 					applyPurple
-					rsync -av --exclude="BackupAZ" /var/mobile/Library/Preferences/* "/tmp/BackOn/${BACKUP_NAME}/Library/Preferences"
+					rsync -av --exclude="BackupAZ" /var/mobile/Library/Preferences/* "/tmp/BackOn/Backup/${BACKUP_NAME}/Library/Preferences"
 					applyNoColor
 				else
-					rsync -q -av --exclude="BackupAZ" /var/mobile/Library/Preferences/* "/tmp/BackOn/${BACKUP_NAME}/Library/Preferences"
+					rsync -q -av --exclude="BackupAZ" /var/mobile/Library/Preferences/* "/tmp/BackOn/Backup/${BACKUP_NAME}/Library/Preferences"
 				fi
 				echo -e "${DONE}"
 				showPressAnyKeyToContinue
 			elif [[ "${ANSWER_E}" == quit || "${ANSWER_E}" == q ]]; then
-				if [[ -z "$(ls "/tmp/BackOn/${BACKUP_NAME}/Library")" ]]; then
-					rm -rf "/tmp/BackOn/${BACKUP_NAME}/Library"
+				if [[ -z "$(ls "/tmp/BackOn/Backup/${BACKUP_NAME}/Library")" ]]; then
+					rm -rf "/tmp/BackOn/Backup/${BACKUP_NAME}/Library"
 				fi
 				break
 			elif [[ "${ANSWER_E}" == ods ]]; then
@@ -950,12 +950,12 @@ function backupLibrary(){
 				ExitKey
 			elif [[ -f "/var/mobile/Library/${ANSWER_E}" ]]; then
 				echo -e "${BACKING_UP}"
-				cp "/var/mobile/Library/${ANSWER_E}" "/tmp/BackOn/${BACKUP_NAME}/Library"
+				cp "/var/mobile/Library/${ANSWER_E}" "/tmp/BackOn/Backup/${BACKUP_NAME}/Library"
 				echo -e "${DONE}"
 				showPressAnyKeyToContinue
 			elif [[ -d "/var/mobile/Library/${ANSWER_E}" ]]; then
 				echo -e "${BACKING_UP}"
-				cp -r "/var/mobile/Library/${ANSWER_E}" "/tmp/BackOn/${BACKUP_NAME}/Library"
+				cp -r "/var/mobile/Library/${ANSWER_E}" "/tmp/BackOn/Backup/${BACKUP_NAME}/Library"
 				echo -e "${DONE}"
 				showPressAnyKeyToContinue
 			else
@@ -973,37 +973,37 @@ function showBackupedFilesBackup(){
 	showLinesA
 	echo -e "${SHOW_INFO_5}"
 	showLinesB
-	if [[ -f "/tmp/BackOn/${BACKUP_NAME}/Cydia/apt.txt" ]]; then
+	if [[ -f "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia/apt.txt" ]]; then
 		echo -e "${BACKUPED_CYDIA_PACKAGES_LIST} : ${YES}"
 	else
 		echo -e "${BACKUPED_CYDIA_PACKAGES_LIST} : ${NO}"
 	fi
-	if [[ -f "/tmp/BackOn/${BACKUP_NAME}/Cydia/cydia.list" ]]; then
+	if [[ -f "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia/cydia.list" ]]; then
 		echo -e "${BACKUPED_CYDIA_SOURCE} : ${YES}"
 	else
 		echo -e "${BACKUPED_CYDIA_SOURCE} : ${NO}"
 	fi
-	if [[ -f "/tmp/BackOn/${BACKUP_NAME}/Cydia/metadata.cb0" ]]; then
+	if [[ -f "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia/metadata.cb0" ]]; then
 		echo -e "${BACKUPED_CYDIA_METADATA} : ${YES}"
 	else
 		echo -e "${BACKUPED_CYDIA_METADATA} : ${NO}"
 	fi
-	if [[ -d "/tmp/BackOn/${BACKUP_NAME}/Library" ]]; then
+	if [[ -d "/tmp/BackOn/Backup/${BACKUP_NAME}/Library" ]]; then
 		echo -e "${BACKUPED_LIBRARY} : ${YES}"
 		showLinesB
 		if [[ "${detailFileListView}" == YES ]]; then
-			ls -l "/tmp/BackOn/${BACKUP_NAME}/Library"
+			ls -l "/tmp/BackOn/Backup/${BACKUP_NAME}/Library"
 		else
-			ls "/tmp/BackOn/${BACKUP_NAME}/Library"
+			ls "/tmp/BackOn/Backup/${BACKUP_NAME}/Library"
 		fi
 		if [[ "${showLog}" == YES ]]; then
-			if [[ -d "/tmp/BackOn/${BACKUP_NAME}/Library/Caches" ]]; then
+			if [[ -d "/tmp/BackOn/Backup/${BACKUP_NAME}/Library/Caches" ]]; then
 				showLinesB
-				echo -e "/var/mobile/Library/Caches - /tmp/BackOn/${BACKUP_NAME}/Library"
+				echo -e "/var/mobile/Library/Caches - /tmp/BackOn/Backup/${BACKUP_NAME}/Library"
 				if [[ "${detailFileListView}" == YES ]]; then
-					ls -l "/tmp/BackOn/${BACKUP_NAME}/Library/Caches"
+					ls -l "/tmp/BackOn/Backup/${BACKUP_NAME}/Library/Caches"
 				else
-					ls "/tmp/BackOn/${BACKUP_NAME}/Library/Caches"
+					ls "/tmp/BackOn/Backup/${BACKUP_NAME}/Library/Caches"
 				fi
 			fi
 		fi
@@ -1019,7 +1019,7 @@ function saveBackup(){
 	showLinesA
 	echo -e "${SHOW_INFO_6}"
 	showLinesB
-	if [[ -z "$(ls /tmp/BackOn/${BACKUP_NAME})" ]]; then
+	if [[ -z "$(ls /tmp/BackOn/Backup/${BACKUP_NAME})" ]]; then
 		applyRed
 		echo -e "${NOTHING_TO_BACKUP}"
 		applyNoColor
@@ -1558,6 +1558,10 @@ while(true); do
 	applyNoColor
 
 	if [[ "${ANSWER_A}" == 1 ]]; then
+		if [[ -d "/tmp/BackOn/Backup" ]]; then
+			rm -rf "/tmp/BackOn/Backup"
+		fi
+		mkdir /tmp/BackOn/Backup
 		defineBackupName
 		if [[ "${showLog}" == YES ]]; then
 			applyPurple
