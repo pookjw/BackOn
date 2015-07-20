@@ -49,9 +49,9 @@ Library를 모두 복원하는 것은 무한사과 (부팅불가)의 위험이 �
 
 - (Added) official/unofficial 표기 추가.
 
-official : 제가(원 개발자) 만든 BackOn입니다.
+>- official : 제가(원 개발자) 만든 BackOn입니다.
 
-unofficial : 다른 사람이 BackOn을 수정한 것입니다.
+>- unofficial : 다른 사람이 BackOn을 수정한 것입니다.
 
 BackOn을 수정해서 배포할 땐 **'TOOL_RELEASE'**에 unofficial 표기를 해주세요.
 
