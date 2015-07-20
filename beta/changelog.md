@@ -44,3 +44,15 @@ Library를 모두 복원하는 것은 무한사과 (부팅불가)의 위험이 �
 - (Fixed) 백업 작업 경로 변경
 
 원래는 /tmp/BackOn/**백업이름**이 작업 경로였는데, /tmp/BackoOn/backup/**백업이름**으로 변경했습니다.
+
+# beta-144 (2015-07-20)
+
+- (Added) official/unofficial 표기 추가.
+
+official : 제가(원 개발자) 만든 BackOn입니다.
+
+unofficial : 다른 사람이 BackOn을 수정한 것입니다.
+
+BackOn을 수정해서 배포할 땐 **'TOOL_RELEASE'**에 unofficial 표기를 해주세요.
+
+현재 여기서 배포하고 있는 BackOn은 official입니다.
