@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-140
+# BackOn alpha-141
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=140
+TOOL_BUILD_NUM=141
 ##############################################
 
 function setEnglish(){
@@ -392,10 +392,6 @@ function openDevSettings(){
 			showLinesA
 			echo -e "/tmp/BackOn/"
 			ls -l "/tmp/BackOn"
-			echo -e -e "\n/tmp/BackOn/Cydia"
-			ls -l "/tmp/BackOn/Cydia"
-			echo -e -e "\n/tmp/BackOn/Library"
-			ls -l "/tmp/BackOn/Library"
 			echo -e -e "\n/tmp/BackOn/Backup/${BACKUP_NAME}"
 			ls -l "/tmp/BackOn/Backup/${BACKUP_NAME}"
 			echo -e -e "\n/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia"
@@ -1036,7 +1032,7 @@ function saveBackup(){
 		showLinesA
 		showPressAnyKeyToContinue
 	else
-		cd /tmp/BackOn/$BACKUP_NAME
+		cd /tmp/BackOn/Backup/${BACKUP_NAME}
 		mkdir info
 		echo -e "${TOOL_BUILD_NUM}" >> info/ToolBuildNum
 		echo -e "${TOOL_BUILD_TYPE}" >> info/ToolBuildType
