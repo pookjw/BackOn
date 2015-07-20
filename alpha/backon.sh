@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-139
+# BackOn alpha-140
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=139
+TOOL_BUILD_NUM=140
 ##############################################
 
 function setEnglish(){
@@ -253,10 +253,20 @@ function openDevSettings(){
 			fi
 		elif [[ "${ANSWER_D}" == 5 ]]; then
 			applyLightCyan
-			read -p "Query : " UpdateURL
+			read -p "Locked : " ANSWER_L
 			applyNoColor
-			if [[ -z "${UpdateURL}" ]]; then
-				UpdateURL="https://github.com/pookjw/BackOn/archive/master.zip"
+			if [[ "${ANSWER_L}" == 1234 ]]; then
+				applyLightCyan
+				read -p "Query : " UpdateURL
+				applyNoColor
+				if [[ -z "${UpdateURL}" ]]; then
+					UpdateURL="https://github.com/pookjw/BackOn/archive/master.zip"
+				fi
+			else
+				applyRed
+				echo "Incorrect!"
+				applyNoColor
+				showPressAnyKeyToContinue
 			fi
 		elif [[ "${ANSWER_D}" == 6 ]]; then
 			applyLightCyan
@@ -732,11 +742,11 @@ function defineBackupName(){
 					fi
 				done
 			fi
-			if [[ -d "/tmp/BackOn/${ANSWER_B}" ]]; then
-				rm -rf "/tmp/BackOn/${ANSWER_B}"
+			if [[ -d "/tmp/BackOn/Backup/${ANSWER_B}" ]]; then
+				rm -rf "/tmp/BackOn/Backup/${ANSWER_B}"
 			fi
-			mkdir "/tmp/BackOn/${ANSWER_B}"
-			if [[ ! -d "/tmp/BackOn/${ANSWER_B}" ]]; then
+			mkdir "/tmp/BackOn/Backup/${ANSWER_B}"
+			if [[ ! -d "/tmp/BackOn/Backup/${ANSWER_B}" ]]; then
 				applyRed
 				echo -e "ERROR"
 				applyNoColor
