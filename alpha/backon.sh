@@ -4,9 +4,11 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-141
+# BackOn alpha-143-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=141
+TOOL_BUILD_NUM=143
+TOOL_RELEASE=official
+# If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
 
 function setEnglish(){
@@ -153,7 +155,7 @@ function openDevSettings(){
 	while(true); do
 		ClearKey
 		showLinesA
-		echo -e "DevSettings - ${TOOL_BUILD_TYPE}-${TOOL_BUILD_NUM}"
+		echo -e "DevSettings - ${TOOL_BUILD_TYPE}-${TOOL_BUILD_NUM}-${TOOL_RELEASE}"
 		showLinesB
 		if [[ "${ExitKey}" == YES ]]; then
 			echo -e "(1) ExitKey : YES"
@@ -1036,6 +1038,7 @@ function saveBackup(){
 		mkdir info
 		echo -e "${TOOL_BUILD_NUM}" >> info/ToolBuildNum
 		echo -e "${TOOL_BUILD_TYPE}" >> info/ToolBuildType
+		echo -e "${TOOL_RELEASE}" >> info/ToolRelease
 		echo -e "${OSVer}" >> info/OSVersion
 		echo -e "${SAVING}"
 		if [[ "${showLog}" == YES ]]; then
@@ -1542,7 +1545,7 @@ fi
 while(true); do
 	ClearKey
 	showLinesA
-	echo -e "BackOn ${TOOL_BUILD_TYPE}-${TOOL_BUILD_NUM} - ${LANGUAGE}"
+	echo -e "BackOn ${TOOL_BUILD_TYPE}-${TOOL_BUILD_NUM}-${TOOL_RELEASE} - ${LANGUAGE}"
 	showLinesB
 	echo -e "(1) ${CREATE_BACKUP}"
 	echo -e "(2) ${RESTORE_FROM_BACKUP}"
