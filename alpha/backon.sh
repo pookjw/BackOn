@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-137
+# BackOn alpha-138
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=137
+TOOL_BUILD_NUM=138
 ##############################################
 
 function setEnglish(){
@@ -201,7 +201,6 @@ function openDevSettings(){
 		elif [[ "${detailFileListView}" == NO ]]; then
 			echo -e "(14) detailFileListView : NO"
 		fi
-		echo -
 		if [[ "${runUpdateODS}" == YES ]]; then
 			echo -e "(15) runUpdateODS : YES"
 		elif [[ "${runUpdateODS}" == NO ]]; then
@@ -1000,6 +999,7 @@ function showBackupedFilesBackup(){
 		if [[ "${showLog}" == YES ]]; then
 			if [[ -d "/tmp/BackOn/${BACKUP_NAME}/Library/Caches" ]]; then
 				showLinesB
+				echo -e "/var/mobile/Library/Caches - /tmp/BackOn/${BACKUP_NAME}/Library"
 				if [[ "${detailFileListView}" == YES ]]; then
 					ls -l "/tmp/BackOn/${BACKUP_NAME}/Library/Caches"
 				else
