@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-135
+# BackOn alpha-137
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=135
+TOOL_BUILD_NUM=137
 ##############################################
 
 function setEnglish(){
@@ -196,6 +196,12 @@ function openDevSettings(){
 		fi
 		echo -e "(12) switchLanguage (Current : ${LANGUAGE})"
 		echo -e "(13) setDefaultLanguage : ${setDefaultLanguage}"
+		if [[ "${detailFileListView}" == YES ]]; then
+			echo -e "(14) detailFileListView : YES"
+		elif [[ "${detailFileListView}" == NO ]]; then
+			echo -e "(14) detailFileListView : NO"
+		fi
+		echo -
 		if [[ "${runUpdateODS}" == YES ]]; then
 			echo -e "(15) runUpdateODS : YES"
 		elif [[ "${runUpdateODS}" == NO ]]; then
@@ -337,6 +343,12 @@ function openDevSettings(){
 					break
 				fi
 			done
+		elif [[ "${ANSWER_D}" == 14 ]]; then
+			if [[ "${detailFileListView}" == YES ]]; then
+				detailFileListView=NO
+			elif [[ "${detailFileListView}" == NO ]]; then
+				detailFileListView=YES
+			fi
 		elif [[ "${ANSWER_D}" == 15 ]]; then
 			if [[ "${runUpdateODS}" == YES ]]; then
 				runUpdateODS=NO
@@ -427,6 +439,7 @@ function saveSettings(){
 	echo -e "${BackupPath}" >> /var/mobile/Library/Preferences/BackOn/BackupPath
 	echo -e "${ClearKey}" >> /var/mobile/Library/Preferences/BackOn/ClearKey
 	echo -e "${setDefaultLanguage}" >> /var/mobile/Library/Preferences/BackOn/setDefaultLanguage
+	echo -e "${detailFileListView}" >> /var/mobile/Library/Preferences/BackOn/detailFileListView
 	echo -e "${runUpdateODS}" >> /var/mobile/Library/Preferences/BackOn/runUpdateODS
 	echo -e "${applyColorScheme}" >> /var/mobile/Library/Preferences/BackOn/applyColorScheme
 	echo -e "${DynamicLine}" >> /var/mobile/Library/Preferences/BackOn/DynamicLine
@@ -492,6 +505,11 @@ function loadSettings(){
 		setDefaultLanguage="$(cat "/var/mobile/Library/Preferences/BackOn/setDefaultLanguage")"
 	else
 		setDefaultLanguage=English
+	fi
+	if [[ -f "/var/mobile/Library/Preferences/BackOn/detailFileListView" ]]; then
+		detailFileListView="$(cat "/var/mobile/Library/Preferences/BackOn/detailFileListView")"
+	else
+		detailFileListView=NO
 	fi
 	if [[ -f "/var/mobile/Library/Preferences/BackOn/runUpdateODS" ]]; then
 		runUpdateODS="$(cat "/var/mobile/Library/Preferences/BackOn/runUpdateODS")"
@@ -803,7 +821,7 @@ function backupLibrary(){
 		showLinesA
 		echo -e "${SHOW_INFO_3}"
 		showLinesB
-		if [[ "${showLog}" == YES ]]; then
+		if [[ "${detailFileListView}" == YES ]]; then
 			ls -l /var/mobile/Library
 		else
 			ls /var/mobile/Library
@@ -857,7 +875,7 @@ function backupLibrary(){
 					showLinesA
 					echo -e "${SHOW_INFO_4}"
 					showLinesB
-					if [[ "${showLog}" == YES ]]; then
+					if [[ "${detailFileListView}" == YES ]]; then
 						ls -l "/tmp/BackOn/${BACKUP_NAME}/Library"
 					else
 						ls "/tmp/BackOn/${BACKUP_NAME}/Library"
@@ -974,15 +992,19 @@ function showBackupedFilesBackup(){
 	if [[ -d "/tmp/BackOn/${BACKUP_NAME}/Library" ]]; then
 		echo -e "${BACKUPED_LIBRARY} : ${YES}"
 		showLinesB
-		if [[ "${showLog}" == YES ]]; then
-			ls -l "/tmp/BackOn/$BACKUP_NAME/Library"
+		if [[ "${detailFileListView}" == YES ]]; then
+			ls -l "/tmp/BackOn/${BACKUP_NAME}/Library"
 		else
-			ls "/tmp/BackOn/$BACKUP_NAME/Library"
+			ls "/tmp/BackOn/${BACKUP_NAME}/Library"
 		fi
 		if [[ "${showLog}" == YES ]]; then
-			if [[ -d "/tmp/BackOn/$BACKUP_NAME/Library/Caches" ]]; then
+			if [[ -d "/tmp/BackOn/${BACKUP_NAME}/Library/Caches" ]]; then
 				showLinesB
-				ls -l "/tmp/BackOn/$BACKUP_NAME/Library/Caches"
+				if [[ "${detailFileListView}" == YES ]]; then
+					ls -l "/tmp/BackOn/${BACKUP_NAME}/Library/Caches"
+				else
+					ls "/tmp/BackOn/${BACKUP_NAME}/Library/Caches"
+				fi
 			fi
 		fi
 	else
@@ -1331,7 +1353,7 @@ function restoreLibrary(){
 		showLinesA
 		echo -e "${SHOW_INFO_10}"
 		showLinesB
-		if [[ "${showLog}" == YES ]]; then
+		if [[ "${detailFileListView}" == YES ]]; then
 			ls -l "/tmp/BackOn/Restore/Library"
 		else
 			ls "/tmp/BackOn/Restore/Library"
