@@ -25,6 +25,8 @@ Library를 모두 복원하는 것은 무한사과 (부팅불가)의 위험이 �
 
 보안 문제때문에 비밀번호를 걸어놨습니다.
 
+---
+
 - (Added) (DevSettings) detailFileListView 추가
 
 ![이미지](https://farm4.staticflickr.com/3731/19663590028_591cc3d425_o.png)
@@ -36,6 +38,8 @@ Library를 모두 복원하는 것은 무한사과 (부팅불가)의 위험이 �
 ▲ detailFileListView 켬
 
 원래는 showLog에 병합되어 있던 부분인데 detailFileListView로 따로 분리했습니다.
+
+---
 
 - (Fixed) 백업 작업 경로 변경
 
