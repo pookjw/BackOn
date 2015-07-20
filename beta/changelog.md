@@ -19,7 +19,7 @@ Library를 모두 복원하는 것은 무한사과 (부팅불가)의 위험이 �
 
 # beta-142 (2015-07-20)
 
-- (Added) (DevSettings) DevSettings에서 UpdateURL 변경을 못하도록 잠금.
+- (Added) [DevSettings] DevSettings에서 UpdateURL 변경을 못하도록 잠금.
 
 ![이미지](https://farm1.staticflickr.com/288/19825383876_2c03de6a18_o.png)
 
@@ -27,7 +27,7 @@ Library를 모두 복원하는 것은 무한사과 (부팅불가)의 위험이 �
 
 ---
 
-- (Added) (DevSettings) detailFileListView 추가
+- (Added) [DevSettings] detailFileListView 추가
 
 ![이미지](https://farm4.staticflickr.com/3731/19663590028_591cc3d425_o.png)
 
