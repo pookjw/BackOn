@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-143-official
+# BackOn alpha-145-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=143
+TOOL_BUILD_NUM=145
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -873,7 +873,9 @@ function backupLibrary(){
 						showLinesA
 						echo -e "${SHOW_INFO_4}"
 						showLinesB
+						applyRed
 						echo -e "${NOTHING_TO_DELETE}"
+						applyNoColor
 						showLinesA
 						showPressAnyKeyToContinue
 						break
