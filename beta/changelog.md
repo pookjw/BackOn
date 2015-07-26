@@ -68,3 +68,7 @@ BackOn을 수정해서 배포할 땐 **'TOOL_RELEASE'**에 unofficial 표기를 
 ![이미지](https://farm1.staticflickr.com/436/19878511862_7590614063_o.png)
 
 ▲ 빨간색 적용 화면
+
+# beta-147 (2015-07-26)
+
+- (Fixed) 오타 수정.

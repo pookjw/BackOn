@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn beta-146-official
+# BackOn beta-147-official
 TOOL_BUILD_TYPE=beta
-TOOL_BUILD_NUM=146
+TOOL_BUILD_NUM=147
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -1423,7 +1423,7 @@ function restoreLibrary(){
 			:
 		elif [[ -f "/tmp/BackOn/Restore/Library/${ANSWER_I}" ]]; then
 			if [[ "${skipRestore}" == YES ]]; then
-				echo -e "Skipped"
+				echo -e "Skipped."
 				showPressAnyKeyToContinue
 			else
 				echo -e "${RESTORING}"
@@ -1434,7 +1434,7 @@ function restoreLibrary(){
 			fi
 		elif [[ -d "/tmp/BackOn/Restore/Library/${ANSWER_I}" ]]; then
 			if [[ "${skipRestore}" == YES ]]; then
-				echo -e "Skipped"
+				echo -e "Skipped."
 				showPressAnyKeyToContinue
 			else
 				echo -e "${RESTORING}"
