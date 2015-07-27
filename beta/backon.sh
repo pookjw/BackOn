@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn beta-147-official
+# BackOn beta-148-official
 TOOL_BUILD_TYPE=beta
-TOOL_BUILD_NUM=147
+TOOL_BUILD_NUM=148
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -64,7 +64,7 @@ function setEnglish(){
 	RESTORE_LIBRARY="Restore Library."
 	REBOOT="Reboot."
 	RESTORING="Restoring..."
-	RESTORING_ALL_IS_NOT_RECOMMENDED="Restoring all Library files is not recommended bacause it may causes boot-loop. Are you sure to continue? (yes/no)"
+	RESTORING_ALL_IS_NOT_RECOMMENDED="Restoring all Library files is not recommended bacause it may cause boot-loop. Are you sure to continue? (yes/no)"
 	SHOW_GUIDE_3="Enter file/folder name that you want to backup. If you want to backup all of files, enter 'all' command. Enter 'delete' command to delete backuped backup."
 	SHOW_GUIDE_4="Enter file/folder name that you want to delete backup. If you want to delete all of backup files, enter 'all' command."
 	SHOW_GUIDE_10="Enter file/folder name that you want to restore. If you want to restore all of files, enter 'all' command."
@@ -1073,7 +1073,12 @@ function defineBackupPath(){
 		read -p "- " ANSWER_F
 		applyNoColor
 
-		if [[ "${ANSWER_F}" == xBackup || "${ANSWER_F}" == xbackup ]]; then
+		if [[ -z "${ANSWER_F}" ]]; then
+			applyRed
+			echo -e "${FORM_IS_EMPTY}"
+			applyNoColor
+			showPressAnyKeyToContinue
+		elif [[ "${ANSWER_F}" == xBackup || "${ANSWER_F}" == xbackup ]]; then
 			if [[ -f "/var/mobile/Library/xBackup/Backups/backup.bk.zip" ]]; then
 				ToRestoreBackupPath="/var/mobile/Library/xBackup/Backups/backup.bk.zip"
 				break
