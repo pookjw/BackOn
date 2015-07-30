@@ -1,8 +1,81 @@
-cp backon.sh /usr/bin/backon
-chmod +x /usr/bin/backon
-if [[ -f /var/mobile/Library/Preferences/BackOn/runUpdateODS ]]; then
-	if [[ "$(cat "/var/mobile/Library/Preferences/BackOn/runUpdateODS")" == YES ]]; then
-		backon -ods; exit 0
-	fi
+#!/bin/sh
+if [[ -f "/tmp/BackOn/Update/info/runUpdateODS" ]]; then
+	runUpdateODS="$(cat "/tmp/BackOn/Update/info/runUpdateODS")"
 fi
-backon; exit 0
+if [[ -f "/tmp/BackOn/Update/info/UpdateBuildType" ]]; then
+	UpdateBuildType="$(cat "/tmp/BackOn/Update/info/UpdateBuildType")"
+fi
+if [[ -f "/tmp/BackOn/Update/info/updateWithDEBInstall" ]]; then
+	updateWithDEBInstall="$(cat "/tmp/BackOn/Update/info/updateWithDEBInstall")"
+fi
+if [[ -f "/tmp/BackOn/Update/info/UpdaterVersion" ]]; then
+	UpdaterVersion="$(cat "/tmp/BackOn/Update/info/UpdaterVersion")"
+else
+	UpdaterVersion=1
+fi
+if [[ -f "/tmp/BackOn/Update/info/showLog" ]]; then
+	showLog="$(cat "/tmp/BackOn/Update/info/showLog")"
+fi
+if [[ -f "/tmp/BackOn/Update/info/UpdateBuildVersion" ]]; then
+	UpdateBuildVersion="$(cat "/tmp/BackOn/Update/info/UpdateBuildVersion")"
+fi
+
+function Update1(){
+	echo "UpdaterVersion : 1"
+	cp backon.sh /usr/bin/backon
+	chmod +x /usr/bin/backon
+	if [[ -f /var/mobile/Library/Preferences/BackOn/runUpdateODS ]]; then
+		if [[ "$(cat "/var/mobile/Library/Preferences/BackOn/runUpdateODS")" == YES ]]; then
+			backon -ods; exit 0
+		fi
+	fi
+	backon; exit 0
+}
+
+function Update2(){
+	if [[ "${showLog}" == YES ]]; then
+		echo "UpdaterVersion : 2"
+		echo "runUpdateODS : ${runUpdateODS}"
+		echo "UpdateBuildType : ${UpdateBuildType}"
+		echo "updateWithDEBInstall : ${updateWithDEBInstall}"
+		echo "UpdaterVersion : ${UpdaterVersion}"
+		echo "showLog : ${showLog}"
+		echo "UpdateBuildVersion : ${UpdateBuildVersion}"
+		showPressAnyKeyToContinue
+	fi
+	if [[ "${updateWithDEBInstall}" == YES && ! "${UpdateBuildType}" == alpha ]]; then
+		if [[ "${showLog}" == YES ]]; then
+			dpkg -i "/tmp/BackOn/Update/master/BackOn-master/deb-${UpdateBuildType}/${UpdateBuildType}-${UpdateBuildVersion}.deb"
+		else
+			dpkg -i "/tmp/BackOn/Update/master/BackOn-master/deb-${UpdateBuildType}/${UpdateBuildType}-${UpdateBuildVersion}.deb" > /dev/null 2>&1
+		fi
+	else
+		cp "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/backon.sh" /usr/bin/backon
+		chmod +x /usr/bin/backon
+	fi
+	runBackOn
+}
+
+function showPressAnyKeyToContinue(){
+	read -s -n 1 -p "Press Any key to continue..."
+}
+
+function runBackOn(){
+	if [[ "${runUpdateODS}" == YES ]]; then
+		backon -ods
+	else
+		backon
+	fi
+	exit 0
+}
+
+##############################
+
+if [[ "${UpdaterVersion}" == 1 ]]; then
+	Update1
+elif [[ "${UpdaterVersion=}" == 2 ]]; then
+	Update2
+else
+	echo "ERROR!"
+	exit 1
+fi

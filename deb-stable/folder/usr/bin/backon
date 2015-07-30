@@ -4,9 +4,10 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn stable-149-official
+# BackOn stable-162-official
 TOOL_BUILD_TYPE=stable
-TOOL_BUILD_NUM=149
+TOOL_BUILD_NUM=162
+UpdaterVersion=2
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -221,6 +222,12 @@ function openDevSettings(){
 		elif [[ "${DynamicLine}" == NO ]]; then
 			echo -e "(20) DynamicLine : NO"
 		fi
+		echo -e "(21) UpdaterVersion : ${UpdaterVersion}"
+		if [[ "${updateWithDEBInstall}" == YES ]]; then
+			echo -e "(22) updateWithDEBInstall : YES"
+		elif [[ "${updateWithDEBInstall}" == NO ]]; then
+			echo -e "(22) updateWithDEBInstall : NO"
+		fi
 		echo -e "(l) ls"
 		echo -e "(s) Save Settings."
 		echo -e "(d) Disable DevSettings."
@@ -389,6 +396,19 @@ function openDevSettings(){
 			elif [[ "${DynamicLine}" == NO ]]; then
 				DynamicLine=YES
 			fi
+		elif [[ "${ANSWER_D}" == 21 ]]; then
+			applyLightCyan
+			read -p "Query : " UpdaterVersion
+			applyNoColor
+			if [[ -z "${UpdaterVersion}" ]]; then
+				UpdaterVersion=1
+			fi
+		elif [[ "${ANSWER_D}" == 22 ]]; then
+			if [[ "${updateWithDEBInstall}" == YES ]]; then
+				updateWithDEBInstall=NO
+			elif [[ "${updateWithDEBInstall}" == NO ]]; then
+				updateWithDEBInstall=YES
+			fi
 		elif [[ "${ANSWER_D}" == l || "${ANSWER_D}" == ls ]]; then
 			ClearKey
 			showLinesA
@@ -533,6 +553,11 @@ function loadSettings(){
 	else
 		DynamicLine=YES
 	fi
+	if [[ -f "/var/mobile/Library/Preferences/BackOn/updateWithDEBInstall" ]]; then
+		updateWithDEBInstall="$(cat "/var/mobile/Library/Preferences/BackOn/updateWithDEBInstall")"
+	else
+		updateWithDEBInstall=YES
+	fi
 }
 
 function showLinesA(){
@@ -652,7 +677,16 @@ function switchLanguage(){
 	fi
 }
 
-function killMobileCydia(){
+function killCydia(){
+	ps cax | grep Cydia > /dev/null
+	if [ $? -eq 0 ]; then
+		if [[ "${showLog}" == YES ]]; then
+			applyPurple
+			echo -e "Killing Cydia..."
+			applyNoColor
+		fi
+		killall -9 Cydia
+	fi
 	ps cax | grep MobileCydia > /dev/null
 	if [ $? -eq 0 ]; then
 		if [[ "${showLog}" == YES ]]; then
@@ -805,7 +839,7 @@ function backupCydiaData(){
 		rm -rf "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia"
 	fi
 	mkdir "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia"
-	killMobileCydia
+	killCydia
 	dpkg --get-selections > "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia/apt.txt"
 	cp /etc/apt/sources.list.d/cydia.list "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia"
 	if [[ -f /var/lib/cydia/metadata.plist ]]; then
@@ -1319,7 +1353,7 @@ function restoreCydia(){
 	if [[ "${skipRestore}" == YES ]]; then
 		echo -e "Skipped."
 	else
-		killMobileCydia
+		killCydia
 		echo -e "${RESTORING}"
 		if [[ "${showLog}" == YES ]]; then
 			applyPurple
@@ -1507,6 +1541,16 @@ function installUpdate(){
 				fi
 				echo -e "${INSTALLING}"
 				chmod +x "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/update-script"
+				if [[ -d "/tmp/BackOn/Update/info" ]]; then
+					rm -rf "/tmp/BackOn/Update/info"
+				fi
+				mkdir "/tmp/BackOn/Update/info"
+				echo "${runUpdateODS}" >> "/tmp/BackOn/Update/info/runUpdateODS"
+				echo "${UpdateBuildType}" >> "/tmp/BackOn/Update/info/UpdateBuildType"
+				echo "${updateWithDEBInstall}" >> "/tmp/BackOn/Update/info/updateWithDEBInstall"
+				echo "${UpdaterVersion}" >> "/tmp/BackOn/Update/info/UpdaterVersion"
+				echo "${showLog}" >> "/tmp/BackOn/Update/info/showLog"
+				echo "$(cat "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/build")" >> "/tmp/BackOn/Update/info/UpdateBuildVersion"
 				cd "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}"
 				./update-script
 				quitTool_NoClear
