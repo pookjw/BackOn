@@ -4,9 +4,10 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-145-official
+# BackOn alpha-150-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=145
+TOOL_BUILD_NUM=150
+UpdaterVersion=2
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -64,7 +65,7 @@ function setEnglish(){
 	RESTORE_LIBRARY="Restore Library."
 	REBOOT="Reboot."
 	RESTORING="Restoring..."
-	RESTORING_ALL_IS_NOT_RECOMMENDED="Restoring all Library files is not recommended bacause it may causes boot-loop. Are you sure to continue? (yes/no)"
+	RESTORING_ALL_IS_NOT_RECOMMENDED="Restoring all Library files is not recommended bacause it may cause boot-loop. Are you sure to continue? (yes/no)"
 	SHOW_GUIDE_3="Enter file/folder name that you want to backup. If you want to backup all of files, enter 'all' command. Enter 'delete' command to delete backuped backup."
 	SHOW_GUIDE_4="Enter file/folder name that you want to delete backup. If you want to delete all of backup files, enter 'all' command."
 	SHOW_GUIDE_10="Enter file/folder name that you want to restore. If you want to restore all of files, enter 'all' command."
@@ -221,6 +222,12 @@ function openDevSettings(){
 		elif [[ "${DynamicLine}" == NO ]]; then
 			echo -e "(20) DynamicLine : NO"
 		fi
+		if [[ "${updateWithDEBInstall}" == YES ]]; then
+			echo -e "(21) updateWithDEBInstall : YES"
+		elif [[ "${updateWithDEBInstall}" == NO ]]; then
+			echo -e "(21) updateWithDEBInstall : NO"
+		fi
+		echo -e "(6) OSVer : ${UpdaterVersion}"
 		echo -e "(l) ls"
 		echo -e "(s) Save Settings."
 		echo -e "(d) Disable DevSettings."
@@ -389,6 +396,19 @@ function openDevSettings(){
 			elif [[ "${DynamicLine}" == NO ]]; then
 				DynamicLine=YES
 			fi
+		elif [[ "${ANSWER_D}" == 21 ]]; then
+			applyLightCyan
+			read -p "Query : " UpdaterVersion
+			applyNoColor
+			if [[ -z "${UpdaterVersion}" ]]; then
+				UpdaterVersion=1
+			fi
+		elif [[ "${ANSWER_D}" == 21 ]]; then
+			if [[ "${updateWithDEBInstall}" == YES ]]; then
+				updateWithDEBInstall=NO
+			elif [[ "${updateWithDEBInstall}" == NO ]]; then
+				updateWithDEBInstall=YES
+			fi
 		elif [[ "${ANSWER_D}" == l || "${ANSWER_D}" == ls ]]; then
 			ClearKey
 			showLinesA
@@ -532,6 +552,11 @@ function loadSettings(){
 		DynamicLine="$(cat "/var/mobile/Library/Preferences/BackOn/DynamicLine")"
 	else
 		DynamicLine=YES
+	fi
+	if [[ -f "/var/mobile/Library/Preferences/BackOn/updateWithDEBInstall" ]]; then
+		updateWithDEBInstall="$(cat "/var/mobile/Library/Preferences/BackOn/updateWithDEBInstall")"
+	else
+		updateWithDEBInstall=YES
 	fi
 }
 
@@ -1073,7 +1098,12 @@ function defineBackupPath(){
 		read -p "- " ANSWER_F
 		applyNoColor
 
-		if [[ "${ANSWER_F}" == xBackup || "${ANSWER_F}" == xbackup ]]; then
+		if [[ -z "${ANSWER_F}" ]]; then
+			applyRed
+			echo -e "${FORM_IS_EMPTY}"
+			applyNoColor
+			showPressAnyKeyToContinue
+		elif [[ "${ANSWER_F}" == xBackup || "${ANSWER_F}" == xbackup ]]; then
 			if [[ -f "/var/mobile/Library/xBackup/Backups/backup.bk.zip" ]]; then
 				ToRestoreBackupPath="/var/mobile/Library/xBackup/Backups/backup.bk.zip"
 				break
@@ -1423,7 +1453,7 @@ function restoreLibrary(){
 			:
 		elif [[ -f "/tmp/BackOn/Restore/Library/${ANSWER_I}" ]]; then
 			if [[ "${skipRestore}" == YES ]]; then
-				echo -e "Skipped"
+				echo -e "Skipped."
 				showPressAnyKeyToContinue
 			else
 				echo -e "${RESTORING}"
@@ -1434,7 +1464,7 @@ function restoreLibrary(){
 			fi
 		elif [[ -d "/tmp/BackOn/Restore/Library/${ANSWER_I}" ]]; then
 			if [[ "${skipRestore}" == YES ]]; then
-				echo -e "Skipped"
+				echo -e "Skipped."
 				showPressAnyKeyToContinue
 			else
 				echo -e "${RESTORING}"
@@ -1502,8 +1532,17 @@ function installUpdate(){
 				fi
 				echo -e "${INSTALLING}"
 				chmod +x "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/update-script"
-				cd "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}"
-				./update-script
+				if [[ -d "/tmp/BackOn/Update/info" ]]; then
+					rm -rf "/tmp/BackOn/Update/info"
+				fi
+				mkdir "/tmp/BackOn/Update/info"
+				echo "${runUpdateODS}" >> "/tmp/BackOn/Update/info"
+				echo "${UpdateBuildType}" >> "/tmp/BackOn/Update/info"
+				echo "${updateWithDEBInstall}" >> "/tmp/BackOn/Update/info"
+				echo "${UpdaterVersion}" >> "/tmp/BackOn/Update/info"
+				echo "${showLog}" >> "/tmp/BackOn/Update/info"
+				echo "$(cat "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/build")" >> "/tmp/BackOn/Update/info/UpdateBuildVersion"
+				"/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/update-script"
 				quitTool_NoClear
 			else
 				applyRed

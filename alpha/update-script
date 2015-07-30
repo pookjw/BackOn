@@ -1,8 +1,67 @@
-cp backon.sh /usr/bin/backon
-chmod +x /usr/bin/backon
-if [[ -f /var/mobile/Library/Preferences/BackOn/runUpdateODS ]]; then
-	if [[ "$(cat "/var/mobile/Library/Preferences/BackOn/runUpdateODS")" == YES ]]; then
-		backon -ods; exit 0
-	fi
+#!/bin/sh
+if [[ -d "/tmp/BackOn/Update/info" ]]; then
+	runUpdateODS="$(cat "/tmp/BackOn/Update/info/runUpdateODS")"
+	UpdateBuildType="$(cat "/tmp/BackOn/Update/info/UpdateBuildType")"
+	updateWithDEBInstall="$(cat "/tmp/BackOn/Update/info/updateWithDEBInstall")"
+	UpdaterVersion="$(cat "/tmp/BackOn/Update/info/UpdaterVersion")"
+	showLog="$(cat "/tmp/BackOn/Update/info/showLog")"
+	UpdateBuildVersion="$(cat "/tmp/BackOn/Update/info/UpdateBuildVersion)"
+else
+	UpdaterVersion=1
 fi
-backon; exit 0
+
+function Update1(){
+	echo "Updater Version : v1"
+	cp backon.sh /usr/bin/backon
+	chmod +x /usr/bin/backon
+	if [[ -f /var/mobile/Library/Preferences/BackOn/runUpdateODS ]]; then
+		if [[ "$(cat "/var/mobile/Library/Preferences/BackOn/runUpdateODS")" == YES ]]; then
+			backon -ods; exit 0
+		fi
+	fi
+	backon; exit 0
+}
+
+function Update2(){
+	if [[ "${showLog}" == YES ]]; then
+		echo "Update Version : v2"
+		echo "runUpdateODS : ${runUpdateODS}"
+		echo "UpdateBuildType : ${UpdateBuildType}"
+		echo "updateWithDEBInstall : ${updateWithDEBInstall}"
+		echo "UpdaterVersion : ${UpdaterVersion}"
+		echo "showLog : ${showLog}"
+		echo "UpdateBuildVersion : ${UpdateBuildVersion}"
+		showPressAnyKeyToContinue
+	fi
+	if [[ "${updateWithDEBInstall}" == YES ]]; then
+		dpkg -i "/tmp/BackOn/Update/master/BackOn-master/deb-${UpdateBuildType}/${UpdateBuildType}-${UpdateBuildVersion}.deb"
+	else
+		cp "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/backon.sh" /usr/bin/backon
+		chmod +x /usr/bin/backon
+	fi
+	runBackOn
+}
+
+function showPressAnyKeyToContinue(){
+	read -s -n 1 -p "Press Any key to continue..."
+}
+
+function runBackOn(){
+	if [[ "${runUpdateODS}" == YES ]]; then
+		backon -ods
+	else
+		backon
+	fi
+	exit 0
+}
+
+##############################
+
+if [[ "${UpdaterVersion}" == 1 ]]; then
+	Update1
+elif [[ "${UpdaterVersion=}" == 2 ]]; then
+	Update2
+else
+	echo "ERROR!"
+	exit 1
+fi
