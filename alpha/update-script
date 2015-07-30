@@ -21,7 +21,7 @@ if [[ -f "/tmp/BackOn/Update/info/UpdateBuildVersion" ]]; then
 fi
 
 function Update1(){
-	echo "Updater Version : v1"
+	echo "UpdaterVersion : v1"
 	cp backon.sh /usr/bin/backon
 	chmod +x /usr/bin/backon
 	if [[ -f /var/mobile/Library/Preferences/BackOn/runUpdateODS ]]; then
@@ -34,7 +34,7 @@ function Update1(){
 
 function Update2(){
 	if [[ "${showLog}" == YES ]]; then
-		echo "Update Version : v2"
+		echo "UpdaterVersion : v2"
 		echo "runUpdateODS : ${runUpdateODS}"
 		echo "UpdateBuildType : ${UpdateBuildType}"
 		echo "updateWithDEBInstall : ${updateWithDEBInstall}"
@@ -43,7 +43,7 @@ function Update2(){
 		echo "UpdateBuildVersion : ${UpdateBuildVersion}"
 		showPressAnyKeyToContinue
 	fi
-	if [[ "${updateWithDEBInstall}" == YES ]]; then
+	if [[ "${updateWithDEBInstall}" == YES && ! "${UpdateBuildType}" == alpha ]]; then
 		dpkg -i "/tmp/BackOn/Update/master/BackOn-master/deb-${UpdateBuildType}/${UpdateBuildType}-${UpdateBuildVersion}.deb"
 	else
 		cp "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/backon.sh" /usr/bin/backon
