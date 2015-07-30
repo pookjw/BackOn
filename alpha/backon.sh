@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-161-official
+# BackOn alpha-163-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=161
+TOOL_BUILD_NUM=163
 UpdaterVersion=2
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
@@ -1552,6 +1552,7 @@ function installUpdate(){
 				echo "${showLog}" >> "/tmp/BackOn/Update/info/showLog"
 				echo "$(cat "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/build")" >> "/tmp/BackOn/Update/info/UpdateBuildVersion"
 				cd "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}"
+				killCydia
 				./update-script
 				quitTool_NoClear
 			else
