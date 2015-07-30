@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn beta-160-official
+# BackOn beta-165-official
 TOOL_BUILD_TYPE=beta
-TOOL_BUILD_NUM=160
+TOOL_BUILD_NUM=165
 UpdaterVersion=2
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
@@ -1540,7 +1540,6 @@ function installUpdate(){
 					PA2CKey
 				fi
 				echo -e "${INSTALLING}"
-				chmod +x "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/update-script"
 				if [[ -d "/tmp/BackOn/Update/info" ]]; then
 					rm -rf "/tmp/BackOn/Update/info"
 				fi
@@ -1552,6 +1551,8 @@ function installUpdate(){
 				echo "${showLog}" >> "/tmp/BackOn/Update/info/showLog"
 				echo "$(cat "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/build")" >> "/tmp/BackOn/Update/info/UpdateBuildVersion"
 				cd "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}"
+				killCydia
+				chmod +x "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/update-script"
 				./update-script
 				quitTool_NoClear
 			else
