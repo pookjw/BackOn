@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-152-official
+# BackOn alpha-153-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=152
+TOOL_BUILD_NUM=153
 UpdaterVersion=2
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
@@ -1551,7 +1551,8 @@ function installUpdate(){
 				echo "${UpdaterVersion}" >> "/tmp/BackOn/Update/info/UpdaterVersion"
 				echo "${showLog}" >> "/tmp/BackOn/Update/info/showLog"
 				echo "$(cat "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/build")" >> "/tmp/BackOn/Update/info/UpdateBuildVersion"
-				"/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/update-script"
+				cd "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/update-script"
+				./update-script
 				quitTool_NoClear
 			else
 				applyRed
