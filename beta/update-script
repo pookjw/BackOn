@@ -44,7 +44,11 @@ function Update2(){
 		showPressAnyKeyToContinue
 	fi
 	if [[ "${updateWithDEBInstall}" == YES && ! "${UpdateBuildType}" == alpha ]]; then
-		dpkg -i "/tmp/BackOn/Update/master/BackOn-master/deb-${UpdateBuildType}/${UpdateBuildType}-${UpdateBuildVersion}.deb"
+		if [[ "${showLog}" == YES ]]; then
+			dpkg -i "/tmp/BackOn/Update/master/BackOn-master/deb-${UpdateBuildType}/${UpdateBuildType}-${UpdateBuildVersion}.deb"
+		else
+			dpkg -i "/tmp/BackOn/Update/master/BackOn-master/deb-${UpdateBuildType}/${UpdateBuildType}-${UpdateBuildVersion}.deb" > /dev/null 2>&1
+		fi
 	else
 		cp "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/backon.sh" /usr/bin/backon
 		chmod +x /usr/bin/backon
