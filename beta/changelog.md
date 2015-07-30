@@ -84,3 +84,7 @@ BackOn을 수정해서 배포할 땐 **'TOOL_RELEASE'**에 unofficial 표기를 
 이제 업데이트할 땐 deb 파일을 설치하는 방식으로 바꼈습니다. deb 파일로 설치하지 않고 이전 방식의 설치 방식(바이너리만 업데이트)으로 이용하려면 DevSettings에서 **updateWithDEBInstall** 설정값을 비활성화시키면 됩니다.
 
 참고로 alpha 빌드는 deb 파일을 제공하지 않으므로 이전 설치 방식 (바이너리 업데이트)로 업데이트가 진행됩니다.
+
+# beta-156 (2015-07-31)
+
+- (Fixed) beta 빌드인데 alpha 빌드로 표기되던 버그 수정.

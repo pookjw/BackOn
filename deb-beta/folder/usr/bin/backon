@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-155-official
-TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=155
+# BackOn beta-156-official
+TOOL_BUILD_TYPE=beta
+TOOL_BUILD_NUM=156
 UpdaterVersion=2
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
