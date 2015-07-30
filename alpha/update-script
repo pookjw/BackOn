@@ -21,7 +21,7 @@ if [[ -f "/tmp/BackOn/Update/info/UpdateBuildVersion" ]]; then
 fi
 
 function Update1(){
-	echo "UpdaterVersion : v1"
+	echo "UpdaterVersion : 1"
 	cp backon.sh /usr/bin/backon
 	chmod +x /usr/bin/backon
 	if [[ -f /var/mobile/Library/Preferences/BackOn/runUpdateODS ]]; then
@@ -34,7 +34,7 @@ function Update1(){
 
 function Update2(){
 	if [[ "${showLog}" == YES ]]; then
-		echo "UpdaterVersion : v2"
+		echo "UpdaterVersion : 2"
 		echo "runUpdateODS : ${runUpdateODS}"
 		echo "UpdateBuildType : ${UpdateBuildType}"
 		echo "updateWithDEBInstall : ${updateWithDEBInstall}"

@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn beta-158-official
+# BackOn beta-160-official
 TOOL_BUILD_TYPE=beta
-TOOL_BUILD_NUM=158
+TOOL_BUILD_NUM=160
 UpdaterVersion=2
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
@@ -222,11 +222,13 @@ function openDevSettings(){
 		elif [[ "${DynamicLine}" == NO ]]; then
 			echo -e "(20) DynamicLine : NO"
 		fi
+		echo -e "(21) UpdaterVersion : ${UpdaterVersion}"
 		if [[ "${updateWithDEBInstall}" == YES ]]; then
-			echo -e "(21) updateWithDEBInstall : YES"
+			echo -e "(22) updateWithDEBInstall : YES"
 		elif [[ "${updateWithDEBInstall}" == NO ]]; then
-			echo -e "(21) updateWithDEBInstall : NO"
-		fi		echo -e "(l) ls"
+			echo -e "(22) updateWithDEBInstall : NO"
+		fi
+		echo -e "(l) ls"
 		echo -e "(s) Save Settings."
 		echo -e "(d) Disable DevSettings."
 		showLinesA
@@ -401,7 +403,7 @@ function openDevSettings(){
 			if [[ -z "${UpdaterVersion}" ]]; then
 				UpdaterVersion=1
 			fi
-		elif [[ "${ANSWER_D}" == 21 ]]; then
+		elif [[ "${ANSWER_D}" == 22 ]]; then
 			if [[ "${updateWithDEBInstall}" == YES ]]; then
 				updateWithDEBInstall=NO
 			elif [[ "${updateWithDEBInstall}" == NO ]]; then
