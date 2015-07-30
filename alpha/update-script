@@ -1,13 +1,23 @@
 #!/bin/sh
-if [[ -d "/tmp/BackOn/Update/info" ]]; then
+if [[ -f "/tmp/BackOn/Update/info/runUpdateODS" ]]; then
 	runUpdateODS="$(cat "/tmp/BackOn/Update/info/runUpdateODS")"
+fi
+if [[ -f "/tmp/BackOn/Update/info/UpdateBuildType" ]]; then
 	UpdateBuildType="$(cat "/tmp/BackOn/Update/info/UpdateBuildType")"
+fi
+if [[ -f "/tmp/BackOn/Update/info/updateWithDEBInstall" ]]; then
 	updateWithDEBInstall="$(cat "/tmp/BackOn/Update/info/updateWithDEBInstall")"
+fi
+if [[ -f "/tmp/BackOn/Update/info/UpdaterVersion" ]]; then
 	UpdaterVersion="$(cat "/tmp/BackOn/Update/info/UpdaterVersion")"
-	showLog="$(cat "/tmp/BackOn/Update/info/showLog")"
-	UpdateBuildVersion="$(cat "/tmp/BackOn/Update/info/UpdateBuildVersion)"
 else
 	UpdaterVersion=1
+fi
+if [[ -f "/tmp/BackOn/Update/info/showLog" ]]; then
+	showLog="$(cat "/tmp/BackOn/Update/info/showLog")"
+fi
+if [[ -f "/tmp/BackOn/Update/info/UpdateBuildVersion" ]]; then
+	UpdateBuildVersion="$(cat "/tmp/BackOn/Update/info/UpdateBuildVersion)"
 fi
 
 function Update1(){
