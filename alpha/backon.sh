@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-151-official
+# BackOn alpha-152-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=151
+TOOL_BUILD_NUM=152
 UpdaterVersion=2
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
@@ -1545,11 +1545,11 @@ function installUpdate(){
 					rm -rf "/tmp/BackOn/Update/info"
 				fi
 				mkdir "/tmp/BackOn/Update/info"
-				echo "${runUpdateODS}" >> "/tmp/BackOn/Update/info"
-				echo "${UpdateBuildType}" >> "/tmp/BackOn/Update/info"
-				echo "${updateWithDEBInstall}" >> "/tmp/BackOn/Update/info"
-				echo "${UpdaterVersion}" >> "/tmp/BackOn/Update/info"
-				echo "${showLog}" >> "/tmp/BackOn/Update/info"
+				echo "${runUpdateODS}" >> "/tmp/BackOn/Update/info/runUpdateODS"
+				echo "${UpdateBuildType}" >> "/tmp/BackOn/Update/info/UpdateBuildType"
+				echo "${updateWithDEBInstall}" >> "/tmp/BackOn/Update/info/updateWithDEBInstall"
+				echo "${UpdaterVersion}" >> "/tmp/BackOn/Update/info/UpdaterVersion"
+				echo "${showLog}" >> "/tmp/BackOn/Update/info/showLog"
 				echo "$(cat "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/build")" >> "/tmp/BackOn/Update/info/UpdateBuildVersion"
 				"/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/update-script"
 				quitTool_NoClear
