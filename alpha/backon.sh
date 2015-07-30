@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-157-official
+# BackOn alpha-159-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=157
+TOOL_BUILD_NUM=159
 UpdaterVersion=2
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
@@ -227,7 +227,6 @@ function openDevSettings(){
 		elif [[ "${updateWithDEBInstall}" == NO ]]; then
 			echo -e "(21) updateWithDEBInstall : NO"
 		fi
-		echo -e "(6) OSVer : ${UpdaterVersion}"
 		echo -e "(l) ls"
 		echo -e "(s) Save Settings."
 		echo -e "(d) Disable DevSettings."
