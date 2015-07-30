@@ -17,7 +17,7 @@ if [[ -f "/tmp/BackOn/Update/info/showLog" ]]; then
 	showLog="$(cat "/tmp/BackOn/Update/info/showLog")"
 fi
 if [[ -f "/tmp/BackOn/Update/info/UpdateBuildVersion" ]]; then
-	UpdateBuildVersion="$(cat "/tmp/BackOn/Update/info/UpdateBuildVersion)"
+	UpdateBuildVersion="$(cat "/tmp/BackOn/Update/info/UpdateBuildVersion")"
 fi
 
 function Update1(){
