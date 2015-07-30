@@ -88,3 +88,7 @@ BackOn을 수정해서 배포할 땐 **'TOOL_RELEASE'**에 unofficial 표기를 
 # beta-156 (2015-07-31)
 
 - (Fixed) beta 빌드인데 alpha 빌드로 표기되던 버그 수정.
+
+# beta-158 (2015-07-31)
+
+- (Fixed) DevSettings 오류 수정.
