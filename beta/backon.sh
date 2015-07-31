@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn beta-171-official
+# BackOn beta-173-official
 TOOL_BUILD_TYPE=beta
-TOOL_BUILD_NUM=171
+TOOL_BUILD_NUM=173
 UpdaterVersion=2
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
@@ -1563,7 +1563,6 @@ function installUpdate(){
 				echo -e "${applyColorScheme}" >> "/tmp/BackOn/Update/info/applyColorScheme"
 				echo -e "$(cat "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/build")" >> "/tmp/BackOn/Update/info/UpdateBuildVersion"
 				cd "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}"
-				killCydia
 				chmod +x "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/update-script"
 				./update-script
 				quitTool_NoClear
