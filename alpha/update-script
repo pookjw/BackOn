@@ -16,12 +16,17 @@ fi
 if [[ -f "/tmp/BackOn/Update/info/showLog" ]]; then
 	showLog="$(cat "/tmp/BackOn/Update/info/showLog")"
 fi
+if [[ -f "/tmp/BackOn/Update/info/applyColorScheme" ]]; then
+	applyColorScheme="$(cat "/tmp/BackOn/Update/info/applyColorScheme")"
+fi
 if [[ -f "/tmp/BackOn/Update/info/UpdateBuildVersion" ]]; then
 	UpdateBuildVersion="$(cat "/tmp/BackOn/Update/info/UpdateBuildVersion")"
 fi
 
 function Update1(){
+	applyPurple
 	echo "UpdaterVersion : 1"
+	applyNoColor
 	cp backon.sh /usr/bin/backon
 	chmod +x /usr/bin/backon
 	if [[ -f /var/mobile/Library/Preferences/BackOn/runUpdateODS ]]; then
@@ -34,18 +39,22 @@ function Update1(){
 
 function Update2(){
 	if [[ "${showLog}" == YES ]]; then
-		echo "UpdaterVersion : 2"
-		echo "runUpdateODS : ${runUpdateODS}"
-		echo "UpdateBuildType : ${UpdateBuildType}"
-		echo "updateWithDEBInstall : ${updateWithDEBInstall}"
-		echo "UpdaterVersion : ${UpdaterVersion}"
-		echo "showLog : ${showLog}"
-		echo "UpdateBuildVersion : ${UpdateBuildVersion}"
+		applyPurple
+		echo -e "UpdaterVersion : 2"
+		echo -e "runUpdateODS : ${runUpdateODS}"
+		echo -e "UpdateBuildType : ${UpdateBuildType}"
+		echo -e "updateWithDEBInstall : ${updateWithDEBInstall}"
+		echo -e "UpdaterVersion : ${UpdaterVersion}"
+		echo -e "showLog : ${showLog}"
+		echo -e "UpdateBuildVersion : ${UpdateBuildVersion}"
+		applyNoColor
 		showPressAnyKeyToContinue
 	fi
 	if [[ "${updateWithDEBInstall}" == YES && ! "${UpdateBuildType}" == alpha ]]; then
 		if [[ "${showLog}" == YES ]]; then
+			applyPurple
 			dpkg -i "/tmp/BackOn/Update/master/BackOn-master/deb-${UpdateBuildType}/${UpdateBuildType}-${UpdateBuildVersion}.deb"
+			applyNoColor
 		else
 			dpkg -i "/tmp/BackOn/Update/master/BackOn-master/deb-${UpdateBuildType}/${UpdateBuildType}-${UpdateBuildVersion}.deb" > /dev/null 2>&1
 		fi
@@ -56,8 +65,35 @@ function Update2(){
 	runBackOn
 }
 
+function applyRed(){
+	if [[ "${applyColorScheme}" == YES ]]; then
+		echo -e -n "\033[0;31m"
+	fi
+}
+
+function applyPurple(){
+	if [[ "${applyColorScheme}" == YES ]]; then
+		echo -e -n "\033[1;35m"
+	fi
+}
+
+function applyLightCyan(){
+	if [[ "${applyColorScheme}" == YES ]]; then
+		echo -e -n "\033[1;36m"
+	fi
+}
+
+function applyNoColor(){
+	if [[ "${applyColorScheme}" == YES ]]; then
+		echo -e -n "\033[0m"
+	fi
+}
+
 function showPressAnyKeyToContinue(){
+	applyLightCyan
 	read -s -n 1 -p "Press Any key to continue..."
+	applyNoColor
+	echo -e
 }
 
 function runBackOn(){
@@ -76,6 +112,8 @@ if [[ "${UpdaterVersion}" == 1 ]]; then
 elif [[ "${UpdaterVersion=}" == 2 ]]; then
 	Update2
 else
+	applyRed
 	echo "ERROR!"
+	applyNoColor
 	exit 1
 fi
