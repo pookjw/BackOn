@@ -27,6 +27,7 @@ function Update1(){
 	applyPurple
 	echo "UpdaterVersion : 1"
 	applyNoColor
+	showPressAnyKeyToContinue
 	cp backon.sh /usr/bin/backon
 	chmod +x /usr/bin/backon
 	if [[ -f /var/mobile/Library/Preferences/BackOn/runUpdateODS ]]; then
@@ -46,6 +47,7 @@ function Update2(){
 		echo -e "updateWithDEBInstall : ${updateWithDEBInstall}"
 		echo -e "UpdaterVersion : ${UpdaterVersion}"
 		echo -e "showLog : ${showLog}"
+		echo -e "applyColorScheme : ${applyColorScheme}"
 		echo -e "UpdateBuildVersion : ${UpdateBuildVersion}"
 		applyNoColor
 		showPressAnyKeyToContinue
