@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-169-official
+# BackOn alpha-170-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=169
+TOOL_BUILD_NUM=170
 UpdaterVersion=2
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
@@ -66,7 +66,7 @@ function setEnglish(){
 	REBOOT="Reboot."
 	RESTORING="Restoring..."
 	REFRESHING_SOURCES="Refreshing Cydia sources..."
-	DOWNLOADING_INSTALLING_PACKAGES="Cydia 패키지 다운로드 & 설치 중..."
+	DOWNLOADING_INSTALLING_PACKAGES="Downloading Cydia packages & Installing..."
 	RESTORING_ALL_IS_NOT_RECOMMENDED="Restoring all Library files is not recommended bacause it may cause boot-loop. Are you sure to continue? (yes/no)"
 	SHOW_GUIDE_3="Enter file/folder name that you want to backup. If you want to backup all of files, enter 'all' command. Enter 'delete' command to delete backuped backup."
 	SHOW_GUIDE_4="Enter file/folder name that you want to delete backup. If you want to delete all of backup files, enter 'all' command."
