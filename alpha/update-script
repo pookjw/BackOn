@@ -1,12 +1,16 @@
 #!/bin/sh
 if [[ -f "/tmp/BackOn/Update/info/runUpdateODS" ]]; then
 	runUpdateODS="$(cat "/tmp/BackOn/Update/info/runUpdateODS")"
+else
+	runUpdateODS=NO
 fi
 if [[ -f "/tmp/BackOn/Update/info/UpdateBuildType" ]]; then
 	UpdateBuildType="$(cat "/tmp/BackOn/Update/info/UpdateBuildType")"
 fi
 if [[ -f "/tmp/BackOn/Update/info/updateWithDEBInstall" ]]; then
 	updateWithDEBInstall="$(cat "/tmp/BackOn/Update/info/updateWithDEBInstall")"
+else
+	updateWithDEBInstall=YES
 fi
 if [[ -f "/tmp/BackOn/Update/info/UpdaterVersion" ]]; then
 	UpdaterVersion="$(cat "/tmp/BackOn/Update/info/UpdaterVersion")"
@@ -15,9 +19,13 @@ else
 fi
 if [[ -f "/tmp/BackOn/Update/info/showLog" ]]; then
 	showLog="$(cat "/tmp/BackOn/Update/info/showLog")"
+else
+	showLog=NO
 fi
 if [[ -f "/tmp/BackOn/Update/info/applyColorScheme" ]]; then
 	applyColorScheme="$(cat "/tmp/BackOn/Update/info/applyColorScheme")"
+else
+	applyColorScheme=YES
 fi
 if [[ -f "/tmp/BackOn/Update/info/UpdateBuildVersion" ]]; then
 	UpdateBuildVersion="$(cat "/tmp/BackOn/Update/info/UpdateBuildVersion")"
@@ -26,12 +34,7 @@ fi
 function Update1(){
 	UpdateBuildType="${PWD##*/}"
 	UpdateBuildVersion="$(cat build)"
-	applyPurple
-	echo -e "UpdaterVersion : 1"
-	echo -e "UpdateBuildType : ${UpdateBuildType}"
-	echo -e "UpdateBuildVersion : ${UpdateBuildVersion}"
-	applyNoColor
-	showPressAnyKeyToContinue
+	showInfo
 	if [[ "${UpdateBuildType}" == alpha ]]; then
 		cp backon.sh /usr/bin/backon
 		chmod +x /usr/bin/backon
@@ -56,16 +59,7 @@ function Update1(){
 
 function Update2(){
 	if [[ "${showLog}" == YES ]]; then
-		applyPurple
-		echo -e "UpdaterVersion : 2"
-		echo -e "runUpdateODS : ${runUpdateODS}"
-		echo -e "UpdateBuildType : ${UpdateBuildType}"
-		echo -e "updateWithDEBInstall : ${updateWithDEBInstall}"
-		echo -e "showLog : ${showLog}"
-		echo -e "applyColorScheme : ${applyColorScheme}"
-		echo -e "UpdateBuildVersion : ${UpdateBuildVersion}"
-		applyNoColor
-		showPressAnyKeyToContinue
+		showInfo
 	fi
 	if [[ "${updateWithDEBInstall}" == YES && ! "${UpdateBuildType}" == alpha ]]; then
 		if [[ "${showLog}" == YES ]]; then
@@ -80,6 +74,19 @@ function Update2(){
 		chmod +x /usr/bin/backon
 	fi
 	runBackOn
+}
+
+function showInfo(){
+	applyPurple
+	echo -e "UpdaterVersion : ${UpdaterVersion}"
+	echo -e "runUpdateODS : ${runUpdateODS}"
+	echo -e "UpdateBuildType : ${UpdateBuildType}"
+	echo -e "updateWithDEBInstall : ${updateWithDEBInstall}"
+	echo -e "showLog : ${showLog}"
+	echo -e "applyColorScheme : ${applyColorScheme}"
+	echo -e "UpdateBuildVersion : ${UpdateBuildVersion}"
+	applyNoColor
+	showPressAnyKeyToContinue
 }
 
 function applyRed(){
