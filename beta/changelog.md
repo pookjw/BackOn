@@ -96,3 +96,15 @@ BackOn을 수정해서 배포할 땐 **'TOOL_RELEASE'**에 unofficial 표기를 
 # beta-160 (2015-07-31)
 
 - (Fixed) DevSettings 오류 수정 (2).
+
+# beta-171 (2015-07-31)
+
+- (Added) Cydia 소스, 패키지 복원 중에 현재 상황을 상세히 알려주는 문구 추가.
+
+![이미지](https://farm1.staticflickr.com/366/20168329571_d170d133c6_o.png)
+
+▲ 이렇게.
+
+---
+
+- (Fixed) 업데이트 기능 관련 수정.

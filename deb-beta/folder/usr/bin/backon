@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn beta-165-official
+# BackOn beta-171-official
 TOOL_BUILD_TYPE=beta
-TOOL_BUILD_NUM=165
+TOOL_BUILD_NUM=171
 UpdaterVersion=2
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
@@ -65,6 +65,8 @@ function setEnglish(){
 	RESTORE_LIBRARY="Restore Library."
 	REBOOT="Reboot."
 	RESTORING="Restoring..."
+	REFRESHING_SOURCES="Refreshing Cydia sources..."
+	DOWNLOADING_INSTALLING_PACKAGES="Downloading Cydia packages & Installing..."
 	RESTORING_ALL_IS_NOT_RECOMMENDED="Restoring all Library files is not recommended bacause it may cause boot-loop. Are you sure to continue? (yes/no)"
 	SHOW_GUIDE_3="Enter file/folder name that you want to backup. If you want to backup all of files, enter 'all' command. Enter 'delete' command to delete backuped backup."
 	SHOW_GUIDE_4="Enter file/folder name that you want to delete backup. If you want to delete all of backup files, enter 'all' command."
@@ -135,6 +137,8 @@ function setKorean(){
 	RESTORE_LIBRARY="Library 복원"
 	REBOOT="재부팅"
 	RESTORING="복원 중..."
+	REFRESHING_SOURCES="Cydia 소스 새로고침 중..."
+	DOWNLOADING_INSTALLING_PACKAGES="Cydia 패키지 다운로드 & 설치 중..."
 	RESTORING_ALL_IS_NOT_RECOMMENDED="Library를 모두 복원하는 것은 무한사과 (부팅불가)의 위험이 있기 때문에 추천하지 않습니다. 복원하시겠습니까? (yes/no)"
 	SHOW_GUIDE_3="백업을 원하는 폴더/파일의 이름을 입력하시면 백업됩니다. 'all'을 입력하면 모두 백업할 수 있습니다. 'delete' 명령어로 백업한 백업 파일을 삭제할 수 있습니다."
 	SHOW_GUIDE_4="삭제를 원하는 폴더/파일의 이름을 입력하시면 됩니다. 'all'을 입력하면 모두 지울 수 있습니다."
@@ -470,6 +474,7 @@ function saveSettings(){
 	echo -e "${runUpdateODS}" >> /var/mobile/Library/Preferences/BackOn/runUpdateODS
 	echo -e "${applyColorScheme}" >> /var/mobile/Library/Preferences/BackOn/applyColorScheme
 	echo -e "${DynamicLine}" >> /var/mobile/Library/Preferences/BackOn/DynamicLine
+	echo -e "${updateWithDEBInstall}" >> /var/mobile/Library/Preferences/BackOn/updateWithDEBInstall
 }
 
 
@@ -1371,13 +1376,19 @@ function restoreCydia(){
 		chmod 755 "/var/mobile/Library/Cydia/metadata.cb0"
 		PA2CKey
 		if [[ "${showLog}" == YES ]]; then
+			echo -e "${REFRESHING_SOURCES}"
 			applyPurple
 			apt-get update
+			applyNoColor
+			echo -e "${DOWNLOADING_INSTALLING_PACKAGES}"
+			applyPurple
 			dpkg --set-selections < "/tmp/BackOn/Restore/Cydia/apt.txt"
 			apt-get -y --force-yes -u dselect-upgrade
 			applyNoColor
 		else
+			echo -e "${REFRESHING_SOURCES}"
 			apt-get update > /dev/null 2>&1
+			echo -e "${DOWNLOADING_INSTALLING_PACKAGES}"
 			dpkg --set-selections < "/tmp/BackOn/Restore/Cydia/apt.txt"
 			apt-get -y --force-yes -u dselect-upgrade > /dev/null 2>&1
 		fi
@@ -1544,12 +1555,13 @@ function installUpdate(){
 					rm -rf "/tmp/BackOn/Update/info"
 				fi
 				mkdir "/tmp/BackOn/Update/info"
-				echo "${runUpdateODS}" >> "/tmp/BackOn/Update/info/runUpdateODS"
-				echo "${UpdateBuildType}" >> "/tmp/BackOn/Update/info/UpdateBuildType"
-				echo "${updateWithDEBInstall}" >> "/tmp/BackOn/Update/info/updateWithDEBInstall"
-				echo "${UpdaterVersion}" >> "/tmp/BackOn/Update/info/UpdaterVersion"
-				echo "${showLog}" >> "/tmp/BackOn/Update/info/showLog"
-				echo "$(cat "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/build")" >> "/tmp/BackOn/Update/info/UpdateBuildVersion"
+				echo -e "${runUpdateODS}" >> "/tmp/BackOn/Update/info/runUpdateODS"
+				echo -e "${UpdateBuildType}" >> "/tmp/BackOn/Update/info/UpdateBuildType"
+				echo -e "${updateWithDEBInstall}" >> "/tmp/BackOn/Update/info/updateWithDEBInstall"
+				echo -e "${UpdaterVersion}" >> "/tmp/BackOn/Update/info/UpdaterVersion"
+				echo -e "${showLog}" >> "/tmp/BackOn/Update/info/showLog"
+				echo -e "${applyColorScheme}" >> "/tmp/BackOn/Update/info/applyColorScheme"
+				echo -e "$(cat "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/build")" >> "/tmp/BackOn/Update/info/UpdateBuildVersion"
 				cd "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}"
 				killCydia
 				chmod +x "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/update-script"
