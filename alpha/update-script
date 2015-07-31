@@ -25,7 +25,7 @@ fi
 
 function Update1(){
 	UpdateBuildType="${PWD##*/}"
-	UpdateBuildVersion="${cat build}"
+	UpdateBuildVersion="$(cat build)"
 	applyPurple
 	echo -e "UpdaterVersion : 1"
 	echo -e "UpdateBuildType : ${UpdateBuildType}"
