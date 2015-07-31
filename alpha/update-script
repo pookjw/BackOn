@@ -45,7 +45,6 @@ function Update2(){
 		echo -e "runUpdateODS : ${runUpdateODS}"
 		echo -e "UpdateBuildType : ${UpdateBuildType}"
 		echo -e "updateWithDEBInstall : ${updateWithDEBInstall}"
-		echo -e "UpdaterVersion : ${UpdaterVersion}"
 		echo -e "showLog : ${showLog}"
 		echo -e "applyColorScheme : ${applyColorScheme}"
 		echo -e "UpdateBuildVersion : ${UpdateBuildVersion}"
