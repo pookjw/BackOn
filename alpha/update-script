@@ -41,7 +41,7 @@ function Update1(){
 	elif [[ "${UpdateBuildType}" == beta || "${UpdateBuildType}" == stable ]]; then
 		killCydia
 		applyPurple
-		dpkg -i "$../deb-${UpdateBuildType}/${UpdateBuildType}-${UpdateBuildVersion}.deb"
+		dpkg -i "../deb-${UpdateBuildType}/${UpdateBuildType}-${UpdateBuildVersion}.deb"
 		applyNoColor
 	else
 		applyRed
