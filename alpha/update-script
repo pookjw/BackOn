@@ -2,7 +2,11 @@
 if [[ -f "/tmp/BackOn/Update/info/runUpdateODS" ]]; then
 	runUpdateODS="$(cat "/tmp/BackOn/Update/info/runUpdateODS")"
 else
-	runUpdateODS=NO
+	if [[ -f "/var/mobile/Library/Preferences/BackOn/runUpdateODS" ]]; then
+		runUpdateODS="$(cat "/tmp/BackOn/Update/info/runUpdateODS")"
+	else
+		runUpdateODS=NO
+	fi
 fi
 if [[ -f "/tmp/BackOn/Update/info/UpdateBuildType" ]]; then
 	UpdateBuildType="$(cat "/tmp/BackOn/Update/info/UpdateBuildType")"
@@ -49,12 +53,7 @@ function Update1(){
 		applyNoColor
 		exit 1
 	fi
-	if [[ -f /var/mobile/Library/Preferences/BackOn/runUpdateODS ]]; then
-		if [[ "$(cat "/var/mobile/Library/Preferences/BackOn/runUpdateODS")" == YES ]]; then
-			backon -ods; exit 0
-		fi
-	fi
-	backon; exit 0
+	runBackOn
 }
 
 function Update2(){
