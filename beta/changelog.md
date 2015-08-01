@@ -108,3 +108,7 @@ BackOn을 수정해서 배포할 땐 **'TOOL_RELEASE'**에 unofficial 표기를 
 ---
 
 - (Fixed) 업데이트 기능 관련 수정.
+
+# beta-173 (2015-08-01)
+
+- (Fixed) 버그 수정.
