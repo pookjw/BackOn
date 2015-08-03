@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn stable-186-official
+# BackOn stable-189-official
 TOOL_BUILD_TYPE=stable
-TOOL_BUILD_NUM=186
+TOOL_BUILD_NUM=189
 UpdaterVersion=2
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
@@ -120,7 +120,7 @@ function setKorean(){
 	REMOVING="삭제 중..."
 	UNPACKING="압축해제 중..."
 	CLOSING_TOOL="툴 종료 중..."
-	ENTER_BACKUP_PATH="백업 파일의 경로를 입력해 주세요. ('xbakcup' 명령어를 입력하시면 xBackup의 백업 파일을 복원합니다.)"
+	ENTER_BACKUP_PATH="백업 파일의 경로를 입력해 주세요. ('xbackup' 명령어를 입력하시면 xBackup의 백업 파일을 복원합니다.)"
 	NOT_BACKON_BACKUP="이것은 BackOn의 백업 파일이 아닙니다."
 	DONE="완료"
 	YES="예"

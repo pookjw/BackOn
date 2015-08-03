@@ -122,3 +122,7 @@ BackOn을 수정해서 배포할 땐 **'TOOL_RELEASE'**에 unofficial 표기를 
 # beta-185 (2015-08-04)
 
 - (Fixed) 오타 수정.
+
+# beta-188 (2015-08-04)
+
+- (Fixed) 오타 수정.
