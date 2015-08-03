@@ -232,6 +232,11 @@ function openDevSettings(){
 		elif [[ "${updateWithDEBInstall}" == NO ]]; then
 			echo -e "(22) updateWithDEBInstall : NO"
 		fi
+		if [[ "${completeLibraryBackup}" == YES ]]; then
+			echo -e "(23) completeLibraryBackup : YES"
+		elif [[ "${completeLibraryBackup}" == NO ]]; then
+			echo -e "(23) completeLibraryBackup : NO"
+		fi
 		echo -e "(l) ls"
 		echo -e "(s) Save Settings."
 		echo -e "(d) Disable DevSettings."
@@ -413,6 +418,12 @@ function openDevSettings(){
 			elif [[ "${updateWithDEBInstall}" == NO ]]; then
 				updateWithDEBInstall=YES
 			fi
+		elif [[ "${ANSWER_D}" == 23 ]]; then
+			if [[ "${completeLibraryBackup}" == YES ]]; then
+				completeLibraryBackup=NO
+			elif [[ "${completeLibraryBackup}" == NO ]]; then
+				completeLibraryBackup=YES
+			fi
 		elif [[ "${ANSWER_D}" == l || "${ANSWER_D}" == ls ]]; then
 			ClearKey
 			showLinesA
@@ -475,6 +486,7 @@ function saveSettings(){
 	echo -e "${applyColorScheme}" >> /var/mobile/Library/Preferences/BackOn/applyColorScheme
 	echo -e "${DynamicLine}" >> /var/mobile/Library/Preferences/BackOn/DynamicLine
 	echo -e "${updateWithDEBInstall}" >> /var/mobile/Library/Preferences/BackOn/updateWithDEBInstall
+	echo -e "${completeLibraryBackup}" >> /var/mobile/Library/Preferences/BackOn/completeLibraryBackup
 }
 
 
@@ -562,6 +574,11 @@ function loadSettings(){
 		updateWithDEBInstall="$(cat "/var/mobile/Library/Preferences/BackOn/updateWithDEBInstall")"
 	else
 		updateWithDEBInstall=YES
+	fi
+	if [[ -f "/var/mobile/Library/Preferences/BackOn/completeLibraryBackup" ]]; then
+		completeLibraryBackup="$(cat "/var/mobile/Library/Preferences/BackOn/completeLibraryBackup")"
+	else
+		completeLibraryBackup=NO
 	fi
 }
 
@@ -887,10 +904,18 @@ function backupLibrary(){
 				echo -e "${BACKING_UP}"
 				if [[ "${showLog}" == YES ]]; then
 					applyPurple
-					rsync -av --exclude="Assets" --exclude="Caches" --exclude="Filza" --exclude="Preferences/BackupAZ" /var/mobile/Library/* "/tmp/BackOn/Backup/${BACKUP_NAME}/Library"
+					if [[ "${completeLibraryBackup}" == YES ]]; then
+						rsync -av --exclude="Assets" --exclude="Caches" --exclude="Filza" --exclude="Preferences/BackupAZ" /var/mobile/Library/* "/tmp/BackOn/Backup/${BACKUP_NAME}/Library"
+					else
+						rsync -av /var/mobile/Library/* "/tmp/BackOn/Backup/${BACKUP_NAME}/Library"
+					fi
 					applyNoColor
 				else
-					rsync -q -av --exclude="Assets" --exclude="Caches" --exclude="Filza" --exclude="Preferences/BackupAZ" /var/mobile/Library/* "/tmp/BackOn/Backup/${BACKUP_NAME}/Library"
+					if [[ "${completeLibraryBackup}" == YES ]]; then
+						rsync -q -av --exclude="Assets" --exclude="Caches" --exclude="Filza" --exclude="Preferences/BackupAZ" /var/mobile/Library/* "/tmp/BackOn/Backup/${BACKUP_NAME}/Library"
+					else
+						rsync -q -av /var/mobile/Library/* "/tmp/BackOn/Backup/${BACKUP_NAME}/Library"
+					fi
 				fi
 				if [[ -f "/var/mobile/Library/Caches/libactivator.plist" ]]; then
 					if [[ ! -d "/tmp/BackOn/Backup/${BACKUP_NAME}/Library/Caches" ]]; then
