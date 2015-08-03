@@ -17,3 +17,9 @@
 # stbale-174 (2015-08-01)
 
 - (Fixed) 버그 수정.
+
+# stable-183 (2015-08-04)
+
+- (Fixed) 오타 수정.
+
+- (Fixed) DevSettings 관련 기능 추가.

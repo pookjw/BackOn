@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn beta-173-official
+# BackOn beta-182-official
 TOOL_BUILD_TYPE=beta
-TOOL_BUILD_NUM=173
+TOOL_BUILD_NUM=182
 UpdaterVersion=2
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
@@ -232,6 +232,16 @@ function openDevSettings(){
 		elif [[ "${updateWithDEBInstall}" == NO ]]; then
 			echo -e "(22) updateWithDEBInstall : NO"
 		fi
+		if [[ "${completeLibraryBackup}" == YES ]]; then
+			echo -e "(23) completeLibraryBackup : YES"
+		elif [[ "${completeLibraryBackup}" == NO ]]; then
+			echo -e "(23) completeLibraryBackup : NO"
+		fi
+		if [[ "${fixDynamicLineIssue}" == YES ]]; then
+			echo -e "(24) fixDynamicLineIssue : YES"
+		elif [[ "${fixDynamicLineIssue}" == NO ]]; then
+			echo -e "(24) completeLibraryBackup : NO"
+		fi
 		echo -e "(l) ls"
 		echo -e "(s) Save Settings."
 		echo -e "(d) Disable DevSettings."
@@ -413,6 +423,18 @@ function openDevSettings(){
 			elif [[ "${updateWithDEBInstall}" == NO ]]; then
 				updateWithDEBInstall=YES
 			fi
+		elif [[ "${ANSWER_D}" == 23 ]]; then
+			if [[ "${completeLibraryBackup}" == YES ]]; then
+				completeLibraryBackup=NO
+			elif [[ "${completeLibraryBackup}" == NO ]]; then
+				completeLibraryBackup=YES
+			fi
+		elif [[ "${ANSWER_D}" == 24 ]]; then
+			if [[ "${fixDynamicLineIssue}" == YES ]]; then
+				fixDynamicLineIssue=NO
+			elif [[ "${fixDynamicLineIssue}" == NO ]]; then
+				fixDynamicLineIssue=YES
+			fi
 		elif [[ "${ANSWER_D}" == l || "${ANSWER_D}" == ls ]]; then
 			ClearKey
 			showLinesA
@@ -475,6 +497,8 @@ function saveSettings(){
 	echo -e "${applyColorScheme}" >> /var/mobile/Library/Preferences/BackOn/applyColorScheme
 	echo -e "${DynamicLine}" >> /var/mobile/Library/Preferences/BackOn/DynamicLine
 	echo -e "${updateWithDEBInstall}" >> /var/mobile/Library/Preferences/BackOn/updateWithDEBInstall
+	echo -e "${completeLibraryBackup}" >> /var/mobile/Library/Preferences/BackOn/completeLibraryBackup
+	echo -e "${fixDynamicLineIssue}" >> /var/mobile/Library/Preferences/BackOn/fixDynamicLineIssue
 }
 
 
@@ -563,6 +587,16 @@ function loadSettings(){
 	else
 		updateWithDEBInstall=YES
 	fi
+	if [[ -f "/var/mobile/Library/Preferences/BackOn/completeLibraryBackup" ]]; then
+		completeLibraryBackup="$(cat "/var/mobile/Library/Preferences/BackOn/completeLibraryBackup")"
+	else
+		completeLibraryBackup=NO
+	fi
+	if [[ -f "/var/mobile/Library/Preferences/BackOn/fixDynamicLineIssue" ]]; then
+		fixDynamicLineIssue="$(cat "/var/mobile/Library/Preferences/BackOn/fixDynamicLineIssue")"
+	else
+		fixDynamicLineIssue=NO
+	fi
 }
 
 function showLinesA(){
@@ -573,7 +607,9 @@ function showLinesA(){
 	   		echo -e -n "*"
 	 		PRINTED_COUNTS=$(($PRINTED_COUNTS+1))
 		done
-		echo -e
+		if [[ ! "${fixDynamicLineIssue}" == YES ]]; then
+			echo -e
+		fi
 	else
 		echo "***************"
 	fi
@@ -587,7 +623,9 @@ function showLinesB(){
 	   		echo -e -n "-"
 	 		PRINTED_COUNTS=$((${PRINTED_COUNTS}+1))
 		done
-		echo -e
+		if [[ ! "${fixDynamicLineIssue}" == YES ]]; then
+			echo -e
+		fi
 	else
 		echo "---------------"
 	fi
@@ -887,10 +925,18 @@ function backupLibrary(){
 				echo -e "${BACKING_UP}"
 				if [[ "${showLog}" == YES ]]; then
 					applyPurple
-					rsync -av --exclude="Assets" --exclude="Caches" --exclude="Filza" --exclude="Preferences/BackupAZ" /var/mobile/Library/* "/tmp/BackOn/Backup/${BACKUP_NAME}/Library"
+					if [[ "${completeLibraryBackup}" == YES ]]; then
+						rsync -av /var/mobile/Library/* "/tmp/BackOn/Backup/${BACKUP_NAME}/Library"
+					else
+						rsync -av --exclude="Assets" --exclude="Caches" --exclude="Filza" --exclude="Preferences/BackupAZ" /var/mobile/Library/* "/tmp/BackOn/Backup/${BACKUP_NAME}/Library"
+					fi
 					applyNoColor
 				else
-					rsync -q -av --exclude="Assets" --exclude="Caches" --exclude="Filza" --exclude="Preferences/BackupAZ" /var/mobile/Library/* "/tmp/BackOn/Backup/${BACKUP_NAME}/Library"
+					if [[ "${completeLibraryBackup}" == YES ]]; then
+						rsync -q -av /var/mobile/Library/* "/tmp/BackOn/Backup/${BACKUP_NAME}/Library"
+					else
+						rsync -q -av --exclude="Assets" --exclude="Caches" --exclude="Filza" --exclude="Preferences/BackupAZ" /var/mobile/Library/* "/tmp/BackOn/Backup/${BACKUP_NAME}/Library"
+					fi
 				fi
 				if [[ -f "/var/mobile/Library/Caches/libactivator.plist" ]]; then
 					if [[ ! -d "/tmp/BackOn/Backup/${BACKUP_NAME}/Library/Caches" ]]; then
@@ -981,10 +1027,18 @@ function backupLibrary(){
 				fi
 				if [[ "${showLog}" == YES ]]; then
 					applyPurple
-					rsync -av --exclude="BackupAZ" /var/mobile/Library/Preferences/* "/tmp/BackOn/Backup/${BACKUP_NAME}/Library/Preferences"
+					if [[ "${completeLibraryBackup}" == YES ]]; then
+						rsync -av /var/mobile/Library/Preferences/* "/tmp/BackOn/Backup/${BACKUP_NAME}/Library/Preferences"
+					else
+						rsync -av --exclude="BackupAZ" /var/mobile/Library/Preferences/* "/tmp/BackOn/Backup/${BACKUP_NAME}/Library/Preferences"
+					fi
 					applyNoColor
 				else
-					rsync -q -av --exclude="BackupAZ" /var/mobile/Library/Preferences/* "/tmp/BackOn/Backup/${BACKUP_NAME}/Library/Preferences"
+					if [[ "${completeLibraryBackup}" == YES ]]; then
+						rsync -q -av /var/mobile/Library/Preferences/* "/tmp/BackOn/Backup/${BACKUP_NAME}/Library/Preferences"
+					else
+						rsync -q -av --exclude="BackupAZ" /var/mobile/Library/Preferences/* "/tmp/BackOn/Backup/${BACKUP_NAME}/Library/Preferences"
+					fi
 				fi
 				echo -e "${DONE}"
 				showPressAnyKeyToContinue
@@ -1037,6 +1091,7 @@ function showBackupedFilesBackup(){
 	else
 		echo -e "${BACKUPED_CYDIA_METADATA} : ${NO}"
 	fi
+	showLinesB
 	if [[ -d "/tmp/BackOn/Backup/${BACKUP_NAME}/Library" ]]; then
 		echo -e "${BACKUPED_LIBRARY} : ${YES}"
 		showLinesB
@@ -1048,7 +1103,9 @@ function showBackupedFilesBackup(){
 		if [[ "${showLog}" == YES ]]; then
 			if [[ -d "/tmp/BackOn/Backup/${BACKUP_NAME}/Library/Caches" ]]; then
 				showLinesB
+				applyPurple
 				echo -e "/var/mobile/Library/Caches - /tmp/BackOn/Backup/${BACKUP_NAME}/Library"
+				applyNoColor
 				if [[ "${detailFileListView}" == YES ]]; then
 					ls -l "/tmp/BackOn/Backup/${BACKUP_NAME}/Library/Caches"
 				else
@@ -1604,6 +1661,8 @@ fi
 mkdir /tmp/BackOn
 if [[ "${1}" == "-ods" ]]; then
 	openDevSettings
+elif [[ "${1}" == "-update" ]]; then
+	installUpdate
 fi
 while(true); do
 	ClearKey
