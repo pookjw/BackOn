@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-172-official
+# BackOn alpha-176-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=172
+TOOL_BUILD_NUM=176
 UpdaterVersion=2
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
@@ -237,6 +237,11 @@ function openDevSettings(){
 		elif [[ "${completeLibraryBackup}" == NO ]]; then
 			echo -e "(23) completeLibraryBackup : NO"
 		fi
+		if [[ "${fixDynamicLineIssue}" == YES ]]; then
+			echo -e "(24) fixDynamicLineIssue : YES"
+		elif [[ "${fixDynamicLineIssue}" == NO ]]; then
+			echo -e "(24) completeLibraryBackup : NO"
+		fi
 		echo -e "(l) ls"
 		echo -e "(s) Save Settings."
 		echo -e "(d) Disable DevSettings."
@@ -424,6 +429,12 @@ function openDevSettings(){
 			elif [[ "${completeLibraryBackup}" == NO ]]; then
 				completeLibraryBackup=YES
 			fi
+		elif [[ "${ANSWER_D}" == 23 ]]; then
+			if [[ "${fixDynamicLineIssue}" == YES ]]; then
+				fixDynamicLineIssue=NO
+			elif [[ "${fixDynamicLineIssue}" == NO ]]; then
+				fixDynamicLineIssue=YES
+			fi
 		elif [[ "${ANSWER_D}" == l || "${ANSWER_D}" == ls ]]; then
 			ClearKey
 			showLinesA
@@ -487,6 +498,7 @@ function saveSettings(){
 	echo -e "${DynamicLine}" >> /var/mobile/Library/Preferences/BackOn/DynamicLine
 	echo -e "${updateWithDEBInstall}" >> /var/mobile/Library/Preferences/BackOn/updateWithDEBInstall
 	echo -e "${completeLibraryBackup}" >> /var/mobile/Library/Preferences/BackOn/completeLibraryBackup
+	echo -e "${fixDynamicLineIssue}" >> /var/mobile/Library/Preferences/BackOn/fixDynamicLineIssue
 }
 
 
@@ -580,6 +592,11 @@ function loadSettings(){
 	else
 		completeLibraryBackup=NO
 	fi
+	if [[ -f "/var/mobile/Library/Preferences/BackOn/fixDynamicLineIssue" ]]; then
+		fixDynamicLineIssue="$(cat "/var/mobile/Library/Preferences/BackOn/fixDynamicLineIssue")"
+	else
+		fixDynamicLineIssue=NO
+	fi
 }
 
 function showLinesA(){
@@ -590,7 +607,9 @@ function showLinesA(){
 	   		echo -e -n "*"
 	 		PRINTED_COUNTS=$(($PRINTED_COUNTS+1))
 		done
-		echo -e
+		if [[ ! "${fixDynamicLineIssue}" == YES ]]; then
+			echo -e
+		fi
 	else
 		echo "***************"
 	fi
@@ -604,7 +623,9 @@ function showLinesB(){
 	   		echo -e -n "-"
 	 		PRINTED_COUNTS=$((${PRINTED_COUNTS}+1))
 		done
-		echo -e
+		if [[ ! "${fixDynamicLineIssue}" == YES ]]; then
+			echo -e
+		fi
 	else
 		echo "---------------"
 	fi
@@ -1062,6 +1083,7 @@ function showBackupedFilesBackup(){
 	else
 		echo -e "${BACKUPED_CYDIA_METADATA} : ${NO}"
 	fi
+	showLinesB
 	if [[ -d "/tmp/BackOn/Backup/${BACKUP_NAME}/Library" ]]; then
 		echo -e "${BACKUPED_LIBRARY} : ${YES}"
 		showLinesB
