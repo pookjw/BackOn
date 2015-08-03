@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-177-official
+# BackOn alpha-178-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=177
+TOOL_BUILD_NUM=178
 UpdaterVersion=2
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
@@ -1027,10 +1027,18 @@ function backupLibrary(){
 				fi
 				if [[ "${showLog}" == YES ]]; then
 					applyPurple
-					rsync -av --exclude="BackupAZ" /var/mobile/Library/Preferences/* "/tmp/BackOn/Backup/${BACKUP_NAME}/Library/Preferences"
+					if [[ "${completeLibraryBackup}" == YES ]]; then
+						rsync -av /var/mobile/Library/* "/tmp/BackOn/Backup/${BACKUP_NAME}/Library"
+					else
+						rsync -av --exclude="Assets" --exclude="Caches" --exclude="Filza" --exclude="Preferences/BackupAZ" /var/mobile/Library/* "/tmp/BackOn/Backup/${BACKUP_NAME}/Library"
+					fi
 					applyNoColor
 				else
-					rsync -q -av --exclude="BackupAZ" /var/mobile/Library/Preferences/* "/tmp/BackOn/Backup/${BACKUP_NAME}/Library/Preferences"
+					if [[ "${completeLibraryBackup}" == YES ]]; then
+						rsync -q -av /var/mobile/Library/* "/tmp/BackOn/Backup/${BACKUP_NAME}/Library"
+					else
+						rsync -q -av --exclude="Assets" --exclude="Caches" --exclude="Filza" --exclude="Preferences/BackupAZ" /var/mobile/Library/* "/tmp/BackOn/Backup/${BACKUP_NAME}/Library"
+					fi
 				fi
 				echo -e "${DONE}"
 				showPressAnyKeyToContinue
