@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-176-official
+# BackOn alpha-177-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=176
+TOOL_BUILD_NUM=177
 UpdaterVersion=2
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
@@ -429,7 +429,7 @@ function openDevSettings(){
 			elif [[ "${completeLibraryBackup}" == NO ]]; then
 				completeLibraryBackup=YES
 			fi
-		elif [[ "${ANSWER_D}" == 23 ]]; then
+		elif [[ "${ANSWER_D}" == 24 ]]; then
 			if [[ "${fixDynamicLineIssue}" == YES ]]; then
 				fixDynamicLineIssue=NO
 			elif [[ "${fixDynamicLineIssue}" == NO ]]; then
