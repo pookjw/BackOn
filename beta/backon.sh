@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn beta-182-official
+# BackOn beta-185-official
 TOOL_BUILD_TYPE=beta
-TOOL_BUILD_NUM=182
+TOOL_BUILD_NUM=185
 UpdaterVersion=2
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
@@ -240,7 +240,7 @@ function openDevSettings(){
 		if [[ "${fixDynamicLineIssue}" == YES ]]; then
 			echo -e "(24) fixDynamicLineIssue : YES"
 		elif [[ "${fixDynamicLineIssue}" == NO ]]; then
-			echo -e "(24) completeLibraryBackup : NO"
+			echo -e "(24) fixDynamicLineIssue : NO"
 		fi
 		echo -e "(l) ls"
 		echo -e "(s) Save Settings."

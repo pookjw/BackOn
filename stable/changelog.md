@@ -23,3 +23,7 @@
 - (Fixed) 오타 수정.
 
 - (Fixed) DevSettings 관련 기능 추가. (completeLibraryBackup, completeLibraryBackup)
+
+# stable-186 (2015-08-04)
+
+- (Fixed) 오타 수정.

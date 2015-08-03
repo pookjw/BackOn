@@ -118,3 +118,7 @@ BackOn을 수정해서 배포할 땐 **'TOOL_RELEASE'**에 unofficial 표기를 
 - (Fixed) 오타 수정.
 
 - (Fixed) DevSettings 관련 기능 추가. (completeLibraryBackup, completeLibraryBackup)
+
+# beta-185 (2015-08-04)
+
+- (Fixed) 오타 수정.
