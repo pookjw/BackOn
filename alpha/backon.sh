@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-180-official
+# BackOn alpha-181-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=180
+TOOL_BUILD_NUM=181
 UpdaterVersion=2
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
@@ -1661,6 +1661,8 @@ fi
 mkdir /tmp/BackOn
 if [[ "${1}" == "-ods" ]]; then
 	openDevSettings
+elif [[ "${1}" == "-update" ]]; then
+	installUpdate
 fi
 while(true); do
 	ClearKey
