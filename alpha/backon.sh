@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-196-official
+# BackOn alpha-197-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=196
+TOOL_BUILD_NUM=197
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -1716,7 +1716,7 @@ function installUpdate_old(){
 						break
 					fi
 				fi
-				if [[ "${showLog} == YES" ]]; then
+				if [[ "${showLog}" == YES ]]; then
 					applyPurple
 					echo "Downloaded : $(cat "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/build") / Current : ${TOOL_BUILD_NUM}"
 					applyNoColor
