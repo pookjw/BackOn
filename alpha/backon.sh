@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-192-official
+# BackOn alpha-193-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=192
+TOOL_BUILD_NUM=193
 UpdaterVersion=2
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
@@ -1574,7 +1574,9 @@ function runUpdate(){
 }
 
 function showUpdaterVersion(){
+	applyPurple
 	echo "UpdaterVersion : ${UpdaterVersion}"
+	applyNoColor
 }
 
 function installUpdate(){
