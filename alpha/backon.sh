@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-191-official
+# BackOn alpha-192-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=191
+TOOL_BUILD_NUM=192
 UpdaterVersion=2
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
@@ -1573,11 +1573,18 @@ function runUpdate(){
 	fi
 }
 
+function showUpdaterVersion(){
+	echo "UpdaterVersion : ${UpdaterVersion}"
+}
+
 function installUpdate(){
 	ClearKey
 	local COUNT=0
 	while [[ ! "$COUNT" == 3 ]]; do
 		showLinesA
+		if [[ "${showLog}" == YES ]]; then
+			showUpdaterVersion
+		fi
 		echo -e "${DOWNLOADING}"
 		if [[ -d "/tmp/BackOn/Update" ]]; then
 			rm -rf "/tmp/BackOn/Update"
@@ -1656,6 +1663,9 @@ function installUpdate_old(){
 	local COUNT=0
 	while [[ ! "$COUNT" == 3 ]]; do
 		showLinesA
+		if [[ "${showLog}" == YES ]]; then
+			showUpdaterVersion
+		fi
 		echo "${DOWNLOADING}"
 		if [[ -d "/tmp/BackOn/Update" ]]; then
 			rm -rf "/tmp/BackOn/Update"
@@ -1666,7 +1676,6 @@ function installUpdate_old(){
 		else
 			wget -q --no-check-certificate --output-document=/tmp/BackOn/Update/master.zip "https://github.com/pookjw/BackOn/archive/master.zip"
 		fi
-		PA2CKey
 		if [[ -f "/tmp/BackOn/Update/master.zip" ]]; then
 			if [[ "${ShowLog}" == YES ]]; then
 				unzip "/tmp/BackOn/Update/master.zip" -d "/tmp/BackOn/Update/master"

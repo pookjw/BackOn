@@ -3,7 +3,7 @@ if [[ -f "/tmp/BackOn/Update/info/runUpdateODS" ]]; then
 	runUpdateODS="$(cat "/tmp/BackOn/Update/info/runUpdateODS")"
 else
 	if [[ -f "/var/mobile/Library/Preferences/BackOn/runUpdateODS" ]]; then
-		runUpdateODS="$(cat "/tmp/BackOn/Update/info/runUpdateODS")"
+		runUpdateODS="$(cat "/var/mobile/Library/Preferences/BackOn/runUpdateODS")"
 	else
 		runUpdateODS=NO
 	fi
@@ -88,6 +88,7 @@ function showInfo(){
 	echo -e "updateWithDEBInstall : ${updateWithDEBInstall}"
 	echo -e "showLog : ${showLog}"
 	echo -e "applyColorScheme : ${applyColorScheme}"
+	echo -e "showPA2C : ${showPA2C}"
 	echo -e "UpdateBuildVersion : ${UpdateBuildVersion}"
 	applyNoColor
 	PA2CKey
@@ -120,7 +121,7 @@ function applyNoColor(){
 function PA2CKey(){
 	if [[ "${showPA2C}" == YES ]]; then
 		applyLightCyan
-		read -s -n 1 -p "${PRESS_ANY_KEY_TO_CONTINUE}"
+		read -s -n 1 -p "Press any key to continue..."
 		applyNoColor
 		echo -e
 	fi
