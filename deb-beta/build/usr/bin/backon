@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn beta-204-official
+# BackOn beta-207-official
 TOOL_BUILD_TYPE=beta
-TOOL_BUILD_NUM=204
+TOOL_BUILD_NUM=207
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -1226,7 +1226,7 @@ function unzipBackup(){
 		applyPurple
 		unzip "${ToRestoreBackupPath}" -d /tmp/BackOn/Restore
 		applyNoColor
-		showPA2C
+		PA2CKey
 	else
 		applyPurple
 		unzip -qq "${ToRestoreBackupPath}" -d /tmp/BackOn/Restore
