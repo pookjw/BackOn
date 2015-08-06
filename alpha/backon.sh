@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-190-official
+# BackOn alpha-191-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=190
+TOOL_BUILD_NUM=191
 UpdaterVersion=2
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
@@ -390,7 +390,7 @@ function openDevSettings(){
 		elif [[ "${ANSWER_D}" == 16 ]]; then
 			saveSettings
 			loadSettings
-			installUpdate
+			runUpdate
 		elif [[ "${ANSWER_D}" == 17 ]]; then
 			saveSettings
 			loadSettings
@@ -415,7 +415,7 @@ function openDevSettings(){
 			read -p "Query : " UpdaterVersion
 			applyNoColor
 			if [[ -z "${UpdaterVersion}" ]]; then
-				UpdaterVersion=1
+				UpdaterVersion=2
 			fi
 		elif [[ "${ANSWER_D}" == 22 ]]; then
 			if [[ "${updateWithDEBInstall}" == YES ]]; then
@@ -1427,7 +1427,6 @@ function restoreCydia(){
 		fi
 		cp "/tmp/BackOn/Restore/Cydia/metadata.cb0" "/var/mobile/Library/Cydia"
 		chmod 755 "/var/mobile/Library/Cydia/metadata.cb0"
-		PA2CKey
 		if [[ "${showLog}" == YES ]]; then
 			echo -e "${REFRESHING_SOURCES}"
 			applyPurple
@@ -1562,6 +1561,18 @@ function rebootDevice(){
 	quitTool
 }
 
+function runUpdate(){
+	if [[ "${UpdaterVersion}" == 1 ]]; then
+		installUpdate_old
+	elif [[ "${UpdaterVersion}" == 2 ]]; then
+		installUpdate
+	else
+		applyRed
+		echo -e "ERROR! (UpdaterVersion is wrong.)"
+		applyNoColor
+	fi
+}
+
 function installUpdate(){
 	ClearKey
 	local COUNT=0
@@ -1579,7 +1590,6 @@ function installUpdate(){
 		else
 			wget -q --no-check-certificate --output-document=/tmp/BackOn/Update/master.zip "${UpdateURL}"
 		fi
-		PA2CKey
 		if [[ -f "/tmp/BackOn/Update/master.zip" ]]; then
 			if [[ "${showLog}" == YES ]]; then
 				applyPurple
@@ -1618,6 +1628,7 @@ function installUpdate(){
 				echo -e "${UpdaterVersion}" >> "/tmp/BackOn/Update/info/UpdaterVersion"
 				echo -e "${showLog}" >> "/tmp/BackOn/Update/info/showLog"
 				echo -e "${applyColorScheme}" >> "/tmp/BackOn/Update/info/applyColorScheme"
+				echo -e "${showPA2C}" >> "/tmp/BackOn/Update/info/showPA2C"
 				echo -e "$(cat "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/build")" >> "/tmp/BackOn/Update/info/UpdateBuildVersion"
 				cd "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}"
 				chmod +x "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/update-script"
@@ -1638,6 +1649,61 @@ function installUpdate(){
 	done
 	showLinesA
 	PA2CKey
+}
+
+function installUpdate_old(){
+	ClearKey
+	local COUNT=0
+	while [[ ! "$COUNT" == 3 ]]; do
+		showLinesA
+		echo "${DOWNLOADING}"
+		if [[ -d "/tmp/BackOn/Update" ]]; then
+			rm -rf "/tmp/BackOn/Update"
+		fi
+		mkdir "/tmp/BackOn/Update"
+		if [[ "${ShowLog}" == YES ]]; then
+			wget --no-check-certificate --output-document=/tmp/BackOn/Update/master.zip "https://github.com/pookjw/BackOn/archive/master.zip"
+		else
+			wget -q --no-check-certificate --output-document=/tmp/BackOn/Update/master.zip "https://github.com/pookjw/BackOn/archive/master.zip"
+		fi
+		PA2CKey
+		if [[ -f "/tmp/BackOn/Update/master.zip" ]]; then
+			if [[ "${ShowLog}" == YES ]]; then
+				unzip "/tmp/BackOn/Update/master.zip" -d "/tmp/BackOn/Update/master"
+			else
+				unzip -qq "/tmp/BackOn/Update/master.zip" -d "/tmp/BackOn/Update/master"
+			fi
+			if [[ -d "/tmp/BackOn/Update/master/BackOn-master/" ]]; then
+				if [[ -z "$(cat "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/build")" ]]; then
+					echo "ERROR!"
+					break
+				fi
+				if [ ${TOOL_BUILD_NUM} -ge "$(cat "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/build")" ]; then
+					if [[ ! "${ForceInstallUpdate}" == YES ]]; then
+						echo "${UP_TO_DATE}"
+						break
+					fi
+				fi
+				if [[ "${ShowLog} == YES" ]]; then
+					echo "Downloaded : $(cat "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/build") / Current : ${TOOL_BUILD_NUM}"
+					PA2CKey
+				fi
+				echo "${INSTALLING}"
+				chmod +x "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/update-script"
+				cd "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}"
+				./update-script
+				quitTool_NoClear
+			else
+				echo "ERROR!"
+				break
+			fi
+		else
+			echo "ERROR!"
+			break
+		fi
+	done
+	showLinesA
+	showPressAnyKeyToContinue
 }
 
 ##############################################
@@ -1662,7 +1728,7 @@ mkdir /tmp/BackOn
 if [[ "${1}" == "-ods" ]]; then
 	openDevSettings
 elif [[ "${1}" == "-update" ]]; then
-	installUpdate
+	runUpdate
 fi
 while(true); do
 	ClearKey
@@ -1716,7 +1782,6 @@ while(true); do
 		unzipBackup
 		convertxBackup
 		convertOldBackup
-		PA2CKey
 		if [[ ! -d /tmp/BackOn/Restore/Cydia && ! -d /tmp/BackOn/Restore/Library ]]; then
 			applyRed
 			echo -e "${NOT_BACKON_BACKUP}"
@@ -1728,7 +1793,7 @@ while(true); do
 	elif [[ "${ANSWER_A}" == 3 ]]; then
 		switchLanguage
 	elif [[ "${ANSWER_A}" == 4 ]]; then
-		installUpdate
+		runUpdate
 	elif [[ "${ANSWER_A}" == quit || "${ANSWER_A}" == q ]]; then
 		quitTool
 	elif [[ "${ANSWER_A}" == ods ]]; then

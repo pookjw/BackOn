@@ -31,6 +31,11 @@ if [[ -f "/tmp/BackOn/Update/info/applyColorScheme" ]]; then
 else
 	applyColorScheme=YES
 fi
+if [[ -f "/tmp/BackOn/Update/info/showPA2C" ]]; then
+	showPA2C="$(cat "/tmp/BackOn/Update/info/showPA2C")"
+else
+	showPA2C=YES
+fi
 if [[ -f "/tmp/BackOn/Update/info/UpdateBuildVersion" ]]; then
 	UpdateBuildVersion="$(cat "/tmp/BackOn/Update/info/UpdateBuildVersion")"
 fi
@@ -85,7 +90,7 @@ function showInfo(){
 	echo -e "applyColorScheme : ${applyColorScheme}"
 	echo -e "UpdateBuildVersion : ${UpdateBuildVersion}"
 	applyNoColor
-	showPressAnyKeyToContinue
+	PA2CKey
 }
 
 function applyRed(){
@@ -112,11 +117,13 @@ function applyNoColor(){
 	fi
 }
 
-function showPressAnyKeyToContinue(){
-	applyLightCyan
-	read -s -n 1 -p "Press Any key to continue..."
-	applyNoColor
-	echo -e
+function PA2CKey(){
+	if [[ "${showPA2C}" == YES ]]; then
+		applyLightCyan
+		read -s -n 1 -p "${PRESS_ANY_KEY_TO_CONTINUE}"
+		applyNoColor
+		echo -e
+	fi
 }
 
 function killCydia(){
