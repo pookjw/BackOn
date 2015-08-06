@@ -47,7 +47,9 @@ fi
 function Update1(){
 	UpdateBuildType="${PWD##*/}"
 	UpdateBuildVersion="$(cat build)"
-	showInfo
+	if [[ "${showLog}" == YES ]]; then
+		showInfo
+	fi
 	if [[ "${UpdateBuildType}" == alpha ]]; then
 		cp backon.sh /usr/bin/backon
 		chmod +x /usr/bin/backon
