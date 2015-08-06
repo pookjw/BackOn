@@ -131,6 +131,6 @@ BackOn을 수정해서 배포할 땐 **'TOOL_RELEASE'**에 unofficial 표기를 
 
 - (Fixed) Updater 관련 코드 수정.
 
-# beta-204 (2015-08-07)
+# beta-207 (2015-08-07)
 
 - (Fixed) 코드 수정.
