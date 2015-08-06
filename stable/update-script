@@ -3,7 +3,7 @@ if [[ -f "/tmp/BackOn/Update/info/runUpdateODS" ]]; then
 	runUpdateODS="$(cat "/tmp/BackOn/Update/info/runUpdateODS")"
 else
 	if [[ -f "/var/mobile/Library/Preferences/BackOn/runUpdateODS" ]]; then
-		runUpdateODS="$(cat "/tmp/BackOn/Update/info/runUpdateODS")"
+		runUpdateODS="$(cat "/var/mobile/Library/Preferences/BackOn/runUpdateODS")"
 	else
 		runUpdateODS=NO
 	fi
@@ -24,12 +24,21 @@ fi
 if [[ -f "/tmp/BackOn/Update/info/showLog" ]]; then
 	showLog="$(cat "/tmp/BackOn/Update/info/showLog")"
 else
-	showLog=NO
+	if [[ -f "/var/mobile/Library/Preferences/BackOn/showLog" ]]; then
+		showLog="$(cat "/var/mobile/Library/Preferences/BackOn/showLog")"
+	else
+		showLog=NO
+	fi
 fi
 if [[ -f "/tmp/BackOn/Update/info/applyColorScheme" ]]; then
 	applyColorScheme="$(cat "/tmp/BackOn/Update/info/applyColorScheme")"
 else
 	applyColorScheme=YES
+fi
+if [[ -f "/tmp/BackOn/Update/info/showPA2C" ]]; then
+	showPA2C="$(cat "/tmp/BackOn/Update/info/showPA2C")"
+else
+	showPA2C=YES
 fi
 if [[ -f "/tmp/BackOn/Update/info/UpdateBuildVersion" ]]; then
 	UpdateBuildVersion="$(cat "/tmp/BackOn/Update/info/UpdateBuildVersion")"
@@ -38,15 +47,22 @@ fi
 function Update1(){
 	UpdateBuildType="${PWD##*/}"
 	UpdateBuildVersion="$(cat build)"
-	showInfo
+	if [[ "${showLog}" == YES ]]; then
+		showInfo
+	fi
 	if [[ "${UpdateBuildType}" == alpha ]]; then
 		cp backon.sh /usr/bin/backon
 		chmod +x /usr/bin/backon
 	elif [[ "${UpdateBuildType}" == beta || "${UpdateBuildType}" == stable ]]; then
 		killCydia
-		applyPurple
-		dpkg -i "../deb-${UpdateBuildType}/${UpdateBuildType}-${UpdateBuildVersion}.deb"
-		applyNoColor
+		if [[ "${showLog}" == YES ]]; then
+			applyPurple
+			dpkg -i "../deb-${UpdateBuildType}/${UpdateBuildType}-${UpdateBuildVersion}.deb"
+			PA2CKey
+			applyNoColor
+		else
+			dpkg -i "../deb-${UpdateBuildType}/${UpdateBuildType}-${UpdateBuildVersion}.deb" > /dev/null 2>&1
+		fi
 	else
 		applyRed
 		echo "ERROR!"
@@ -64,6 +80,7 @@ function Update2(){
 		if [[ "${showLog}" == YES ]]; then
 			applyPurple
 			dpkg -i "/tmp/BackOn/Update/master/BackOn-master/deb-${UpdateBuildType}/${UpdateBuildType}-${UpdateBuildVersion}.deb"
+			PA2CKey
 			applyNoColor
 		else
 			dpkg -i "/tmp/BackOn/Update/master/BackOn-master/deb-${UpdateBuildType}/${UpdateBuildType}-${UpdateBuildVersion}.deb" > /dev/null 2>&1
@@ -83,9 +100,10 @@ function showInfo(){
 	echo -e "updateWithDEBInstall : ${updateWithDEBInstall}"
 	echo -e "showLog : ${showLog}"
 	echo -e "applyColorScheme : ${applyColorScheme}"
+	echo -e "showPA2C : ${showPA2C}"
 	echo -e "UpdateBuildVersion : ${UpdateBuildVersion}"
 	applyNoColor
-	showPressAnyKeyToContinue
+	PA2CKey
 }
 
 function applyRed(){
@@ -112,11 +130,13 @@ function applyNoColor(){
 	fi
 }
 
-function showPressAnyKeyToContinue(){
-	applyLightCyan
-	read -s -n 1 -p "Press Any key to continue..."
-	applyNoColor
-	echo -e
+function PA2CKey(){
+	if [[ "${showPA2C}" == YES ]]; then
+		applyLightCyan
+		read -s -n 1 -p "Press any key to continue..."
+		applyNoColor
+		echo -e
+	fi
 }
 
 function killCydia(){
