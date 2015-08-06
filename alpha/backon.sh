@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-194-official
+# BackOn alpha-195-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=194
+TOOL_BUILD_NUM=195
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -1678,13 +1678,13 @@ function installUpdate_old(){
 			rm -rf "/tmp/BackOn/Update"
 		fi
 		mkdir "/tmp/BackOn/Update"
-		if [[ "${ShowLog}" == YES ]]; then
+		if [[ "${showLog}" == YES ]]; then
 			wget --no-check-certificate --output-document=/tmp/BackOn/Update/master.zip "https://github.com/pookjw/BackOn/archive/master.zip"
 		else
 			wget -q --no-check-certificate --output-document=/tmp/BackOn/Update/master.zip "https://github.com/pookjw/BackOn/archive/master.zip"
 		fi
 		if [[ -f "/tmp/BackOn/Update/master.zip" ]]; then
-			if [[ "${ShowLog}" == YES ]]; then
+			if [[ "${showLog}" == YES ]]; then
 				unzip "/tmp/BackOn/Update/master.zip" -d "/tmp/BackOn/Update/master"
 			else
 				unzip -qq "/tmp/BackOn/Update/master.zip" -d "/tmp/BackOn/Update/master"
@@ -1700,7 +1700,7 @@ function installUpdate_old(){
 						break
 					fi
 				fi
-				if [[ "${ShowLog} == YES" ]]; then
+				if [[ "${showLog} == YES" ]]; then
 					echo "Downloaded : $(cat "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/build") / Current : ${TOOL_BUILD_NUM}"
 					PA2CKey
 				fi
