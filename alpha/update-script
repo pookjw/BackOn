@@ -24,7 +24,11 @@ fi
 if [[ -f "/tmp/BackOn/Update/info/showLog" ]]; then
 	showLog="$(cat "/tmp/BackOn/Update/info/showLog")"
 else
-	showLog=NO
+	if [[ -f "/var/mobile/Library/Preferences/BackOn/showLog" ]]; then
+		showLog="$(cat "/var/mobile/Library/Preferences/BackOn/showLog")"
+	else
+		showLog=NO
+	fi
 fi
 if [[ -f "/tmp/BackOn/Update/info/applyColorScheme" ]]; then
 	applyColorScheme="$(cat "/tmp/BackOn/Update/info/applyColorScheme")"
