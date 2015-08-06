@@ -80,8 +80,8 @@ function Update2(){
 		if [[ "${showLog}" == YES ]]; then
 			applyPurple
 			dpkg -i "/tmp/BackOn/Update/master/BackOn-master/deb-${UpdateBuildType}/${UpdateBuildType}-${UpdateBuildVersion}.deb"
-			PA2CKey
 			applyNoColor
+			PA2CKey
 		else
 			dpkg -i "/tmp/BackOn/Update/master/BackOn-master/deb-${UpdateBuildType}/${UpdateBuildType}-${UpdateBuildVersion}.deb" > /dev/null 2>&1
 		fi
