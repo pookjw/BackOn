@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-195-official
+# BackOn alpha-196-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=195
+TOOL_BUILD_NUM=196
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -1227,7 +1227,9 @@ function unzipBackup(){
 		unzip "${ToRestoreBackupPath}" -d /tmp/BackOn/Restore
 		applyNoColor
 	else
+		applyPurple
 		unzip -qq "${ToRestoreBackupPath}" -d /tmp/BackOn/Restore
+		applyNoColor
 	fi
 }
 
@@ -1602,7 +1604,9 @@ function installUpdate(){
 			wget --no-check-certificate --output-document=/tmp/BackOn/Update/master.zip "${UpdateURL}"
 			applyNoColor
 		else
+			applyPurple
 			wget -q --no-check-certificate --output-document=/tmp/BackOn/Update/master.zip "${UpdateURL}"
+			applyNoColor
 		fi
 		if [[ -f "/tmp/BackOn/Update/master.zip" ]]; then
 			if [[ "${showLog}" == YES ]]; then
@@ -1610,7 +1614,9 @@ function installUpdate(){
 				unzip "/tmp/BackOn/Update/master.zip" -d "/tmp/BackOn/Update/master"
 				applyNoColor
 			else
+				applyPurple
 				unzip -qq "/tmp/BackOn/Update/master.zip" -d "/tmp/BackOn/Update/master"
+				applyNoColor
 			fi
 			if [[ -d "/tmp/BackOn/Update/master/BackOn-master/" ]]; then
 				if [[ -z "$(cat "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/build")" ]]; then
@@ -1679,19 +1685,29 @@ function installUpdate_old(){
 		fi
 		mkdir "/tmp/BackOn/Update"
 		if [[ "${showLog}" == YES ]]; then
+			applyPurple
 			wget --no-check-certificate --output-document=/tmp/BackOn/Update/master.zip "https://github.com/pookjw/BackOn/archive/master.zip"
+			applyNoColor
 		else
+			applyPurple
 			wget -q --no-check-certificate --output-document=/tmp/BackOn/Update/master.zip "https://github.com/pookjw/BackOn/archive/master.zip"
+			applyNoColor
 		fi
 		if [[ -f "/tmp/BackOn/Update/master.zip" ]]; then
 			if [[ "${showLog}" == YES ]]; then
+				applyPurple
 				unzip "/tmp/BackOn/Update/master.zip" -d "/tmp/BackOn/Update/master"
+				applyNoColor
 			else
+				applyPurple
 				unzip -qq "/tmp/BackOn/Update/master.zip" -d "/tmp/BackOn/Update/master"
+				applyNoColor
 			fi
 			if [[ -d "/tmp/BackOn/Update/master/BackOn-master/" ]]; then
 				if [[ -z "$(cat "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/build")" ]]; then
+					applyRed
 					echo "ERROR!"
+					applyNoColor
 					break
 				fi
 				if [ ${TOOL_BUILD_NUM} -ge "$(cat "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/build")" ]; then
@@ -1701,7 +1717,9 @@ function installUpdate_old(){
 					fi
 				fi
 				if [[ "${showLog} == YES" ]]; then
+					applyPurple
 					echo "Downloaded : $(cat "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/build") / Current : ${TOOL_BUILD_NUM}"
+					applyNoColor
 					PA2CKey
 				fi
 				echo "${INSTALLING}"
@@ -1710,11 +1728,15 @@ function installUpdate_old(){
 				./update-script
 				quitTool_NoClear
 			else
+				applyRed
 				echo "ERROR!"
+				applyNoColor
 				break
 			fi
 		else
+			applyRed
 			echo "ERROR!"
+			applyNoColor
 			break
 		fi
 	done
