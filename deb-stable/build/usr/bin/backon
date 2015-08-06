@@ -4,10 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn stable-189-official
+# BackOn stable-199-official
 TOOL_BUILD_TYPE=stable
-TOOL_BUILD_NUM=189
-UpdaterVersion=2
+TOOL_BUILD_NUM=199
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -289,7 +288,7 @@ function openDevSettings(){
 				applyRed
 				echo "Incorrect!"
 				applyNoColor
-				showPressAnyKeyToContinue
+				PA2CKey
 			fi
 		elif [[ "${ANSWER_D}" == 6 ]]; then
 			applyLightCyan
@@ -390,7 +389,7 @@ function openDevSettings(){
 		elif [[ "${ANSWER_D}" == 16 ]]; then
 			saveSettings
 			loadSettings
-			installUpdate
+			runUpdate
 		elif [[ "${ANSWER_D}" == 17 ]]; then
 			saveSettings
 			loadSettings
@@ -415,7 +414,7 @@ function openDevSettings(){
 			read -p "Query : " UpdaterVersion
 			applyNoColor
 			if [[ -z "${UpdaterVersion}" ]]; then
-				UpdaterVersion=1
+				UpdaterVersion=2
 			fi
 		elif [[ "${ANSWER_D}" == 22 ]]; then
 			if [[ "${updateWithDEBInstall}" == YES ]]; then
@@ -457,7 +456,7 @@ function openDevSettings(){
 			echo -e -e "\n/tmp/BackOn/Restore/info"
 			ls -l "/tmp/BackOn/Restore/info"
 			showLinesA
-			showPressAnyKeyToContinue
+			PA2CKey
 		elif [[ "${ANSWER_D}" == save ||  "${ANSWER_D}" == s ]]; then
 			echo -e "Session was done."
 			saveSettings
@@ -496,6 +495,7 @@ function saveSettings(){
 	echo -e "${runUpdateODS}" >> /var/mobile/Library/Preferences/BackOn/runUpdateODS
 	echo -e "${applyColorScheme}" >> /var/mobile/Library/Preferences/BackOn/applyColorScheme
 	echo -e "${DynamicLine}" >> /var/mobile/Library/Preferences/BackOn/DynamicLine
+	echo -e "${UpdaterVersion}" >> /var/mobile/Library/Preferences/BackOn/UpdaterVersion
 	echo -e "${updateWithDEBInstall}" >> /var/mobile/Library/Preferences/BackOn/updateWithDEBInstall
 	echo -e "${completeLibraryBackup}" >> /var/mobile/Library/Preferences/BackOn/completeLibraryBackup
 	echo -e "${fixDynamicLineIssue}" >> /var/mobile/Library/Preferences/BackOn/fixDynamicLineIssue
@@ -525,7 +525,7 @@ function loadSettings(){
 	if [[ -f "/var/mobile/Library/Preferences/BackOn/showPA2C" ]]; then
 		showPA2C="$(cat "/var/mobile/Library/Preferences/BackOn/showPA2C")"
 	else
-		showPA2C=NO
+		showPA2C=YES
 	fi
 	if [[ -f "/var/mobile/Library/Preferences/BackOn/skipRestore" ]]; then
 		skipRestore="$(cat "/var/mobile/Library/Preferences/BackOn/skipRestore")"
@@ -586,6 +586,11 @@ function loadSettings(){
 		updateWithDEBInstall="$(cat "/var/mobile/Library/Preferences/BackOn/updateWithDEBInstall")"
 	else
 		updateWithDEBInstall=YES
+	fi
+	if [[ -f "/var/mobile/Library/Preferences/BackOn/UpdaterVersion" ]]; then
+		UpdaterVersion="$(cat "/var/mobile/Library/Preferences/BackOn/UpdaterVersion")"
+	else
+		UpdaterVersion=2
 	fi
 	if [[ -f "/var/mobile/Library/Preferences/BackOn/completeLibraryBackup" ]]; then
 		completeLibraryBackup="$(cat "/var/mobile/Library/Preferences/BackOn/completeLibraryBackup")"
@@ -655,18 +660,11 @@ function applyNoColor(){
 	fi
 }
 
-function showPressAnyKeyToContinue(){
-	applyLightCyan
-	read -s -n 1 -p "${PRESS_ANY_KEY_TO_CONTINUE}"
-	applyNoColor
-	echo -e
-}
-
 function showNotSupportedFunction(){
 	applyRed
 	echo -e "${NOT_SUPPORTED_FUNCTION}"
 	applyNoColor
-	showPressAnyKeyToContinue
+	PA2CKey
 }
 
 function ExitKey(){
@@ -679,7 +677,10 @@ function ExitKey(){
 
 function PA2CKey(){
 	if [[ "${showPA2C}" == YES ]]; then
-		showPressAnyKeyToContinue
+		applyLightCyan
+		read -s -n 1 -p "${PRESS_ANY_KEY_TO_CONTINUE}"
+		applyNoColor
+		echo -e
 	fi
 }
 
@@ -795,7 +796,7 @@ function defineBackupName(){
 			applyRed
 			echo -e "${FORM_IS_EMPTY}"
 			applyNoColor
-			showPressAnyKeyToContinue
+			PA2CKey
 		elif [[ "${ANSWER_B}" == ods ]]; then
 			openDevSettings
 		elif [[ "${ANSWER_B}" == q || "${ANSWER_B}" == quit ]]; then
@@ -893,7 +894,7 @@ function backupCydiaData(){
 	fi
 	echo -e "${DONE}"
 	showLinesA
-	showPressAnyKeyToContinue
+	PA2CKey
 }
 
 function backupLibrary(){
@@ -950,7 +951,7 @@ function backupLibrary(){
 					fi
 				fi
 				echo -e "${DONE}"
-				showPressAnyKeyToContinue
+				PA2CKey
 			elif [[ "${ANSWER_E}" == delete ]]; then
 				while(true); do
 					if [[ -z "$(ls "/tmp/BackOn/Backup/${BACKUP_NAME}/Library")" ]]; then
@@ -962,7 +963,7 @@ function backupLibrary(){
 						echo -e "${NOTHING_TO_DELETE}"
 						applyNoColor
 						showLinesA
-						showPressAnyKeyToContinue
+						PA2CKey
 						break
 					fi
 					ClearKey
@@ -990,7 +991,7 @@ function backupLibrary(){
 							rm -rf "/tmp/BackOn/Backup/${BACKUP_NAME}/Library"
 							mkdir "/tmp/BackOn/Backup/${BACKUP_NAME}/Library"
 							echo -e "${DONE}"
-							showPressAnyKeyToContinue
+							PA2CKey
 						elif [[ "${ANSWER_J}" == q || "${ANSWER_J}" == quit ]]; then
 							break
 						elif  [[ "${ANSWER_J}" == ods ]]; then
@@ -1001,12 +1002,12 @@ function backupLibrary(){
 							echo -e "${REMOVING}"
 							rm "/tmp/BackOn/Backup/${BACKUP_NAME}/Library/${ANSWER_J}"
 							echo -e "${DONE}"
-							showPressAnyKeyToContinue
+							PA2CKey
 						elif [[ -d "/tmp/BackOn/Backup/${BACKUP_NAME}/Library/${ANSWER_J}" ]]; then
 							echo -e "${REMOVING}"
 							rm -rf "/tmp/BackOn/Backup/${BACKUP_NAME}/Library/${ANSWER_J}"
 							echo -e "${DONE}"
-							showPressAnyKeyToContinue
+							PA2CKey
 						else
 							applyRed
 							echo -e "${NO_SUCH_FILE_OR_DIRECTORY}"
@@ -1041,7 +1042,7 @@ function backupLibrary(){
 					fi
 				fi
 				echo -e "${DONE}"
-				showPressAnyKeyToContinue
+				PA2CKey
 			elif [[ "${ANSWER_E}" == quit || "${ANSWER_E}" == q ]]; then
 				if [[ -z "$(ls "/tmp/BackOn/Backup/${BACKUP_NAME}/Library")" ]]; then
 					rm -rf "/tmp/BackOn/Backup/${BACKUP_NAME}/Library"
@@ -1055,17 +1056,17 @@ function backupLibrary(){
 				echo -e "${BACKING_UP}"
 				cp "/var/mobile/Library/${ANSWER_E}" "/tmp/BackOn/Backup/${BACKUP_NAME}/Library"
 				echo -e "${DONE}"
-				showPressAnyKeyToContinue
+				PA2CKey
 			elif [[ -d "/var/mobile/Library/${ANSWER_E}" ]]; then
 				echo -e "${BACKING_UP}"
 				cp -r "/var/mobile/Library/${ANSWER_E}" "/tmp/BackOn/Backup/${BACKUP_NAME}/Library"
 				echo -e "${DONE}"
-				showPressAnyKeyToContinue
+				PA2CKey
 			else
 				applyRed
 				echo -e "${NO_SUCH_FILE_OR_DIRECTORY} : ${ANSWER_E}"
 				applyNoColor
-				showPressAnyKeyToContinue
+				PA2CKey
 			fi
 		fi
 	done
@@ -1117,7 +1118,7 @@ function showBackupedFilesBackup(){
 		echo -e "${BACKUP_LIBRARY} : ${NO}"
 	fi
 	showLinesA
-	showPressAnyKeyToContinue
+	PA2CKey
 }
 
 function saveBackup(){
@@ -1130,7 +1131,7 @@ function saveBackup(){
 		echo -e "${NOTHING_TO_BACKUP}"
 		applyNoColor
 		showLinesA
-		showPressAnyKeyToContinue
+		PA2CKey
 	else
 		cd /tmp/BackOn/Backup/${BACKUP_NAME}
 		mkdir info
@@ -1173,7 +1174,7 @@ function defineBackupPath(){
 			applyRed
 			echo -e "${FORM_IS_EMPTY}"
 			applyNoColor
-			showPressAnyKeyToContinue
+			PA2CKey
 		elif [[ "${ANSWER_F}" == xBackup || "${ANSWER_F}" == xbackup ]]; then
 			if [[ -f "/var/mobile/Library/xBackup/Backups/backup.bk.zip" ]]; then
 				ToRestoreBackupPath="/var/mobile/Library/xBackup/Backups/backup.bk.zip"
@@ -1182,7 +1183,7 @@ function defineBackupPath(){
 				applyRed
 				echo -e "${NO_SUCH_XBACKUP}"
 				applyNoColor
-				showPressAnyKeyToContinue
+				PA2CKey
 			fi
 		elif [[ "${ANSWER_F}" == ods ]]; then
 			openDevSettings
@@ -1213,7 +1214,7 @@ function defineBackupPath(){
 				applyRed
 				echo -e "${NO_SUCH_FILE}"
 				applyNoColor
-				showPressAnyKeyToContinue
+				PA2CKey
 			fi
 		fi
 	done
@@ -1226,7 +1227,9 @@ function unzipBackup(){
 		unzip "${ToRestoreBackupPath}" -d /tmp/BackOn/Restore
 		applyNoColor
 	else
+		applyPurple
 		unzip -qq "${ToRestoreBackupPath}" -d /tmp/BackOn/Restore
+		applyNoColor
 	fi
 }
 
@@ -1338,7 +1341,7 @@ function checkiOSVerMatching(){
 			showLinesA
 			echo "${OSVER_IS_NOT_MATCHING}"
 			showLinesA
-			showPressAnyKeyToContinue
+			PA2CKey
 		fi
 	fi
 }
@@ -1431,7 +1434,6 @@ function restoreCydia(){
 		fi
 		cp "/tmp/BackOn/Restore/Cydia/metadata.cb0" "/var/mobile/Library/Cydia"
 		chmod 755 "/var/mobile/Library/Cydia/metadata.cb0"
-		PA2CKey
 		if [[ "${showLog}" == YES ]]; then
 			echo -e "${REFRESHING_SOURCES}"
 			applyPurple
@@ -1452,7 +1454,7 @@ function restoreCydia(){
 	fi
 	echo -e "${DONE}"
 	showLinesA
-	showPressAnyKeyToContinue
+	PA2CKey
 }
 
 function showBackupedFilesRestore(){
@@ -1462,7 +1464,7 @@ function showBackupedFilesRestore(){
 	showLinesB
 	cat "/tmp/BackOn/Restore/Cydia/apt.txt"
 	showLinesA
-	showPressAnyKeyToContinue
+	PA2CKey
 }
 
 function restoreLibrary(){
@@ -1505,18 +1507,20 @@ function restoreLibrary(){
 				if [[ "${ANSWER_K}" == yes ]]; then
 					if [[ "${skipRestore}" == YES ]]; then
 						echo -e "Skipped."
-						showPressAnyKeyToContinue
+						PA2CKey
 					else
 						echo -e "${RESTORING}"
 						cp -r /tmp/BackOn/Restore/Library/* "/var/mobile/Library"
 						chmod -R 755 /var/mobile/Library
 						echo -e "${DONE}"
-						showPressAnyKeyToContinue
+						PA2CKey
 					fi
 					break
 				elif [[ "${ANSWER_K}" == no || "${ANSWER_K}" == quit || "${ANSWER_K}" == q ]]; then
+					applyRed
 					echo "${CANCELED}"
-					showPressAnyKeyToContinue
+					applyNoColor
+					PA2CKey
 					break
 				elif [[ "${ANSWER_K}" == ods ]]; then
 					openDevSettings
@@ -1531,30 +1535,30 @@ function restoreLibrary(){
 		elif [[ -f "/tmp/BackOn/Restore/Library/${ANSWER_I}" ]]; then
 			if [[ "${skipRestore}" == YES ]]; then
 				echo -e "Skipped."
-				showPressAnyKeyToContinue
+				PA2CKey
 			else
 				echo -e "${RESTORING}"
 				cp "/tmp/BackOn/Restore/Library/${ANSWER_I}" "/var/mobile/Library"
 				chmod -R 755 "/var/mobile/Library/${ANSWER_I}"
 				echo -e "${DONE}"
-				showPressAnyKeyToContinue
+				PA2CKey
 			fi
 		elif [[ -d "/tmp/BackOn/Restore/Library/${ANSWER_I}" ]]; then
 			if [[ "${skipRestore}" == YES ]]; then
 				echo -e "Skipped."
-				showPressAnyKeyToContinue
+				PA2CKey
 			else
 				echo -e "${RESTORING}"
 				cp -r "/tmp/BackOn/Restore/Library/${ANSWER_I}" "/var/mobile/Library"
 				chmod -R 755 "/var/mobile/Library/${ANSWER_I}"
 				echo -e "${DONE}"
-				showPressAnyKeyToContinue
+				PA2CKey
 			fi
 		else
 			applyRed
 			echo -e "${NO_SUCH_FILE_OR_DIRECTORY}"
 			applyNoColor
-			showPressAnyKeyToContinue
+			PA2CKey
 		fi
 	done
 }
@@ -1564,11 +1568,32 @@ function rebootDevice(){
 	quitTool
 }
 
+function runUpdate(){
+	if [[ "${UpdaterVersion}" == 1 ]]; then
+		installUpdate_old
+	elif [[ "${UpdaterVersion}" == 2 ]]; then
+		installUpdate
+	else
+		applyRed
+		echo -e "ERROR! (UpdaterVersion is wrong.)"
+		applyNoColor
+	fi
+}
+
+function showUpdaterVersion(){
+	applyPurple
+	echo "UpdaterVersion : ${UpdaterVersion}"
+	applyNoColor
+}
+
 function installUpdate(){
 	ClearKey
 	local COUNT=0
 	while [[ ! "$COUNT" == 3 ]]; do
 		showLinesA
+		if [[ "${showLog}" == YES ]]; then
+			showUpdaterVersion
+		fi
 		echo -e "${DOWNLOADING}"
 		if [[ -d "/tmp/BackOn/Update" ]]; then
 			rm -rf "/tmp/BackOn/Update"
@@ -1579,20 +1604,25 @@ function installUpdate(){
 			wget --no-check-certificate --output-document=/tmp/BackOn/Update/master.zip "${UpdateURL}"
 			applyNoColor
 		else
+			applyPurple
 			wget -q --no-check-certificate --output-document=/tmp/BackOn/Update/master.zip "${UpdateURL}"
+			applyNoColor
 		fi
-		PA2CKey
 		if [[ -f "/tmp/BackOn/Update/master.zip" ]]; then
 			if [[ "${showLog}" == YES ]]; then
 				applyPurple
 				unzip "/tmp/BackOn/Update/master.zip" -d "/tmp/BackOn/Update/master"
 				applyNoColor
 			else
+				applyPurple
 				unzip -qq "/tmp/BackOn/Update/master.zip" -d "/tmp/BackOn/Update/master"
+				applyNoColor
 			fi
 			if [[ -d "/tmp/BackOn/Update/master/BackOn-master/" ]]; then
 				if [[ -z "$(cat "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/build")" ]]; then
+					applyRed
 					echo -e "ERROR!"
+					applyNoColor
 					break
 				fi
 				if [ ${TOOL_BUILD_NUM} -ge "$(cat "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/build")" ]; then
@@ -1618,6 +1648,7 @@ function installUpdate(){
 				echo -e "${UpdaterVersion}" >> "/tmp/BackOn/Update/info/UpdaterVersion"
 				echo -e "${showLog}" >> "/tmp/BackOn/Update/info/showLog"
 				echo -e "${applyColorScheme}" >> "/tmp/BackOn/Update/info/applyColorScheme"
+				echo -e "${showPA2C}" >> "/tmp/BackOn/Update/info/showPA2C"
 				echo -e "$(cat "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/build")" >> "/tmp/BackOn/Update/info/UpdateBuildVersion"
 				cd "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}"
 				chmod +x "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/update-script"
@@ -1632,6 +1663,79 @@ function installUpdate(){
 		else
 			applyRed
 			echo -e "ERROR!"
+			applyNoColor
+			break
+		fi
+	done
+	showLinesA
+	PA2CKey
+}
+
+function installUpdate_old(){
+	ClearKey
+	local COUNT=0
+	while [[ ! "$COUNT" == 3 ]]; do
+		showLinesA
+		if [[ "${showLog}" == YES ]]; then
+			showUpdaterVersion
+		fi
+		echo "${DOWNLOADING}"
+		if [[ -d "/tmp/BackOn/Update" ]]; then
+			rm -rf "/tmp/BackOn/Update"
+		fi
+		mkdir "/tmp/BackOn/Update"
+		if [[ "${showLog}" == YES ]]; then
+			applyPurple
+			wget --no-check-certificate --output-document=/tmp/BackOn/Update/master.zip "https://github.com/pookjw/BackOn/archive/master.zip"
+			applyNoColor
+		else
+			applyPurple
+			wget -q --no-check-certificate --output-document=/tmp/BackOn/Update/master.zip "https://github.com/pookjw/BackOn/archive/master.zip"
+			applyNoColor
+		fi
+		if [[ -f "/tmp/BackOn/Update/master.zip" ]]; then
+			if [[ "${showLog}" == YES ]]; then
+				applyPurple
+				unzip "/tmp/BackOn/Update/master.zip" -d "/tmp/BackOn/Update/master"
+				applyNoColor
+			else
+				applyPurple
+				unzip -qq "/tmp/BackOn/Update/master.zip" -d "/tmp/BackOn/Update/master"
+				applyNoColor
+			fi
+			if [[ -d "/tmp/BackOn/Update/master/BackOn-master/" ]]; then
+				if [[ -z "$(cat "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/build")" ]]; then
+					applyRed
+					echo "ERROR!"
+					applyNoColor
+					break
+				fi
+				if [ ${TOOL_BUILD_NUM} -ge "$(cat "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/build")" ]; then
+					if [[ ! "${ForceInstallUpdate}" == YES ]]; then
+						echo "${UP_TO_DATE}"
+						break
+					fi
+				fi
+				if [[ "${showLog}" == YES ]]; then
+					applyPurple
+					echo "Downloaded : $(cat "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/build") / Current : ${TOOL_BUILD_NUM}"
+					applyNoColor
+					PA2CKey
+				fi
+				echo "${INSTALLING}"
+				chmod +x "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/update-script"
+				cd "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}"
+				./update-script
+				quitTool_NoClear
+			else
+				applyRed
+				echo "ERROR!"
+				applyNoColor
+				break
+			fi
+		else
+			applyRed
+			echo "ERROR!"
 			applyNoColor
 			break
 		fi
@@ -1662,7 +1766,7 @@ mkdir /tmp/BackOn
 if [[ "${1}" == "-ods" ]]; then
 	openDevSettings
 elif [[ "${1}" == "-update" ]]; then
-	installUpdate
+	runUpdate
 fi
 while(true); do
 	ClearKey
@@ -1707,7 +1811,7 @@ while(true); do
 			applyPurple
 			echo -e "Recognized backup file path : ${ToRestoreBackupPath}"
 			applyNoColor
-			showPressAnyKeyToContinue
+			PA2CKey
 		fi
 		if [[ -d "/tmp/BackOn/Restore" ]]; then
 			rm -rf /tmp/BackOn/Restore
@@ -1716,7 +1820,6 @@ while(true); do
 		unzipBackup
 		convertxBackup
 		convertOldBackup
-		PA2CKey
 		if [[ ! -d /tmp/BackOn/Restore/Cydia && ! -d /tmp/BackOn/Restore/Library ]]; then
 			applyRed
 			echo -e "${NOT_BACKON_BACKUP}"
@@ -1728,7 +1831,7 @@ while(true); do
 	elif [[ "${ANSWER_A}" == 3 ]]; then
 		switchLanguage
 	elif [[ "${ANSWER_A}" == 4 ]]; then
-		installUpdate
+		runUpdate
 	elif [[ "${ANSWER_A}" == quit || "${ANSWER_A}" == q ]]; then
 		quitTool
 	elif [[ "${ANSWER_A}" == ods ]]; then
