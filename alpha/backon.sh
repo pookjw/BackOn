@@ -4,10 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-193-official
+# BackOn alpha-194-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=193
-UpdaterVersion=2
+TOOL_BUILD_NUM=194
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -496,6 +495,7 @@ function saveSettings(){
 	echo -e "${runUpdateODS}" >> /var/mobile/Library/Preferences/BackOn/runUpdateODS
 	echo -e "${applyColorScheme}" >> /var/mobile/Library/Preferences/BackOn/applyColorScheme
 	echo -e "${DynamicLine}" >> /var/mobile/Library/Preferences/BackOn/DynamicLine
+	echo -e "${UpdaterVersion}" >> /var/mobile/Library/Preferences/BackOn/UpdaterVersion
 	echo -e "${updateWithDEBInstall}" >> /var/mobile/Library/Preferences/BackOn/updateWithDEBInstall
 	echo -e "${completeLibraryBackup}" >> /var/mobile/Library/Preferences/BackOn/completeLibraryBackup
 	echo -e "${fixDynamicLineIssue}" >> /var/mobile/Library/Preferences/BackOn/fixDynamicLineIssue
@@ -586,6 +586,11 @@ function loadSettings(){
 		updateWithDEBInstall="$(cat "/var/mobile/Library/Preferences/BackOn/updateWithDEBInstall")"
 	else
 		updateWithDEBInstall=YES
+	fi
+	if [[ -f "/var/mobile/Library/Preferences/BackOn/UpdaterVersion" ]]; then
+		UpdaterVersion="$(cat "/var/mobile/Library/Preferences/BackOn/UpdaterVersion")"
+	else
+		UpdaterVersion=2
 	fi
 	if [[ -f "/var/mobile/Library/Preferences/BackOn/completeLibraryBackup" ]]; then
 		completeLibraryBackup="$(cat "/var/mobile/Library/Preferences/BackOn/completeLibraryBackup")"
