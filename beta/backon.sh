@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn beta-198-official
+# BackOn beta-201-official
 TOOL_BUILD_TYPE=beta
-TOOL_BUILD_NUM=198
+TOOL_BUILD_NUM=201
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -1741,7 +1741,7 @@ function installUpdate_old(){
 		fi
 	done
 	showLinesA
-	showPressAnyKeyToContinue
+	PA2CKey
 }
 
 ##############################################
