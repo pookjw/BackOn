@@ -65,7 +65,7 @@ function Update1(){
 		fi
 	else
 		applyRed
-		echo "ERROR!"
+		echo -e "ERROR!"
 		applyNoColor
 		exit 1
 	fi
@@ -177,7 +177,7 @@ elif [[ "${UpdaterVersion=}" == 2 ]]; then
 	Update2
 else
 	applyRed
-	echo "ERROR!"
+	echo -e "ERROR!"
 	applyNoColor
 	exit 1
 fi
