@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-206-official
+# BackOn alpha-209-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=206
+TOOL_BUILD_NUM=209
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -1012,7 +1012,7 @@ function backupLibrary(){
 							applyRed
 							echo -e "${NO_SUCH_FILE_OR_DIRECTORY}"
 							applyNoColor
-							PRESS_ANY_KEY_TO_CONTINUE
+							PA2CKey
 						fi
 					fi
 				done
