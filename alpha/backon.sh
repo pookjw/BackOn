@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-210-official
+# BackOn alpha-211-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=210
+TOOL_BUILD_NUM=211
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -1045,7 +1045,7 @@ function backupLibrary(){
 				PA2CKey
 			elif [[ "${ANSWER_E}" == "/" ]]; then
 				applyRed
-				echo -e "${NO_SUCH_FILE_OR_DIRECTORY} : ${ANSWER_E}"
+				echo -e "${NO_SUCH_FILE_OR_DIRECTORY}"
 				applyNoColor
 				PA2CKey
 			elif [[ "${ANSWER_E}" == quit || "${ANSWER_E}" == q ]]; then
@@ -1069,7 +1069,7 @@ function backupLibrary(){
 				PA2CKey
 			else
 				applyRed
-				echo -e "${NO_SUCH_FILE_OR_DIRECTORY} : ${ANSWER_E}"
+				echo -e "${NO_SUCH_FILE_OR_DIRECTORY}"
 				applyNoColor
 				PA2CKey
 			fi
