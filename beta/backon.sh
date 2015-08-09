@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn beta-207-official
+# BackOn beta-214-official
 TOOL_BUILD_TYPE=beta
-TOOL_BUILD_NUM=207
+TOOL_BUILD_NUM=214
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -212,7 +212,7 @@ function openDevSettings(){
 		elif [[ "${runUpdateODS}" == NO ]]; then
 			echo -e "(15) runUpdateODS : NO"
 		fi
-		echo -e "(16) Check update now."
+		echo -e "(16) ${CHECK_FOR_UPDATES}"
 		echo -e "(17) cp /backon.sh /usr/bin/backon"
 		echo -e "(18) setTestFunction"
 		if [[ "${applyColorScheme}" == YES ]]; then
@@ -286,7 +286,7 @@ function openDevSettings(){
 				fi
 			else
 				applyRed
-				echo "Incorrect!"
+				echo -e "Incorrect!"
 				applyNoColor
 				PA2CKey
 			fi
@@ -616,7 +616,7 @@ function showLinesA(){
 			echo -e
 		fi
 	else
-		echo "***************"
+		echo -e "***************"
 	fi
 }
 
@@ -632,7 +632,7 @@ function showLinesB(){
 			echo -e
 		fi
 	else
-		echo "---------------"
+		echo -e "---------------"
 	fi
 }
 
@@ -746,7 +746,7 @@ function quitTool(){
 	ClearKey
 	applyNoColor
 	if [[ -d /tmp/BackOn ]]; then
-		echo "${CLOSING_TOOL}"
+		echo -e "${CLOSING_TOOL}"
 		rm -rf /tmp/BackOn
 	fi
 	exit 0
@@ -756,7 +756,7 @@ function quitTool_Error(){
 	ClearKey
 	applyNoColor
 	if [[ -d /tmp/BackOn ]]; then
-		echo "${CLOSING_TOOL}"
+		echo -e "${CLOSING_TOOL}"
 		rm -rf /tmp/BackOn
 	fi
 	exit 1
@@ -765,7 +765,7 @@ function quitTool_Error(){
 function quitTool_NoClear(){
 	applyNoColor
 	if [[ -d /tmp/BackOn ]]; then
-		echo "${CLOSING_TOOL}"
+		echo -e "${CLOSING_TOOL}"
 		rm -rf /tmp/BackOn
 	fi
 	exit 0
@@ -774,7 +774,7 @@ function quitTool_NoClear(){
 function quitTool_NoClear_Error(){
 	applyNoColor
 	if [[ -d /tmp/BackOn ]]; then
-		echo "${CLOSING_TOOL}"
+		echo -e "${CLOSING_TOOL}"
 		rm -rf /tmp/BackOn
 	fi
 	exit 1
@@ -1012,7 +1012,7 @@ function backupLibrary(){
 							applyRed
 							echo -e "${NO_SUCH_FILE_OR_DIRECTORY}"
 							applyNoColor
-							PRESS_ANY_KEY_TO_CONTINUE
+							PA2CKey
 						fi
 					fi
 				done
@@ -1043,6 +1043,11 @@ function backupLibrary(){
 				fi
 				echo -e "${DONE}"
 				PA2CKey
+			elif [[ "${ANSWER_E}" == "/" ]]; then
+				applyRed
+				echo -e "${NO_SUCH_FILE_OR_DIRECTORY}"
+				applyNoColor
+				PA2CKey
 			elif [[ "${ANSWER_E}" == quit || "${ANSWER_E}" == q ]]; then
 				if [[ -z "$(ls "/tmp/BackOn/Backup/${BACKUP_NAME}/Library")" ]]; then
 					rm -rf "/tmp/BackOn/Backup/${BACKUP_NAME}/Library"
@@ -1064,7 +1069,7 @@ function backupLibrary(){
 				PA2CKey
 			else
 				applyRed
-				echo -e "${NO_SUCH_FILE_OR_DIRECTORY} : ${ANSWER_E}"
+				echo -e "${NO_SUCH_FILE_OR_DIRECTORY}"
 				applyNoColor
 				PA2CKey
 			fi
@@ -1340,7 +1345,7 @@ function checkiOSVerMatching(){
 		if [[ ! "${OSVer}" == "$(cat "/tmp/BackOn/Restore/info/OSVersion")" ]]; then
 			ClearKey
 			showLinesA
-			echo "${OSVER_IS_NOT_MATCHING}"
+			echo -e "${OSVER_IS_NOT_MATCHING}"
 			showLinesA
 			PA2CKey
 		fi
@@ -1519,7 +1524,7 @@ function restoreLibrary(){
 					break
 				elif [[ "${ANSWER_K}" == no || "${ANSWER_K}" == quit || "${ANSWER_K}" == q ]]; then
 					applyRed
-					echo "${CANCELED}"
+					echo -e "${CANCELED}"
 					applyNoColor
 					PA2CKey
 					break
@@ -1531,6 +1536,11 @@ function restoreLibrary(){
 					showNotSupportedFunction
 				fi
 			done
+		elif [[ "${ANSWER_I}" == "/" ]]; then
+			applyRed
+			echo -e "${NO_SUCH_FILE_OR_DIRECTORY}"
+			applyNoColor
+			PA2CKey
 		elif [[ -z "${ANSWER_I}" ]]; then
 			:
 		elif [[ -f "/tmp/BackOn/Restore/Library/${ANSWER_I}" ]]; then
@@ -1583,7 +1593,7 @@ function runUpdate(){
 
 function showUpdaterVersion(){
 	applyPurple
-	echo "UpdaterVersion : ${UpdaterVersion}"
+	echo -e "UpdaterVersion : ${UpdaterVersion}"
 	applyNoColor
 }
 
@@ -1680,7 +1690,7 @@ function installUpdate_old(){
 		if [[ "${showLog}" == YES ]]; then
 			showUpdaterVersion
 		fi
-		echo "${DOWNLOADING}"
+		echo -e "${DOWNLOADING}"
 		if [[ -d "/tmp/BackOn/Update" ]]; then
 			rm -rf "/tmp/BackOn/Update"
 		fi
@@ -1707,36 +1717,36 @@ function installUpdate_old(){
 			if [[ -d "/tmp/BackOn/Update/master/BackOn-master/" ]]; then
 				if [[ -z "$(cat "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/build")" ]]; then
 					applyRed
-					echo "ERROR!"
+					echo -e "ERROR!"
 					applyNoColor
 					break
 				fi
 				if [ ${TOOL_BUILD_NUM} -ge "$(cat "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/build")" ]; then
 					if [[ ! "${ForceInstallUpdate}" == YES ]]; then
-						echo "${UP_TO_DATE}"
+						echo -e "${UP_TO_DATE}"
 						break
 					fi
 				fi
 				if [[ "${showLog}" == YES ]]; then
 					applyPurple
-					echo "Downloaded : $(cat "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/build") / Current : ${TOOL_BUILD_NUM}"
+					echo -e "Downloaded : $(cat "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/build") / Current : ${TOOL_BUILD_NUM}"
 					applyNoColor
 					PA2CKey
 				fi
-				echo "${INSTALLING}"
+				echo -e "${INSTALLING}"
 				chmod +x "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/update-script"
 				cd "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}"
 				./update-script
 				quitTool_NoClear
 			else
 				applyRed
-				echo "ERROR!"
+				echo -e "ERROR!"
 				applyNoColor
 				break
 			fi
 		else
 			applyRed
-			echo "ERROR!"
+			echo -e "ERROR!"
 			applyNoColor
 			break
 		fi
@@ -1781,9 +1791,8 @@ while(true); do
 	elif [[ "${LANGUAGE}" == Korean ]]; then
 		echo -e "(3) Change to English."
 	fi
-	echo -e "(4) ${CHECK_FOR_UPDATES}"
 	if [[ "${enabledODS}" == YES ]]; then
-		echo "(ods) Open DevSettings."
+		echo -e "(ods) Open DevSettings."
 	fi
 	echo -e "(q) ${QUIT}"
 	showLinesB
@@ -1831,8 +1840,6 @@ while(true); do
 		showInitialRestoreMenu
 	elif [[ "${ANSWER_A}" == 3 ]]; then
 		switchLanguage
-	elif [[ "${ANSWER_A}" == 4 ]]; then
-		runUpdate
 	elif [[ "${ANSWER_A}" == quit || "${ANSWER_A}" == q ]]; then
 		quitTool
 	elif [[ "${ANSWER_A}" == ods ]]; then
