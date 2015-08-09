@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-209-official
+# BackOn alpha-210-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=209
+TOOL_BUILD_NUM=210
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -1043,6 +1043,11 @@ function backupLibrary(){
 				fi
 				echo -e "${DONE}"
 				PA2CKey
+			elif [[ "${ANSWER_E}" == "/" ]]; then
+				applyRed
+				echo -e "${NO_SUCH_FILE_OR_DIRECTORY} : ${ANSWER_E}"
+				applyNoColor
+				PA2CKey
 			elif [[ "${ANSWER_E}" == quit || "${ANSWER_E}" == q ]]; then
 				if [[ -z "$(ls "/tmp/BackOn/Backup/${BACKUP_NAME}/Library")" ]]; then
 					rm -rf "/tmp/BackOn/Backup/${BACKUP_NAME}/Library"
@@ -1531,6 +1536,11 @@ function restoreLibrary(){
 					showNotSupportedFunction
 				fi
 			done
+		elif [[ "${ANSWER_I}" == "/" ]]; then
+			applyRed
+			echo -e "${NO_SUCH_FILE_OR_DIRECTORY}"
+			applyNoColor
+			PA2CKey
 		elif [[ -z "${ANSWER_I}" ]]; then
 			:
 		elif [[ -f "/tmp/BackOn/Restore/Library/${ANSWER_I}" ]]; then
