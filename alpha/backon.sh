@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-212-official
+# BackOn alpha-213-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=212
+TOOL_BUILD_NUM=213
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -212,7 +212,7 @@ function openDevSettings(){
 		elif [[ "${runUpdateODS}" == NO ]]; then
 			echo -e "(15) runUpdateODS : NO"
 		fi
-		echo -e "(16) ${CHECKING_FOR_UPDATE}"
+		echo -e "(16) ${CHECK_FOR_UPDATES}"
 		echo -e "(17) cp /backon.sh /usr/bin/backon"
 		echo -e "(18) setTestFunction"
 		if [[ "${applyColorScheme}" == YES ]]; then
