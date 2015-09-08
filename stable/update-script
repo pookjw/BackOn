@@ -173,7 +173,7 @@ function runBackOn(){
 
 if [[ "${UpdaterVersion}" == 1 ]]; then
 	Update1
-elif [[ "${UpdaterVersion=}" == 2 ]]; then
+elif [[ "${UpdaterVersion}" == 2 ]]; then
 	Update2
 else
 	applyRed

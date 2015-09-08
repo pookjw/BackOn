@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-213-official
+# BackOn alpha-216-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=213
+TOOL_BUILD_NUM=216
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -1588,6 +1588,7 @@ function runUpdate(){
 		applyRed
 		echo -e "ERROR! (UpdaterVersion is wrong.)"
 		applyNoColor
+		PA2CKey
 	fi
 }
 
