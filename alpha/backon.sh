@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-233-official
+# BackOn alpha-234-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=233
+TOOL_BUILD_NUM=234
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -1625,7 +1625,9 @@ function customBackup(){
 			echo -e "${SHOW_INFO_12}"
 			showLinesB
 			if [[ -z "$(ls "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom")" ]]; then
+				applyRed
 				echo -e "${NOT_BACKUPED_YET}"
+				applyNoColor
 			else
 				for NAME in `ls "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom"`; do
 					echo -e -n "${NAME} "
