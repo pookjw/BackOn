@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-229-official
+# BackOn alpha-230-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=229
+TOOL_BUILD_NUM=230
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -1703,6 +1703,8 @@ function customBackup(){
 						PA2CKey
 					fi
 				done
+			else
+				showNotSupportedFunction
 			fi
 		done
 	else
@@ -1761,6 +1763,8 @@ function customRestore(){
 						PA2CKey
 					fi
 				fi
+			else
+				showNotSupportedFunction
 			fi
 		done
 	else
