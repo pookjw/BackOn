@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-220-official
+# BackOn alpha-221-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=220
+TOOL_BUILD_NUM=221
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -1606,81 +1606,90 @@ function rebootDevice(){
 }
 
 function customBackup(){
-	if [[ ! -d "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom" ]]; then
-		mkdir "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom"
-	fi
-	while(true); do
-		ClearKey
-		showLinesA
-		echo -e "${SHOW_INFO_12}"
-		showLinesB
-		if [[ -z "$(ls /tmp/BackOn/Backup/${BACKUP_NAME}/Custom)" ]]; then
-			echo -e "${NOT_BACKUPED_YET}"
-		else
-			for NAME in `ls "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom"`; do
-				echo -e -n "${NAME}"
-				applyLightCyan
-				echo -e "(`cat /tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${NAME}/path`)"
-				applyNoColor
-			done
-			:
+	if [[ -d "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom" ]]; then
+		if [[ ! -d "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom" ]]; then
+			mkdir "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom"
 		fi
-		showLinesB
-		echo -e "${ENTER_NICKNAME}"
-		showLinesA
-		applyLightCyan
-		read -p "- " ANSWER_M
-		applyNoColor
-
-		if [[ -z "${ANSWER_M}" ]]; then
-			echo -e "${FORM_IS_EMPTY}"
-			showPA2C
-		elif [[ "${ANSWER_M}" == ods ]]; then
-			openDevSettings
-		elif [[ "${ANSWER_M}" == exit ]]; then
-			ExitKey
-		elif [[ -d "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${ANSWER_M}" ]]; then
-			showYESNO "${ALREADY_EXISTS_WANT_TO_REMOVE}"
-			if [[ "${ANSWER_YESNO}" == YES ]]; then
-				rm -rf "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${ANSWER_M}"
-				echo -e "${DONE}"
-				showPA2C
-			elif [[ "${ANSWER_M}" == NO ]]; then
-				echo -e "${CANCELED}"
-				showPA2C
-			fi
-		elif [[ ! -d "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${ANSWER_M}" ]]; then
-			mkdir -p "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${ANSWER_M}/Backup"
+		while(true); do
 			ClearKey
 			showLinesA
-			echo -e "${ENTER_FILE_PATH}"
+			echo -e "${SHOW_INFO_12}"
+			showLinesB
+			if [[ -z "$(ls /tmp/BackOn/Backup/${BACKUP_NAME}/Custom)" ]]; then
+				echo -e "${NOT_BACKUPED_YET}"
+			else
+				for NAME in `ls "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom"`; do
+					echo -e -n "${NAME}"
+					applyLightCyan
+					echo -e "(`cat /tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${NAME}/path`)"
+					applyNoColor
+				done
+				:
+			fi
+			showLinesB
+			echo -e "${ENTER_NICKNAME}"
 			showLinesA
 			applyLightCyan
-			read -p "- " ANSWER_N
+			read -p "- " ANSWER_M
 			applyNoColor
 
-			if [[ -z "${ANSWER_N}" ]]; then
+			if [[ -z "${ANSWER_M}" ]]; then
 				echo -e "${FORM_IS_EMPTY}"
-				echo -e "${CANCELED}"
 				showPA2C
-			elif [[ -f "${ANSWER_N}" ]]; then
-				cp "${ANSWER_N}" "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${ANSWER_M}/Backup"
-				echo -e "${ANSWER_N}" >> "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${ANSWER_M}/path"
-				echo -e "file" >> "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${ANSWER_M}/type"
-				echo -e "${DONE}"
-				showPA2C
-			elif [[ -d "${ANSWER_N}" ]]; then
-				cp -r "${ANSWER_N}" "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${ANSWER_M}/Backup"
-				echo -e "${ANSWER_N}" >> "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${ANSWER_M}/path"
-				echo -e "folder" >> "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${ANSWER_M}/type"
-				echo -e "${DONE}"
-				showPA2C
-			else
-				echo -e "NO_SUCH_FILE_OR_DIRECTORY"
-				showPA2C
+			elif [[ "${ANSWER_M}" == ods ]]; then
+				openDevSettings
+			elif [[ "${ANSWER_M}" == exit ]]; then
+				ExitKey
+			elif [[ "${ANSWER_M}" == quit || "${ANSWER_M}" == q ]]; then
+				break
+			elif [[ -d "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${ANSWER_M}" ]]; then
+				showYESNO "${ALREADY_EXISTS_WANT_TO_REMOVE}"
+				if [[ "${ANSWER_YESNO}" == YES ]]; then
+					rm -rf "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${ANSWER_M}"
+					echo -e "${DONE}"
+					showPA2C
+				elif [[ "${ANSWER_M}" == NO ]]; then
+					echo -e "${CANCELED}"
+					showPA2C
+				fi
+			elif [[ ! -d "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${ANSWER_M}" ]]; then
+				mkdir -p "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${ANSWER_M}/Backup"
+				ClearKey
+				showLinesA
+				echo -e "${ENTER_FILE_PATH}"
+				showLinesA
+				applyLightCyan
+				read -p "- " ANSWER_N
+				applyNoColor
+
+				if [[ -z "${ANSWER_N}" ]]; then
+					echo -e "${FORM_IS_EMPTY}"
+					echo -e "${CANCELED}"
+					showPA2C
+				elif [[ -f "${ANSWER_N}" ]]; then
+					cp "${ANSWER_N}" "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${ANSWER_M}/Backup"
+					echo -e "${ANSWER_N}" >> "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${ANSWER_M}/path"
+					echo -e "file" >> "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${ANSWER_M}/type"
+					echo -e "${DONE}"
+					showPA2C
+				elif [[ -d "${ANSWER_N}" ]]; then
+					cp -r "${ANSWER_N}" "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${ANSWER_M}/Backup"
+					echo -e "${ANSWER_N}" >> "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${ANSWER_M}/path"
+					echo -e "folder" >> "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${ANSWER_M}/type"
+					echo -e "${DONE}"
+					showPA2C
+				else
+					echo -e "NO_SUCH_FILE_OR_DIRECTORY"
+					showPA2C
+				fi
 			fi
-		fi
-	done
+		done
+	else
+		applyRed
+		echo -e "ERROR!"
+		applyNoColor
+		showPA2C
+	fi
 }
 
 function runUpdate(){
