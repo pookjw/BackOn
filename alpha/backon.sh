@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-232-official
+# BackOn alpha-233-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=232
+TOOL_BUILD_NUM=233
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -1658,8 +1658,10 @@ function customBackup(){
 					rm -rf "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${ANSWER_M}"
 					echo -e "${DONE}"
 					PA2CKey
-				elif [[ "${ANSWER_M}" == NO ]]; then
+				elif [[ "${ANSWER_YESNO}" == NO ]]; then
+					applyRed
 					echo -e "${CANCELED}"
+					applyNoColor
 					PA2CKey
 				fi
 			elif [[ ! -d "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${ANSWER_M}" ]]; then
