@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-228-official
+# BackOn alpha-229-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=228
+TOOL_BUILD_NUM=229
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -1640,8 +1640,7 @@ function customBackup(){
 			applyNoColor
 
 			if [[ -z "${ANSWER_M}" ]]; then
-				echo -e "${FORM_IS_EMPTY}"
-				PA2CKey
+				:
 			elif [[ "${ANSWER_M}" == ods ]]; then
 				openDevSettings
 			elif [[ "${ANSWER_M}" == exit ]]; then
@@ -1673,8 +1672,7 @@ function customBackup(){
 					applyNoColor
 
 					if [[ -z "${ANSWER_N}" ]]; then
-						echo -e "${FORM_IS_EMPTY}"
-						PA2CKey
+						:
 					elif [[ "${ANSWER_N}" == ods ]]; then
 						openDevSettings
 					elif [[ "${ANSWER_N}" == exit ]]; then
@@ -1734,8 +1732,7 @@ function customRestore(){
 			applyNoColor
 
 			if [[ -z "${ANSWER_O}" ]]; then
-				echo -e "${FORM_IS_EMPTY}"
-				PA2CKey
+				:
 			elif [[ "${ANSWER_O}" == ods ]]; then
 				openDevSettings
 			elif [[ "${ANSWER_O}" == exit ]]; then
