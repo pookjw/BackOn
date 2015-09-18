@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-226-official
+# BackOn alpha-227-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=226
+TOOL_BUILD_NUM=227
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -68,7 +68,7 @@ function setEnglish(){
 	DOWNLOADING_INSTALLING_PACKAGES="Downloading Cydia packages & Installing..."
 	RESTORING_ALL_IS_NOT_RECOMMENDED="Restoring all Library files is not recommended bacause it may cause boot-loop. Are you sure to continue? (yes/no)"
 	NOT_BACKUPED_YET="Not backuped file yet."
-	ENTER_NICKNAME="Enter nickname of custom backup that you want to do."
+	ENTER_NICKNAME="Enter nickname of custom backup that you want to do. (Space bar is not supported.)"
 	ALREADY_EXISTS_WANT_TO_REMOVE="Entered nickname is already exists. Do you want to remove it? (yes/no)"
 	ENTER_FILE_PATH="Enter file/folder path."
 	SHOW_GUIDE_3="Enter file/folder name that you want to backup. If you want to backup all of files, enter 'all' command. Enter 'delete' command to delete backuped backup."
@@ -146,7 +146,7 @@ function setKorean(){
 	DOWNLOADING_INSTALLING_PACKAGES="Cydia 패키지 다운로드 & 설치 중..."
 	RESTORING_ALL_IS_NOT_RECOMMENDED="Library를 모두 복원하는 것은 무한사과 (부팅불가)의 위험이 있기 때문에 추천하지 않습니다. 복원하시겠습니까? (yes/no)"
 	NOT_BACKUPED_YET="아직 백업된 파일이 없습니다."
-	ENTER_NICKNAME="커스텀 백업할 것의 닉네임을 입력해 주세요."
+	ENTER_NICKNAME="커스텀 백업할 것의 닉네임을 입력해 주세요. (띄어쓰기는 지원되지 않습니다.)"
 	ALREADY_EXISTS_WANT_TO_REMOVE="입력하신 닉네임은 이미 존재합니다. 기존 것을 제거하시겠습니까? (yes/no)"
 	ENTER_FILE_PATH="파일/폴더 경로를 입력해 주세요."
 	SHOW_GUIDE_3="백업을 원하는 폴더/파일의 이름을 입력하시면 백업됩니다. 'all'을 입력하면 모두 백업할 수 있습니다. 'delete' 명령어로 백업한 백업 파일을 삭제할 수 있습니다."
@@ -465,6 +465,8 @@ function openDevSettings(){
 			ls -l "/tmp/BackOn/Backup/${BACKUP_NAME}/Library"
 			echo -e "\n/tmp/BackOn/Backup/${BACKUP_NAME}/Library/Caches"
 			ls -l "/tmp/BackOn/Backup/${BACKUP_NAME}/Library/Caches"
+			echo -e "\n/tmp/BackOn/Backup/${BACKUP_NAME}/Custom"
+			ls -l "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom"
 			echo -e "\n/tmp/BackOn/Restore"
 			ls -l "/tmp/BackOn/Restore"
 			echo -e "\n/tmp/BackOn/Restore/Cydia"
@@ -473,6 +475,8 @@ function openDevSettings(){
 			ls -l "/tmp/BackOn/Restore/Library"
 			echo -e "\n/tmp/BackOn/Restore/info"
 			ls -l "/tmp/BackOn/Restore/info"
+			echo -e "\n/tmp/BackOn/Restore/Custom"
+			ls -l "/tmp/BackOn/Restore/Custom"
 			showLinesA
 			PA2CKey
 		elif [[ "${ANSWER_D}" == save ||  "${ANSWER_D}" == s ]]; then
