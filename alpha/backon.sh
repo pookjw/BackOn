@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-217-official
+# BackOn alpha-218-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=217
+TOOL_BUILD_NUM=218
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -1614,12 +1614,12 @@ function customBackup(){
 		if [[ -z "$(ls /tmp/BackOn/Backup/${BACKUP_NAME}/Custom)" ]]; then
 			echo -e "${NOT_BACKUPED_YET}"
 		else
-			for NAME in `ls "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom"`; do
-				echo -e -n "${NAME}"
-				applyLightCyan
-				echo -e "(`cat /tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${NAME}/path`)"
-				applyNoColor
-			done
+			#for NAME in `ls "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom"`; do
+			#	echo -e -n "${NAME}"
+			#	applyLightCyan
+			#	echo -e "(`cat /tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${NAME}/path`)"
+			#	applyNoColor
+			#done
 		fi
 		showLinesB
 		echo -e "${ENTER_NICKNAME}"
