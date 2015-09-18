@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-222-official
+# BackOn alpha-223-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=222
+TOOL_BUILD_NUM=223
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -1635,7 +1635,7 @@ function customBackup(){
 
 			if [[ -z "${ANSWER_M}" ]]; then
 				echo -e "${FORM_IS_EMPTY}"
-				showPA2C
+				PA2CKey
 			elif [[ "${ANSWER_M}" == ods ]]; then
 				openDevSettings
 			elif [[ "${ANSWER_M}" == exit ]]; then
@@ -1647,10 +1647,10 @@ function customBackup(){
 				if [[ "${ANSWER_YESNO}" == YES ]]; then
 					rm -rf "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${ANSWER_M}"
 					echo -e "${DONE}"
-					showPA2C
+					PA2CKey
 				elif [[ "${ANSWER_M}" == NO ]]; then
 					echo -e "${CANCELED}"
-					showPA2C
+					PA2CKey
 				fi
 			elif [[ ! -d "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${ANSWER_M}" ]]; then
 				mkdir -p "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${ANSWER_M}/Backup"
@@ -1665,22 +1665,22 @@ function customBackup(){
 				if [[ -z "${ANSWER_N}" ]]; then
 					echo -e "${FORM_IS_EMPTY}"
 					echo -e "${CANCELED}"
-					showPA2C
+					PA2CKey
 				elif [[ -f "${ANSWER_N}" ]]; then
 					cp "${ANSWER_N}" "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${ANSWER_M}/Backup"
 					echo -e "${ANSWER_N}" >> "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${ANSWER_M}/path"
 					echo -e "file" >> "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${ANSWER_M}/type"
 					echo -e "${DONE}"
-					showPA2C
+					PA2CKey
 				elif [[ -d "${ANSWER_N}" ]]; then
 					cp -r "${ANSWER_N}" "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${ANSWER_M}/Backup"
 					echo -e "${ANSWER_N}" >> "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${ANSWER_M}/path"
 					echo -e "folder" >> "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${ANSWER_M}/type"
 					echo -e "${DONE}"
-					showPA2C
+					PA2CKey
 				else
 					echo -e "NO_SUCH_FILE_OR_DIRECTORY"
-					showPA2C
+					PA2CKey
 				fi
 			fi
 		done
@@ -1688,7 +1688,7 @@ function customBackup(){
 		applyRed
 		echo -e "ERROR!"
 		applyNoColor
-		showPA2C
+		PA2CKey
 	fi
 }
 
