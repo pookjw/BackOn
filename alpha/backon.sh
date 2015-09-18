@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-223-official
+# BackOn alpha-224-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=223
+TOOL_BUILD_NUM=224
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -454,21 +454,21 @@ function openDevSettings(){
 			showLinesA
 			echo -e "/tmp/BackOn/"
 			ls -l "/tmp/BackOn"
-			echo -e -e "\n/tmp/BackOn/Backup/${BACKUP_NAME}"
+			echo -e "\n/tmp/BackOn/Backup/${BACKUP_NAME}"
 			ls -l "/tmp/BackOn/Backup/${BACKUP_NAME}"
-			echo -e -e "\n/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia"
+			echo -e "\n/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia"
 			ls -l "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia"
-			echo -e -e "\n/tmp/BackOn/Backup/${BACKUP_NAME}/Library"
+			echo -e "\n/tmp/BackOn/Backup/${BACKUP_NAME}/Library"
 			ls -l "/tmp/BackOn/Backup/${BACKUP_NAME}/Library"
-			echo -e -e "\n/tmp/BackOn/Backup/${BACKUP_NAME}/Library/Caches"
+			echo -e "\n/tmp/BackOn/Backup/${BACKUP_NAME}/Library/Caches"
 			ls -l "/tmp/BackOn/Backup/${BACKUP_NAME}/Library/Caches"
-			echo -e -e "\n/tmp/BackOn/Restore"
+			echo -e "\n/tmp/BackOn/Restore"
 			ls -l "/tmp/BackOn/Restore"
-			echo -e -e "\n/tmp/BackOn/Restore/Cydia"
+			echo -e "\n/tmp/BackOn/Restore/Cydia"
 			ls -l "/tmp/BackOn/Restore/Cydia"
-			echo -e -e "\n/tmp/BackOn/Restore/Library"
+			echo -e "\n/tmp/BackOn/Restore/Library"
 			ls -l "/tmp/BackOn/Restore/Library"
-			echo -e -e "\n/tmp/BackOn/Restore/info"
+			echo -e "\n/tmp/BackOn/Restore/info"
 			ls -l "/tmp/BackOn/Restore/info"
 			showLinesA
 			PA2CKey
@@ -1619,9 +1619,9 @@ function customBackup(){
 				echo -e "${NOT_BACKUPED_YET}"
 			else
 				for NAME in `ls "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom"`; do
-					echo -e -n "${NAME}"
+					echo -e -n "${NAME} "
 					applyLightCyan
-					echo -e "(`cat /tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${NAME}/path`)"
+					echo -e "(`cat /tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${NAME}/path` | `cat /tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${NAME}/type`)"
 					applyNoColor
 				done
 				:
@@ -1679,7 +1679,8 @@ function customBackup(){
 					echo -e "${DONE}"
 					PA2CKey
 				else
-					echo -e "NO_SUCH_FILE_OR_DIRECTORY"
+					echo -e "${NO_SUCH_FILE_OR_DIRECTORY}"
+					rm -rf "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${ANSWER_M}"
 					PA2CKey
 				fi
 			fi
