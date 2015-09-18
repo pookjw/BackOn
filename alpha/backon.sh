@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-225-official
+# BackOn alpha-226-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=225
+TOOL_BUILD_NUM=226
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -1712,6 +1712,7 @@ function customBackup(){
 function customRestore(){
 	if [[ -d "/tmp/BackOn/Restore/Custom" ]]; then
 		while(true); do
+			ClearKey
 			showLinesA
 			echo -e "${SHOW_INFO_13}"
 			showLinesB
@@ -1724,6 +1725,7 @@ function customRestore(){
 			showLinesA
 			applyLightCyan
 			read -p "- " ANSWER_O
+			applyNoColor
 
 			if [[ -z "${ANSWER_O}" ]]; then
 				echo -e "${FORM_IS_EMPTY}"
@@ -1736,13 +1738,19 @@ function customRestore(){
 				break
 			elif [[ -d "/tmp/BackOn/Restore/Custom/${ANSWER_O}" ]]; then
 				if [[ "${skipRestore}" == YES ]]; then
-					echo -e "Skipped"
+					echo -e "Skipped."
 					PA2CKey
 				else
 					if [[ "$(cat "/tmp/BackOn/Restore/Custom/${ANSWER_O}/type")" == file ]]; then
+						echo -e "${RESTORING}"
 						cp "/tmp/BackOn/Restore/Custom/${ANSWER_O}/Backup/`ls "/tmp/BackOn/Restore/Custom/${ANSWER_O}/Backup"`" "`cat "/tmp/BackOn/Restore/Custom/${ANSWER_O}/path"`"
+						echo -e "${DONE}"
+						PA2CKey
 					elif [[ "$(cat "/tmp/BackOn/Restore/Custom/${ANSWER_O}/type")" == folder ]]; then
+						echo -e "${RESTORING}"
 						cp -r "/tmp/BackOn/Restore/Custom/${ANSWER_O}/Backup/`ls "/tmp/BackOn/Restore/Custom/${ANSWER_O}/Backup"`" "`cat "/tmp/BackOn/Restore/Custom/${ANSWER_O}/path"`"
+						echo -e "${DONE}"
+						PA2CKey
 					else
 						applyRed
 						echo -e "ERROR!"
