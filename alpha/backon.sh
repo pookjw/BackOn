@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-227-official
+# BackOn alpha-228-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=227
+TOOL_BUILD_NUM=228
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -1699,7 +1699,9 @@ function customBackup(){
 						PA2CKey
 						break
 					else
+						applyRed
 						echo -e "${NO_SUCH_FILE_OR_DIRECTORY}"
+						applyNoColor
 						PA2CKey
 					fi
 				done
