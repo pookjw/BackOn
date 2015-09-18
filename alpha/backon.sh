@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-218-official
+# BackOn alpha-219-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=218
+TOOL_BUILD_NUM=219
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -252,7 +252,7 @@ function openDevSettings(){
 			echo -e "(24) fixDynamicLineIssue : YES"
 		elif [[ "${fixDynamicLineIssue}" == NO ]]; then
 			echo -e "(24) fixDynamicLineIssue : NO"
-		fi
+		elif -e "(25) customBackup"
 		echo -e "(l) ls"
 		echo -e "(s) Save Settings."
 		echo -e "(d) Disable DevSettings."
@@ -446,6 +446,8 @@ function openDevSettings(){
 			elif [[ "${fixDynamicLineIssue}" == NO ]]; then
 				fixDynamicLineIssue=YES
 			fi
+		elif [[ "${ANSWER_D}" == 25 ]]; then
+			customBackup
 		elif [[ "${ANSWER_D}" == l || "${ANSWER_D}" == ls ]]; then
 			ClearKey
 			showLinesA
@@ -1614,12 +1616,13 @@ function customBackup(){
 		if [[ -z "$(ls /tmp/BackOn/Backup/${BACKUP_NAME}/Custom)" ]]; then
 			echo -e "${NOT_BACKUPED_YET}"
 		else
-			#for NAME in `ls "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom"`; do
-			#	echo -e -n "${NAME}"
-			#	applyLightCyan
-			#	echo -e "(`cat /tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${NAME}/path`)"
-			#	applyNoColor
-			#done
+			for NAME in `ls "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom"`; do
+				echo -e -n "${NAME}"
+				applyLightCyan
+				echo -e "(`cat /tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${NAME}/path`)"
+				applyNoColor
+			done
+			:
 		fi
 		showLinesB
 		echo -e "${ENTER_NICKNAME}"
@@ -1635,7 +1638,7 @@ function customBackup(){
 			openDevSettings
 		elif [[ "${ANSWER_M}" == exit ]]; then
 			ExitKey
-		if [[ -d "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${ANSWER_M}" ]]; then
+		elif [[ -d "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${ANSWER_M}" ]]; then
 			showYESNO "${ALREADY_EXISTS_WANT_TO_REMOVE}"
 			if [[ "${ANSWER_YESNO}" == YES ]]; then
 				rm -rf "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${ANSWER_M}"
