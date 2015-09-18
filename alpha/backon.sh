@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-231-official
+# BackOn alpha-232-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=231
+TOOL_BUILD_NUM=232
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -672,7 +672,9 @@ function showYESNO(){
 		read -p "- " ANSWER_YESNO
 		applyNoColor
 
-		if [[ "${ANSWER_YESNO}" == yes ]]; then
+		if [[ -z "${ANSWER_YESNO}" ]]; then
+			:
+		elif [[ "${ANSWER_YESNO}" == yes ]]; then
 			ANSWER_YESNO=YES
 			break
 		elif [[ "${ANSWER_YESNO}" == no ]]; then
