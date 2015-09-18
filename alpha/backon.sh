@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-219-official
+# BackOn alpha-220-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=219
+TOOL_BUILD_NUM=220
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -252,7 +252,8 @@ function openDevSettings(){
 			echo -e "(24) fixDynamicLineIssue : YES"
 		elif [[ "${fixDynamicLineIssue}" == NO ]]; then
 			echo -e "(24) fixDynamicLineIssue : NO"
-		elif -e "(25) customBackup"
+		fi
+		echo -e "(25) customBackup"
 		echo -e "(l) ls"
 		echo -e "(s) Save Settings."
 		echo -e "(d) Disable DevSettings."
