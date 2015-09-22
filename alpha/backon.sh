@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-234-official
+# BackOn alpha-235-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=234
+TOOL_BUILD_NUM=235
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -1615,7 +1615,7 @@ function rebootDevice(){
 }
 
 function customBackup(){
-	if [[ -d "/tmp/BackOn/Backup/${BACKUP_NAME}" ]]; then
+	if [[ -d "/tmp/BackOn/Backup/${BACKUP_NAME}" && ! -z "${BACKUP_NAME}" ]]; then
 		if [[ ! -d "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom" ]]; then
 			mkdir "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom"
 		fi
