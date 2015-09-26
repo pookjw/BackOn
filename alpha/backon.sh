@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-235-official
+# BackOn alpha-236-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=235
+TOOL_BUILD_NUM=236
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -891,6 +891,7 @@ function defineBackupName(){
 
 function showInitialBackupMenu(){
 	while(true); do
+		removeEmptyBackupFolder
 		ClearKey
 		showLinesA
 		echo -e "${SHOW_INFO_1}"
@@ -927,6 +928,16 @@ function showInitialBackupMenu(){
 	done
 }
 
+function removeEmptyBackupFolder(){
+	for FOLDER in Cydia Library; do
+		if [[ -d "/tmp/BackOn/Backup/${BACKUP_NAME}/${FOLDER}" ]]; then
+			if [[ -z "$(ls "/tmp/BackOn/Backup/${BACKUP_NAME}/${FOLDER}")" ]]; then
+				rm -rf "/tmp/BackOn/Backup/${BACKUP_NAME}/${FOLDER}"
+			fi
+		fi
+	done
+}
+
 function backupCydiaData(){
 	ClearKey
 	showLinesA
@@ -946,7 +957,14 @@ function backupCydiaData(){
 	if [[ -f /var/mobile/Library/Cydia/metadata.cb0 ]]; then
 		cp /var/mobile/Library/Cydia/metadata.cb0 "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia"
 	fi
-	echo -e "${DONE}"
+	if [[ ! -f "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia/apt.txt" || ! -f "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia/cydia.list" || ! -f "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia/metadata.cb0" ]]; then
+		applyRed
+		echo -e "ERROR!"
+		applyNoColor
+		removeEmptyBackupFolder
+	else
+		echo -e "${DONE}"
+	fi
 	showLinesA
 	PA2CKey
 }
@@ -1103,9 +1121,7 @@ function backupLibrary(){
 				applyNoColor
 				PA2CKey
 			elif [[ "${ANSWER_E}" == quit || "${ANSWER_E}" == q ]]; then
-				if [[ -z "$(ls "/tmp/BackOn/Backup/${BACKUP_NAME}/Library")" ]]; then
-					rm -rf "/tmp/BackOn/Backup/${BACKUP_NAME}/Library"
-				fi
+				removeEmptyBackupFolder
 				break
 			elif [[ "${ANSWER_E}" == ods ]]; then
 				openDevSettings
@@ -1132,6 +1148,7 @@ function backupLibrary(){
 }
 
 function showBackupedFilesBackup(){
+	removeEmptyBackupFolder
 	ClearKey
 	showLinesA
 	echo -e "${SHOW_INFO_5}"
@@ -1181,6 +1198,7 @@ function showBackupedFilesBackup(){
 }
 
 function saveBackup(){
+	removeEmptyBackupFolder
 	ClearKey
 	showLinesA
 	echo -e "${SHOW_INFO_6}"
