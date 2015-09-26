@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-236-official
+# BackOn alpha-237-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=236
+TOOL_BUILD_NUM=237
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -749,11 +749,7 @@ function checkRoot(){
 		applyRed
 		echo -e "${NOT_RUN_AS_ROOT}"
 		applyNoColor
-		if [[ -z "${command1}" ]]; then
-			su -c "backon"
-		else
-			su -c "backon ${command1}"
-		fi
+		su -c backon "${1}"
 		quitTool_NoClear
 	fi
 }
@@ -1983,9 +1979,8 @@ if [[ "${setDefaultLanguage}" == Korean ]]; then
 else
 	setEnglish
 fi
-command1="${1}"
 checkOS
-checkRoot
+checkRoot "${1}"
 if [[ -d "/var/mobile/Library/Preferences/BackOn" ]]; then
 	saveSettings
 fi
