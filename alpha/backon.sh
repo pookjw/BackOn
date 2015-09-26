@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-237-official
+# BackOn alpha-238-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=237
+TOOL_BUILD_NUM=238
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -925,7 +925,7 @@ function showInitialBackupMenu(){
 }
 
 function removeEmptyBackupFolder(){
-	for FOLDER in Cydia Library; do
+	for FOLDER in Cydia Library Custom; do
 		if [[ -d "/tmp/BackOn/Backup/${BACKUP_NAME}/${FOLDER}" ]]; then
 			if [[ -z "$(ls "/tmp/BackOn/Backup/${BACKUP_NAME}/${FOLDER}")" ]]; then
 				rm -rf "/tmp/BackOn/Backup/${BACKUP_NAME}/${FOLDER}"
