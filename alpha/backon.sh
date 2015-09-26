@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-238-official
+# BackOn alpha-239-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=238
+TOOL_BUILD_NUM=239
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -1177,7 +1177,7 @@ function showBackupedFilesBackup(){
 			if [[ -d "/tmp/BackOn/Backup/${BACKUP_NAME}/Library/Caches" ]]; then
 				showLinesB
 				applyPurple
-				echo -e "/var/mobile/Library/Caches - /tmp/BackOn/Backup/${BACKUP_NAME}/Library"
+				echo -e "/var/mobile/Library/Caches - /tmp/BackOn/Backup/${BACKUP_NAME}/Library/Caches"
 				applyNoColor
 				if [[ "${detailFileListView}" == YES ]]; then
 					ls -l "/tmp/BackOn/Backup/${BACKUP_NAME}/Library/Caches"
