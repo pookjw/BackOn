@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-239-official
+# BackOn alpha-240-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=239
+TOOL_BUILD_NUM=240
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -940,7 +940,7 @@ function backupCydiaData(){
 	echo -e "${SHOW_INFO_2}"
 	showLinesB
 	echo -e "${BACKING_UP}"
-	if [[ -d "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia" ]]; then
+	if [[ -d "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia" || -f "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia" ]]; then
 		rm -rf "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia"
 	fi
 	mkdir "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia"
@@ -966,6 +966,9 @@ function backupCydiaData(){
 }
 
 function backupLibrary(){
+	if [[ -f "/tmp/BackOn/Backup/${BACKUP_NAME}/Library" ]]; then
+		rm "/tmp/BackOn/Backup/${BACKUP_NAME}/Library"
+	fi
 	if [[ ! -d "/tmp/BackOn/Backup/${BACKUP_NAME}/Library" ]]; then
 		mkdir "/tmp/BackOn/Backup/${BACKUP_NAME}/Library"
 	fi
@@ -1664,9 +1667,7 @@ function customBackup(){
 			elif [[ "${ANSWER_M}" == exit ]]; then
 				ExitKey
 			elif [[ "${ANSWER_M}" == quit || "${ANSWER_M}" == q ]]; then
-				if [[ -z "$(ls "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom")" ]]; then
-					rm -rf "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom"
-				fi
+				removeEmptyBackupFolder
 				break
 			elif [[ -d "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${ANSWER_M}" ]]; then
 				showYESNO "${ALREADY_EXISTS_WANT_TO_REMOVE}"
