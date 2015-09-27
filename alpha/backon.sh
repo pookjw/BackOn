@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-241-official
+# BackOn alpha-242-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=241
+TOOL_BUILD_NUM=242
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -86,7 +86,8 @@ function setEnglish(){
 	SHOW_INFO_10="Restore Menu > Restore Library"
 	SHOW_INFO_11="Restore Menu > Restore Library > Restore all of Library."
 	SHOW_INFO_12="Custom Backup"
-	SHOW_INFO_13="Custom Restore"
+	SHOW_INFO_13="Custom Backup > Detect backup target"
+	SHOW_INFO_14="Custom Restore"
 }
 
 function setKorean(){
@@ -164,7 +165,8 @@ function setKorean(){
 	SHOW_INFO_10="복원 메뉴 > Library 복원"
 	SHOW_INFO_11="복원 메뉴 > Library 복원 > Library 모두 복원"
 	SHOW_INFO_12="커스텀 백업"
-	SHOW_INFO_13="커스텀 복원"
+	SHOW_INFO_13="커스텀 백업 > 백업 대상 입력"
+	SHOW_INFO_14="커스텀 복원"
 }
 
 function openDevSettings(){
@@ -1686,6 +1688,8 @@ function customBackup(){
 				while(true); do
 					ClearKey
 					showLinesA
+					echo -e "${SHOW_INFO_13}"
+					showLinesB
 					echo -e "${ENTER_FILE_PATH}"
 					showLinesA
 					applyLightCyan
@@ -1741,7 +1745,7 @@ function customRestore(){
 		while(true); do
 			ClearKey
 			showLinesA
-			echo -e "${SHOW_INFO_13}"
+			echo -e "${SHOW_INFO_14}"
 			showLinesB
 			for NAME in `ls "/tmp/BackOn/Restore/Custom"`; do
 				echo -e -n "${NAME} "
