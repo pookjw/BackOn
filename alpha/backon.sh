@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-240-official
+# BackOn alpha-241-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=240
+TOOL_BUILD_NUM=241
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -67,7 +67,7 @@ function setEnglish(){
 	REFRESHING_SOURCES="Refreshing Cydia sources..."
 	DOWNLOADING_INSTALLING_PACKAGES="Downloading Cydia packages & Installing..."
 	RESTORING_ALL_IS_NOT_RECOMMENDED="Restoring all Library files is not recommended bacause it may cause boot-loop. Are you sure to continue? (yes/no)"
-	NOT_BACKUPED_YET="Not backuped file yet."
+	NOT_BACKUPED_YET="No backuped file yet."
 	ENTER_NICKNAME="Enter nickname of custom backup that you want to do. (Space bar is not supported.)"
 	ALREADY_EXISTS_WANT_TO_REMOVE="Entered nickname is already exists. Do you want to remove it? (yes/no)"
 	ENTER_FILE_PATH="Enter file/folder path."
@@ -1190,7 +1190,7 @@ function showBackupedFilesBackup(){
 			fi
 		fi
 	else
-		echo -e "${BACKUP_LIBRARY} : ${NO}"
+		echo -e "${BACKUPED_LIBRARY} : ${NO}"
 	fi
 	showLinesA
 	PA2CKey
