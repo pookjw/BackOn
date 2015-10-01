@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-244-official
+# BackOn alpha-245-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=244
+TOOL_BUILD_NUM=245
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -755,7 +755,7 @@ function checkRoot(){
 		applyRed
 		echo -e "${NOT_RUN_AS_ROOT}"
 		applyNoColor
-		su -c backon "${1}"
+		su -c "backon ${1}"
 		quitTool_NoClear
 	fi
 }
