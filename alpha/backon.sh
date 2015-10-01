@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-242-official
+# BackOn alpha-243-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=242
+TOOL_BUILD_NUM=243
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -1674,6 +1674,7 @@ function customBackup(){
 			elif [[ -d "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${ANSWER_M}" ]]; then
 				showYESNO "${ALREADY_EXISTS_WANT_TO_REMOVE}"
 				if [[ "${ANSWER_YESNO}" == YES ]]; then
+					echo -e "${REMOVING}"
 					rm -rf "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${ANSWER_M}"
 					echo -e "${DONE}"
 					PA2CKey
