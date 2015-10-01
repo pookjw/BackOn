@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-243-official
+# BackOn alpha-244-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=243
+TOOL_BUILD_NUM=244
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -257,6 +257,7 @@ function openDevSettings(){
 		fi
 		echo -e "(25) customBackup"
 		echo -e "(26) customRestore"
+		echo -e "(c) Start sh."
 		echo -e "(l) ls"
 		echo -e "(s) Save Settings."
 		echo -e "(d) Disable DevSettings."
@@ -454,6 +455,9 @@ function openDevSettings(){
 			customBackup
 		elif [[ "${ANSWER_D}" == 26 ]]; then
 			customRestore
+		elif [[ "${ANSWER_D}" == c || "${ANSWER_D}" == sh ]]; then
+			sh
+			PA2CKey
 		elif [[ "${ANSWER_D}" == l || "${ANSWER_D}" == ls ]]; then
 			ClearKey
 			showLinesA
