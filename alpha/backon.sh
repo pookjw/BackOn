@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-246-official
+# BackOn alpha-247-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=246
+TOOL_BUILD_NUM=247
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -28,7 +28,6 @@ function setEnglish(){
 	ENTER_QUIT="Enter 'quit' to quit this menu."
 	ENTER_BACKUP_NAME="Enter backup name that you want to do. (If you want to set backup name to current date and time, enter 'date'.)"
 	BACKUP_CANCELED="Backup was canceled because form was empty."
-	FORM_IS_EMPTY="Form is empty."
 	NOT_SUPPORTED_FUNCTION="Not supported function."
 	NO_SUCH_FILE_OR_DIRECTORY="No such file or directory."
 	NO_SUCH_FILE="No such file."
@@ -107,7 +106,6 @@ function setKorean(){
 	ENTER_QUIT="'quit'을 입력하면 이 메뉴를 종료합니다."
 	ENTER_BACKUP_NAME="원하는 백업 이름을 입력해 주세요. ('date'를 입력하면 현재 날짜, 시간을 백업 이름으로 지정합니다.)"
 	BACKUP_CANCELED="입력란이 비었기 때문에 백업을 취소합니다."
-	FORM_IS_EMPTY="입력란이 비었습니다."
 	NOT_SUPPORTED_FUNCTION="지원되지 않는 기능입니다."
 	NO_SUCH_FILE_OR_DIRECTORY="존재하지 않는 파일이나 폴더입니다."
 	NO_SUCH_FILE="존재하지 않는 파일입니다."
@@ -849,10 +847,7 @@ function defineBackupName(){
 		read -p "- " ANSWER_B
 		applyNoColor
 		if [[ -z "${ANSWER_B}" ]]; then
-			applyRed
-			echo -e "${FORM_IS_EMPTY}"
-			applyNoColor
-			PA2CKey
+			:
 		elif [[ "${ANSWER_B}" == ods ]]; then
 			openDevSettings
 		elif [[ "${ANSWER_B}" == q || "${ANSWER_B}" == quit ]]; then
@@ -1235,7 +1230,10 @@ function saveBackup(){
 			applyNoColor
 			quitTool_NoClear_Error
 		fi
-		echo -e "${SUCCEED_SAVE_BACKUP} (${BackupPath}/${ANSWER_B}.zip)"
+		echo -e "${SUCCEED_SAVE_BACKUP} "
+		applyLightCyan
+		echo -e -n "(${BackupPath}/${ANSWER_B}.zip)"
+		applyNoColor
 		showLinesA
 		quitTool_NoClear
 	fi
@@ -1253,10 +1251,7 @@ function defineBackupPath(){
 		applyNoColor
 
 		if [[ -z "${ANSWER_F}" ]]; then
-			applyRed
-			echo -e "${FORM_IS_EMPTY}"
-			applyNoColor
-			PA2CKey
+			:
 		elif [[ "${ANSWER_F}" == xBackup || "${ANSWER_F}" == xbackup ]]; then
 			if [[ -f "/var/mobile/Library/xBackup/Backups/backup.bk.zip" ]]; then
 				ToRestoreBackupPath="/var/mobile/Library/xBackup/Backups/backup.bk.zip"
