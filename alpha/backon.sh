@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-247-official
+# BackOn alpha-248-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=247
+TOOL_BUILD_NUM=248
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -1230,9 +1230,9 @@ function saveBackup(){
 			applyNoColor
 			quitTool_NoClear_Error
 		fi
-		echo -e "${SUCCEED_SAVE_BACKUP} "
+		echo -e "${SUCCEED_SAVE_BACKUP}"
 		applyLightCyan
-		echo -e -n "(${BackupPath}/${ANSWER_B}.zip)"
+		echo -e "(${BackupPath}/${ANSWER_B}.zip)"
 		applyNoColor
 		showLinesA
 		quitTool_NoClear
