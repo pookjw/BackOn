@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-251-official
+# BackOn alpha-250-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=251
+TOOL_BUILD_NUM=250
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -1988,6 +1988,9 @@ else
 fi
 checkOS
 checkRoot "${1}"
+if [[ -d "/var/mobile/Library/Preferences/BackOn" ]]; then
+	saveSettings
+fi
 OSVer="$(sw_vers -productVersion)"
 UpdateURL="https://github.com/pookjw/BackOn/archive/master.zip"
 if [[ -d "/tmp/BackOn" ]]; then
