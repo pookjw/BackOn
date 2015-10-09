@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-249-official
+# BackOn alpha-250-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=249
+TOOL_BUILD_NUM=250
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -122,7 +122,7 @@ function setKorean(){
 	SAVE_BACKUP="백업을 저장"
 	BACKING_UP="백업 중..."
 	SAVING="저장 중..."
-	SAVED_BACKUP_PATH="저장된 백업 파일의 경로"
+	SAVED_BACKUP_PATH="백업 파일의 경로"
 	REMOVING="삭제 중..."
 	UNPACKING="압축해제 중..."
 	CLOSING_TOOL="툴 종료 중..."
