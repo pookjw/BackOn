@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-248-official
+# BackOn alpha-249-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=248
+TOOL_BUILD_NUM=249
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -43,6 +43,7 @@ function setEnglish(){
 	SAVE_BACKUP="Save backup."
 	BACKING_UP="Backing up..."
 	SAVING="Saving..."
+	SAVED_BACKUP_PATH="Path"
 	REMOVING="Removing..."
 	UNPACKING="Unpacking..."
 	CLOSING_TOOL="Closing tool..."
@@ -121,6 +122,7 @@ function setKorean(){
 	SAVE_BACKUP="백업을 저장"
 	BACKING_UP="백업 중..."
 	SAVING="저장 중..."
+	SAVED_BACKUP_PATH="저장된 백업 파일의 경로"
 	REMOVING="삭제 중..."
 	UNPACKING="압축해제 중..."
 	CLOSING_TOOL="툴 종료 중..."
@@ -1232,7 +1234,7 @@ function saveBackup(){
 		fi
 		echo -e "${SUCCEED_SAVE_BACKUP}"
 		applyLightCyan
-		echo -e "(${BackupPath}/${ANSWER_B}.zip)"
+		echo -e "${SAVED_BACKUP_PATH} : ${BackupPath}/${ANSWER_B}.zip"
 		applyNoColor
 		showLinesA
 		quitTool_NoClear
