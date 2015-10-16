@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-252-official
+# BackOn alpha-253-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=252
+TOOL_BUILD_NUM=253
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -1531,8 +1531,8 @@ function restoreCydia(){
 			dpkg --set-selections < "/tmp/BackOn/Restore/Cydia/apt.txt"
 			apt-get -y --force-yes -u dselect-upgrade > /dev/null 2>&1
 		fi
+		echo -e "${DONE}"
 	fi
-	echo -e "${DONE}"
 	showLinesA
 	PA2CKey
 }
