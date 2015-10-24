@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-254-official
+# BackOn alpha-255-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=254
+TOOL_BUILD_NUM=255
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -15,7 +15,7 @@ function setEnglish(){
 	LANGUAGE="English"
 	NOT_RUN_AS_ROOT="You didn't run as root! Please enter root password. (Initial password is 'alpine')"
 	NOT_IOS="This is not iOS."
-	ENTER_TEXT="Enter a command(1, 2, 3, q) that you want to do."
+	ENTER_TEXT="Enter a command(1, 2, 3, 4, q) that you want to do."
 	CREATE_BACKUP="Create backup."
 	RESTORE_FROM_BACKUP="Restore from backup."
 	CHECK_FOR_UPDATES="Check for updates."
@@ -95,7 +95,7 @@ function setKorean(){
 	LANGUAGE="Korean"
 	NOT_RUN_AS_ROOT="root로 로그인되지 않았습니다! root 비밀번호를 입력해 주세요. (초기 비밀번호는 'alpine'입니다.)"
 	NOT_IOS="실행된 기기는 iOS가 아닙니다."
-	ENTER_TEXT="명령어(1, 2, 3, q)를 입력해 주세요."
+	ENTER_TEXT="명령어(1, 2, 3, 4, q)를 입력해 주세요."
 	CREATE_BACKUP="백업 생성"
 	RESTORE_FROM_BACKUP="백업에서 복원"
 	CHECK_FOR_UPDATES="업데이트 확인"
@@ -1435,15 +1435,15 @@ function showInitialRestoreMenu(){
 			echo -e "(2) ${RESTORE_SHOW_CYDIA_LIST}"
 		else
 			applyRed
-			echo -e "(1) ${RESTORE_CYDIA_DATA} ${NOT_BACKUPED}"
-			echo -e "(2) ${RESTORE_SHOW_CYDIA_LIST} ${NOT_BACKUPED}"
+			echo -e "(1) ${RESTORE_CYDIA_DATA} (${NOT_BACKUPED})"
+			echo -e "(2) ${RESTORE_SHOW_CYDIA_LIST} (${NOT_BACKUPED})"
 			applyNoColor
 		fi
 		if [[ -d "/tmp/BackOn/Restore/Library" ]]; then
 			echo -e "(3) ${RESTORE_LIBRARY}"
 		else
 			applyRed
-			echo -e "(3) ${RESTORE_LIBRARY} ${NOT_BACKUPED}"
+			echo -e "(3) ${RESTORE_LIBRARY} (${NOT_BACKUPED})"
 			applyNoColor
 		fi
 		echo -e "(4) ${REBOOT}"
@@ -2011,6 +2011,7 @@ while(true); do
 	elif [[ "${LANGUAGE}" == Korean ]]; then
 		echo -e "(3) Change to English."
 	fi
+	echo -e "(4) ${CHECK_FOR_UPDATES}"
 	if [[ "${enabledODS}" == YES ]]; then
 		echo -e "(ods) Open DevSettings."
 	fi
@@ -2060,6 +2061,8 @@ while(true); do
 		showInitialRestoreMenu
 	elif [[ "${ANSWER_A}" == 3 ]]; then
 		switchLanguage
+	elif [[ "${ANSWER_A}" == 4 ]]; then
+		runUpdate
 	elif [[ "${ANSWER_A}" == quit || "${ANSWER_A}" == q ]]; then
 		quitTool
 	elif [[ "${ANSWER_A}" == ods ]]; then
