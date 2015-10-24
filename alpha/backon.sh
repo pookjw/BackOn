@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-255-official
+# BackOn alpha-256-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=255
+TOOL_BUILD_NUM=256
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -796,6 +796,26 @@ function killCydia(){
 	fi
 }
 
+function removeEmptyBackupFolder(){
+	for Folder in Cydia Library Custom; do
+		if [[ -d "/tmp/BackOn/Backup/${BACKUP_NAME}/${Folder}" ]]; then
+			if [[ -z "$(ls "/tmp/BackOn/Backup/${BACKUP_NAME}/${Folder}")" ]]; then
+				rm -rf "/tmp/BackOn/Backup/${BACKUP_NAME}/${Folder}"
+			fi
+		fi
+	done
+}
+
+function removeEmptyRestoreFolder(){
+	for Folder in Cydia Library Custom info; do
+		if [[ -d "/tmp/BackOn/Restore/${Folder}" ]]; then
+			if [[ -z "$(ls "/tmp/BackOn/Restore/${Folder}")" ]]; then
+				rm -rf "/tmp/BackOn/Restore/${Folder}"
+			fi
+		fi
+	done
+}
+
 function quitTool(){
 	ClearKey
 	applyNoColor
@@ -925,16 +945,6 @@ function showInitialBackupMenu(){
 	done
 }
 
-function removeEmptyBackupFolder(){
-	for FOLDER in Cydia Library Custom; do
-		if [[ -d "/tmp/BackOn/Backup/${BACKUP_NAME}/${FOLDER}" ]]; then
-			if [[ -z "$(ls "/tmp/BackOn/Backup/${BACKUP_NAME}/${FOLDER}")" ]]; then
-				rm -rf "/tmp/BackOn/Backup/${BACKUP_NAME}/${FOLDER}"
-			fi
-		fi
-	done
-}
-
 function backupCydiaData(){
 	ClearKey
 	showLinesA
@@ -1022,7 +1032,13 @@ function backupLibrary(){
 						applyNoColor
 					fi
 				fi
-				echo -e "${DONE}"
+				if [[ -z "$(ls "/tmp/BackOn/Backup/${BACKUP_NAME}/Library")" ]]; then
+					applyRed
+					echo -e "ERROR!"
+					applyNoColor
+				else
+					echo -e "${DONE}"
+				fi
 				PA2CKey
 			elif [[ "${ANSWER_E}" == delete ]]; then
 				while(true); do
@@ -1113,7 +1129,13 @@ function backupLibrary(){
 						rsync -q -av --exclude="BackupAZ" /var/mobile/Library/Preferences/* "/tmp/BackOn/Backup/${BACKUP_NAME}/Library/Preferences"
 					fi
 				fi
-				echo -e "${DONE}"
+				if [[ -d "/tmp/BackOn/Backup/${BACKUP_NAME}/Library/Preferences" ]]; then
+					echo -e "${DONE}"
+				else
+					applyRed
+					echo -e "ERROR!"
+					applyNoColor
+				fi
 				PA2CKey
 			elif [[ "${ANSWER_E}" == "/" ]]; then
 				applyRed
@@ -1130,12 +1152,24 @@ function backupLibrary(){
 			elif [[ -f "/var/mobile/Library/${ANSWER_E}" ]]; then
 				echo -e "${BACKING_UP}"
 				cp "/var/mobile/Library/${ANSWER_E}" "/tmp/BackOn/Backup/${BACKUP_NAME}/Library"
-				echo -e "${DONE}"
+				if [[ -f "/tmp/BackOn/Backup/${BACKUP_NAME}/Library/${ANSWER_E}" ]]; then
+					echo -e "${DONE}"
+				else
+					applyRed
+					echo -e "ERROR!"
+					applyNoColor
+				fi
 				PA2CKey
 			elif [[ -d "/var/mobile/Library/${ANSWER_E}" ]]; then
 				echo -e "${BACKING_UP}"
 				cp -r "/var/mobile/Library/${ANSWER_E}" "/tmp/BackOn/Backup/${BACKUP_NAME}/Library"
-				echo -e "${DONE}"
+				if [[ -d "/tmp/BackOn/Backup/${BACKUP_NAME}/Library/${ANSWER_E}" ]]; then
+					echo -e "${DONE}"
+				else
+					applyRed
+					echo -e "ERROR!"
+					applyNoColor
+				fi
 				PA2CKey
 			else
 				applyRed
@@ -1426,6 +1460,7 @@ function checkiOSVerMatching(){
 
 function showInitialRestoreMenu(){
 	while(true); do
+		removeEmptyRestoreFolder
 		ClearKey
 		showLinesA
 		echo -e "${SHOW_INFO_7}"
