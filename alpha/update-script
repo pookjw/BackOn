@@ -69,7 +69,8 @@ function Update1(){
 		applyNoColor
 		exit 1
 	fi
-	runBackOn
+	echo "Done."
+	exit 0
 }
 
 function Update2(){
@@ -89,7 +90,8 @@ function Update2(){
 		cp "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/backon.sh" /usr/bin/backon
 		chmod +x /usr/bin/backon
 	fi
-	runBackOn
+	echo "Done."
+	exit 0
 }
 
 function showInfo(){
@@ -158,15 +160,6 @@ function killCydia(){
 		fi
 		killall -9 MobileCydia
 	fi
-}
-
-function runBackOn(){
-	if [[ "${runUpdateODS}" == YES ]]; then
-		backon -ods
-	else
-		backon
-	fi
-	exit 0
 }
 
 ##############################
