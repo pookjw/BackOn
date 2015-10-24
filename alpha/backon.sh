@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-253-official
+# BackOn alpha-254-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=253
+TOOL_BUILD_NUM=254
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -68,6 +68,7 @@ function setEnglish(){
 	DOWNLOADING_INSTALLING_PACKAGES="Downloading Cydia packages & Installing..."
 	RESTORING_ALL_IS_NOT_RECOMMENDED="Restoring all Library files is not recommended bacause it may cause boot-loop. Are you sure to continue? (yes/no)"
 	NOT_BACKUPED_YET="No backuped file yet."
+	NOT_BACKUPED="Not backuped"
 	ENTER_NICKNAME="Enter nickname of custom backup that you want to do. (Space bar is not supported.)"
 	ALREADY_EXISTS_WANT_TO_REMOVE="Entered nickname is already exists. Do you want to remove it? (yes/no)"
 	ENTER_FILE_PATH="Enter file/folder path."
@@ -147,6 +148,7 @@ function setKorean(){
 	DOWNLOADING_INSTALLING_PACKAGES="Cydia 패키지 다운로드 & 설치 중..."
 	RESTORING_ALL_IS_NOT_RECOMMENDED="Library를 모두 복원하는 것은 무한사과 (부팅불가)의 위험이 있기 때문에 추천하지 않습니다. 복원하시겠습니까? (yes/no)"
 	NOT_BACKUPED_YET="아직 백업된 파일이 없습니다."
+	NOT_BACKUPED="백업되지 않음"
 	ENTER_NICKNAME="커스텀 백업할 것의 닉네임을 입력해 주세요. (띄어쓰기는 지원되지 않습니다.)"
 	ALREADY_EXISTS_WANT_TO_REMOVE="입력하신 닉네임은 이미 존재합니다. 기존 것을 제거하시겠습니까? (yes/no)"
 	ENTER_FILE_PATH="파일/폴더 경로를 입력해 주세요."
@@ -544,11 +546,7 @@ function loadSettings(){
 	if [[ -f "/var/mobile/Library/Preferences/BackOn/showLog" ]]; then
 		showLog="$(cat "/var/mobile/Library/Preferences/BackOn/showLog")"
 	else
-		if [[ "${TOOL_BUILD_TYPE}" == alpha ]]; then
-			showLog=YES
-		else
-			showLog=NO
-		fi
+		showLog=YES
 	fi
 	if [[ -f "/var/mobile/Library/Preferences/BackOn/showPA2C" ]]; then
 		showPA2C="$(cat "/var/mobile/Library/Preferences/BackOn/showPA2C")"
@@ -1428,26 +1426,25 @@ function checkiOSVerMatching(){
 
 function showInitialRestoreMenu(){
 	while(true); do
-		if [[ -d "/tmp/BackOn/Restore/Cydia" ]]; then
-			RestoreCydiaIsAvailable=YES
-		else
-			RestoreCydiaIsAvailable=NO
-		fi
-		if [[ -d "/tmp/BackOn/Restore/Library" ]]; then
-			RestoreLibraryIsAvailable=YES
-		else
-			RestoreLibraryIsAvailable=NO
-		fi
 		ClearKey
 		showLinesA
 		echo -e "${SHOW_INFO_7}"
 		showLinesB
-		if [[ "${RestoreCydiaIsAvailable}" == YES ]]; then
+		if [[ -d "/tmp/BackOn/Restore/Cydia" ]]; then
 			echo -e "(1) ${RESTORE_CYDIA_DATA}"
 			echo -e "(2) ${RESTORE_SHOW_CYDIA_LIST}"
+		else
+			applyRed
+			echo -e "(1) ${RESTORE_CYDIA_DATA} ${NOT_BACKUPED}"
+			echo -e "(2) ${RESTORE_SHOW_CYDIA_LIST} ${NOT_BACKUPED}"
+			applyNoColor
 		fi
-		if [[ "${RestoreLibraryIsAvailable}" == YES ]]; then
+		if [[ -d "/tmp/BackOn/Restore/Library" ]]; then
 			echo -e "(3) ${RESTORE_LIBRARY}"
+		else
+			applyRed
+			echo -e "(3) ${RESTORE_LIBRARY} ${NOT_BACKUPED}"
+			applyNoColor
 		fi
 		echo -e "(4) ${REBOOT}"
 		echo -e "(q) ${QUIT}"
@@ -1457,19 +1454,19 @@ function showInitialRestoreMenu(){
 		applyNoColor
 
 		if [[ "${ANSWER_H}" == 1 ]]; then
-			if [[ "${RestoreCydiaIsAvailable}" == YES ]]; then
+			if [[ -d "/tmp/BackOn/Restore/Cydia" ]]; then
 				restoreCydia
 			else
 				showNotSupportedFunction
 			fi
 		elif [[ "${ANSWER_H}" == 2 ]]; then
-			if [[ "${RestoreCydiaIsAvailable}" == YES ]]; then
+			if [[ -d "/tmp/BackOn/Restore/Cydia" ]]; then
 				showBackupedFilesRestore
 			else
 				showNotSupportedFunction
 			fi
 		elif [[ "${ANSWER_H}" == 3 ]]; then
-			if [[ "${RestoreLibraryIsAvailable}" == YES ]]; then
+			if [[ -d "/tmp/BackOn/Restore/Library" ]]; then
 				restoreLibrary
 			else
 				showNotSupportedFunction
