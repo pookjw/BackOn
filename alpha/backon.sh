@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-256-official
+# BackOn alpha-257-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=256
+TOOL_BUILD_NUM=257
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -1129,12 +1129,12 @@ function backupLibrary(){
 						rsync -q -av --exclude="BackupAZ" /var/mobile/Library/Preferences/* "/tmp/BackOn/Backup/${BACKUP_NAME}/Library/Preferences"
 					fi
 				fi
-				if [[ -d "/tmp/BackOn/Backup/${BACKUP_NAME}/Library/Preferences" ]]; then
-					echo -e "${DONE}"
-				else
+				if [[ -z "$(ls "/tmp/BackOn/Backup/${BACKUP_NAME}/Library/Preferences")" ]]; then
 					applyRed
 					echo -e "ERROR!"
 					applyNoColor
+				else
+					echo -e "${DONE}"
 				fi
 				PA2CKey
 			elif [[ "${ANSWER_E}" == "/" ]]; then
