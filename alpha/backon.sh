@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-257-official
+# BackOn alpha-258-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=257
+TOOL_BUILD_NUM=258
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -1920,6 +1920,7 @@ function installUpdate(){
 				cd "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}"
 				chmod +x "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/update-script"
 				./update-script
+				showLinesA
 				quitTool_NoClear
 			else
 				applyRed
@@ -1993,6 +1994,7 @@ function installUpdate_old(){
 				chmod +x "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/update-script"
 				cd "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}"
 				./update-script
+				showLinesA
 				quitTool_NoClear
 			else
 				applyRed
