@@ -141,7 +141,7 @@ BackOn을 수정해서 배포할 땐 **'TOOL_RELEASE'**에 unofficial 표기를 
 
 - (Fixed) 홈에서 업데이트 확인 기능 제거.
 
-# beta-259
+# beta-259 (2015-10-25)
 
 - (Fixed) showLog가 기본적으로 YES로 켜짐.
 
