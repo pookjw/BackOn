@@ -2,4 +2,7 @@
 if [[ -d /var/mobile/Library/Preferences/BackOn ]]; then
 	rm -rf /var/mobile/Library/Preferences/BackOn
 fi
+if [[ -d /tmp/BackOn ]]; then
+	rm -rf /tmp/BackOn
+fi
 exit
