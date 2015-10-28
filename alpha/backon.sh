@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-258-official
+# BackOn alpha-261-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=258
+TOOL_BUILD_NUM=261
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -347,6 +347,8 @@ function openDevSettings(){
 					break
 				elif [[ ${ANSWER_E} == exit ]]; then
 					ExitKey
+				elif [[ "${ANSWER_E}" == q || "${ANSWER_E}" == quit ]]; then
+					break
 				fi
 			done
 		elif [[ "${ANSWER_D}" == 9 ]]; then
