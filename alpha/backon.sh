@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-262-official
+# BackOn alpha-263-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=262
+TOOL_BUILD_NUM=263
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -500,7 +500,6 @@ function openDevSettings(){
 		elif [[ "${ANSWER_D}" == disable || "${ANSWER_D}" == d ]]; then
 			rm -rf /var/mobile/Library/Preferences/BackOn
 			loadSettings
-
 			break
 		elif [[ "${ANSWER_D}" == exit ]]; then
 			ExitKey
