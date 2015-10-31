@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-265-official
+# BackOn alpha-266-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=265
+TOOL_BUILD_NUM=266
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -968,7 +968,7 @@ function backupCydiaData(){
 	if [[ -f /var/mobile/Library/Cydia/metadata.cb0 ]]; then
 		cp /var/mobile/Library/Cydia/metadata.cb0 "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia"
 	fi
-	if [[ ! -f "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia/apt.txt" || ! -f "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia/cydia.list" || ! -f "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia/metadata.cb0" ]]; then
+	if [[ ! -f "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia/apt.txt" || ! -f "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia/sources.list" || ! -f "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia/metadata.cb0" ]]; then
 		applyRed
 		echo -e "ERROR!"
 		applyNoColor
@@ -1196,7 +1196,7 @@ function showBackupedFilesBackup(){
 	else
 		echo -e "${BACKUPED_CYDIA_PACKAGES_LIST} : ${NO}"
 	fi
-	if [[ -f "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia/cydia.list" ]]; then
+	if [[ -f "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia/sources.list" ]]; then
 		echo -e "${BACKUPED_CYDIA_SOURCE} : ${YES}"
 	else
 		echo -e "${BACKUPED_CYDIA_SOURCE} : ${NO}"
@@ -1363,10 +1363,18 @@ function convertOldBackup(){
 			mv "/tmp/BackOn/Restore/${File}" "/tmp/BackOn/Restore/Cydia/${File}"
 		fi
 	done
+	if [[ -f "/tmp/BackOn/Restore/Cydia/cydia.list" ]]; then
+		if [[ "${showLog}" == YES ]]; then
+			applyPurple
+			echo -e "Converting cydia.list..."
+			applyNoColor
+		fi
+		mv "/tmp/BackOn/Restore/Cydia/cydia.list" "/tmp/BackOn/Restore/Cydia/sources.list"
+	fi
 	if [[ -f "/tmp/BackOn/Restore/Cydia/metadata.plist" ]]; then
 		if [[ "${showLog}" == YES ]]; then
 			applyPurple
-			echo -e "Converting metadata.cb0..."
+			echo -e "Converting metadata.plist..."
 			applyNoColor
 		fi
 		mv "/tmp/BackOn/Restore/Cydia/metadata.plist" "/tmp/BackOn/Restore/Cydia/metadata.cb0"
@@ -1408,7 +1416,7 @@ function convertxBackup(){
 			if [[ ! -d "/tmp/BackOn/Restore/Cydia" ]]; then
 				mkdir -p "/tmp/BackOn/Restore/Cydia"
 			fi
-			mv "/tmp/BackOn/Restore/var/mobile/Library/xBackup/Backups/backup.bk.list" "/tmp/BackOn/Restore/Cydia/cydia.list"
+			mv "/tmp/BackOn/Restore/var/mobile/Library/xBackup/Backups/backup.bk.list" "/tmp/BackOn/Restore/Cydia/sources.list"
 		fi
 		if [[ -f "/tmp/BackOn/Restore/var/mobile/Library/xBackup/Backups/backup.bk.meta" ]]; then
 			if [[ "${showLog}" == YES ]]; then
@@ -1538,11 +1546,11 @@ function restoreCydia(){
 		echo -e "${RESTORING}"
 		if [[ "${showLog}" == YES ]]; then
 			applyPurple
-			echo -e "Restoring : sources.list.d"
+			echo -e "Restoring : sources.list"
 			applyNoColor
 		fi
-		cp "/tmp/BackOn/Restore/Cydia/cydia.list" "/etc/apt/sources.list.d"
-		chmod 755 "/etc/apt/sources.list.d"
+		cp "/tmp/BackOn/Restore/Cydia/sources.list" "/var/mobile/Library/Caches/com.saurik.Cydia/sources.list"
+		chmod 755 "/var/mobile/Library/Caches/com.saurik.Cydia/sources.list"
 		if [[ "${showLog}" == YES ]]; then
 			applyPurple
 			echo -e "Restoring : metadata.cb0"
