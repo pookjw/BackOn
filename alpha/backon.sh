@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-264-official
+# BackOn alpha-265-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=264
+TOOL_BUILD_NUM=265
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -961,7 +961,7 @@ function backupCydiaData(){
 	mkdir -p "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia"
 	killCydia
 	dpkg --get-selections > "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia/apt.txt"
-	cp /var/mobile/Library/com.saurik.Cydia/sources.list "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia"
+	cp /var/mobile/Library/Caches/com.saurik.Cydia/sources.list "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia"
 	if [[ -f /var/lib/cydia/metadata.plist ]]; then
 		cp /var/lib/cydia/metadata.plist "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia/metadata.cb0"
 	fi
