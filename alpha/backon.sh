@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-267-official
+# BackOn alpha-268-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=267
+TOOL_BUILD_NUM=268
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -2100,7 +2100,9 @@ while(true); do
 		unzipBackup
 		convertxBackup
 		convertOldBackup
-		PA2CKey
+		if [[ "${showLog}" == YES ]]; then
+			PA2CKey
+		fi
 		if [[ ! -d /tmp/BackOn/Restore/Cydia && ! -d /tmp/BackOn/Restore/Library && ! -d /tmp/BackOn/Restore/Custom ]]; then
 			applyRed
 			echo -e "${NOT_BACKON_BACKUP}"
