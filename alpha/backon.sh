@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-269-official
+# BackOn alpha-270-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=269
+TOOL_BUILD_NUM=270
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -1696,7 +1696,7 @@ function customBackup(){
 				for Name in `ls "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom"`; do
 					echo -e -n "${Name} "
 					applyLightCyan
-					echo -e "(`cat "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${Name}/path"` | `cat "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${NAME}/type"`)"
+					echo -e "(`cat "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${Name}/path"` | `cat "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${Name}/type"`)"
 					applyNoColor
 				done
 			fi
@@ -1796,7 +1796,7 @@ function customRestore(){
 			for Name in `ls "/tmp/BackOn/Restore/Custom"`; do
 				echo -e -n "${Name} "
 				applyLightCyan
-				echo -e "(`cat "/tmp/BackOn/Restore/Custom/${Name}/path"` | `cat "/tmp/BackOn/Restore/Custom/${NAME}/type"`)"
+				echo -e "(`cat "/tmp/BackOn/Restore/Custom/${Name}/path"` | `cat "/tmp/BackOn/Restore/Custom/${Name}/type"`)"
 				applyNoColor
 			done
 			showLinesA
