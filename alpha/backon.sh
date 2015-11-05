@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-270-official
+# BackOn alpha-271-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=270
+TOOL_BUILD_NUM=271
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -493,7 +493,6 @@ function openDevSettings(){
 			showLinesA
 			PA2CKey
 		elif [[ "${ANSWER_D}" == save ||  "${ANSWER_D}" == s ]]; then
-			echo -e "Session was done."
 			saveSettings
 			loadSettings
 			break
