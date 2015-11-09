@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn beta-259-official
+# BackOn beta-272-official
 TOOL_BUILD_TYPE=beta
-TOOL_BUILD_NUM=259
+TOOL_BUILD_NUM=272
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -259,6 +259,7 @@ function openDevSettings(){
 		fi
 		echo -e "(25) customBackup"
 		echo -e "(26) customRestore"
+		echo -e "(27) loadSettings"
 		echo -e "(c) Start sh."
 		echo -e "(l) ls"
 		echo -e "(s) Save Settings."
@@ -347,6 +348,8 @@ function openDevSettings(){
 					break
 				elif [[ ${ANSWER_E} == exit ]]; then
 					ExitKey
+				elif [[ "${ANSWER_E}" == q || "${ANSWER_E}" == quit ]]; then
+					break
 				fi
 			done
 		elif [[ "${ANSWER_D}" == 9 ]]; then
@@ -457,6 +460,8 @@ function openDevSettings(){
 			customBackup
 		elif [[ "${ANSWER_D}" == 26 ]]; then
 			customRestore
+		elif [[ "${ANSWER_D}" == 27 ]]; then
+			loadSettings
 		elif [[ "${ANSWER_D}" == c || "${ANSWER_D}" == sh ]]; then
 			sh
 			PA2CKey
@@ -488,14 +493,12 @@ function openDevSettings(){
 			showLinesA
 			PA2CKey
 		elif [[ "${ANSWER_D}" == save ||  "${ANSWER_D}" == s ]]; then
-			echo -e "Session was done."
 			saveSettings
 			loadSettings
 			break
 		elif [[ "${ANSWER_D}" == disable || "${ANSWER_D}" == d ]]; then
 			rm -rf /var/mobile/Library/Preferences/BackOn
 			loadSettings
-
 			break
 		elif [[ "${ANSWER_D}" == exit ]]; then
 			ExitKey
@@ -511,7 +514,7 @@ function saveSettings(){
 	if [[ -d "/var/mobile/Library/Preferences/BackOn" ]]; then
 		rm -rf /var/mobile/Library/Preferences/BackOn
 	fi
-	mkdir /var/mobile/Library/Preferences/BackOn
+	mkdir -p /var/mobile/Library/Preferences/BackOn
 	echo -e "${ExitKey}" >> /var/mobile/Library/Preferences/BackOn/ExitKey
 	echo -e "${showLog}" >> /var/mobile/Library/Preferences/BackOn/showLog
 	echo -e "${showPA2C}" >> /var/mobile/Library/Preferences/BackOn/showPA2C
@@ -892,7 +895,7 @@ function defineBackupName(){
 			if [[ -d "/tmp/BackOn/Backup/${ANSWER_B}" ]]; then
 				rm -rf "/tmp/BackOn/Backup/${ANSWER_B}"
 			fi
-			mkdir "/tmp/BackOn/Backup/${ANSWER_B}"
+			mkdir -p "/tmp/BackOn/Backup/${ANSWER_B}"
 			if [[ ! -d "/tmp/BackOn/Backup/${ANSWER_B}" ]]; then
 				applyRed
 				echo -e "ERROR"
@@ -954,17 +957,17 @@ function backupCydiaData(){
 	if [[ -d "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia" || -f "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia" ]]; then
 		rm -rf "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia"
 	fi
-	mkdir "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia"
+	mkdir -p "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia"
 	killCydia
 	dpkg --get-selections > "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia/apt.txt"
-	cp /etc/apt/sources.list.d/cydia.list "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia"
+	cp /var/mobile/Library/Caches/com.saurik.Cydia/sources.list "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia"
 	if [[ -f /var/lib/cydia/metadata.plist ]]; then
 		cp /var/lib/cydia/metadata.plist "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia/metadata.cb0"
 	fi
 	if [[ -f /var/mobile/Library/Cydia/metadata.cb0 ]]; then
 		cp /var/mobile/Library/Cydia/metadata.cb0 "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia"
 	fi
-	if [[ ! -f "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia/apt.txt" || ! -f "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia/cydia.list" || ! -f "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia/metadata.cb0" ]]; then
+	if [[ ! -f "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia/apt.txt" || ! -f "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia/sources.list" || ! -f "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia/metadata.cb0" ]]; then
 		applyRed
 		echo -e "ERROR!"
 		applyNoColor
@@ -981,7 +984,7 @@ function backupLibrary(){
 		rm "/tmp/BackOn/Backup/${BACKUP_NAME}/Library"
 	fi
 	if [[ ! -d "/tmp/BackOn/Backup/${BACKUP_NAME}/Library" ]]; then
-		mkdir "/tmp/BackOn/Backup/${BACKUP_NAME}/Library"
+		mkdir -p "/tmp/BackOn/Backup/${BACKUP_NAME}/Library"
 	fi
 	while(true); do
 		ClearKey
@@ -1023,7 +1026,7 @@ function backupLibrary(){
 				fi
 				if [[ -f "/var/mobile/Library/Caches/libactivator.plist" ]]; then
 					if [[ ! -d "/tmp/BackOn/Backup/${BACKUP_NAME}/Library/Caches" ]]; then
-						mkdir "/tmp/BackOn/Backup/${BACKUP_NAME}/Library/Caches"
+						mkdir -p "/tmp/BackOn/Backup/${BACKUP_NAME}/Library/Caches"
 					fi
 					cp /var/mobile/Library/Caches/libactivator.plist "/tmp/BackOn/Backup/${BACKUP_NAME}/Library/Caches"
 					if [[ "${showLog}" == YES ]]; then
@@ -1077,7 +1080,7 @@ function backupLibrary(){
 						if [[ "${ANSWER_J}" == all ]]; then
 							echo -e "${REMOVING}"
 							rm -rf "/tmp/BackOn/Backup/${BACKUP_NAME}/Library"
-							mkdir "/tmp/BackOn/Backup/${BACKUP_NAME}/Library"
+							mkdir -p "/tmp/BackOn/Backup/${BACKUP_NAME}/Library"
 							echo -e "${DONE}"
 							PA2CKey
 						elif [[ "${ANSWER_J}" == q || "${ANSWER_J}" == quit ]]; then
@@ -1112,7 +1115,7 @@ function backupLibrary(){
 				fi
 				echo -e "${BACKING_UP}"
 				if [[ ! -d "/tmp/BackOn/Backup/${BACKUP_NAME}/Library/Preferences" ]]; then
-					mkdir "/tmp/BackOn/Backup/${BACKUP_NAME}/Library/Preferences"
+					mkdir -p "/tmp/BackOn/Backup/${BACKUP_NAME}/Library/Preferences"
 				fi
 				if [[ "${showLog}" == YES ]]; then
 					applyPurple
@@ -1192,7 +1195,7 @@ function showBackupedFilesBackup(){
 	else
 		echo -e "${BACKUPED_CYDIA_PACKAGES_LIST} : ${NO}"
 	fi
-	if [[ -f "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia/cydia.list" ]]; then
+	if [[ -f "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia/sources.list" ]]; then
 		echo -e "${BACKUPED_CYDIA_SOURCE} : ${YES}"
 	else
 		echo -e "${BACKUPED_CYDIA_SOURCE} : ${NO}"
@@ -1245,7 +1248,7 @@ function saveBackup(){
 		PA2CKey
 	else
 		cd /tmp/BackOn/Backup/${BACKUP_NAME}
-		mkdir info
+		mkdir -p info
 		echo -e "${TOOL_BUILD_NUM}" >> info/ToolBuildNum
 		echo -e "${TOOL_BUILD_TYPE}" >> info/ToolBuildType
 		echo -e "${TOOL_RELEASE}" >> info/ToolRelease
@@ -1354,15 +1357,23 @@ function convertOldBackup(){
 				applyNoColor
 			fi
 			if [[ ! -d "/tmp/BackOn/Restore/Cydia" ]]; then
-				mkdir /tmp/BackOn/Restore/Cydia
+				mkdir -p /tmp/BackOn/Restore/Cydia
 			fi
 			mv "/tmp/BackOn/Restore/${File}" "/tmp/BackOn/Restore/Cydia/${File}"
 		fi
 	done
+	if [[ -f "/tmp/BackOn/Restore/Cydia/cydia.list" ]]; then
+		if [[ "${showLog}" == YES ]]; then
+			applyPurple
+			echo -e "Converting cydia.list..."
+			applyNoColor
+		fi
+		mv "/tmp/BackOn/Restore/Cydia/cydia.list" "/tmp/BackOn/Restore/Cydia/sources.list"
+	fi
 	if [[ -f "/tmp/BackOn/Restore/Cydia/metadata.plist" ]]; then
 		if [[ "${showLog}" == YES ]]; then
 			applyPurple
-			echo -e "Converting metadata.cb0..."
+			echo -e "Converting metadata.plist..."
 			applyNoColor
 		fi
 		mv "/tmp/BackOn/Restore/Cydia/metadata.plist" "/tmp/BackOn/Restore/Cydia/metadata.cb0"
@@ -1391,7 +1402,7 @@ function convertxBackup(){
 				applyNoColor
 			fi
 			if [[ ! -d "/tmp/BackOn/Restore/Cydia" ]]; then
-				mkdir "/tmp/BackOn/Restore/Cydia"
+				mkdir -p "/tmp/BackOn/Restore/Cydia"
 			fi
 			mv "/tmp/BackOn/Restore/var/mobile/Library/xBackup/Backups/backup.bk" "/tmp/BackOn/Restore/Cydia/apt.txt"
 		fi
@@ -1402,9 +1413,9 @@ function convertxBackup(){
 				applyNoColor
 			fi
 			if [[ ! -d "/tmp/BackOn/Restore/Cydia" ]]; then
-				mkdir "/tmp/BackOn/Restore/Cydia"
+				mkdir -p "/tmp/BackOn/Restore/Cydia"
 			fi
-			mv "/tmp/BackOn/Restore/var/mobile/Library/xBackup/Backups/backup.bk.list" "/tmp/BackOn/Restore/Cydia/cydia.list"
+			mv "/tmp/BackOn/Restore/var/mobile/Library/xBackup/Backups/backup.bk.list" "/tmp/BackOn/Restore/Cydia/sources.list"
 		fi
 		if [[ -f "/tmp/BackOn/Restore/var/mobile/Library/xBackup/Backups/backup.bk.meta" ]]; then
 			if [[ "${showLog}" == YES ]]; then
@@ -1413,7 +1424,7 @@ function convertxBackup(){
 				applyNoColor
 			fi
 			if [[ ! -d "/tmp/BackOn/Restore/Cydia" ]]; then
-				mkdir "/tmp/BackOn/Restore/Cydia"
+				mkdir -p "/tmp/BackOn/Restore/Cydia"
 			fi
 			mv "/tmp/BackOn/Restore/var/mobile/Library/xBackup/Backups/backup.bk.meta" "/tmp/BackOn/Restore/Cydia/metadata.cb0"
 		fi
@@ -1424,10 +1435,10 @@ function convertxBackup(){
 				applyNoColor
 			fi
 			if [[ ! -d "/tmp/BackOn/Restore/Library" ]]; then
-				mkdir "/tmp/BackOn/Restore/Library"
+				mkdir -p "/tmp/BackOn/Restore/Library"
 			fi
 			if [[ ! -d "/tmp/BackOn/Restore/Library/SpringBoard" ]]; then
-				mkdir "/tmp/BackOn/Restore/Library/SpringBoard"
+				mkdir -p "/tmp/BackOn/Restore/Library/SpringBoard"
 			fi
 			mv "/tmp/BackOn/Restore/var/mobile/Library/xBackup/Backups/backup.bk.icon" "/tmp/BackOn/Restore/Library/SpringBoard/IconState.plist"
 		fi
@@ -1438,7 +1449,7 @@ function convertxBackup(){
 				applyNoColor
 			fi
 			if [[ ! -d "/tmp/BackOn/Restore/Library" ]]; then
-				mkdir "/tmp/BackOn/Restore/Library"
+				mkdir -p "/tmp/BackOn/Restore/Library"
 			fi
 			mv "/tmp/BackOn/Restore/var/mobile/Library/xBackup/Backups/backup.bk.prefs" "/tmp/BackOn/Restore/Library/Preferences"
 		fi
@@ -1534,11 +1545,11 @@ function restoreCydia(){
 		echo -e "${RESTORING}"
 		if [[ "${showLog}" == YES ]]; then
 			applyPurple
-			echo -e "Restoring : sources.list.d"
+			echo -e "Restoring : sources.list"
 			applyNoColor
 		fi
-		cp "/tmp/BackOn/Restore/Cydia/cydia.list" "/etc/apt/sources.list.d"
-		chmod 755 "/etc/apt/sources.list.d"
+		cp "/tmp/BackOn/Restore/Cydia/sources.list" "/var/mobile/Library/Caches/com.saurik.Cydia/sources.list"
+		chmod 755 "/var/mobile/Library/Caches/com.saurik.Cydia/sources.list"
 		if [[ "${showLog}" == YES ]]; then
 			applyPurple
 			echo -e "Restoring : metadata.cb0"
@@ -1669,7 +1680,7 @@ function rebootDevice(){
 function customBackup(){
 	if [[ -d "/tmp/BackOn/Backup/${BACKUP_NAME}" && ! -z "${BACKUP_NAME}" ]]; then
 		if [[ ! -d "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom" ]]; then
-			mkdir "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom"
+			mkdir -p "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom"
 		fi
 		while(true); do
 			ClearKey
@@ -1681,10 +1692,10 @@ function customBackup(){
 				echo -e "${NOT_BACKUPED_YET}"
 				applyNoColor
 			else
-				for NAME in `ls "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom"`; do
-					echo -e -n "${NAME} "
+				for Name in `ls "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom"`; do
+					echo -e -n "${Name} "
 					applyLightCyan
-					echo -e "(`cat "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${NAME}/path"` | `cat "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${NAME}/type"`)"
+					echo -e "(`cat "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${Name}/path"` | `cat "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${Name}/type"`)"
 					applyNoColor
 				done
 			fi
@@ -1781,10 +1792,10 @@ function customRestore(){
 			showLinesA
 			echo -e "${SHOW_INFO_14}"
 			showLinesB
-			for NAME in `ls "/tmp/BackOn/Restore/Custom"`; do
-				echo -e -n "${NAME} "
+			for Name in `ls "/tmp/BackOn/Restore/Custom"`; do
+				echo -e -n "${Name} "
 				applyLightCyan
-				echo -e "(`cat "/tmp/BackOn/Restore/Custom/${NAME}/path"` | `cat "/tmp/BackOn/Restore/Custom/${NAME}/type"`)"
+				echo -e "(`cat "/tmp/BackOn/Restore/Custom/${Name}/path"` | `cat "/tmp/BackOn/Restore/Custom/${Name}/type"`)"
 				applyNoColor
 			done
 			showLinesA
@@ -1865,7 +1876,7 @@ function installUpdate(){
 		if [[ -d "/tmp/BackOn/Update" ]]; then
 			rm -rf "/tmp/BackOn/Update"
 		fi
-		mkdir "/tmp/BackOn/Update"
+		mkdir -p "/tmp/BackOn/Update"
 		if [[ "${showLog}" == YES ]]; then
 			applyPurple
 			wget --no-check-certificate --output-document=/tmp/BackOn/Update/master.zip "${UpdateURL}"
@@ -1908,7 +1919,7 @@ function installUpdate(){
 				if [[ -d "/tmp/BackOn/Update/info" ]]; then
 					rm -rf "/tmp/BackOn/Update/info"
 				fi
-				mkdir "/tmp/BackOn/Update/info"
+				mkdir -p "/tmp/BackOn/Update/info"
 				echo -e "${runUpdateODS}" >> "/tmp/BackOn/Update/info/runUpdateODS"
 				echo -e "${UpdateBuildType}" >> "/tmp/BackOn/Update/info/UpdateBuildType"
 				echo -e "${updateWithDEBInstall}" >> "/tmp/BackOn/Update/info/updateWithDEBInstall"
@@ -1951,7 +1962,7 @@ function installUpdate_old(){
 		if [[ -d "/tmp/BackOn/Update" ]]; then
 			rm -rf "/tmp/BackOn/Update"
 		fi
-		mkdir "/tmp/BackOn/Update"
+		mkdir -p "/tmp/BackOn/Update"
 		if [[ "${showLog}" == YES ]]; then
 			applyPurple
 			wget --no-check-certificate --output-document=/tmp/BackOn/Update/master.zip "https://github.com/pookjw/BackOn/archive/master.zip"
@@ -2030,7 +2041,7 @@ UpdateURL="https://github.com/pookjw/BackOn/archive/master.zip"
 if [[ -d "/tmp/BackOn" ]]; then
 	rm -rf "/tmp/BackOn"
 fi
-mkdir /tmp/BackOn
+mkdir -p /tmp/BackOn
 if [[ "${1}" == "-ods" ]]; then
 	openDevSettings
 elif [[ "${1}" == "-update" ]]; then
@@ -2064,7 +2075,7 @@ while(true); do
 		if [[ -d "/tmp/BackOn/Backup" ]]; then
 			rm -rf "/tmp/BackOn/Backup"
 		fi
-		mkdir /tmp/BackOn/Backup
+		mkdir -p /tmp/BackOn/Backup
 		defineBackupName
 		if [[ "${showLog}" == YES ]]; then
 			applyPurple
@@ -2084,10 +2095,13 @@ while(true); do
 		if [[ -d "/tmp/BackOn/Restore" ]]; then
 			rm -rf /tmp/BackOn/Restore
 		fi
-		mkdir /tmp/BackOn/Restore
+		mkdir -p /tmp/BackOn/Restore
 		unzipBackup
 		convertxBackup
 		convertOldBackup
+		if [[ "${showLog}" == YES ]]; then
+			PA2CKey
+		fi
 		if [[ ! -d /tmp/BackOn/Restore/Cydia && ! -d /tmp/BackOn/Restore/Library && ! -d /tmp/BackOn/Restore/Custom ]]; then
 			applyRed
 			echo -e "${NOT_BACKON_BACKUP}"

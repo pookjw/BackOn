@@ -166,3 +166,11 @@ BackOn을 수정해서 배포할 땐 **'TOOL_RELEASE'**에 unofficial 표기를 
 - (Added) [DevSettings] Start sh 기능 추가.
 
 단순히 sh 바이너리를 실행하는 기능입니다.
+
+# beta-272 (2015-11-10)
+
+- (Fixed) Cydia 1.1.9+ 지원 강화.
+
+- (Added) [DevSettings] loadSettings 실행 기능 추가.
+
+- (Fixed) 버그 수정.
