@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-276-official
+# BackOn alpha-277-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=276
+TOOL_BUILD_NUM=277
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -499,7 +499,7 @@ function openDevSettings(){
 			loadSettings
 			break
 		elif [[ "${ANSWER_D}" == disable || "${ANSWER_D}" == d ]]; then
-			rm -rf /var/mobile/Library/Preferences/Backon/DevSettings
+			rm -rf /var/mobile/Library/Preferences/BackOn/DevSettings
 			loadSettings
 			break
 		elif [[ "${ANSWER_D}" == exit ]]; then
@@ -513,53 +513,53 @@ function openDevSettings(){
 }
 
 function saveSettings(){
-	if [[ -d "/var/mobile/Library/Preferences/Backon/DevSettings" ]]; then
-		rm -rf /var/mobile/Library/Preferences/Backon/DevSettings
+	if [[ -d "/var/mobile/Library/Preferences/BackOn/DevSettings" ]]; then
+		rm -rf /var/mobile/Library/Preferences/BackOn/DevSettings
 	fi
-	mkdir -p /var/mobile/Library/Preferences/Backon/DevSettings
-	echo -e "${ExitKey}" >> /var/mobile/Library/Preferences/Backon/DevSettings/ExitKey
-	echo -e "${showLog}" >> /var/mobile/Library/Preferences/Backon/DevSettings/showLog
-	echo -e "${showPA2C}" >> /var/mobile/Library/Preferences/Backon/DevSettings/showPA2C
-	echo -e "${skipRestore}" >> /var/mobile/Library/Preferences/Backon/DevSettings/skipRestore
-	echo -e "${UpdateBuildType}" >> /var/mobile/Library/Preferences/Backon/DevSettings/UpdateBuildType
-	echo -e "${ForceInstallUpdate}" >> /var/mobile/Library/Preferences/Backon/DevSettings/ForceInstallUpdate
-	echo -e "${BackupPath}" >> /var/mobile/Library/Preferences/Backon/DevSettings/BackupPath
-	echo -e "${ClearKey}" >> /var/mobile/Library/Preferences/Backon/DevSettings/ClearKey
-	echo -e "${setDefaultLanguage}" >> /var/mobile/Library/Preferences/Backon/DevSettings/setDefaultLanguage
-	echo -e "${detailFileListView}" >> /var/mobile/Library/Preferences/Backon/DevSettings/detailFileListView
-	echo -e "${runUpdateODS}" >> /var/mobile/Library/Preferences/Backon/DevSettings/runUpdateODS
-	echo -e "${applyColorScheme}" >> /var/mobile/Library/Preferences/Backon/DevSettings/applyColorScheme
-	echo -e "${DynamicLine}" >> /var/mobile/Library/Preferences/Backon/DevSettings/DynamicLine
-	echo -e "${UpdaterVersion}" >> /var/mobile/Library/Preferences/Backon/DevSettings/UpdaterVersion
-	echo -e "${updateWithDEBInstall}" >> /var/mobile/Library/Preferences/Backon/DevSettings/updateWithDEBInstall
-	echo -e "${completeLibraryBackup}" >> /var/mobile/Library/Preferences/Backon/DevSettings/completeLibraryBackup
-	echo -e "${fixDynamicLineIssue}" >> /var/mobile/Library/Preferences/Backon/DevSettings/fixDynamicLineIssue
+	mkdir -p /var/mobile/Library/Preferences/BackOn/DevSettings
+	echo -e "${ExitKey}" >> /var/mobile/Library/Preferences/BackOn/DevSettings/ExitKey
+	echo -e "${showLog}" >> /var/mobile/Library/Preferences/BackOn/DevSettings/showLog
+	echo -e "${showPA2C}" >> /var/mobile/Library/Preferences/BackOn/DevSettings/showPA2C
+	echo -e "${skipRestore}" >> /var/mobile/Library/Preferences/BackOn/DevSettings/skipRestore
+	echo -e "${UpdateBuildType}" >> /var/mobile/Library/Preferences/BackOn/DevSettings/UpdateBuildType
+	echo -e "${ForceInstallUpdate}" >> /var/mobile/Library/Preferences/BackOn/DevSettings/ForceInstallUpdate
+	echo -e "${BackupPath}" >> /var/mobile/Library/Preferences/BackOn/DevSettings/BackupPath
+	echo -e "${ClearKey}" >> /var/mobile/Library/Preferences/BackOn/DevSettings/ClearKey
+	echo -e "${setDefaultLanguage}" >> /var/mobile/Library/Preferences/BackOn/DevSettings/setDefaultLanguage
+	echo -e "${detailFileListView}" >> /var/mobile/Library/Preferences/BackOn/DevSettings/detailFileListView
+	echo -e "${runUpdateODS}" >> /var/mobile/Library/Preferences/BackOn/DevSettings/runUpdateODS
+	echo -e "${applyColorScheme}" >> /var/mobile/Library/Preferences/BackOn/DevSettings/applyColorScheme
+	echo -e "${DynamicLine}" >> /var/mobile/Library/Preferences/BackOn/DevSettings/DynamicLine
+	echo -e "${UpdaterVersion}" >> /var/mobile/Library/Preferences/BackOn/DevSettings/UpdaterVersion
+	echo -e "${updateWithDEBInstall}" >> /var/mobile/Library/Preferences/BackOn/DevSettings/updateWithDEBInstall
+	echo -e "${completeLibraryBackup}" >> /var/mobile/Library/Preferences/BackOn/DevSettings/completeLibraryBackup
+	echo -e "${fixDynamicLineIssue}" >> /var/mobile/Library/Preferences/BackOn/DevSettings/fixDynamicLineIssue
 }
 
 
 function loadSettings(){
-	if [[ -d "/var/mobile/Library/Preferences/Backon/DevSettings" ]]; then
+	if [[ -d "/var/mobile/Library/Preferences/BackOn/DevSettings" ]]; then
 		enabledODS=YES
 	else
 		enabledODS=NO
 	fi
-	if [[ -f "/var/mobile/Library/Preferences/Backon/DevSettings/ExitKey" ]]; then
-		ExitKey="$(cat "/var/mobile/Library/Preferences/Backon/DevSettings/ExitKey")"
+	if [[ -f "/var/mobile/Library/Preferences/BackOn/DevSettings/ExitKey" ]]; then
+		ExitKey="$(cat "/var/mobile/Library/Preferences/BackOn/DevSettings/ExitKey")"
 	else
 		ExitKey=NO
 	fi
-	if [[ -f "/var/mobile/Library/Preferences/Backon/DevSettings/showLog" ]]; then
-		showLog="$(cat "/var/mobile/Library/Preferences/Backon/DevSettings/showLog")"
+	if [[ -f "/var/mobile/Library/Preferences/BackOn/DevSettings/showLog" ]]; then
+		showLog="$(cat "/var/mobile/Library/Preferences/BackOn/DevSettings/showLog")"
 	else
 		showLog=YES
 	fi
-	if [[ -f "/var/mobile/Library/Preferences/Backon/DevSettings/showPA2C" ]]; then
-		showPA2C="$(cat "/var/mobile/Library/Preferences/Backon/DevSettings/showPA2C")"
+	if [[ -f "/var/mobile/Library/Preferences/BackOn/DevSettings/showPA2C" ]]; then
+		showPA2C="$(cat "/var/mobile/Library/Preferences/BackOn/DevSettings/showPA2C")"
 	else
 		showPA2C=YES
 	fi
-	if [[ -f "/var/mobile/Library/Preferences/Backon/DevSettings/skipRestore" ]]; then
-		skipRestore="$(cat "/var/mobile/Library/Preferences/Backon/DevSettings/skipRestore")"
+	if [[ -f "/var/mobile/Library/Preferences/BackOn/DevSettings/skipRestore" ]]; then
+		skipRestore="$(cat "/var/mobile/Library/Preferences/BackOn/DevSettings/skipRestore")"
 	else
 		skipRestore=NO
 	fi
@@ -568,68 +568,68 @@ function loadSettings(){
 	else
 		MakeFakeActivatorFile=NO
 	fi
-	if [[ -f "/var/mobile/Library/Preferences/Backon/DevSettings/UpdateBuildType" ]]; then
-		UpdateBuildType="$(cat "/var/mobile/Library/Preferences/Backon/DevSettings/UpdateBuildType")"
+	if [[ -f "/var/mobile/Library/Preferences/BackOn/DevSettings/UpdateBuildType" ]]; then
+		UpdateBuildType="$(cat "/var/mobile/Library/Preferences/BackOn/DevSettings/UpdateBuildType")"
 	else
 		UpdateBuildType="${TOOL_BUILD_TYPE}"
 	fi
-	if [[ -f "/var/mobile/Library/Preferences/Backon/DevSettings/ForceInstallUpdate" ]]; then
-		ForceInstallUpdate="$(cat "/var/mobile/Library/Preferences/Backon/DevSettings/ForceInstallUpdate")"
+	if [[ -f "/var/mobile/Library/Preferences/BackOn/DevSettings/ForceInstallUpdate" ]]; then
+		ForceInstallUpdate="$(cat "/var/mobile/Library/Preferences/BackOn/DevSettings/ForceInstallUpdate")"
 	else
 		ForceInstallUpdate=NO
 	fi
-	if [[ -f "/var/mobile/Library/Preferences/Backon/DevSettings/BackupPath" ]]; then
-		BackupPath="$(cat /var/mobile/Library/Preferences/Backon/DevSettings/BackupPath)"
+	if [[ -f "/var/mobile/Library/Preferences/BackOn/DevSettings/BackupPath" ]]; then
+		BackupPath="$(cat /var/mobile/Library/Preferences/BackOn/DevSettings/BackupPath)"
 	else
 		BackupPath=/var/mobile/Media
 	fi
-	if [[ -f "/var/mobile/Library/Preferences/Backon/DevSettings/ClearKey" ]]; then
-		ClearKey="$(cat "/var/mobile/Library/Preferences/Backon/DevSettings/ClearKey")"
+	if [[ -f "/var/mobile/Library/Preferences/BackOn/DevSettings/ClearKey" ]]; then
+		ClearKey="$(cat "/var/mobile/Library/Preferences/BackOn/DevSettings/ClearKey")"
 	else
 		ClearKey=YES
 	fi
-	if [[ -f "/var/mobile/Library/Preferences/Backon/DevSettings/setDefaultLanguage" ]]; then
-		setDefaultLanguage="$(cat "/var/mobile/Library/Preferences/Backon/DevSettings/setDefaultLanguage")"
+	if [[ -f "/var/mobile/Library/Preferences/BackOn/DevSettings/setDefaultLanguage" ]]; then
+		setDefaultLanguage="$(cat "/var/mobile/Library/Preferences/BackOn/DevSettings/setDefaultLanguage")"
 	else
 		setDefaultLanguage=English
 	fi
-	if [[ -f "/var/mobile/Library/Preferences/Backon/DevSettings/detailFileListView" ]]; then
-		detailFileListView="$(cat "/var/mobile/Library/Preferences/Backon/DevSettings/detailFileListView")"
+	if [[ -f "/var/mobile/Library/Preferences/BackOn/DevSettings/detailFileListView" ]]; then
+		detailFileListView="$(cat "/var/mobile/Library/Preferences/BackOn/DevSettings/detailFileListView")"
 	else
 		detailFileListView=NO
 	fi
-	if [[ -f "/var/mobile/Library/Preferences/Backon/DevSettings/runUpdateODS" ]]; then
-		runUpdateODS="$(cat "/var/mobile/Library/Preferences/Backon/DevSettings/runUpdateODS")"
+	if [[ -f "/var/mobile/Library/Preferences/BackOn/DevSettings/runUpdateODS" ]]; then
+		runUpdateODS="$(cat "/var/mobile/Library/Preferences/BackOn/DevSettings/runUpdateODS")"
 	else
 		runUpdateODS=NO
 	fi
-	if [[ -f "/var/mobile/Library/Preferences/Backon/DevSettings/applyColorScheme" ]]; then
-		applyColorScheme="$(cat "/var/mobile/Library/Preferences/Backon/DevSettings/applyColorScheme")"
+	if [[ -f "/var/mobile/Library/Preferences/BackOn/DevSettings/applyColorScheme" ]]; then
+		applyColorScheme="$(cat "/var/mobile/Library/Preferences/BackOn/DevSettings/applyColorScheme")"
 	else
 		applyColorScheme=YES
 	fi
-	if [[ -f "/var/mobile/Library/Preferences/Backon/DevSettings/DynamicLine" ]]; then
-		DynamicLine="$(cat "/var/mobile/Library/Preferences/Backon/DevSettings/DynamicLine")"
+	if [[ -f "/var/mobile/Library/Preferences/BackOn/DevSettings/DynamicLine" ]]; then
+		DynamicLine="$(cat "/var/mobile/Library/Preferences/BackOn/DevSettings/DynamicLine")"
 	else
 		DynamicLine=YES
 	fi
-	if [[ -f "/var/mobile/Library/Preferences/Backon/DevSettings/updateWithDEBInstall" ]]; then
-		updateWithDEBInstall="$(cat "/var/mobile/Library/Preferences/Backon/DevSettings/updateWithDEBInstall")"
+	if [[ -f "/var/mobile/Library/Preferences/BackOn/DevSettings/updateWithDEBInstall" ]]; then
+		updateWithDEBInstall="$(cat "/var/mobile/Library/Preferences/BackOn/DevSettings/updateWithDEBInstall")"
 	else
 		updateWithDEBInstall=YES
 	fi
-	if [[ -f "/var/mobile/Library/Preferences/Backon/DevSettings/UpdaterVersion" ]]; then
-		UpdaterVersion="$(cat "/var/mobile/Library/Preferences/Backon/DevSettings/UpdaterVersion")"
+	if [[ -f "/var/mobile/Library/Preferences/BackOn/DevSettings/UpdaterVersion" ]]; then
+		UpdaterVersion="$(cat "/var/mobile/Library/Preferences/BackOn/DevSettings/UpdaterVersion")"
 	else
 		UpdaterVersion=2
 	fi
-	if [[ -f "/var/mobile/Library/Preferences/Backon/DevSettings/completeLibraryBackup" ]]; then
-		completeLibraryBackup="$(cat "/var/mobile/Library/Preferences/Backon/DevSettings/completeLibraryBackup")"
+	if [[ -f "/var/mobile/Library/Preferences/BackOn/DevSettings/completeLibraryBackup" ]]; then
+		completeLibraryBackup="$(cat "/var/mobile/Library/Preferences/BackOn/DevSettings/completeLibraryBackup")"
 	else
 		completeLibraryBackup=NO
 	fi
-	if [[ -f "/var/mobile/Library/Preferences/Backon/DevSettings/fixDynamicLineIssue" ]]; then
-		fixDynamicLineIssue="$(cat "/var/mobile/Library/Preferences/Backon/DevSettings/fixDynamicLineIssue")"
+	if [[ -f "/var/mobile/Library/Preferences/BackOn/DevSettings/fixDynamicLineIssue" ]]; then
+		fixDynamicLineIssue="$(cat "/var/mobile/Library/Preferences/BackOn/DevSettings/fixDynamicLineIssue")"
 	else
 		fixDynamicLineIssue=NO
 	fi
@@ -1574,13 +1574,13 @@ function restoreCydia(){
 			cp "/tmp/BackOn/Restore/Cydia/com.saurik.Cydia.plist" "/var/mobile/Library/Preferences"
 			chmod 755 "/var/mobile/Library/Preferences/com.saurik.Cydia.plist"
 		fi
-		if [[ -d "/var/mpobile/Library/Caches/com.saurik.Cydia/lists" ]]; then
+		if [[ -d "/var/mobile/Library/Caches/com.saurik.Cydia/lists" ]]; then
 			if [[ "${showLog}" == YES ]]; then
 				applyPurple
-				echo -e "Removing : /var/mpobile/Library/Caches/com.saurik.Cydia/lists"
+				echo -e "Removing : /var/mobile/Library/Caches/com.saurik.Cydia/lists"
 				applyNoColor
 			fi
-			rm -rf "/var/mpobile/Library/Caches/com.saurik.Cydia/lists"
+			rm -rf "/var/mobile/Library/Caches/com.saurik.Cydia/lists"
 		fi
 		if [[ "${showLog}" == YES ]]; then
 			echo -e "${REFRESHING_SOURCES}"
@@ -2058,7 +2058,7 @@ else
 fi
 checkOS
 checkRoot "${1}"
-if [[ -d "/var/mobile/Library/Preferences/Backon/DevSettings" ]]; then
+if [[ -d "/var/mobile/Library/Preferences/BackOn/DevSettings" ]]; then
 	saveSettings
 fi
 OSVer="$(sw_vers -productVersion)"
