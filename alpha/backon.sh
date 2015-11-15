@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-274-official
+# BackOn alpha-275-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=274
+TOOL_BUILD_NUM=275
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -1383,8 +1383,8 @@ function convertOldBackup(){
 		fi
 		mv "/tmp/BackOn/Restore/Cydia/metadata.plist" "/tmp/BackOn/Restore/Cydia/metadata.cb0"
 	fi
-	if [[ ! -f "/tmp/Restore/Cydia/com.saurik.Cydia.plist" && -f "/tmp/Restore/Library/Preferences/com.saurik.Cydia.plist" ]]; then
-		cp /tmp/Restore/Library/Preferences/com.saurik.Cydia.plist /tmp/Restore/Cydia
+	if [[ ! -f "/tmp/BackOn/Restore/Cydia/com.saurik.Cydia.plist" && -f "/tmp/BackOn/Restore/Library/Preferences/com.saurik.Cydia.plist" ]]; then
+		cp /tmp/BackOn/Restore/Library/Preferences/com.saurik.Cydia.plist /tmp/BackOn/Restore/Cydia
 	fi
 	if [[ -f "/tmp/BackOn/Restore/info/ios_version" ]]; then
 		if [[ "${showLog}" == YES ]]; then
@@ -1565,13 +1565,13 @@ function restoreCydia(){
 		fi
 		cp "/tmp/BackOn/Restore/Cydia/metadata.cb0" "/var/mobile/Library/Cydia"
 		chmod 755 "/var/mobile/Library/Cydia/metadata.cb0"
-		if [[ -f "/tmp/Restore/Cydia/com.saurik.Cydia.plist" ]]; then
+		if [[ -f "/tmp/BackOn/Restore/Cydia/com.saurik.Cydia.plist" ]]; then
 			if [[ "${showLog}" == YES ]]; then
 				applyPurple
 				echo -e "Restoring : com.saurik.Cydia.plist"
 				applyNoColor
 			fi
-			cp "/tmp/Restore/com.saurik.Cydia.plist" "/var/mobile/Library/Preferences"
+			cp "/tmp/BackOn/Restore/com.saurik.Cydia.plist" "/var/mobile/Library/Preferences"
 			chmod 755 "/var/mobile/Library/Preferences/com.saurik.Cydia.plist"
 		fi
 		if [[ -d "/var/mpobile/Library/Caches/com.saurik.Cydia/lists" ]]; then
