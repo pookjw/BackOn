@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-277-official
+# BackOn alpha-278-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=277
+TOOL_BUILD_NUM=278
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -1384,6 +1384,11 @@ function convertOldBackup(){
 		mv "/tmp/BackOn/Restore/Cydia/metadata.plist" "/tmp/BackOn/Restore/Cydia/metadata.cb0"
 	fi
 	if [[ ! -f "/tmp/BackOn/Restore/Cydia/com.saurik.Cydia.plist" && -f "/tmp/BackOn/Restore/Library/Preferences/com.saurik.Cydia.plist" ]]; then
+		if [[ "${showLog}" == YES ]]; then
+			applyPurple
+			echo -e "Converting com.saurik.Cydia.plist..."
+			applyNoColor
+		fi
 		cp /tmp/BackOn/Restore/Library/Preferences/com.saurik.Cydia.plist /tmp/BackOn/Restore/Cydia
 	fi
 	if [[ -f "/tmp/BackOn/Restore/info/ios_version" ]]; then
