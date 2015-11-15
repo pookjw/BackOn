@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-271-official
+# BackOn alpha-273-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=271
+TOOL_BUILD_NUM=273
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -56,6 +56,7 @@ function setEnglish(){
 	BACKUPED_CYDIA_PACKAGES_LIST="Cydia packages list"
 	BACKUPED_CYDIA_SOURCE="Cydia source"
 	BACKUPED_CYDIA_METADATA="Cydia metadata"
+	BACKUPED_CYDIA_SETTINGS="Cydia Settings"
 	BACKUPED_LIBRARY="Library"
 	SUCCEED_SAVE_BACKUP="Succeed to save backup!"
 	OSVER_IS_NOT_MATCHING="iOS Version of backup is not matching with current iOS Version. It will cause problem."
@@ -136,6 +137,7 @@ function setKorean(){
 	BACKUPED_CYDIA_PACKAGES_LIST="Cydia 패키지 목록"
 	BACKUPED_CYDIA_SOURCE="Cydia 소스"
 	BACKUPED_CYDIA_METADATA="Cydia metadata"
+	BACKUPED_CYDIA_SETTINGS="Cydia 설정"
 	BACKUPED_LIBRARY="Library"
 	SUCCEED_SAVE_BACKUP="백업에 성공했습니다!"
 	OSVER_IS_NOT_MATCHING="백업할 때의 iOS 버전이 현재 기기의 iOS 버전과 일치하지 않습니다. 이것은 문제를 야기할 수 있습니다."
@@ -935,6 +937,7 @@ function showInitialBackupMenu(){
 		elif [[ "${ANSWER_C}" == q || "${ANSWER_C}" == quit ]]; then
 			quitTool
 		elif [[ "${ANSWER_C}" == s ]]; then
+			showBackupedFilesBackup
 			saveBackup
 		elif [[ "${ANSWER_C}" == ods ]]; then
 			openDevSettings
@@ -953,21 +956,22 @@ function backupCydiaData(){
 	showLinesA
 	echo -e "${SHOW_INFO_2}"
 	showLinesB
+	killCydia
 	echo -e "${BACKING_UP}"
 	if [[ -d "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia" || -f "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia" ]]; then
 		rm -rf "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia"
 	fi
 	mkdir -p "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia"
-	killCydia
 	dpkg --get-selections > "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia/apt.txt"
 	cp /var/mobile/Library/Caches/com.saurik.Cydia/sources.list "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia"
+	cp /var/mobile/Library/Preferences/com.saurik.Cydia.plist /tmp/BackOn/Backup/${BACKUP_NAME}/Cydia
 	if [[ -f /var/lib/cydia/metadata.plist ]]; then
 		cp /var/lib/cydia/metadata.plist "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia/metadata.cb0"
 	fi
 	if [[ -f /var/mobile/Library/Cydia/metadata.cb0 ]]; then
 		cp /var/mobile/Library/Cydia/metadata.cb0 "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia"
 	fi
-	if [[ ! -f "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia/apt.txt" || ! -f "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia/sources.list" || ! -f "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia/metadata.cb0" ]]; then
+	if [[ ! -f "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia/apt.txt" || ! -f "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia/sources.list" || ! -f "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia/metadata.cb0" || ! -f "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia/com.saurik.Cydia.plist" ]]; then
 		applyRed
 		echo -e "ERROR!"
 		applyNoColor
@@ -1205,6 +1209,11 @@ function showBackupedFilesBackup(){
 	else
 		echo -e "${BACKUPED_CYDIA_METADATA} : ${NO}"
 	fi
+	if [[ -f "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia/com.saurik.Cydia.plist" ]]; then
+		echo -e "${BACKUPED_CYDIA_SETTINGS} : ${YES}"
+	else
+		echo -e "${BACKUPED_CYDIA_SETTINGS} : ${NO}"
+	fi
 	showLinesB
 	if [[ -d "/tmp/BackOn/Backup/${BACKUP_NAME}/Library" ]]; then
 		echo -e "${BACKUPED_LIBRARY} : ${YES}"
@@ -1214,17 +1223,13 @@ function showBackupedFilesBackup(){
 		else
 			ls "/tmp/BackOn/Backup/${BACKUP_NAME}/Library"
 		fi
-		if [[ "${showLog}" == YES ]]; then
+		if [[ "${detailFileListView}" == YES ]]; then
 			if [[ -d "/tmp/BackOn/Backup/${BACKUP_NAME}/Library/Caches" ]]; then
 				showLinesB
 				applyPurple
 				echo -e "/var/mobile/Library/Caches - /tmp/BackOn/Backup/${BACKUP_NAME}/Library/Caches"
 				applyNoColor
-				if [[ "${detailFileListView}" == YES ]]; then
-					ls -l "/tmp/BackOn/Backup/${BACKUP_NAME}/Library/Caches"
-				else
-					ls "/tmp/BackOn/Backup/${BACKUP_NAME}/Library/Caches"
-				fi
+				ls -l "/tmp/BackOn/Backup/${BACKUP_NAME}/Library/Caches"
 			fi
 		fi
 	else
@@ -1377,6 +1382,9 @@ function convertOldBackup(){
 			applyNoColor
 		fi
 		mv "/tmp/BackOn/Restore/Cydia/metadata.plist" "/tmp/BackOn/Restore/Cydia/metadata.cb0"
+	fi
+	if [[ ! -f "/tmp/Restore/Cydia/com.saurik.Cydia.plist" && -f "/tmp/Restore/Library/Preferences/com.saurik.Cydia.plist" ]]; then
+		cp /tmp/Restore/Library/Preferences/com.saurik.Cydia.plist /tmp/Restore/Cydia
 	fi
 	if [[ -f "/tmp/BackOn/Restore/info/ios_version" ]]; then
 		if [[ "${showLog}" == YES ]]; then
@@ -1557,6 +1565,23 @@ function restoreCydia(){
 		fi
 		cp "/tmp/BackOn/Restore/Cydia/metadata.cb0" "/var/mobile/Library/Cydia"
 		chmod 755 "/var/mobile/Library/Cydia/metadata.cb0"
+		if [[ -f "/tmp/Restore/Cydia/com.saurik.Cydia.plist" ]]; then
+			if [[ "${showLog}" == YES ]]; then
+				applyPurple
+				echo -e "Restoring : com.saurik.Cydia.plist"
+				applyNoColor
+			fi
+			cp "/tmp/Restore/com.saurik.Cydia.plist" "/var/mobile/Library/Preferences"
+			chmod 755 "/var/mobile/Library/Preferences/com.saurik.Cydia.plist"
+		fi
+		if [[ -d "/var/mpobile/Library/Caches/com.saurik.Cydia/lists" ]]; then
+			if [[ "${showLog}" == YES ]]; then
+				applyPurple
+				echo -e "Removing : /var/mpobile/Library/Caches/com.saurik.Cydia/lists"
+				applyNoColor
+			fi
+			rm -rf "/var/mpobile/Library/Caches/com.saurik.Cydia/lists"
+		fi
 		if [[ "${showLog}" == YES ]]; then
 			echo -e "${REFRESHING_SOURCES}"
 			applyPurple
