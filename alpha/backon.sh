@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-275-official
+# BackOn alpha-276-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=275
+TOOL_BUILD_NUM=276
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -1571,7 +1571,7 @@ function restoreCydia(){
 				echo -e "Restoring : com.saurik.Cydia.plist"
 				applyNoColor
 			fi
-			cp "/tmp/BackOn/Restore/com.saurik.Cydia.plist" "/var/mobile/Library/Preferences"
+			cp "/tmp/BackOn/Restore/Cydia/com.saurik.Cydia.plist" "/var/mobile/Library/Preferences"
 			chmod 755 "/var/mobile/Library/Preferences/com.saurik.Cydia.plist"
 		fi
 		if [[ -d "/var/mpobile/Library/Caches/com.saurik.Cydia/lists" ]]; then
