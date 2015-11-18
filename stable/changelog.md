@@ -71,3 +71,11 @@
 - (Added) [DevSettings] Start sh 기능 추가.
 
 단순히 sh 바이너리를 실행하는 기능입니다.
+
+# stable-280 (2015-11-19)
+
+- (Fixed) Cydia 1.1.9+에서 Cydia 소스 복원이 제대로 안 되던 버그 수정. (단, iOS 9에선 여전히 문제가 있음. 테스트한 바로는 iOS 4.2.1에선 잘 작동함.)
+
+- (Added) 백업 저장할 때 백업한 파일을 보여주는 과정을 추가.
+
+- (Fixed) [DevSettings] DevSettings 설정 파일 저장 경로 변경.
