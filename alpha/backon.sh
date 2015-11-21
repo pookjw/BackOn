@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-288-official
+# BackOn alpha-289-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=288
+TOOL_BUILD_NUM=289
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -1293,15 +1293,15 @@ function showBackupedFilesBackup(){
 	else
 		echo -e "${BACKUPED_CYDIA_SETTINGS} : ${NO}"
 	fi
-	if [[ -d "/tmp/BackOn/Backup/${BACKUP_NAME}/AppData" ]]; then
-		echo -e "${BACKUPED_USERAPP_DATA}" : ${YES}
-	else
-		echo -e "${BACKUPED_USERAPP_DATA}" : ${NO}
-	fi
 	if [[ -d "/tmp/BackOn/Backup/${BACKUP_NAME}/Library" ]]; then
 		echo -e "${BACKUPED_LIBRARY} : ${YES}"
 	else
 		echo -e "${BACKUPED_LIBRARY} : ${NO}"
+	fi
+	if [[ -d "/tmp/BackOn/Backup/${BACKUP_NAME}/AppData" ]]; then
+		echo -e "${BACKUPED_USERAPP_DATA}" : ${YES}
+	else
+		echo -e "${BACKUPED_USERAPP_DATA}" : ${NO}
 	fi
 	showLinesA
 	PA2CKey
