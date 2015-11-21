@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-295-official
+# BackOn alpha-296-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=295
+TOOL_BUILD_NUM=296
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -1141,6 +1141,7 @@ function backupUserAppData(){
 			echo *.app | cut -d"." -f1;
 		done
 		showLinesB
+		echo -e "(${ENTER_QUIT})"
 		echo -e "(${ENTER_BACKUP_APP_NAME})"
 		showLinesA
 		applyLightCyan
