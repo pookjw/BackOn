@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-294-official
+# BackOn alpha-295-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=294
+TOOL_BUILD_NUM=295
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -35,6 +35,7 @@ function setEnglish(){
 	NO_SUCH_XBACKUP="I can't find backup file of xBackup. (/var/mobile/Library/xBackup/Backups/backup.bk.zip)"
 	NOTHING_TO_BACKUP="Nothing to backup!"
 	NOTHING_TO_DELETE="Nothing to delete!"
+	NOT_AVAILABLE="Not available."
 	PRESS_ANY_KEY_TO_CONTINUE="Press any key to continue..."
 	WILL_CREATE_BACKUP_NAME="Will create backup name"
 	BACKUP_CYDIA_DATA="Backup Cydia sources and packages."
@@ -121,6 +122,7 @@ function setKorean(){
 	NO_SUCH_XBACKUP="xBackup의 백업 파일을 찾을 수 없습니다! (/var/mobile/Library/xBackup/Backups/backup.bk.zip)"
 	NOTHING_TO_BACKUP="백업할 파일이 없습니다!"
 	NOTHING_TO_DELETE="지울 백업 파일이 없습니다!"
+	NOT_AVAILABLE="백업 불가"
 	PRESS_ANY_KEY_TO_CONTINUE="계속하려면 아무 키나 누르십시오..."
 	WILL_CREATE_BACKUP_NAME="백업 이름"
 	BACKUP_CYDIA_DATA="Cydia 소스, 패키지를 백업"
@@ -902,7 +904,13 @@ function showInitialBackupMenu(){
 		showLinesB
 		echo -e "(1) ${BACKUP_CYDIA_DATA}"
 		echo -e "(2) ${BACKUP_LIBRARY}"
-		echo -e "(3) ${BACKUP_USERAPP_DATA}"
+		if [[ -z "$(ls "/var/mobile/Applications")" ]]; then
+			applyRed
+			echo -e "(3) ${BACKUP_USERAPP_DATA} (${NOT_AVAILABLE})"
+			applyNoColor
+		else
+			echo -e "(3) ${BACKUP_USERAPP_DATA}"
+		fi
 		echo -e "(4) ${SHOW_BACKUPED_FILES}"
 		echo -e "(q) ${DISCARD_BACKUP}"
 		echo -e "(s) ${SAVE_BACKUP}"
@@ -916,7 +924,11 @@ function showInitialBackupMenu(){
 		elif [[ "${ANSWER_C}" == 2 ]]; then
 			backupLibrary
 		elif [[ "${ANSWER_C}" == 3 ]]; then
-			backupUserAppData
+			if [[ -z "$(ls "/var/mobile/Applications")" ]]; then
+				showNotSupportedFunction
+			else 
+				backupUserAppData
+			fi
 		elif [[ "${ANSWER_C}" == 4 ]]; then
 			showBackupedFilesBackup
 		elif [[ "${ANSWER_C}" == q || "${ANSWER_C}" == quit ]]; then
