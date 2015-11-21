@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-293-official
+# BackOn alpha-294-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=293
+TOOL_BUILD_NUM=294
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -59,8 +59,8 @@ function setEnglish(){
 	BACKUPED_CYDIA_SOURCE="Cydia source"
 	BACKUPED_CYDIA_METADATA="Cydia metadata"
 	BACKUPED_CYDIA_SETTINGS="Cydia Settings"
-	BACKUPED_USERAPP_DATA="User App Data"
 	BACKUPED_LIBRARY="Library"
+	BACKUPED_USERAPP_DATA="User App Data"
 	SUCCEED_SAVE_BACKUP="Succeed to save backup!"
 	OSVER_IS_NOT_MATCHING="iOS Version of backup is not matching with current iOS Version. It will cause problem."
 	RESTORE_CYDIA_DATA="Restore Cydia sources and packages list."
@@ -145,8 +145,8 @@ function setKorean(){
 	BACKUPED_CYDIA_SOURCE="Cydia 소스"
 	BACKUPED_CYDIA_METADATA="Cydia metadata"
 	BACKUPED_CYDIA_SETTINGS="Cydia 설정"
-	BACKUPED_USERAPP_DATA="사용자 어플 데이터 백업"
 	BACKUPED_LIBRARY="Library"
+	BACKUPED_USERAPP_DATA="사용자 어플 데이터"
 	SUCCEED_SAVE_BACKUP="백업에 성공했습니다!"
 	OSVER_IS_NOT_MATCHING="백업할 때의 iOS 버전이 현재 기기의 iOS 버전과 일치하지 않습니다. 이것은 문제를 야기할 수 있습니다."
 	RESTORE_CYDIA_DATA="Cydia 소스, 패키지 복원"
