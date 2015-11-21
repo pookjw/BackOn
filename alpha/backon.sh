@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-284-official
+# BackOn alpha-285-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=284
+TOOL_BUILD_NUM=285
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -27,8 +27,7 @@ function setEnglish(){
 	QUIT="Quit."
 	ENTER_QUIT="Enter 'quit' to quit this menu."
 	ENTER_BACKUP_NAME="Enter backup name that you want to do. (If you want to set backup name to current date and time, enter 'date'.)"
-	ENTER_APP_NAME="Enter app name that you want to backup."
-	BACKUP_CANCELED="Backup was canceled because form was empty."
+	ENTER_BACKUP_APP_NAME="Enter app name that you want to backup."
 	NOT_SUPPORTED_FUNCTION="Not supported function."
 	NO_SUCH_FILE_OR_DIRECTORY="No such file or directory."
 	NO_SUCH_FILE="No such file."
@@ -95,6 +94,7 @@ function setEnglish(){
 	SHOW_INFO_13="Custom Backup > Detect backup target"
 	SHOW_INFO_14="Custom Restore"
 	SHOW_INFO_15="Backup Menu > Backup App Data"
+	SHOW_INFO_16="Backup Menu > Backup App Data > Delete backup"
 }
 
 function setKorean(){
@@ -113,8 +113,7 @@ function setKorean(){
 	QUIT="종료"
 	ENTER_QUIT="'quit'을 입력하면 이 메뉴를 종료합니다."
 	ENTER_BACKUP_NAME="원하는 백업 이름을 입력해 주세요. ('date'를 입력하면 현재 날짜, 시간을 백업 이름으로 지정합니다.)"
-	ENTER_APP_NAME="백업을 원하는 App 이름을 입력해 주세요."
-	BACKUP_CANCELED="입력란이 비었기 때문에 백업을 취소합니다."
+	ENTER_BACKUP_APP_NAME="백업을 원하는 App 이름을 입력해 주세요."
 	NOT_SUPPORTED_FUNCTION="지원되지 않는 기능입니다."
 	NO_SUCH_FILE_OR_DIRECTORY="존재하지 않는 파일이나 폴더입니다."
 	NO_SUCH_FILE="존재하지 않는 파일입니다."
@@ -1191,7 +1190,7 @@ function backupUserAppData(){
 			echo *.app | cut -d"." -f1;
 		done
 		showLinesB
-		echo -e "${ENTER_APP_NAME}"
+		echo -e "${ENTER_BACKUP_APP_NAME}"
 		showLinesA
 		applyLightCyan
 		read -p "- " ANSWER_P
@@ -1201,6 +1200,71 @@ function backupUserAppData(){
 			openDevSettings
 		elif [[ "${ANSWER_P}" == exit ]]; then
 			ExitKey
+		elif [[ "${ANSWER_P}" == quit || ${ANSWER_P} == q ]]; then
+			break
+		elif [[ "${ANSWER_P}" == delete ]]; then
+			while(true); do
+				if [[ -z "$(ls "/tmp/BackOn/Backup/${BACKUP_NAME}/AppData")" ]]; then
+					ClearKey
+					showLinesA
+					echo -e "${SHOW_INFO_16}"
+					showLinesB
+					applyRed
+					echo -e "${NOTHING_TO_DELETE}"
+					applyNoColor
+					showLinesA
+					PA2CKey
+					break
+				fi
+				ClearKey
+				showLinesA
+				echo -e "${SHOW_INFO_16}"
+				showLinesB
+				if [[ "${detailFileListView}" == YES ]]; then
+					ls -l "/tmp/BackOn/Backup/${BACKUP_NAME}/AppData"
+				else
+					ls "/tmp/BackOn/Backup/${BACKUP_NAME}/AppData"
+				fi
+				showLinesB
+				echo -e "(${ENTER_QUIT})"
+				echo -e "(${SHOW_GUIDE_4})"
+				showLinesA
+				applyLightCyan
+				read -p "- " ANSWER_Q
+				applyNoColor
+				if [[ -z "${ANSWER_Q}" ]]; then
+					:
+				else
+					if [[ "${ANSWER_Q}" == all ]]; then
+						echo -e "${REMOVING}"
+						rm -rf "/tmp/BackOn/Backup/${BACKUP_NAME}/AppData"
+						mkdir -p "/tmp/BackOn/Backup/${BACKUP_NAME}/AppData"
+						echo -e "${DONE}"
+						PA2CKey
+					elif [[ "${ANSWER_Q}" == q || "${ANSWER_Q}" == quit ]]; then
+						break
+					elif  [[ "${ANSWER_Q}" == ods ]]; then
+						openDevSettings
+					elif [[ "${ANSWER_Q}" == exit ]]; then
+						ExitKey
+					elif [[ -f "/tmp/BackOn/Backup/${BACKUP_NAME}/AppData/${ANSWER_Q}" ]]; then
+						echo -e "${REMOVING}"
+						rm "/tmp/BackOn/Backup/${BACKUP_NAME}/AppData/${ANSWER_Q}"
+						echo -e "${DONE}"
+						PA2CKey
+					elif [[ -d "/tmp/BackOn/Backup/${BACKUP_NAME}/AppData/${ANSWER_Q}" ]]; then
+						echo -e "${REMOVING}"
+						rm -rf "/tmp/BackOn/Backup/${BACKUP_NAME}/AppData/${ANSWER_Q}"
+						echo -e "${DONE}"
+						PA2CKey
+					else
+						applyRed
+						echo -e "${NO_SUCH_FILE_OR_DIRECTORY}"
+						applyNoColor
+						PA2CKey
+					fi
+				fi
+			done
 		elif [[ -z "${ANSWER_P}" ]]; then
 			:
 		else
@@ -1223,7 +1287,7 @@ function backupUserAppData(){
 				mkdir -p "/tmp/BackOn/Backup/${BACKUP_NAME}/AppData/${ANSWER_P}"
 				for NAME in Documents Library; do
 					if [[ -d "/var/mobile/Applications/${APP_CODE}/${NAME}" ]]; then
-						echo -e "${BACKING_UP} (${NAME}})"
+						echo -e "${BACKING_UP} (${NAME})"
 						cp -r "/var/mobile/Applications/${APP_CODE}/${NAME}" "/tmp/BackOn/Backup/${BACKUP_NAME}/AppData/${ANSWER_P}"
 						RESULT_B=YES
 					fi
@@ -1279,24 +1343,8 @@ function showBackupedFilesBackup(){
 	else
 		echo -e "${BACKUPED_USERAPP_DATA}" : ${NO}
 	fi
-	showLinesB
 	if [[ -d "/tmp/BackOn/Backup/${BACKUP_NAME}/Library" ]]; then
 		echo -e "${BACKUPED_LIBRARY} : ${YES}"
-		showLinesB
-		if [[ "${detailFileListView}" == YES ]]; then
-			ls -l "/tmp/BackOn/Backup/${BACKUP_NAME}/Library"
-		else
-			ls "/tmp/BackOn/Backup/${BACKUP_NAME}/Library"
-		fi
-		if [[ "${detailFileListView}" == YES ]]; then
-			if [[ -d "/tmp/BackOn/Backup/${BACKUP_NAME}/Library/Caches" ]]; then
-				showLinesB
-				applyPurple
-				echo -e "/var/mobile/Library/Caches - /tmp/BackOn/Backup/${BACKUP_NAME}/Library/Caches"
-				applyNoColor
-				ls -l "/tmp/BackOn/Backup/${BACKUP_NAME}/Library/Caches"
-			fi
-		fi
 	else
 		echo -e "${BACKUPED_LIBRARY} : ${NO}"
 	fi
