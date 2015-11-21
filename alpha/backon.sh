@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-281-official
+# BackOn alpha-282-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=281
+TOOL_BUILD_NUM=282
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -27,6 +27,7 @@ function setEnglish(){
 	QUIT="Quit."
 	ENTER_QUIT="Enter 'quit' to quit this menu."
 	ENTER_BACKUP_NAME="Enter backup name that you want to do. (If you want to set backup name to current date and time, enter 'date'.)"
+	ENTER_APP_NAME="Enter app name that you want to backup."
 	BACKUP_CANCELED="Backup was canceled because form was empty."
 	NOT_SUPPORTED_FUNCTION="Not supported function."
 	NO_SUCH_FILE_OR_DIRECTORY="No such file or directory."
@@ -1214,6 +1215,8 @@ function backupUserAppData(){
 			cd "/var/mobile/Applications/${NAME}" #Only for iOS 7 or older devices yet.
 			echo *.app | cut -d"." -f1;
 		done
+		showLinesA
+		echo -e "${ENTER_APP_NAME}"
 		read -p "- " ANSWER_P
 
 		if [[ "${ANSWER_P}" == ods ]]; then
@@ -1225,7 +1228,7 @@ function backupUserAppData(){
 		else
 			cd "/var/mobile/Applications"
 			for NAME in $(ls); do
-				if [[ -d "${NAME}/${ANSWER_P}" ]]; then
+				if [[ -d "${NAME}/${ANSWER_P}.app" ]]; then
 					APP_CODE="${NAME}"
 					RESULT_A=YES
 				fi
