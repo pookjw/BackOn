@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-278-official
+# BackOn alpha-281-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=278
+TOOL_BUILD_NUM=281
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -31,6 +31,7 @@ function setEnglish(){
 	NOT_SUPPORTED_FUNCTION="Not supported function."
 	NO_SUCH_FILE_OR_DIRECTORY="No such file or directory."
 	NO_SUCH_FILE="No such file."
+	NO_SUCH_APP="No such app."
 	NO_SUCH_XBACKUP="I can't find backup file of xBackup. (/var/mobile/Library/xBackup/Backups/backup.bk.zip)"
 	NOTHING_TO_BACKUP="Nothing to backup!"
 	NOTHING_TO_DELETE="Nothing to delete!"
@@ -38,6 +39,7 @@ function setEnglish(){
 	WILL_CREATE_BACKUP_NAME="Will create backup name"
 	BACKUP_CYDIA_DATA="Backup Cydia sources and packages."
 	BACKUP_LIBRARY="Backup Library."
+	BACKUP_USERAPP_DATA="Backup user applications (App Store app) data."
 	SHOW_BACKUPED_FILES="Show backuped file(s)."
 	DISCARD_BACKUP="Discard backup."
 	SAVE_BACKUP="Save backup."
@@ -81,7 +83,7 @@ function setEnglish(){
 	SHOW_INFO_3="Backup Menu > Backup Library"
 	SHOW_INFO_4="Backup Menu > Backup Library > Delete backup"
 	SHOW_INFO_5="Backup Menu > Show backuped file(s)"
-	SHOW_INFO_6="Backup Menu > Save backup"
+	SHOW_INFO_6="Backup Menu > Show backuped file(s) > Save backup"
 	SHOW_INFO_7="Restore Menu"
 	SHOW_INFO_8="Restore Menu > Restore Cydia sources and packages list"
 	SHOW_INFO_9="Restore Menu > Show backuped Cydia packages list."
@@ -90,6 +92,7 @@ function setEnglish(){
 	SHOW_INFO_12="Custom Backup"
 	SHOW_INFO_13="Custom Backup > Detect backup target"
 	SHOW_INFO_14="Custom Restore"
+	SHOW_INFO_15="Backup Menu > Backup App Data"
 }
 
 function setKorean(){
@@ -112,6 +115,7 @@ function setKorean(){
 	NOT_SUPPORTED_FUNCTION="지원되지 않는 기능입니다."
 	NO_SUCH_FILE_OR_DIRECTORY="존재하지 않는 파일이나 폴더입니다."
 	NO_SUCH_FILE="존재하지 않는 파일입니다."
+	NO_SUCH_APP="존재하지 않는 어플입니다."
 	NO_SUCH_XBACKUP="xBackup의 백업 파일을 찾을 수 없습니다! (/var/mobile/Library/xBackup/Backups/backup.bk.zip)"
 	NOTHING_TO_BACKUP="백업할 파일이 없습니다!"
 	NOTHING_TO_DELETE="지울 백업 파일이 없습니다!"
@@ -119,6 +123,7 @@ function setKorean(){
 	WILL_CREATE_BACKUP_NAME="백업 이름"
 	BACKUP_CYDIA_DATA="Cydia 소스, 패키지를 백업"
 	BACKUP_LIBRARY="Library 백업"
+	BACKUP_USERAPP_DATA="사용자 어플 (App Store 어플) 백업"
 	SHOW_BACKUPED_FILES="백업한 파일 보기"
 	DISCARD_BACKUP="백업을 취소하고 종료"
 	SAVE_BACKUP="백업을 저장"
@@ -162,7 +167,7 @@ function setKorean(){
 	SHOW_INFO_3="백업 메뉴 > Library 백업"
 	SHOW_INFO_4="백업 메뉴 > Library 백업 > 백업 삭제"
 	SHOW_INFO_5="백업 메뉴 > 백업한 파일 표시"
-	SHOW_INFO_6="백업 메뉴 > 백업을 저장"
+	SHOW_INFO_6="백업 메뉴 > 백업한 파일 표시 > 백업을 저장"
 	SHOW_INFO_7="복원 메뉴"
 	SHOW_INFO_8="복원 메뉴 > Cydia 소스, 패키지 복원"
 	SHOW_INFO_9="복원 메뉴 > 백업한 Cydia 패키지 목록 보기"
@@ -171,6 +176,7 @@ function setKorean(){
 	SHOW_INFO_12="커스텀 백업"
 	SHOW_INFO_13="커스텀 백업 > 백업 대상 입력"
 	SHOW_INFO_14="커스텀 복원"
+	SHOW_INFO_15="백업 메뉴 > 사용자 어플 데이터 백업"
 }
 
 function openDevSettings(){
@@ -920,7 +926,8 @@ function showInitialBackupMenu(){
 		showLinesB
 		echo -e "(1) ${BACKUP_CYDIA_DATA}"
 		echo -e "(2) ${BACKUP_LIBRARY}"
-		echo -e "(3) ${SHOW_BACKUPED_FILES}"
+		echo -e "(3) ${BACKUP_USERAPP_DATA}"
+		echo -e "(4) ${SHOW_BACKUPED_FILES}"
 		echo -e "(q) ${DISCARD_BACKUP}"
 		echo -e "(s) ${SAVE_BACKUP}"
 		showLinesA
@@ -933,6 +940,8 @@ function showInitialBackupMenu(){
 		elif [[ "${ANSWER_C}" == 2 ]]; then
 			backupLibrary
 		elif [[ "${ANSWER_C}" == 3 ]]; then
+			backupUserAppData
+		elif [[ "${ANSWER_C}" == 4 ]]; then
 			showBackupedFilesBackup
 		elif [[ "${ANSWER_C}" == q || "${ANSWER_C}" == quit ]]; then
 			quitTool
@@ -1183,6 +1192,65 @@ function backupLibrary(){
 				echo -e "${NO_SUCH_FILE_OR_DIRECTORY}"
 				applyNoColor
 				PA2CKey
+			fi
+		fi
+	done
+}
+
+function backupUserAppData(){
+	if [[ -f "/tmp/BackOn/Backup/${BACKUP_NAME}/AppData" ]]; then
+		rm "/tmp/BackOn/Backup/${BACKUP_NAME}/AppData"
+	fi
+	if [[ ! -d "/tmp/BackOn/Backup/${BACKUP_NAME}/AppData" ]]; then
+		mkdir -p "/tmp/BackOn/Backup/${BACKUP_NAME}/AppData"
+	fi
+	while(true); do
+		ClearKey
+		showLinesA
+		echo -e "${SHOW_INFO_15}"
+		showLinesB
+		cd "/var/mobile/Applications"
+		for NAME in $(ls); do
+			cd "/var/mobile/Applications/${NAME}" #Only for iOS 7 or older devices yet.
+			echo *.app | cut -d"." -f1;
+		done
+		read -p "- " ANSWER_P
+
+		if [[ "${ANSWER_P}" == ods ]]; then
+			openDevSettings
+		elif [[ "${ANSWER_P}" == exit ]]; then
+			ExitKey
+		elif [[ -z "${ANSWER_P}" ]]; then
+			:
+		else
+			cd "/var/mobile/Applications"
+			for NAME in $(ls); do
+				if [[ -d "${NAME}/${ANSWER_P}" ]]; then
+					APP_CODE="${NAME}"
+					RESULT_A=YES
+				fi
+			done
+			if [[ ! "${RESULT_A}" == YES || -z "${APP_CODE}" ]]; then
+				echo -e "${NO_SUCH_APP}"
+			else
+				if [[ -f "/tmp/BackOn/Backup/${BACKUP_NAME}/AppData/${ANSWER_P}" ]]; then
+					rm "/tmp/BackOn/Backup/${BACKUP_NAME}/AppData/${ANSWER_P}"
+				fi
+				if [[ -d "/tmp/BackOn/Backup/${BACKUP_NAME}/AppData/${ANSWER_P}" ]]; then
+					rm -rf "/tmp/BackOn/Backup/${BACKUP_NAME}/AppData/${ANSWER_P}"
+				fi
+				mkdir -p "/tmp/BackOn/Backup/${BACKUP_NAME}/AppData/${ANSWER_P}"
+				for NAME in Documents Library; do
+					if [[ -d "/var/mobile/Applications/${APP_CODE}/${NAME}" ]]; then
+						cp -r "/var/mobile/Applications/${APP_CODE}/${NAME}" "/tmp/BackOn/Backup/${BACKUP_NAME}/AppData/${ANSWER_P}"
+						RESULT_B=YES
+					fi
+				done
+				if [[ ! "${RESULT_B}" == YES ]]; then
+					applyRed
+					echo -e "ERROR!"
+					applyNoColor
+				fi
 			fi
 		fi
 	done
