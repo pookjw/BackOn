@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-286-official
+# BackOn alpha-287-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=286
+TOOL_BUILD_NUM=287
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -1129,7 +1129,7 @@ function backupUserAppData(){
 			echo *.app | cut -d"." -f1;
 		done
 		showLinesB
-		echo -e "${ENTER_BACKUP_APP_NAME}"
+		echo -e "(${ENTER_BACKUP_APP_NAME})"
 		showLinesA
 		applyLightCyan
 		read -p "- " ANSWER_P
@@ -1211,7 +1211,11 @@ function deleteBackup(){
 			fi
 			ClearKey
 			showLinesA
-			echo -e "${SHOW_INFO_4}"
+			if [[ "${1}" == Library ]]; then
+				echo -e "${SHOW_INFO_4}"
+			elif [[ "${1}" == AppData ]]; then
+				echo -e "${SHOW_INFO_16}"
+			fi
 			showLinesB
 			if [[ "${detailFileListView}" == YES ]]; then
 				ls -l "/tmp/BackOn/Backup/${BACKUP_NAME}/${1}"
