@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-285-official
+# BackOn alpha-286-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=285
+TOOL_BUILD_NUM=286
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -180,6 +180,7 @@ function setKorean(){
 	SHOW_INFO_13="커스텀 백업 > 백업 대상 입력"
 	SHOW_INFO_14="커스텀 복원"
 	SHOW_INFO_15="백업 메뉴 > 사용자 어플 데이터 백업"
+	SHOW_INFO_16="백업 메뉴 > 사용자 어플 데이터 백업 > 백업 삭제"
 }
 
 function openDevSettings(){
@@ -1032,69 +1033,7 @@ function backupLibrary(){
 				fi
 				PA2CKey
 			elif [[ "${ANSWER_E}" == delete ]]; then
-				while(true); do
-					if [[ -z "$(ls "/tmp/BackOn/Backup/${BACKUP_NAME}/Library")" ]]; then
-						ClearKey
-						showLinesA
-						echo -e "${SHOW_INFO_4}"
-						showLinesB
-						applyRed
-						echo -e "${NOTHING_TO_DELETE}"
-						applyNoColor
-						showLinesA
-						PA2CKey
-						break
-					fi
-					ClearKey
-					showLinesA
-					echo -e "${SHOW_INFO_4}"
-					showLinesB
-					if [[ "${detailFileListView}" == YES ]]; then
-						ls -l "/tmp/BackOn/Backup/${BACKUP_NAME}/Library"
-					else
-						ls "/tmp/BackOn/Backup/${BACKUP_NAME}/Library"
-					fi
-					showLinesB
-					echo -e "(${ENTER_QUIT})"
-					echo -e "(${SHOW_GUIDE_4})"
-					showLinesA
-					applyLightCyan
-					read -p "- " ANSWER_J
-					applyNoColor
-
-					if [[ -z "${ANSWER_J}" ]]; then
-						:
-					else
-						if [[ "${ANSWER_J}" == all ]]; then
-							echo -e "${REMOVING}"
-							rm -rf "/tmp/BackOn/Backup/${BACKUP_NAME}/Library"
-							mkdir -p "/tmp/BackOn/Backup/${BACKUP_NAME}/Library"
-							echo -e "${DONE}"
-							PA2CKey
-						elif [[ "${ANSWER_J}" == q || "${ANSWER_J}" == quit ]]; then
-							break
-						elif  [[ "${ANSWER_J}" == ods ]]; then
-							openDevSettings
-						elif [[ "${ANSWER_J}" == exit ]]; then
-							ExitKey
-						elif [[ -f "/tmp/BackOn/Backup/${BACKUP_NAME}/Library/${ANSWER_J}" ]]; then
-							echo -e "${REMOVING}"
-							rm "/tmp/BackOn/Backup/${BACKUP_NAME}/Library/${ANSWER_J}"
-							echo -e "${DONE}"
-							PA2CKey
-						elif [[ -d "/tmp/BackOn/Backup/${BACKUP_NAME}/Library/${ANSWER_J}" ]]; then
-							echo -e "${REMOVING}"
-							rm -rf "/tmp/BackOn/Backup/${BACKUP_NAME}/Library/${ANSWER_J}"
-							echo -e "${DONE}"
-							PA2CKey
-						else
-							applyRed
-							echo -e "${NO_SUCH_FILE_OR_DIRECTORY}"
-							applyNoColor
-							PA2CKey
-						fi
-					fi
-				done
+				deleteBackup Library
 			elif [[ "${ANSWER_E}" == Preferences ]]; then
 				if [[ "${showLog}" == YES ]]; then
 					applyPurple
@@ -1203,68 +1142,7 @@ function backupUserAppData(){
 		elif [[ "${ANSWER_P}" == quit || ${ANSWER_P} == q ]]; then
 			break
 		elif [[ "${ANSWER_P}" == delete ]]; then
-			while(true); do
-				if [[ -z "$(ls "/tmp/BackOn/Backup/${BACKUP_NAME}/AppData")" ]]; then
-					ClearKey
-					showLinesA
-					echo -e "${SHOW_INFO_16}"
-					showLinesB
-					applyRed
-					echo -e "${NOTHING_TO_DELETE}"
-					applyNoColor
-					showLinesA
-					PA2CKey
-					break
-				fi
-				ClearKey
-				showLinesA
-				echo -e "${SHOW_INFO_16}"
-				showLinesB
-				if [[ "${detailFileListView}" == YES ]]; then
-					ls -l "/tmp/BackOn/Backup/${BACKUP_NAME}/AppData"
-				else
-					ls "/tmp/BackOn/Backup/${BACKUP_NAME}/AppData"
-				fi
-				showLinesB
-				echo -e "(${ENTER_QUIT})"
-				echo -e "(${SHOW_GUIDE_4})"
-				showLinesA
-				applyLightCyan
-				read -p "- " ANSWER_Q
-				applyNoColor
-				if [[ -z "${ANSWER_Q}" ]]; then
-					:
-				else
-					if [[ "${ANSWER_Q}" == all ]]; then
-						echo -e "${REMOVING}"
-						rm -rf "/tmp/BackOn/Backup/${BACKUP_NAME}/AppData"
-						mkdir -p "/tmp/BackOn/Backup/${BACKUP_NAME}/AppData"
-						echo -e "${DONE}"
-						PA2CKey
-					elif [[ "${ANSWER_Q}" == q || "${ANSWER_Q}" == quit ]]; then
-						break
-					elif  [[ "${ANSWER_Q}" == ods ]]; then
-						openDevSettings
-					elif [[ "${ANSWER_Q}" == exit ]]; then
-						ExitKey
-					elif [[ -f "/tmp/BackOn/Backup/${BACKUP_NAME}/AppData/${ANSWER_Q}" ]]; then
-						echo -e "${REMOVING}"
-						rm "/tmp/BackOn/Backup/${BACKUP_NAME}/AppData/${ANSWER_Q}"
-						echo -e "${DONE}"
-						PA2CKey
-					elif [[ -d "/tmp/BackOn/Backup/${BACKUP_NAME}/AppData/${ANSWER_Q}" ]]; then
-						echo -e "${REMOVING}"
-						rm -rf "/tmp/BackOn/Backup/${BACKUP_NAME}/AppData/${ANSWER_Q}"
-						echo -e "${DONE}"
-						PA2CKey
-					else
-						applyRed
-						echo -e "${NO_SUCH_FILE_OR_DIRECTORY}"
-						applyNoColor
-						PA2CKey
-					fi
-				fi
-			done
+			deleteBackup AppData
 		elif [[ -z "${ANSWER_P}" ]]; then
 			:
 		else
@@ -1310,6 +1188,78 @@ function backupUserAppData(){
 			fi
 		fi
 	done
+}
+
+function deleteBackup(){
+	if [[ -z "${1}" ]]; then
+		applyRed
+		echo -e "ERROR!"
+		applyNoColor
+	else
+		while(true); do
+			if [[ -z "$(ls "/tmp/BackOn/Backup/${BACKUP_NAME}/${1}")" ]]; then
+				ClearKey
+				showLinesA
+				echo -e "${SHOW_INFO_4}"
+				showLinesB
+				applyRed
+				echo -e "${NOTHING_TO_DELETE}"
+				applyNoColor
+				showLinesA
+				PA2CKey
+				break
+			fi
+			ClearKey
+			showLinesA
+			echo -e "${SHOW_INFO_4}"
+			showLinesB
+			if [[ "${detailFileListView}" == YES ]]; then
+				ls -l "/tmp/BackOn/Backup/${BACKUP_NAME}/${1}"
+			else
+				ls "/tmp/BackOn/Backup/${BACKUP_NAME}/${1}"
+			fi
+			showLinesB
+			echo -e "(${ENTER_QUIT})"
+			echo -e "(${SHOW_GUIDE_4})"
+			showLinesA
+			applyLightCyan
+			read -p "- " ANSWER_J
+			applyNoColor
+
+			if [[ -z "${ANSWER_J}" ]]; then
+				:
+			else
+				if [[ "${ANSWER_J}" == all ]]; then
+					echo -e "${REMOVING}"
+					rm -rf "/tmp/BackOn/Backup/${BACKUP_NAME}/${1}"
+					mkdir -p "/tmp/BackOn/Backup/${BACKUP_NAME}/${1}"
+					echo -e "${DONE}"
+					PA2CKey
+				elif [[ "${ANSWER_J}" == q || "${ANSWER_J}" == quit ]]; then
+					break
+				elif  [[ "${ANSWER_J}" == ods ]]; then
+					openDevSettings
+				elif [[ "${ANSWER_J}" == exit ]]; then
+					ExitKey
+				elif [[ -f "/tmp/BackOn/Backup/${BACKUP_NAME}/${1}/${ANSWER_J}" ]]; then
+					echo -e "${REMOVING}"
+					rm "/tmp/BackOn/Backup/${BACKUP_NAME}/${1}/${ANSWER_J}"
+					echo -e "${DONE}"
+					PA2CKey
+				elif [[ -d "/tmp/BackOn/Backup/${BACKUP_NAME}/${1}/${ANSWER_J}" ]]; then
+					echo -e "${REMOVING}"
+					rm -rf "/tmp/BackOn/Backup/${BACKUP_NAME}/${1}/${ANSWER_J}"
+					echo -e "${DONE}"
+					PA2CKey
+				else
+					applyRed
+					echo -e "${NO_SUCH_FILE_OR_DIRECTORY}"
+					applyNoColor
+					PA2CKey
+				fi
+			fi
+		done
+	fi
 }
 
 function showBackupedFilesBackup(){
