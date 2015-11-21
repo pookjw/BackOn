@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-287-official
+# BackOn alpha-288-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=287
+TOOL_BUILD_NUM=288
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -1186,6 +1186,7 @@ function backupUserAppData(){
 					done
 				fi
 			fi
+			PA2CKey
 		fi
 	done
 }
