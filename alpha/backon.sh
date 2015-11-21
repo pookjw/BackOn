@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-282-official
+# BackOn alpha-283-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=282
+TOOL_BUILD_NUM=283
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -60,6 +60,7 @@ function setEnglish(){
 	BACKUPED_CYDIA_SOURCE="Cydia source"
 	BACKUPED_CYDIA_METADATA="Cydia metadata"
 	BACKUPED_CYDIA_SETTINGS="Cydia Settings"
+	BACKUPED_USERAPP_DATA="User App Data"
 	BACKUPED_LIBRARY="Library"
 	SUCCEED_SAVE_BACKUP="Succeed to save backup!"
 	OSVER_IS_NOT_MATCHING="iOS Version of backup is not matching with current iOS Version. It will cause problem."
@@ -112,6 +113,7 @@ function setKorean(){
 	QUIT="종료"
 	ENTER_QUIT="'quit'을 입력하면 이 메뉴를 종료합니다."
 	ENTER_BACKUP_NAME="원하는 백업 이름을 입력해 주세요. ('date'를 입력하면 현재 날짜, 시간을 백업 이름으로 지정합니다.)"
+	ENTER_APP_NAME="백업을 원하는 App 이름을 입력해 주세요."
 	BACKUP_CANCELED="입력란이 비었기 때문에 백업을 취소합니다."
 	NOT_SUPPORTED_FUNCTION="지원되지 않는 기능입니다."
 	NO_SUCH_FILE_OR_DIRECTORY="존재하지 않는 파일이나 폴더입니다."
@@ -124,7 +126,7 @@ function setKorean(){
 	WILL_CREATE_BACKUP_NAME="백업 이름"
 	BACKUP_CYDIA_DATA="Cydia 소스, 패키지를 백업"
 	BACKUP_LIBRARY="Library 백업"
-	BACKUP_USERAPP_DATA="사용자 어플 (App Store 어플) 백업"
+	BACKUP_USERAPP_DATA="사용자 어플 (App Store 어플) 데이터 백업"
 	SHOW_BACKUPED_FILES="백업한 파일 보기"
 	DISCARD_BACKUP="백업을 취소하고 종료"
 	SAVE_BACKUP="백업을 저장"
@@ -144,6 +146,7 @@ function setKorean(){
 	BACKUPED_CYDIA_SOURCE="Cydia 소스"
 	BACKUPED_CYDIA_METADATA="Cydia metadata"
 	BACKUPED_CYDIA_SETTINGS="Cydia 설정"
+	BACKUPED_USERAPP_DATA="사용자 어플 데이터 백업"
 	BACKUPED_LIBRARY="Library"
 	SUCCEED_SAVE_BACKUP="백업에 성공했습니다!"
 	OSVER_IS_NOT_MATCHING="백업할 때의 iOS 버전이 현재 기기의 iOS 버전과 일치하지 않습니다. 이것은 문제를 야기할 수 있습니다."
@@ -270,7 +273,6 @@ function openDevSettings(){
 		echo -e "(26) customRestore"
 		echo -e "(27) loadSettings"
 		echo -e "(c) Start sh."
-		echo -e "(l) ls"
 		echo -e "(s) Save Settings."
 		echo -e "(d) Disable DevSettings."
 		showLinesA
@@ -473,33 +475,6 @@ function openDevSettings(){
 			loadSettings
 		elif [[ "${ANSWER_D}" == c || "${ANSWER_D}" == sh ]]; then
 			sh
-			PA2CKey
-		elif [[ "${ANSWER_D}" == l || "${ANSWER_D}" == ls ]]; then
-			ClearKey
-			showLinesA
-			echo -e "/tmp/BackOn/"
-			ls -l "/tmp/BackOn"
-			echo -e "\n/tmp/BackOn/Backup/${BACKUP_NAME}"
-			ls -l "/tmp/BackOn/Backup/${BACKUP_NAME}"
-			echo -e "\n/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia"
-			ls -l "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia"
-			echo -e "\n/tmp/BackOn/Backup/${BACKUP_NAME}/Library"
-			ls -l "/tmp/BackOn/Backup/${BACKUP_NAME}/Library"
-			echo -e "\n/tmp/BackOn/Backup/${BACKUP_NAME}/Library/Caches"
-			ls -l "/tmp/BackOn/Backup/${BACKUP_NAME}/Library/Caches"
-			echo -e "\n/tmp/BackOn/Backup/${BACKUP_NAME}/Custom"
-			ls -l "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom"
-			echo -e "\n/tmp/BackOn/Restore"
-			ls -l "/tmp/BackOn/Restore"
-			echo -e "\n/tmp/BackOn/Restore/Cydia"
-			ls -l "/tmp/BackOn/Restore/Cydia"
-			echo -e "\n/tmp/BackOn/Restore/Library"
-			ls -l "/tmp/BackOn/Restore/Library"
-			echo -e "\n/tmp/BackOn/Restore/info"
-			ls -l "/tmp/BackOn/Restore/info"
-			echo -e "\n/tmp/BackOn/Restore/Custom"
-			ls -l "/tmp/BackOn/Restore/Custom"
-			showLinesA
 			PA2CKey
 		elif [[ "${ANSWER_D}" == save ||  "${ANSWER_D}" == s ]]; then
 			saveSettings
@@ -809,7 +784,7 @@ function killCydia(){
 }
 
 function removeEmptyBackupFolder(){
-	for Folder in Cydia Library Custom; do
+	for Folder in AppData Cydia Library Custom; do
 		if [[ -d "/tmp/BackOn/Backup/${BACKUP_NAME}/${Folder}" ]]; then
 			if [[ -z "$(ls "/tmp/BackOn/Backup/${BACKUP_NAME}/${Folder}")" ]]; then
 				rm -rf "/tmp/BackOn/Backup/${BACKUP_NAME}/${Folder}"
@@ -819,7 +794,7 @@ function removeEmptyBackupFolder(){
 }
 
 function removeEmptyRestoreFolder(){
-	for Folder in Cydia Library Custom info; do
+	for Folder in AppData Cydia Library Custom info; do
 		if [[ -d "/tmp/BackOn/Restore/${Folder}" ]]; then
 			if [[ -z "$(ls "/tmp/BackOn/Restore/${Folder}")" ]]; then
 				rm -rf "/tmp/BackOn/Restore/${Folder}"
@@ -1215,9 +1190,12 @@ function backupUserAppData(){
 			cd "/var/mobile/Applications/${NAME}" #Only for iOS 7 or older devices yet.
 			echo *.app | cut -d"." -f1;
 		done
-		showLinesA
+		showLinesB
 		echo -e "${ENTER_APP_NAME}"
+		showLinesA
+		applyLightCyan
 		read -p "- " ANSWER_P
+		applyNoColor
 
 		if [[ "${ANSWER_P}" == ods ]]; then
 			openDevSettings
@@ -1245,6 +1223,7 @@ function backupUserAppData(){
 				mkdir -p "/tmp/BackOn/Backup/${BACKUP_NAME}/AppData/${ANSWER_P}"
 				for NAME in Documents Library; do
 					if [[ -d "/var/mobile/Applications/${APP_CODE}/${NAME}" ]]; then
+						echo -e "${BACKING_UP}"
 						cp -r "/var/mobile/Applications/${APP_CODE}/${NAME}" "/tmp/BackOn/Backup/${BACKUP_NAME}/AppData/${ANSWER_P}"
 						RESULT_B=YES
 					fi
@@ -1284,6 +1263,11 @@ function showBackupedFilesBackup(){
 		echo -e "${BACKUPED_CYDIA_SETTINGS} : ${YES}"
 	else
 		echo -e "${BACKUPED_CYDIA_SETTINGS} : ${NO}"
+	fi
+	if [[ -d "/tmp/BackOn/Backup/${BACKUP_NAME}/AppData" ]]; then
+		echo -e "${BACKUPED_USERAPP_DATA}" : ${YES}
+	else
+		echo -e "${BACKUPED_USERAPP_DATA}" : ${NO}
 	fi
 	showLinesB
 	if [[ -d "/tmp/BackOn/Backup/${BACKUP_NAME}/Library" ]]; then
