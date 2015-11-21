@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-283-official
+# BackOn alpha-284-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=283
+TOOL_BUILD_NUM=284
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -1223,7 +1223,7 @@ function backupUserAppData(){
 				mkdir -p "/tmp/BackOn/Backup/${BACKUP_NAME}/AppData/${ANSWER_P}"
 				for NAME in Documents Library; do
 					if [[ -d "/var/mobile/Applications/${APP_CODE}/${NAME}" ]]; then
-						echo -e "${BACKING_UP}"
+						echo -e "${BACKING_UP} (${NAME}})"
 						cp -r "/var/mobile/Applications/${APP_CODE}/${NAME}" "/tmp/BackOn/Backup/${BACKUP_NAME}/AppData/${ANSWER_P}"
 						RESULT_B=YES
 					fi
@@ -1232,6 +1232,16 @@ function backupUserAppData(){
 					applyRed
 					echo -e "ERROR!"
 					applyNoColor
+				else
+					for NAME in Documents Library; do
+						if [[ ! -d "/tmp/BackOn/Backup/${BACKUP_NAME}/AppData/${ANSWER_P}/${NAME}" ]]; then
+							applyRed
+							echo -e "ERROR! (${NAME})"
+							applyNoColor
+						else
+							echo -e "${DONE} (${NAME})"
+						fi
+					done
 				fi
 			fi
 		fi
