@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-290-official
+# BackOn alpha-291-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=290
+TOOL_BUILD_NUM=291
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -1201,7 +1201,11 @@ function deleteBackup(){
 			if [[ -z "$(ls "/tmp/BackOn/Backup/${BACKUP_NAME}/${1}")" ]]; then
 				ClearKey
 				showLinesA
-				echo -e "${SHOW_INFO_4}"
+				if [[ "${1}" == Library ]]; then
+					echo -e "${SHOW_INFO_4}"
+				elif [[ "${1}" == AppData ]]; then
+					echo -e "${SHOW_INFO_16}"
+				fi
 				showLinesB
 				applyRed
 				echo -e "${NOTHING_TO_DELETE}"
