@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-292-official
+# BackOn alpha-293-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=292
+TOOL_BUILD_NUM=293
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -1154,7 +1154,9 @@ function backupUserAppData(){
 				fi
 			done
 			if [[ ! "${RESULT_A}" == YES || -z "${APP_CODE}" ]]; then
+				applyRed
 				echo -e "${NO_SUCH_APP}"
+				applyNoColor
 			else
 				if [[ -f "/tmp/BackOn/Backup/${BACKUP_NAME}/AppData/${ANSWER_P}" ]]; then
 					rm "/tmp/BackOn/Backup/${BACKUP_NAME}/AppData/${ANSWER_P}"
