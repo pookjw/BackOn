@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-289-official
+# BackOn alpha-290-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=289
+TOOL_BUILD_NUM=290
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -27,7 +27,7 @@ function setEnglish(){
 	QUIT="Quit."
 	ENTER_QUIT="Enter 'quit' to quit this menu."
 	ENTER_BACKUP_NAME="Enter backup name that you want to do. (If you want to set backup name to current date and time, enter 'date'.)"
-	ENTER_BACKUP_APP_NAME="Enter app name that you want to backup."
+	ENTER_BACKUP_APP_NAME="Enter app name that you want to backup. Enter 'delete' command to delete backuped backup."
 	NOT_SUPPORTED_FUNCTION="Not supported function."
 	NO_SUCH_FILE_OR_DIRECTORY="No such file or directory."
 	NO_SUCH_FILE="No such file."
@@ -113,7 +113,7 @@ function setKorean(){
 	QUIT="종료"
 	ENTER_QUIT="'quit'을 입력하면 이 메뉴를 종료합니다."
 	ENTER_BACKUP_NAME="원하는 백업 이름을 입력해 주세요. ('date'를 입력하면 현재 날짜, 시간을 백업 이름으로 지정합니다.)"
-	ENTER_BACKUP_APP_NAME="백업을 원하는 App 이름을 입력해 주세요."
+	ENTER_BACKUP_APP_NAME="백업을 원하는 App 이름을 입력해 주세요. 'delete' 명령어로 백업한 백업 파일을 삭제할 수 있습니다."
 	NOT_SUPPORTED_FUNCTION="지원되지 않는 기능입니다."
 	NO_SUCH_FILE_OR_DIRECTORY="존재하지 않는 파일이나 폴더입니다."
 	NO_SUCH_FILE="존재하지 않는 파일입니다."
