@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-298-official
+# BackOn alpha-299-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=298
+TOOL_BUILD_NUM=299
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -1824,6 +1824,7 @@ function restoreUserAppData(){
 			ls "/tmp/BackOn/Restore/AppData"
 		fi
 		showLinesB
+		echo -e "(${ENTER_QUIT})"
 		echo -e "(${SHOW_GUIDE_14})"
 		showLinesA
 		applyLightCyan
@@ -1842,8 +1843,8 @@ function restoreUserAppData(){
 			if [[ ! -d "/tmp/BackOn/Restore/AppData/${ANSWER_P}" ]]; then
 				echo -e "${NO_SUCH_APP}"
 			else
-				cd "/var/mobile/Applications"
-				for NAME in "$(ls)"; do
+				for NAME in $(ls); do
+					cd "/var/mobile/Applications"
 					if [[ -d "/var/mobile/Applications/${NAME}/${ANSWER_P}.app" ]]; then
 						APP_CODE="${NAME}"
 						RESULT_C=YES
