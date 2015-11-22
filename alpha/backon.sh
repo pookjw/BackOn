@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-297-official
+# BackOn alpha-298-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=297
+TOOL_BUILD_NUM=298
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -1840,7 +1840,7 @@ function restoreUserAppData(){
 			:
 		else
 			if [[ ! -d "/tmp/BackOn/Restore/AppData/${ANSWER_P}" ]]; then
-				echo -e "${NO_SUCH_FILE_OR_DIRECTORY}"
+				echo -e "${NO_SUCH_APP}"
 			else
 				cd "/var/mobile/Applications"
 				for NAME in "$(ls)"; do
@@ -1853,6 +1853,7 @@ function restoreUserAppData(){
 					applyRed
 					echo -e "${NOT_INSTALLED_APP}"
 					applyNoColor
+					PA2CKey
 				else
 					for NAME in Documents Library; do
 						if [[ -d "/tmp/BackOn/Restore/AppData/${ANSWER_P}/${NAME}" ]]; then
@@ -1869,6 +1870,8 @@ function restoreUserAppData(){
 					done
 				fi
 			fi
+			APP_CODE=
+			RESULT_C=
 		fi
 	done
 }
