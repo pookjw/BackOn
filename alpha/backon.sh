@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-300-official
+# BackOn alpha-301-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=300
+TOOL_BUILD_NUM=301
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -1843,8 +1843,8 @@ function restoreUserAppData(){
 			if [[ ! -d "/tmp/BackOn/Restore/AppData/${ANSWER_P}" ]]; then
 				echo -e "${NO_SUCH_APP}"
 			else
+				cd "/var/mobile/Applications"
 				for NAME in $(ls); do
-					cd "/var/mobile/Applications"
 					if [[ -d "/var/mobile/Applications/${NAME}/${ANSWER_P}.app" ]]; then
 						APP_CODE="${NAME}"
 						RESULT_C=YES
