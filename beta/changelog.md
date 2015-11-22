@@ -182,3 +182,13 @@ BackOn을 수정해서 배포할 땐 **'TOOL_RELEASE'**에 unofficial 표기를 
 - (Added) 백업 저장할 때 백업한 파일을 보여주는 과정을 추가.
 
 - (Fixed) [DevSettings] DevSettings 설정 파일 저장 경로 변경.
+
+# beta-303 (2015-11-23)
+
+- (Added) App Store 앱 데이터 백업 및 복원 기능 추가.
+
+단, **아직은 iOS 3~7 전용입니다.** iOS 8 이후로 앱 위치가 변경되면서 이 부분은 따로 작업이 필요합니다. 참고로 대용량 데이터를 백업하면 백업 저장 및 복원 시간에 많은 시간을 소요합니다.
+
+- (Fixed) Library 백업에서 백업 삭제 기능과 App 데이터 백업에서 백업 삭제 기능을 하나의 function으로 통합.
+
+- (Removed) [DevSettings] ls 기능 제거.
