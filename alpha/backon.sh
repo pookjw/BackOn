@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-296-official
+# BackOn alpha-297-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=296
+TOOL_BUILD_NUM=297
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -32,6 +32,7 @@ function setEnglish(){
 	NO_SUCH_FILE_OR_DIRECTORY="No such file or directory."
 	NO_SUCH_FILE="No such file."
 	NO_SUCH_APP="No such app."
+	NOT_INSTALLED_APP="App is not installed now."
 	NO_SUCH_XBACKUP="I can't find backup file of xBackup. (/var/mobile/Library/xBackup/Backups/backup.bk.zip)"
 	NOTHING_TO_BACKUP="Nothing to backup!"
 	NOTHING_TO_DELETE="Nothing to delete!"
@@ -66,6 +67,7 @@ function setEnglish(){
 	OSVER_IS_NOT_MATCHING="iOS Version of backup is not matching with current iOS Version. It will cause problem."
 	RESTORE_CYDIA_DATA="Restore Cydia sources and packages list."
 	RESTORE_SHOW_CYDIA_LIST="Show backuped Cydia packages list."
+	RESTORE_USER_APP_DATA="Restore user applications (App Store app) data."
 	RESTORE_LIBRARY="Restore Library."
 	REBOOT="Reboot."
 	RESTORING="Restoring..."
@@ -80,6 +82,7 @@ function setEnglish(){
 	SHOW_GUIDE_3="Enter file/folder name that you want to backup. If you want to backup all of files, enter 'all' command. Enter 'delete' command to delete backuped backup."
 	SHOW_GUIDE_4="Enter file/folder name that you want to delete backup. If you want to delete all of backup files, enter 'all' command."
 	SHOW_GUIDE_10="Enter file/folder name that you want to restore. If you want to restore all of files, enter 'all' command."
+	SHOW_GUIDE_14="Enter app name that you want to restore."
 	SHOW_INFO_1="Backup Menu"
 	SHOW_INFO_2="Backup Menu > Backup Cydia sources and packages list"
 	SHOW_INFO_3="Backup Menu > Backup Library"
@@ -96,6 +99,7 @@ function setEnglish(){
 	SHOW_INFO_14="Custom Restore"
 	SHOW_INFO_15="Backup Menu > Backup App Data"
 	SHOW_INFO_16="Backup Menu > Backup App Data > Delete backup"
+	SHOW_INFO_17="Restore Menu > Restore App Data"
 }
 
 function setKorean(){
@@ -119,6 +123,7 @@ function setKorean(){
 	NO_SUCH_FILE_OR_DIRECTORY="존재하지 않는 파일이나 폴더입니다."
 	NO_SUCH_FILE="존재하지 않는 파일입니다."
 	NO_SUCH_APP="존재하지 않는 어플입니다."
+	NOT_INSTALLED_APP="현재 App이 설치되지 않았습니다."
 	NO_SUCH_XBACKUP="xBackup의 백업 파일을 찾을 수 없습니다! (/var/mobile/Library/xBackup/Backups/backup.bk.zip)"
 	NOTHING_TO_BACKUP="백업할 파일이 없습니다!"
 	NOTHING_TO_DELETE="지울 백업 파일이 없습니다!"
@@ -153,6 +158,7 @@ function setKorean(){
 	OSVER_IS_NOT_MATCHING="백업할 때의 iOS 버전이 현재 기기의 iOS 버전과 일치하지 않습니다. 이것은 문제를 야기할 수 있습니다."
 	RESTORE_CYDIA_DATA="Cydia 소스, 패키지 복원"
 	RESTORE_SHOW_CYDIA_LIST="백업한 Cydia 패키지 목록 보기"
+	RESTORE_USER_APP_DATA="사용자 어플 (App Store 어플) 데이터 복원"
 	RESTORE_LIBRARY="Library 복원"
 	REBOOT="재부팅"
 	RESTORING="복원 중..."
@@ -167,6 +173,7 @@ function setKorean(){
 	SHOW_GUIDE_3="백업을 원하는 폴더/파일의 이름을 입력하시면 됩니다. 'all'을 입력하면 모두 백업할 수 있습니다. 'delete' 명령어로 백업한 백업 파일을 삭제할 수 있습니다."
 	SHOW_GUIDE_4="삭제를 원하는 폴더/파일의 이름을 입력하시면 됩니다. 'all'을 입력하면 모두 지울 수 있습니다."
 	SHOW_GUIDE_10="복원을 원하는 폴더/파일의 이름을 입력하시면 됩니다. 'all'을 입력하면 모두 복원할 수 있습니다."
+	SHOW_GUIDE_14="복원을 원하는 어플의 이름을 입력하시면 됩니다."
 	SHOW_INFO_1="백업 메뉴"
 	SHOW_INFO_2="백업 메뉴 > Cydia 소스, 패키지 목록을 백업"
 	SHOW_INFO_3="백업 메뉴 > Library 백업"
@@ -183,6 +190,7 @@ function setKorean(){
 	SHOW_INFO_14="커스텀 복원"
 	SHOW_INFO_15="백업 메뉴 > 사용자 어플 데이터 백업"
 	SHOW_INFO_16="백업 메뉴 > 사용자 어플 데이터 백업 > 백업 삭제"
+	SHOW_INFO_17="복원 메뉴 > 사용자 어플 데이터 복원"
 }
 
 function openDevSettings(){
@@ -1587,14 +1595,21 @@ function showInitialRestoreMenu(){
 			echo -e "(2) ${RESTORE_SHOW_CYDIA_LIST} (${NOT_BACKUPED})"
 			applyNoColor
 		fi
-		if [[ -d "/tmp/BackOn/Restore/Library" ]]; then
-			echo -e "(3) ${RESTORE_LIBRARY}"
+		if [[ -d "/tmp/BackOn/Restore/AppData" ]]; then
+			echo -e "(3) ${RESTORE_USER_APP_DATA}"
 		else
 			applyRed
-			echo -e "(3) ${RESTORE_LIBRARY} (${NOT_BACKUPED})"
+			echo -e "(3) ${RESTORE_USER_APP_DATA} (${NOT_BACKUPED})"
 			applyNoColor
 		fi
-		echo -e "(4) ${REBOOT}"
+		if [[ -d "/tmp/BackOn/Restore/Library" ]]; then
+			echo -e "(4) ${RESTORE_LIBRARY}"
+		else
+			applyRed
+			echo -e "(4) ${RESTORE_LIBRARY} (${NOT_BACKUPED})"
+			applyNoColor
+		fi
+		echo -e "(5) ${REBOOT}"
 		echo -e "(q) ${QUIT}"
 		showLinesA
 		applyLightCyan
@@ -1614,12 +1629,18 @@ function showInitialRestoreMenu(){
 				showNotSupportedFunction
 			fi
 		elif [[ "${ANSWER_H}" == 3 ]]; then
+			if [[ -d "/tmp/BackOn/Restore/AppData" ]]; then
+				restoreUserAppData
+			else
+				showNotSupportedFunction
+			fi
+		elif [[ "${ANSWER_H}" == 4 ]]; then
 			if [[ -d "/tmp/BackOn/Restore/Library" ]]; then
 				restoreLibrary
 			else
 				showNotSupportedFunction
 			fi
-		elif [[ "${ANSWER_H}" == 4 ]]; then
+		elif [[ "${ANSWER_H}" == 5 ]]; then
 			rebootDevice
 		elif [[ "${ANSWER_H}" == q || "${ANSWER_H}" == quit ]]; then
 			quitTool
@@ -1721,8 +1742,8 @@ function restoreLibrary(){
 			ls "/tmp/BackOn/Restore/Library"
 		fi
 		showLinesB
-		echo -e "(${SHOW_GUIDE_10})"
 		echo -e "(${ENTER_QUIT})"
+		echo -e "(${SHOW_GUIDE_10})"
 		showLinesA
 		applyLightCyan
 		read -p "- " ANSWER_I
@@ -1787,6 +1808,67 @@ function restoreLibrary(){
 			echo -e "${NO_SUCH_FILE_OR_DIRECTORY}"
 			applyNoColor
 			PA2CKey
+		fi
+	done
+}
+
+function restoreUserAppData(){
+	while(true); do
+		ClearKey
+		showLinesA
+		echo -e "${SHOW_INFO_17}"
+		showLinesB
+		if [[ "${detailFileListView}" == YES ]]; then
+			ls -l "/tmp/BackOn/Restore/AppData"
+		else
+			ls "/tmp/BackOn/Restore/AppData"
+		fi
+		showLinesB
+		echo -e "(${SHOW_GUIDE_14})"
+		showLinesA
+		applyLightCyan
+		read -p "- " ANSWER_P
+		applyNoColor
+
+		if [[ "${ANSWER_P}" == ods ]]; then
+			openDevSettings
+		elif [[ "${ANSWER_P}" == q || "${ANSWER_I}" == quit ]]; then
+			break
+		elif [[ "${ANSWER_P}" == exit ]]; then
+			ExitKey
+		elif [[ -z "${ANSWER_P}" ]]; then
+			:
+		else
+			if [[ ! -d "/tmp/BackOn/Restore/AppData/${ANSWER_P}" ]]; then
+				echo -e "${NO_SUCH_FILE_OR_DIRECTORY}"
+			else
+				cd "/var/mobile/Applications"
+				for NAME in "$(ls)"; do
+					if [[ -d "/var/mobile/Applications/${NAME}/${ANSWER_P}.app" ]]; then
+						APP_CODE="${NAME}"
+						RESULT_C=YES
+					fi
+				done
+				if [[ ! "${RESULT_C}" == YES || -z "${APP_CODE}" ]]; then
+					applyRed
+					echo -e "${NOT_INSTALLED_APP}"
+					applyNoColor
+				else
+					for NAME in Documents Library; do
+						if [[ -d "/tmp/BackOn/Restore/AppData/${ANSWER_P}/${NAME}" ]]; then
+							echo -e "${RESTORING} (${NAME})"
+							cp -r "/tmp/BackOn/Restore/AppData/${ANSWER_P}/${NAME}" "/var/mobile/Applications/${APP_CODE}"
+							if [[ -d "/var/mobile/Applications/${APP_CODE}/${NAME}" ]]; then
+								echo -e "${DONE} (${NAME})"
+							else
+								applyRed
+								echo -e "ERROR!"
+								applyNoColor
+							fi
+						fi
+					done
+				fi
+			fi
 		fi
 	done
 }
@@ -2221,7 +2303,7 @@ while(true); do
 		if [[ "${showLog}" == YES ]]; then
 			PA2CKey
 		fi
-		if [[ ! -d /tmp/BackOn/Restore/Cydia && ! -d /tmp/BackOn/Restore/Library && ! -d /tmp/BackOn/Restore/Custom ]]; then
+		if [[ ! -d /tmp/BackOn/Restore/AppData && ! -d /tmp/BackOn/Restore/Cydia && ! -d /tmp/BackOn/Restore/Library && ! -d /tmp/BackOn/Restore/Custom ]]; then
 			applyRed
 			echo -e "${NOT_BACKON_BACKUP}"
 			applyNoColor
