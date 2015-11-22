@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-299-official
+# BackOn alpha-300-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=299
+TOOL_BUILD_NUM=300
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -1854,25 +1854,27 @@ function restoreUserAppData(){
 					applyRed
 					echo -e "${NOT_INSTALLED_APP}"
 					applyNoColor
-					PA2CKey
 				else
-					for NAME in Documents Library; do
-						if [[ -d "/tmp/BackOn/Restore/AppData/${ANSWER_P}/${NAME}" ]]; then
-							echo -e "${RESTORING} (${NAME})"
-							cp -r "/tmp/BackOn/Restore/AppData/${ANSWER_P}/${NAME}" "/var/mobile/Applications/${APP_CODE}"
-							if [[ -d "/var/mobile/Applications/${APP_CODE}/${NAME}" ]]; then
-								echo -e "${DONE} (${NAME})"
-							else
-								applyRed
-								echo -e "ERROR!"
-								applyNoColor
+					if [[ ! "${skipRestore}" == YES ]]; then
+						for NAME in Documents Library; do
+							if [[ -d "/tmp/BackOn/Restore/AppData/${ANSWER_P}/${NAME}" ]]; then
+								echo -e "${RESTORING} (${NAME})"
+								cp -r "/tmp/BackOn/Restore/AppData/${ANSWER_P}/${NAME}" "/var/mobile/Applications/${APP_CODE}"
+								if [[ -d "/var/mobile/Applications/${APP_CODE}/${NAME}" ]]; then
+									echo -e "${DONE} (${NAME})"
+								else
+									applyRed
+									echo -e "ERROR!"
+									applyNoColor
+								fi
 							fi
-						fi
-					done
+						done
+					fi
 				fi
 			fi
 			APP_CODE=
 			RESULT_C=
+			PA2CKey
 		fi
 	done
 }
