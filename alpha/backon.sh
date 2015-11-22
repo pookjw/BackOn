@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-301-official
+# BackOn alpha-302-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=301
+TOOL_BUILD_NUM=302
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -1855,7 +1855,9 @@ function restoreUserAppData(){
 					echo -e "${NOT_INSTALLED_APP}"
 					applyNoColor
 				else
-					if [[ ! "${skipRestore}" == YES ]]; then
+					if [[ "${skipRestore}" == YES ]]; then
+						echo -e "Skipped."
+					else
 						for NAME in Documents Library; do
 							if [[ -d "/tmp/BackOn/Restore/AppData/${ANSWER_P}/${NAME}" ]]; then
 								echo -e "${RESTORING} (${NAME})"
