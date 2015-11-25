@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-304-official
+# BackOn alpha-305-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=304
+TOOL_BUILD_NUM=305
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -1833,7 +1833,7 @@ function restoreUserAppData(){
 
 		if [[ "${ANSWER_P}" == ods ]]; then
 			openDevSettings
-		elif [[ "${ANSWER_P}" == q || "${ANSWER_I}" == quit ]]; then
+		elif [[ "${ANSWER_P}" == q || "${ANSWER_P}" == quit ]]; then
 			break
 		elif [[ "${ANSWER_P}" == exit ]]; then
 			ExitKey
