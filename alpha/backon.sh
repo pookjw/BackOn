@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-308-official
+# BackOn alpha-309-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=308
+TOOL_BUILD_NUM=309
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -1215,6 +1215,9 @@ function backupUserAppData(){
 					applyRed
 					echo -e "ERROR!"
 					applyNoColor
+					if [[ -d "/tmp/BackOn/Backup/${BACKUP_NAME}/AppData/${ANSWER_P}" ]]; then
+						rm -rf "/tmp/BackOn/Backup/${BACKUP_NAME}/AppData/${ANSWER_P}"
+					fi
 				else
 					for NAME in Documents Library; do
 						if [[ ! -d "/tmp/BackOn/Backup/${BACKUP_NAME}/AppData/${ANSWER_P}/${NAME}" ]]; then
