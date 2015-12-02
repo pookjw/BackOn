@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-305-official
+# BackOn alpha-306-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=305
+TOOL_BUILD_NUM=306
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -65,6 +65,7 @@ function setEnglish(){
 	BACKUPED_USERAPP_DATA="User App Data"
 	SUCCEED_SAVE_BACKUP="Succeed to save backup!"
 	OSVER_IS_NOT_MATCHING="iOS Version of backup is not matching with current iOS Version. It will cause problem."
+	WARN_RESTORE_USER_APP_DATA="This function is not stable yet so it may not work correctly."
 	RESTORE_CYDIA_DATA="Restore Cydia sources and packages list."
 	RESTORE_SHOW_CYDIA_LIST="Show backuped Cydia packages list."
 	RESTORE_USER_APP_DATA="Restore user applications (App Store app) data."
@@ -156,6 +157,7 @@ function setKorean(){
 	BACKUPED_USERAPP_DATA="사용자 어플 데이터"
 	SUCCEED_SAVE_BACKUP="백업에 성공했습니다!"
 	OSVER_IS_NOT_MATCHING="백업할 때의 iOS 버전이 현재 기기의 iOS 버전과 일치하지 않습니다. 이것은 문제를 야기할 수 있습니다."
+	WARN_RESTORE_USER_APP_DATA="이 기능은 아직 안정적이지 않기 때문에 제대로 작동하지 않을 수 있습니다."
 	RESTORE_CYDIA_DATA="Cydia 소스, 패키지 복원"
 	RESTORE_SHOW_CYDIA_LIST="백업한 Cydia 패키지 목록 보기"
 	RESTORE_USER_APP_DATA="사용자 어플 (App Store 어플) 데이터 복원"
@@ -338,6 +340,8 @@ function openDevSettings(){
 			if [[ -z "${OSVer}" ]]; then
 				OSVer="$(sw_vers -productVersion)"
 			fi
+			setOSInitialVer
+			setAppPath
 		elif [[ "${ANSWER_D}" == 7 ]]; then
 			if [[ "${MakeFakeActivatorFile}" == YES ]]; then
 				rm /var/mobile/Library/Caches/libactivator.plist
@@ -627,6 +631,20 @@ function loadSettings(){
 	fi
 }
 
+function setOSInitialVer(){
+	OSInitialVer="$(echo -e "${OSVer}" | cut -d"." -f1)"
+}
+
+function setAppPath(){
+	if [[ "${OSInitialVer}" -le 7 ]]; then
+		INSTALLED_APP_PATH="/var/mobile/Applications"
+		DATA_APP_PATH="/var/mobile/Applications"
+	else
+		INSTALLED_APP_PATH="/var/mobile/Containers/Bundle/Application"
+		DATA_APP_PATH="/var/mobile/Containers/Data/Application"
+	fi
+}
+
 function showLinesA(){
 	if [[ "${DynamicLine}" == YES ]]; then
 		PRINTED_COUNTS=0
@@ -912,7 +930,7 @@ function showInitialBackupMenu(){
 		showLinesB
 		echo -e "(1) ${BACKUP_CYDIA_DATA}"
 		echo -e "(2) ${BACKUP_LIBRARY}"
-		if [[ -z "$(ls "/var/mobile/Applications")" ]]; then
+		if [[ -z "$(ls "${INSTALLED_APP_PATH}")" ]]; then
 			applyRed
 			echo -e "(3) ${BACKUP_USERAPP_DATA} (${NOT_AVAILABLE})"
 			applyNoColor
@@ -932,9 +950,9 @@ function showInitialBackupMenu(){
 		elif [[ "${ANSWER_C}" == 2 ]]; then
 			backupLibrary
 		elif [[ "${ANSWER_C}" == 3 ]]; then
-			if [[ -z "$(ls "/var/mobile/Applications")" ]]; then
+			if [[ -z "$(ls "${INSTALLED_APP_PATH}")" ]]; then
 				showNotSupportedFunction
-			else 
+			else
 				backupUserAppData
 			fi
 		elif [[ "${ANSWER_C}" == 4 ]]; then
@@ -1143,10 +1161,10 @@ function backupUserAppData(){
 		showLinesA
 		echo -e "${SHOW_INFO_15}"
 		showLinesB
-		cd "/var/mobile/Applications"
+		cd "${INSTALLED_APP_PATH}"
 		for NAME in $(ls); do
-			cd "/var/mobile/Applications/${NAME}" #Only for iOS 7 or older devices yet.
-			echo *.app | cut -d"." -f1;
+			cd "${INSTALLED_APP_PATH}/${NAME}" #Only for iOS 7 or older devices yet.
+			echo *.app | cut -d"." -f1
 		done
 		showLinesB
 		echo -e "(${ENTER_QUIT})"
@@ -1167,7 +1185,7 @@ function backupUserAppData(){
 		elif [[ -z "${ANSWER_P}" ]]; then
 			:
 		else
-			cd "/var/mobile/Applications"
+			cd "${INSTALLED_APP_PATH}"
 			for NAME in $(ls); do
 				if [[ -d "${NAME}/${ANSWER_P}.app" ]]; then
 					APP_CODE="${NAME}"
@@ -1187,9 +1205,9 @@ function backupUserAppData(){
 				fi
 				mkdir -p "/tmp/BackOn/Backup/${BACKUP_NAME}/AppData/${ANSWER_P}"
 				for NAME in Documents Library; do
-					if [[ -d "/var/mobile/Applications/${APP_CODE}/${NAME}" ]]; then
+					if [[ -d "${DATA_APP_PATH}/${APP_CODE}/${NAME}" ]]; then
 						echo -e "${BACKING_UP} (${NAME})"
-						cp -r "/var/mobile/Applications/${APP_CODE}/${NAME}" "/tmp/BackOn/Backup/${BACKUP_NAME}/AppData/${ANSWER_P}"
+						cp -r "${DATA_APP_PATH}/${APP_CODE}/${NAME}" "/tmp/BackOn/Backup/${BACKUP_NAME}/AppData/${ANSWER_P}"
 						RESULT_B=YES
 					fi
 				done
@@ -1813,6 +1831,10 @@ function restoreLibrary(){
 }
 
 function restoreUserAppData(){
+	showLinesA
+	echo -e "${WARN_RESTORE_USER_APP_DATA}"
+	showLinesA
+	PA2CKey
 	while(true); do
 		ClearKey
 		showLinesA
@@ -1845,9 +1867,9 @@ function restoreUserAppData(){
 				echo -e "${NO_SUCH_APP}"
 				applyNoColor
 			else
-				cd "/var/mobile/Applications"
+				cd "${INSTALLED_APP_PATH}"
 				for NAME in $(ls); do
-					if [[ -d "/var/mobile/Applications/${NAME}/${ANSWER_P}.app" ]]; then
+					if [[ -d "${DATA_APP_PATH}/${NAME}/${ANSWER_P}.app" ]]; then
 						APP_CODE="${NAME}"
 						RESULT_C=YES
 					fi
@@ -1861,9 +1883,12 @@ function restoreUserAppData(){
 						echo -e "Skipped."
 					else
 						for NAME in Documents Library; do
+							if [[ -d "${DATA_APP_PATH}/${APP_CODE}/${NAME}" ]]; then
+								rm -rf "${DATA_APP_PATH}/${APP_CODE}/${NAME}"
+							fi
 							if [[ -d "/tmp/BackOn/Restore/AppData/${ANSWER_P}/${NAME}" ]]; then
 								echo -e "${RESTORING} (${NAME})"
-								cp -r "/tmp/BackOn/Restore/AppData/${ANSWER_P}/${NAME}" "/var/mobile/Applications/${APP_CODE}"
+								cp -r "/tmp/BackOn/Restore/AppData/${ANSWER_P}/${NAME}" "${DATA_APP_PATH}/${APP_CODE}"
 								if [[ -d "/var/mobile/Applications/${APP_CODE}/${NAME}" ]]; then
 									echo -e "${DONE} (${NAME})"
 								else
@@ -1873,6 +1898,7 @@ function restoreUserAppData(){
 								fi
 							fi
 						done
+						chmod -R 755 "${DATA_APP_PATH}/${APP_CODE}"
 					fi
 				fi
 			fi
@@ -2248,6 +2274,8 @@ if [[ -d "/var/mobile/Library/Preferences/BackOn/DevSettings" ]]; then
 	saveSettings
 fi
 OSVer="$(sw_vers -productVersion)"
+setOSInitialVer
+setAppPath
 UpdateURL="https://github.com/pookjw/BackOn/archive/master.zip"
 if [[ -d "/tmp/BackOn" ]]; then
 	rm -rf "/tmp/BackOn"
