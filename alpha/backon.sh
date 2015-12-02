@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-306-official
+# BackOn alpha-307-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=306
+TOOL_BUILD_NUM=307
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -222,7 +222,7 @@ function openDevSettings(){
 			echo -e "(4) skipRestore : NO"
 		fi
 		echo -e "(5) UpdateURL : ${UpdateURL}"
-		echo -e "(6) OSVer : ${OSVer}"
+		echo -e "(6) OSVer : ${OSVer} (iOS ${OSInitialVer})"
 		if [[ "${MakeFakeActivatorFile}" == YES ]]; then
 			echo -e "(7) MakeFakeActivatorFile : YES"
 		elif [[ "${MakeFakeActivatorFile}" == NO ]]; then
