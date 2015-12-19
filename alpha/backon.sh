@@ -1,12 +1,12 @@
-#!/bin/sh
+#!/bin/sh -x
 ##############################################
 # Kim Jinwoo - pookjw
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-309-official
+# BackOn alpha-310-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=309
+TOOL_BUILD_NUM=310
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
