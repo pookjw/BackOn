@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-310-official
+# BackOn alpha-311-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=310
+TOOL_BUILD_NUM=311
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -962,7 +962,7 @@ function showInitialBackupMenu(){
 		elif [[ "${ANSWER_C}" == 2 ]]; then
 			backupLibrary
 		elif [[ "${ANSWER_C}" == 3 ]]; then
-			if [ -z "$(ls "${INSTALLED_APP_PATH}")" || "${OSInitialVer}" -ge 8 ]; then
+			if [ "${OSInitialVer}" -ge 8  || -z "$(ls "${INSTALLED_APP_PATH}")" ]; then
 				showNotSupportedFunction
 			else
 				backupUserAppData
@@ -1666,7 +1666,7 @@ function showInitialRestoreMenu(){
 				showNotSupportedFunction
 			fi
 		elif [[ "${ANSWER_H}" == 3 ]]; then
-			if [ ! -d "/tmp/BackOn/Restore/AppData" || "${OSInitialVer}" -ge 8 ]; then
+			if [ "${OSInitialVer}" -ge 8 || ! -d "/tmp/BackOn/Restore/AppData" ]; then
 				showNotSupportedFunction
 			else
 				restoreUserAppData
