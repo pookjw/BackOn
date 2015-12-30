@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-309-official
+# BackOn alpha-310-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=309
+TOOL_BUILD_NUM=310
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -37,6 +37,7 @@ function setEnglish(){
 	NOTHING_TO_BACKUP="Nothing to backup!"
 	NOTHING_TO_DELETE="Nothing to delete!"
 	NOT_AVAILABLE="Not available."
+	NOT_SUPPORTED_IOS_VERSION="This iOS version is not supported."
 	PRESS_ANY_KEY_TO_CONTINUE="Press any key to continue..."
 	WILL_CREATE_BACKUP_NAME="Will create backup name"
 	BACKUP_CYDIA_DATA="Backup Cydia sources and packages."
@@ -129,6 +130,7 @@ function setKorean(){
 	NOTHING_TO_BACKUP="백업할 파일이 없습니다!"
 	NOTHING_TO_DELETE="지울 백업 파일이 없습니다!"
 	NOT_AVAILABLE="백업 불가"
+	NOT_SUPPORTED_IOS_VERSION="지원되지 않는 iOS 버전입니다."
 	PRESS_ANY_KEY_TO_CONTINUE="계속하려면 아무 키나 누르십시오..."
 	WILL_CREATE_BACKUP_NAME="백업 이름"
 	BACKUP_CYDIA_DATA="Cydia 소스, 패키지를 백업"
@@ -284,6 +286,8 @@ function openDevSettings(){
 		echo -e "(25) customBackup"
 		echo -e "(26) customRestore"
 		echo -e "(27) loadSettings"
+		echo -e "(28) backupUserAppData"
+		echo -e "(29) restoreUserAppData"
 		echo -e "(c) Start sh."
 		echo -e "(s) Save Settings."
 		echo -e "(d) Disable DevSettings."
@@ -487,6 +491,10 @@ function openDevSettings(){
 			customRestore
 		elif [[ "${ANSWER_D}" == 27 ]]; then
 			loadSettings
+		elif [[ "${ANSWER_D}" == 28 ]]; then
+			backupUserAppData
+		elif [[ "${ANSWER_D}" == 29 ]]; then
+			restoreUserAppData
 		elif [[ "${ANSWER_D}" == c || "${ANSWER_D}" == sh ]]; then
 			sh
 			PA2CKey
@@ -930,7 +938,11 @@ function showInitialBackupMenu(){
 		showLinesB
 		echo -e "(1) ${BACKUP_CYDIA_DATA}"
 		echo -e "(2) ${BACKUP_LIBRARY}"
-		if [[ -z "$(ls "${INSTALLED_APP_PATH}")" ]]; then
+		if [ "${OSInitialVer}" -ge 8 ]; then
+			applyRed
+			echo -e "(3) ${BACKUP_USERAPP_DATA} (${NOT_SUPPORTED_IOS_VERSION})"
+			applyNoColor
+		elif [[ -z "$(ls "${INSTALLED_APP_PATH}")" ]]; then
 			applyRed
 			echo -e "(3) ${BACKUP_USERAPP_DATA} (${NOT_AVAILABLE})"
 			applyNoColor
@@ -950,7 +962,7 @@ function showInitialBackupMenu(){
 		elif [[ "${ANSWER_C}" == 2 ]]; then
 			backupLibrary
 		elif [[ "${ANSWER_C}" == 3 ]]; then
-			if [[ -z "$(ls "${INSTALLED_APP_PATH}")" ]]; then
+			if [ -z "$(ls "${INSTALLED_APP_PATH}")" || "${OSInitialVer}" -ge 8 ]; then
 				showNotSupportedFunction
 			else
 				backupUserAppData
@@ -1616,12 +1628,16 @@ function showInitialRestoreMenu(){
 			echo -e "(2) ${RESTORE_SHOW_CYDIA_LIST} (${NOT_BACKUPED})"
 			applyNoColor
 		fi
-		if [[ -d "/tmp/BackOn/Restore/AppData" ]]; then
-			echo -e "(3) ${RESTORE_USER_APP_DATA}"
-		else
+		if [ "${OSInitialVer}" -ge 8 ]; then
+			applyRed
+			echo -e "(3) ${RESTORE_USER_APP_DATA} (${NOT_SUPPORTED_IOS_VERSION})"
+			applyNoColor
+		elif [[ ! -d "/tmp/BackOn/Restore/AppData" ]]; then
 			applyRed
 			echo -e "(3) ${RESTORE_USER_APP_DATA} (${NOT_BACKUPED})"
 			applyNoColor
+		else
+			echo -e "(3) ${RESTORE_USER_APP_DATA}"
 		fi
 		if [[ -d "/tmp/BackOn/Restore/Library" ]]; then
 			echo -e "(4) ${RESTORE_LIBRARY}"
@@ -1650,10 +1666,10 @@ function showInitialRestoreMenu(){
 				showNotSupportedFunction
 			fi
 		elif [[ "${ANSWER_H}" == 3 ]]; then
-			if [[ -d "/tmp/BackOn/Restore/AppData" ]]; then
-				restoreUserAppData
-			else
+			if [ ! -d "/tmp/BackOn/Restore/AppData" || "${OSInitialVer}" -ge 8 ]; then
 				showNotSupportedFunction
+			else
+				restoreUserAppData
 			fi
 		elif [[ "${ANSWER_H}" == 4 ]]; then
 			if [[ -d "/tmp/BackOn/Restore/Library" ]]; then
