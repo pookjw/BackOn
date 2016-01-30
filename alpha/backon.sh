@@ -4,7 +4,7 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-314-official
+# BackOn alpha-315-official
 TOOL_BUILD_TYPE=alpha
 TOOL_BUILD_NUM=314
 TOOL_RELEASE=official
@@ -1634,6 +1634,10 @@ function showInitialRestoreMenu(){
 			applyRed
 			echo -e "(3) ${RESTORE_USER_APP_DATA} (${NOT_SUPPORTED_IOS_VERSION})"
 			applyNoColor
+		elif [[ -z "$(ls "${INSTALLED_APP_PATH}")" ]]; then
+			applyRed
+			echo -e "(3) ${RESTORE_USER_APP_DATA} (${NOT_INSTALLED_APP})"
+			applyNoColor
 		elif [[ ! -d "/tmp/BackOn/Restore/AppData" ]]; then
 			applyRed
 			echo -e "(3) ${RESTORE_USER_APP_DATA} (${NOT_BACKUPED})"
@@ -1670,7 +1674,9 @@ function showInitialRestoreMenu(){
 		elif [[ "${ANSWER_H}" == 3 ]]; then
 			if [ "${OSInitialVer}" -ge 8 ]; then
 				showNotSupportedFunction
-			elif [[  -z "$(ls "${INSTALLED_APP_PATH}")" ]]; then
+			elif [[ -z "$(ls "${INSTALLED_APP_PATH}")" ]]; then
+				showNotSupportedFunction
+			elif [[ ! -d "/tmp/BackOn/Restore/AppData" ]]; then
 				showNotSupportedFunction
 			else
 				restoreUserAppData
