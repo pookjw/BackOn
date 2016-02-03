@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn beta-313-official
+# BackOn beta-317-official
 TOOL_BUILD_TYPE=beta
-TOOL_BUILD_NUM=313
+TOOL_BUILD_NUM=317
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -777,7 +777,7 @@ function checkRoot(){
 		echo -e "${NOT_RUN_AS_ROOT}"
 		applyNoColor
 		su -c "backon ${1}"
-		quitTool_NoClear
+		exit 0
 	fi
 }
 
@@ -1638,6 +1638,10 @@ function showInitialRestoreMenu(){
 			applyRed
 			echo -e "(3) ${RESTORE_USER_APP_DATA} (${NOT_BACKUPED})"
 			applyNoColor
+		elif [[ -z "$(ls "${INSTALLED_APP_PATH}")" ]]; then
+			applyRed
+			echo -e "(3) ${RESTORE_USER_APP_DATA} (${NOT_INSTALLED_APP})"
+			applyNoColor
 		else
 			echo -e "(3) ${RESTORE_USER_APP_DATA}"
 		fi
@@ -1670,7 +1674,9 @@ function showInitialRestoreMenu(){
 		elif [[ "${ANSWER_H}" == 3 ]]; then
 			if [ "${OSInitialVer}" -ge 8 ]; then
 				showNotSupportedFunction
-			elif [[  -z "$(ls "${INSTALLED_APP_PATH}")" ]]; then
+			elif [[ ! -d "/tmp/BackOn/Restore/AppData" ]]; then
+				showNotSupportedFunction
+			elif [[ -z "$(ls "${INSTALLED_APP_PATH}")" ]]; then
 				showNotSupportedFunction
 			else
 				restoreUserAppData
