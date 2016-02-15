@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-319-official
+# BackOn alpha-320-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=319
+TOOL_BUILD_NUM=320
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -527,6 +527,7 @@ function openDevSettings(){
 				echo -e "(3) customRestore"
 				echo -e "(4) backupUserAppData"
 				echo -e "(5) restoreUserAppData"
+				echo -e "(6) runUpdate"
 				showLinesA
 				applyLightCyan
 				read -p "- " ANSWER_V
@@ -542,6 +543,8 @@ function openDevSettings(){
 					backupUserAppData
 				elif [[ "${ANSWER_V}" == 5 ]]; then
 					restoreUserAppData
+				elif [[ "${ANSWER_V}" == 6 ]]; then
+					runUpdate
 				elif [[ "${ANSWER_V}" == quit || "${ANSWER_V}" == q ]]; then
 					break
 				elif [[ "${ANSWER_V}" == exit ]]; then
