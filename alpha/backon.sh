@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-316-official
+# BackOn alpha-318-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=316
+TOOL_BUILD_NUM=318
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -197,6 +197,380 @@ function setKorean(){
 	SHOW_INFO_17="복원 메뉴 > 사용자 어플 데이터 복원"
 }
 
+function openDevSettings_ing(){
+	while(true); do
+		ClearKey
+		showLinesA
+		echo -e "DevSettings - ${TOOL_BUILD_TYPE}-${TOOL_BUILD_NUM}-${TOOL_RELEASE}"
+		showLinesB
+		echo -e "(1) General Settings."
+		echo -e "(2) Key Settings."
+		echo -e "(3) Backup Settings."
+		echo -e "(4) Restore Settings."
+		echo -e "(5) Update Settings."
+		echo -e "(6) Run function. (All functions not listed.)"
+		echo -e "(l) Reload Settings."
+		echo -e "(d) Disable DevSettings."
+		echo -e "(s) Save Settings."
+		showLinesA
+		applyLightCyan
+		read -p "- " ANSWER_D
+		applyNoColor
+
+		if [[ "${ANSWER_D}" == 1 ]]; then
+			while(true); do
+				ClearKey
+				showLinesA
+				echo -e "DevSettings > General Settings"
+				showLinesB
+				echo -e "(1) showLog : ${showLog}"
+				echo -e "(2) OSVer : ${OSVer} (iOS ${OSInitialVer})"
+				echo -e "(3) switchLanguage (Current : ${switchLanguage})"
+				echo -e "(4) setDefaultLanguage : ${setDefaultLanguage}"
+				echo -e "(5) detailFileListView : ${detailFileListView}"
+				echo -e "(6) applyColorScheme : ${applyColorScheme}"
+				echo -e "(7) DynamicLine : ${DynamicLine}"
+				echo -e "(8) fixDynamicLineIssue : ${fixDynamicLineIssue}"
+				showLinesA
+				applyLightCyan
+				read -p "- " ANSWER_Q
+				applyNoColor
+
+				if [[ "${ANSWER_Q}" == 1 ]]; then
+					if [[ "${showLog}" == YES ]]; then
+						showLog=NO
+					else
+						showLog=YES
+					fi
+				elif [[ "${ANSWER_Q}" == 2 ]]; then
+					applyLightCyan
+					read -p "Query : " OSVer
+					applyNoColor
+					if [[ -z "${OSVer}" ]]; then
+						OSVer="$(sw_vers -productVersion)"
+					fi
+					setOSInitialVer
+					setAppPath
+				elif [[ "${ANSWER_Q}" == 3 ]]; then
+					switchLanguage
+				elif [[ "${ANSWER_Q}" == 4 ]]; then
+					while(true); do
+						ClearKey
+						showLinesA
+						echo -e "DevSettings > General Settings > setDefaultLanguage"
+						showLinesB
+						echo -e "(1) English"
+						echo -e "(2) Korean (한국어)"
+						showLinesA
+						applyLightCyan
+						read -p "- " ANSWER_G
+						applyNoColor
+
+						if [[ "${ANSWER_G}" == 1 ]]; then
+							setDefaultLanguage=English
+							break
+						elif [[ "${ANSWER_G}" == 2 ]]; then
+							setDefaultLanguage=Korean
+							break
+						elif [[ "${ANSWER_G}" == exit ]]; then
+							ExitKey
+						elif [[ "${ANSWER_G}" == q || "${ANSWER_G}" == quit ]]; then
+							break
+						fi
+					done
+				elif [[ "${ANSWER_Q}" == 5 ]]; then
+					if [[ "${detailFileListView}" == YES ]]; then
+						detailFileListView=NO
+					else
+						detailFileListView=YES
+					fi
+				elif [[ "${ANSWER_Q}" == 6 ]]; then
+					if [[ "${applyColorScheme}" == YES ]]; then
+						applyColorScheme=NO
+					else
+						applyColorScheme=YES
+					fi
+				elif [[ "${ANSWER_Q}" == 7 ]]; then
+					if [[ "${DynamicLine}" == YES ]]; then
+						DynamicLine=NO
+					else
+						DynamicLine=YES
+					fi
+				elif [[ "${ANSWER_Q}" == 8 ]]; then
+					if [[ "${fixDynamicLineIssue}" == YES ]]; then
+						fixDynamicLineIssue=NO
+					else
+						fixDynamicLineIssue=YES
+					fi
+				elif [[ "${ANSWER_Q}" == quit || "${ANSWER_Q}" == q ]]; then
+					break
+				elif [[ "${ANSWER_Q}" == exit ]]; then
+					ExitKey
+				elif [[ -z "${ANSWER_Q}" ]]; then
+					:
+				else
+					showNotSupportedFunction
+				fi
+			done
+		elif [[ "${ANSWER_D}" == 2 ]]; then
+			while(true); do
+				ClearKey
+				showLinesA
+				echo -e "DevSettings > Key Settings"
+				showLinesB
+				echo -e "(1) ExitKey : ${ExitKey}"
+				echo -e "(2) PA2CKey : ${PA2CKey}"
+				echo -e "(3) ClearKey : ${ClearKey}" 
+				showLinesA
+				applyLightCyan
+				read -p "- " ANSWER_R
+				applyNoColor
+
+				if [[ "${ANSWER_R}" == 1 ]]; then
+					if [[ "${ExitKey}" == YES ]]; then
+						ExitKey=NO
+					else
+						ExitKey=YES
+					fi
+				elif [[ "${ANSWER_R}" == 2 ]]; then
+					if [[ "${PA2CKey}" == YES ]]; then
+						PA2CKey=NO
+					else
+						PA2CKey=YES
+					fi
+				elif [[ "${ANSWER_R}" == 3 ]]; then
+					if [[ "${ClearKey}" == YES ]]; then
+						ClearKey=NO
+					else
+						ClearKey=YES
+					fi
+				elif [[ "${ANSWER_R}" == quit || "${ANSWER_R}" == q ]]; then
+					break
+				elif [[ "${ANSWER_R}" == exit ]]; then
+					ExitKey
+				elif [[ -z "${ANSWER_R}" ]]; then
+					:
+				else
+					showNotSupportedFunction
+				fi
+			done
+		elif [[ "${ANSWER_D}" == 3 ]]; then
+			while(true); do
+				ClearKey
+				showLinesA
+				echo -e "DevSettings > Backup Settings"
+				showLinesB
+				echo -e "(1) BackupPath : ${BackupPath}"
+				echo -e "(2) completeLibraryBackup : ${completeLibraryBackup}"
+				showLinesA
+				applyLightCyan
+				read -p "- " ANSWER_S
+				applyNoColor
+
+				if [[ "${ANSWER_S}" == 1 ]]; then
+					if [[ "${BackupPath}" == YES ]]; then
+						BackupPath=NO
+					else
+						BackupPath=YES
+					fi
+				elif [[ "${ANSWER_S}" == 2 ]]; then
+					if [[ "${completeLibraryBackup}" == YES ]]; then
+						completeLibraryBackup=NO
+					else
+						completeLibraryBackup=YES
+					fi
+				elif [[ "${ANSWER_S}" == quit || "${ANSWER_S}" == q ]]; then
+					break
+				elif [[ "${ANSWER_S}" == exit ]]; then
+					ExitKey
+				elif [[ -z "${ANSWER_S}" ]]; then
+					:
+				else
+					showNotSupportedFunction
+				fi
+			done
+		elif [[ "${ANSWER_D}" == 4 ]]; then
+			while(true); do
+				ClearKey
+				showLinesA
+				echo -e "DevSettings > Restore Settings"
+				showLinesB
+				echo -e "(1) skipRestore : ${skipRestore}"
+				showLinesA
+				applyLightCyan
+				read -p "- " ANSWER_T
+				applyNoColor
+
+				if [[ "${ANSWER_T}" == 1 ]]; then
+					if [[ "${skipRestore}" == YES ]]; then
+						skipRestore=NO
+					else
+						skipRestore=YES
+					fi
+				elif [[ "${ANSWER_T}" == quit || "${ANSWER_T}" == q ]]; then
+					break
+				elif [[ "${ANSWER_T}" == exit ]]; then
+					ExitKey
+				elif [[ -z "${ANSWER_T}" ]]; then
+					:
+				else
+					showNotSupportedFunction
+				fi
+			done
+		elif [[ "${ANSWER_D}" == 5 ]]; then
+			while(true); do
+				ClearKey
+				showLinesA
+				echo -e "DevSettings > Update Settings"
+				showLinesB
+				echo -e "(1) UpdateURL : ${UpdateURL}"
+				echo -e "(2) UpdaterVersion : ${UpdaterVersion}"
+				echo -e "(3) UpdateBuildType : ${UpdateBuildType}"
+				echo -e "(4) ForceInstallUpdate : ${ForceInstallUpdate}"
+				echo -e "(5) runUpdateODS : ${runUpdateODS}"
+				echo -e "(6) updateWithDEBInstall : ${updateWithDEBInstall}"
+				showLinesA
+				applyLightCyan
+				read -p "- " ANSWER_U
+				applyNoColor
+
+				if [[ "${ANSWER_U}" == 1 ]]; then
+					applyLightCyan
+					read -p "Locked : " ANSWER_L
+					applyNoColor
+					if [[ "${ANSWER_L}" == 1234 ]]; then
+						applyLightCyan
+						read -p "Query : " UpdateURL
+						applyNoColor
+						if [[ -z "${UpdateURL}" ]]; then
+							UpdateURL="https://github.com/pookjw/BackOn/archive/master.zip"
+						fi
+					else
+						applyRed
+						echo -e "Incorrect!"
+						applyNoColor
+						PA2CKey
+					fi
+				elif [[ "${ANSWER_U}" == 2 ]]; then
+					applyLightCyan
+					read -p "Query : " UpdaterVersion
+					applyNoColor
+					if [[ -z "${UpdaterVersion}" ]]; then
+						UpdaterVersion=2
+					fi
+				elif [[ "${ANSWER_U}" == 3 ]]; then
+					while(true); do
+						ClearKey
+						showLinesA
+						echo -e "DevSettings > Update Settings > UpdateBuildType"
+						showLinesB
+						echo -e "(1) alpha"
+						echo -e "(2) beta"
+						echo -e "(3) stable"
+						showLinesA
+						applyLightCyan
+						read -p "- " ANSWER_E
+						applyNoColor
+
+						if [[ "${ANSWER_E}" == 1 ]]; then
+							UpdateBuildType=alpha
+							break
+						elif [[ "${ANSWER_E}" == 2 ]]; then
+							UpdateBuildType=beta
+							break
+						elif [[ "${ANSWER_E}" == 3 ]]; then
+							UpdateBuildType=stable
+							break
+						elif [[ ${ANSWER_E} == exit ]]; then
+							ExitKey
+						elif [[ "${ANSWER_E}" == q || "${ANSWER_E}" == quit ]]; then
+							break
+						fi
+					done
+				elif [[ "${ANSWER_U}" == 4 ]]; then
+					if [[ "${ForceInstallUpdate}" == YES ]]; then
+						ForceInstallUpdate=NO
+					else
+						ForceInstallUpdate=YES
+					fi
+				elif [[ "${ANSWER_U}" == 5 ]]; then
+					if [[ "${runUpdateODS}" == YES ]]; then
+						runUpdateODS=NO
+					else
+						runUpdateODS=YES
+					fi
+				elif [[ "${ANSWER_U}" == 6 ]]; then
+					if [[ "${updateWithDEBInstall}" == YES ]]; then
+						updateWithDEBInstall=NO
+					else
+						updateWithDEBInstall=YES
+					fi
+				elif [[ "${ANSWER_U}" == quit || "${ANSWER_U}" == q ]]; then
+					break
+				elif [[ "${ANSWER_U}" == exit ]]; then
+					ExitKey
+				elif [[ -z "${ANSWER_U}" ]]; then
+					:
+				else
+					showNotSupportedFunction
+				fi
+			done
+		elif [[ "${ANSWER_D}" == 6 ]]; then
+			while(true); do
+				ClearKey
+				showLinesA
+				echo -e "DevSettings > Run function"
+				showLinesB
+				echo -e "(1) openDevSettings_obsolete"
+				echo -e "(2) customBackup"
+				echo -e "(3) customRestore"
+				echo -e "(4) backupUserAppData"
+				echo -e "(5) restoreUserAppData"
+				showLinesA
+				applyLightCyan
+				read -p "- " ANSWER_V
+				applyNoColor
+
+				if [[ "${ANSWER_V}" == 1 ]]; then
+					openDevSettings_obsolete
+				elif [[ "${ANSWER_V}" == 2 ]]; then
+					customBackup
+				elif [[ "${ANSWER_V}" == 3 ]]; then
+					customRestore
+				elif [[ "${ANSWER_V}" == 4 ]]; then
+					backupUserAppData
+				elif [[ "${ANSWER_V}" == 5 ]]; then
+					restoreUserAppData
+				elif [[ "${ANSWER_V}" == quit || "${ANSWER_V}" == q ]]; then
+					break
+				elif [[ "${ANSWER_V}" == exit ]]; then
+					ExitKey
+				elif [[ -z "${ANSWER_V}" ]]; then
+					:
+				else
+					showNotSupportedFunction
+				fi
+			done
+		elif [[ "${ANSWER_D}" == l ]]; then
+			loadSettings
+		elif [[ "${ANSWER_D}" == d ]]; then
+			rm -rf /var/mobile/Library/Preferences/BackOn/DevSettings
+			loadSettings
+			break
+		elif [[ "${ANSWER_D}" == s ]]; then
+			saveSettings
+			loadSettings
+			break
+		elif [[ "${ANSWER_D}" == exit ]]; then
+			ExitKey
+		elif [[ -z "${ANSWER_D}" ]]; then
+			:
+		else
+			showNotSupportedFunction
+		fi
+	done
+}
+
 function openDevSettings(){
 	while(true); do
 		ClearKey
@@ -213,10 +587,10 @@ function openDevSettings(){
 		elif [[ "${showLog}" == NO ]]; then
 			echo -e "(2) showLog : NO"
 		fi
-		if [[ "${showPA2C}" == YES ]]; then
-			echo -e "(3) showPA2C : YES"
-		elif [[ "${showPA2C}" == NO ]]; then
-			echo -e "(3) showPA2C : NO"
+		if [[ "${PA2CKey}" == YES ]]; then
+			echo -e "(3) PA2CKey : YES"
+		elif [[ "${PA2CKey}" == NO ]]; then
+			echo -e "(3) PA2CKey : NO"
 		fi
 		if [[ "${skipRestore}" == YES ]]; then
 			echo -e "(4) skipRestore : YES"
@@ -309,10 +683,10 @@ function openDevSettings(){
 				showLog=YES
 			fi
 		elif [[ "${ANSWER_D}" == 3 ]]; then
-			if [[ "${showPA2C}" == YES ]]; then
-				showPA2C=NO
-			elif [[ "${showPA2C}" == NO ]]; then
-				showPA2C=YES
+			if [[ "${PA2CKey}" == YES ]]; then
+				PA2CKey=NO
+			elif [[ "${PA2CKey}" == NO ]]; then
+				PA2CKey=YES
 			fi
 		elif [[ "${ANSWER_D}" == 4 ]]; then
 			if [[ "${skipRestore}" == YES ]]; then
@@ -523,7 +897,7 @@ function saveSettings(){
 	mkdir -p /var/mobile/Library/Preferences/BackOn/DevSettings
 	echo -e "${ExitKey}" >> /var/mobile/Library/Preferences/BackOn/DevSettings/ExitKey
 	echo -e "${showLog}" >> /var/mobile/Library/Preferences/BackOn/DevSettings/showLog
-	echo -e "${showPA2C}" >> /var/mobile/Library/Preferences/BackOn/DevSettings/showPA2C
+	echo -e "${PA2CKey}" >> /var/mobile/Library/Preferences/BackOn/DevSettings/PA2CKey
 	echo -e "${skipRestore}" >> /var/mobile/Library/Preferences/BackOn/DevSettings/skipRestore
 	echo -e "${UpdateBuildType}" >> /var/mobile/Library/Preferences/BackOn/DevSettings/UpdateBuildType
 	echo -e "${ForceInstallUpdate}" >> /var/mobile/Library/Preferences/BackOn/DevSettings/ForceInstallUpdate
@@ -557,10 +931,10 @@ function loadSettings(){
 	else
 		showLog=YES
 	fi
-	if [[ -f "/var/mobile/Library/Preferences/BackOn/DevSettings/showPA2C" ]]; then
-		showPA2C="$(cat "/var/mobile/Library/Preferences/BackOn/DevSettings/showPA2C")"
+	if [[ -f "/var/mobile/Library/Preferences/BackOn/DevSettings/PA2CKey" ]]; then
+		PA2CKey="$(cat "/var/mobile/Library/Preferences/BackOn/DevSettings/PA2CKey")"
 	else
-		showPA2C=YES
+		PA2CKey=YES
 	fi
 	if [[ -f "/var/mobile/Library/Preferences/BackOn/DevSettings/skipRestore" ]]; then
 		skipRestore="$(cat "/var/mobile/Library/Preferences/BackOn/DevSettings/skipRestore")"
@@ -757,7 +1131,7 @@ function ExitKey(){
 }
 
 function PA2CKey(){
-	if [[ "${showPA2C}" == YES ]]; then
+	if [[ "${PA2CKey}" == YES ]]; then
 		applyLightCyan
 		read -s -n 1 -p "${PRESS_ANY_KEY_TO_CONTINUE}"
 		applyNoColor
@@ -2193,7 +2567,7 @@ function installUpdate(){
 				echo -e "${UpdaterVersion}" >> "/tmp/BackOn/Update/info/UpdaterVersion"
 				echo -e "${showLog}" >> "/tmp/BackOn/Update/info/showLog"
 				echo -e "${applyColorScheme}" >> "/tmp/BackOn/Update/info/applyColorScheme"
-				echo -e "${showPA2C}" >> "/tmp/BackOn/Update/info/showPA2C"
+				echo -e "${PA2CKey}" >> "/tmp/BackOn/Update/info/PA2CKey"
 				echo -e "$(cat "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/build")" >> "/tmp/BackOn/Update/info/UpdateBuildVersion"
 				cd "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}"
 				chmod +x "/tmp/BackOn/Update/master/BackOn-master/${UpdateBuildType}/update-script"
@@ -2383,6 +2757,8 @@ while(true); do
 		switchLanguage
 	elif [[ "${ANSWER_A}" == 4 ]]; then
 		runUpdate
+	elif [[ "${ANSWER_A}" == openHiddenDS ]]; then
+		openDevSettings_ing
 	elif [[ "${ANSWER_A}" == quit || "${ANSWER_A}" == q ]]; then
 		quitTool
 	elif [[ "${ANSWER_A}" == ods ]]; then
