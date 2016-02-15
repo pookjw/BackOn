@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-320-official
+# BackOn alpha-321-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=320
+TOOL_BUILD_NUM=321
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -544,6 +544,8 @@ function openDevSettings(){
 				elif [[ "${ANSWER_V}" == 5 ]]; then
 					restoreUserAppData
 				elif [[ "${ANSWER_V}" == 6 ]]; then
+					saveSettings
+					loadSettings
 					runUpdate
 				elif [[ "${ANSWER_V}" == quit || "${ANSWER_V}" == q ]]; then
 					break
