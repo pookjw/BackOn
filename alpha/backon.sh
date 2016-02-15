@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-318-official
+# BackOn alpha-319-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=318
+TOOL_BUILD_NUM=319
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -197,7 +197,7 @@ function setKorean(){
 	SHOW_INFO_17="복원 메뉴 > 사용자 어플 데이터 복원"
 }
 
-function openDevSettings_ing(){
+function openDevSettings(){
 	while(true); do
 		ClearKey
 		showLinesA
@@ -225,7 +225,7 @@ function openDevSettings_ing(){
 				showLinesB
 				echo -e "(1) showLog : ${showLog}"
 				echo -e "(2) OSVer : ${OSVer} (iOS ${OSInitialVer})"
-				echo -e "(3) switchLanguage (Current : ${switchLanguage})"
+				echo -e "(3) switchLanguage (Current : ${LANGUAGE})"
 				echo -e "(4) setDefaultLanguage : ${setDefaultLanguage}"
 				echo -e "(5) detailFileListView : ${detailFileListView}"
 				echo -e "(6) applyColorScheme : ${applyColorScheme}"
@@ -368,10 +368,11 @@ function openDevSettings_ing(){
 				applyNoColor
 
 				if [[ "${ANSWER_S}" == 1 ]]; then
-					if [[ "${BackupPath}" == YES ]]; then
-						BackupPath=NO
-					else
-						BackupPath=YES
+					applyLightCyan
+					read -p "Query : " BackupPath
+					applyNoColor
+					if [[ ! -d "${BackupPath}" || -z "${BackupPath}" ]]; then
+						BackupPath=/var/mobile/Media
 					fi
 				elif [[ "${ANSWER_S}" == 2 ]]; then
 					if [[ "${completeLibraryBackup}" == YES ]]; then
@@ -571,7 +572,7 @@ function openDevSettings_ing(){
 	done
 }
 
-function openDevSettings(){
+function openDevSettings_obsolete(){
 	while(true); do
 		ClearKey
 		showLinesA
@@ -2757,8 +2758,6 @@ while(true); do
 		switchLanguage
 	elif [[ "${ANSWER_A}" == 4 ]]; then
 		runUpdate
-	elif [[ "${ANSWER_A}" == openHiddenDS ]]; then
-		openDevSettings_ing
 	elif [[ "${ANSWER_A}" == quit || "${ANSWER_A}" == q ]]; then
 		quitTool
 	elif [[ "${ANSWER_A}" == ods ]]; then
