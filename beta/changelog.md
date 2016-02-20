@@ -199,7 +199,7 @@ BackOn을 수정해서 배포할 땐 **'TOOL_RELEASE'**에 unofficial 표기를 
 
 - (Fixed) App Store 앱 데이터 백업 및 복원 기능의 여러 개의 버그 수정
 
-# beta-317
+# beta-317 (2016-02-04)
 
 - (Fixed) 복원 메뉴에서 App 복원 기능이 불가능함에도 불구하고 복원 기능이 실행됐던 문제 수정.
 
@@ -208,3 +208,9 @@ BackOn을 수정해서 배포할 땐 **'TOOL_RELEASE'**에 unofficial 표기를 
 **계정 정보 및 공인인증서를 저장하는 앱은 백업 및 복원이 안 될 수도 있습니다.**
 
 - (Fixed) root 비밀번호를 잘못 입력할시 일부 환경에서 오류가 발생하는 문제 수정.
+
+# beta-322 (2016-02-21)
+
+![이미지](https://farm2.staticflickr.com/1660/25060266081_67036fb5bc_o.png)
+
+- (Fixed) [DevSettings] DevSettings이 새롭게 바뀌었습니다. 예전 방식의 DevSettings는 **(6) Run function.**에서 **(1) openDevSettings_obsolete**를 실행하시면 됩니다.
