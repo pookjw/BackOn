@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-325-official
+# BackOn alpha-326-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=325
+TOOL_BUILD_NUM=326
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -2540,7 +2540,7 @@ function installUpdate(){
 				applyNoColor
 			else
 				applyPurple
-				unzip -qq "/tmp/BackOn/Update/master.zip" -d "/tmp/BackOn/Update/master"
+				unzip "/tmp/BackOn/Update/master.zip" -d "/tmp/BackOn/Update/master" > /dev/null 2>&1
 				applyNoColor
 			fi
 			if [[ -d "/tmp/BackOn/Update/master/BackOn-master/" ]]; then
@@ -2626,7 +2626,7 @@ function installUpdate_old(){
 				applyNoColor
 			else
 				applyPurple
-				unzip -qq "/tmp/BackOn/Update/master.zip" -d "/tmp/BackOn/Update/master"
+				unzip "/tmp/BackOn/Update/master.zip" -d "/tmp/BackOn/Update/master" > /dev/null 2>&1
 				applyNoColor
 			fi
 			if [[ -d "/tmp/BackOn/Update/master/BackOn-master/" ]]; then
