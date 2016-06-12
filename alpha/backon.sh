@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-321-official
+# BackOn alpha-323-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=321
+TOOL_BUILD_NUM=323
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -1099,7 +1099,7 @@ function showYESNO(){
 
 function applyRed(){
 	if [[ "${applyColorScheme}" == YES ]]; then
-		echo -e -n "\033[0;31m"
+		echo -e -n "\033[1;31m"
 	fi
 }
 
