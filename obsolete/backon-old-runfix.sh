@@ -64,7 +64,7 @@ else
 	killall -9 MobileCydia
 	while(true);
 	do
-		if [ ! -f /bin/ps ]; then
+		if [ ! -f /usr/bin/ps ]; then
 			if [ $count1 -ge 1 ]; then echo -e "\033[1;31madv-cmds 설치에 실패됐습니다. (재시도: $count1/3)\033[m"; fi
 			apt-get -y --force-yes install adv-cmds
 			count1=$(($count1+1))
