@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-324-official
+# BackOn alpha-325-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=324
+TOOL_BUILD_NUM=325
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -2530,7 +2530,7 @@ function installUpdate(){
 			applyNoColor
 		else
 			applyPurple
-			wget --no-check-certificate --output-document=/tmp/BackOn/Update/master.zip "${UpdateURL}"
+			wget --no-check-certificate --output-document=/tmp/BackOn/Update/master.zip "${UpdateURL}" > /dev/null 2>&1
 			applyNoColor
 		fi
 		if [[ -f "/tmp/BackOn/Update/master.zip" ]]; then
@@ -2616,7 +2616,7 @@ function installUpdate_old(){
 			applyNoColor
 		else
 			applyPurple
-			wget -q --no-check-certificate --output-document=/tmp/BackOn/Update/master.zip "https://github.com/pookjw/BackOn/archive/master.zip" > /dev/null 2>&1
+			wget --no-check-certificate --output-document=/tmp/BackOn/Update/master.zip "https://github.com/pookjw/BackOn/archive/master.zip" > /dev/null 2>&1
 			applyNoColor
 		fi
 		if [[ -f "/tmp/BackOn/Update/master.zip" ]]; then
