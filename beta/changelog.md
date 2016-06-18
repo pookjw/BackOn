@@ -217,6 +217,6 @@ BackOn을 수정해서 배포할 땐 **'TOOL_RELEASE'**에 unofficial 표기를 
 
 # beta-327 (2016-06-19)
 
-- (Fixed) applyRed에서 적용하는 빨간색 글씨가 진한 빨강 (Dark Red) -> 밝은 빨강 (Light Red)로 변경. (update-script에도 동일적용. 단, alpha, beta에만 적용됐으며 stable은 아직.)
+- (Fixed) applyRed에서 적용하는 빨간색 글씨를 볼드체로 변경. (update-script에도 동일적용. 단, alpha, beta에만 적용됐으며 stable은 아직.)
 
 - (Fixed) installUpdate에서 showLog가 꺼져있음에도 로그가 뜨던 오류 수정.
