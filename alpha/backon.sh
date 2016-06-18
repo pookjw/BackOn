@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-333-official
+# BackOn alpha-334-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=333
+TOOL_BUILD_NUM=334
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -1346,7 +1346,6 @@ function showInitialBackupMenu(){
 			echo -e "(3) ${BACKUP_USERAPP_DATA}"
 		fi
 		echo -e "(4) ${SHOW_BACKUPED_FILES}"
-		showLinesB
 		echo -e "(q) ${DISCARD_BACKUP}"
 		echo -e "(s) ${SAVE_BACKUP}"
 		showLinesA
@@ -2742,7 +2741,6 @@ while(true); do
 		echo -e "(3) Change to English."
 	fi
 	echo -e "(4) ${CHECK_FOR_UPDATES}"
-	showLinesB
 	if [[ "${enabledODS}" == YES ]]; then
 		echo -e "(ods) Open DevSettings."
 	fi
