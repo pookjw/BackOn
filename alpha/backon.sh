@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-331-official
+# BackOn alpha-332-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=331
+TOOL_BUILD_NUM=332
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -2745,6 +2745,7 @@ while(true); do
 	if [[ "${enabledODS}" == YES ]]; then
 		echo -e "(ods) Open DevSettings."
 	fi
+	showLinesB
 	echo -e "(q) ${QUIT}"
 	showLinesB
 	echo -e "- ${ENTER_TEXT}"
