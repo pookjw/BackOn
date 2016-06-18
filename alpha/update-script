@@ -110,7 +110,7 @@ function showInfo(){
 
 function applyRed(){
 	if [[ "${applyColorScheme}" == YES ]]; then
-		echo -e -n "\033[0;31m"
+		echo -e -n "\033[1;31m"
 	fi
 }
 

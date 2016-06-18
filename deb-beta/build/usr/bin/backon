@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn beta-322-official
+# BackOn beta-327-official
 TOOL_BUILD_TYPE=beta
-TOOL_BUILD_NUM=322
+TOOL_BUILD_NUM=327
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -1099,7 +1099,7 @@ function showYESNO(){
 
 function applyRed(){
 	if [[ "${applyColorScheme}" == YES ]]; then
-		echo -e -n "\033[0;31m"
+		echo -e -n "\033[1;31m"
 	fi
 }
 
@@ -2530,7 +2530,7 @@ function installUpdate(){
 			applyNoColor
 		else
 			applyPurple
-			wget -q --no-check-certificate --output-document=/tmp/BackOn/Update/master.zip "${UpdateURL}"
+			wget --no-check-certificate --output-document=/tmp/BackOn/Update/master.zip "${UpdateURL}" > /dev/null 2>&1
 			applyNoColor
 		fi
 		if [[ -f "/tmp/BackOn/Update/master.zip" ]]; then
@@ -2540,7 +2540,7 @@ function installUpdate(){
 				applyNoColor
 			else
 				applyPurple
-				unzip -qq "/tmp/BackOn/Update/master.zip" -d "/tmp/BackOn/Update/master"
+				unzip "/tmp/BackOn/Update/master.zip" -d "/tmp/BackOn/Update/master" > /dev/null 2>&1
 				applyNoColor
 			fi
 			if [[ -d "/tmp/BackOn/Update/master/BackOn-master/" ]]; then
@@ -2616,7 +2616,7 @@ function installUpdate_old(){
 			applyNoColor
 		else
 			applyPurple
-			wget -q --no-check-certificate --output-document=/tmp/BackOn/Update/master.zip "https://github.com/pookjw/BackOn/archive/master.zip"
+			wget --no-check-certificate --output-document=/tmp/BackOn/Update/master.zip "https://github.com/pookjw/BackOn/archive/master.zip" > /dev/null 2>&1
 			applyNoColor
 		fi
 		if [[ -f "/tmp/BackOn/Update/master.zip" ]]; then
@@ -2626,7 +2626,7 @@ function installUpdate_old(){
 				applyNoColor
 			else
 				applyPurple
-				unzip -qq "/tmp/BackOn/Update/master.zip" -d "/tmp/BackOn/Update/master"
+				unzip "/tmp/BackOn/Update/master.zip" -d "/tmp/BackOn/Update/master" > /dev/null 2>&1
 				applyNoColor
 			fi
 			if [[ -d "/tmp/BackOn/Update/master/BackOn-master/" ]]; then

@@ -214,3 +214,9 @@ BackOn을 수정해서 배포할 땐 **'TOOL_RELEASE'**에 unofficial 표기를 
 ![이미지](https://farm2.staticflickr.com/1660/25060266081_67036fb5bc_o.png)
 
 - (Fixed) [DevSettings] DevSettings이 새롭게 바뀌었습니다. 예전 방식의 DevSettings는 **(6) Run function.**에서 **(1) openDevSettings_obsolete**를 실행하시면 됩니다.
+
+# beta-327 (2016-06-19)
+
+- (Fixed) applyRed에서 적용하는 빨간색 글씨가 진한 빨강 (Dark Red) -> 밝은 빨강 (Light Red)로 변경. (update-script에도 동일적용. 단, alpha, beta에만 적용됐으며 stable은 아직.)
+
+- (Fixed) installUpdate에서 showLog가 꺼져있음에도 로그가 뜨던 오류 수정.
