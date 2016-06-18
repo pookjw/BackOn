@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-336-official
+# BackOn alpha-337-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=336
+TOOL_BUILD_NUM=337
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -63,6 +63,7 @@ function setEnglish(){
 	BACKUPED_CYDIA_SETTINGS="Cydia Settings"
 	BACKUPED_LIBRARY="Library"
 	BACKUPED_USERAPP_DATA="User App Data"
+	BACKUPED_CUSTOM_BACKUP="Custom Backup"
 	SUCCEED_SAVE_BACKUP="Succeed to save backup!"
 	OSVER_IS_NOT_MATCHING="iOS Version of backup is not matching with current iOS Version. It will cause problem."
 	WARN_USER_APP_DATA="This function is not stable yet so it may not work correctly."
@@ -157,6 +158,7 @@ function setKorean(){
 	BACKUPED_CYDIA_SETTINGS="Cydia 설정"
 	BACKUPED_LIBRARY="Library"
 	BACKUPED_USERAPP_DATA="사용자 어플 데이터"
+	BACKUPED_CUSTOM_BACKUP="커스텀 백업"
 	SUCCEED_SAVE_BACKUP="백업을 성공했습니다!"
 	OSVER_IS_NOT_MATCHING="백업할 때의 iOS 버전이 현재 기기의 iOS 버전과 일치하지 않습니다. 이것은 문제를 야기할 수 있습니다."
 	WARN_USER_APP_DATA="이 기능은 아직 안정적이지 않기 때문에 제대로 작동하지 않을 수 있습니다."
@@ -1775,7 +1777,7 @@ function showBackupedFilesBackup(){
 	fi
 	if [[ -d "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom" ]]; then
 		showLinesB
-		echo -e "${SHOW_INFO_12}" : ${YES}
+		echo -e "${BACKUPED_CUSTOM_BACKUP}" : ${YES}
 	fi
 	showLinesA
 	PA2CKey
