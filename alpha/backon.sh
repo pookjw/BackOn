@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-328-official
+# BackOn alpha-329-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=328
+TOOL_BUILD_NUM=329
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -211,6 +211,7 @@ function openDevSettings(){
 		echo -e "(4) Restore Settings."
 		echo -e "(5) Update Settings."
 		echo -e "(6) Run function. (All functions not listed.)"
+		showLinesB
 		echo -e "(l) Reload Settings."
 		echo -e "(d) Disable DevSettings."
 		echo -e "(s) Save Settings."
@@ -233,6 +234,8 @@ function openDevSettings(){
 				echo -e "(6) applyColorScheme : ${applyColorScheme}"
 				echo -e "(7) DynamicLine : ${DynamicLine}"
 				echo -e "(8) fixDynamicLineIssue : ${fixDynamicLineIssue}"
+				showLinesB
+				echo -e "${ENTER_QUIT}"
 				showLinesA
 				applyLightCyan
 				read -p "- " ANSWER_Q
@@ -323,6 +326,8 @@ function openDevSettings(){
 				echo -e "(1) ExitKey : ${ExitKey}"
 				echo -e "(2) PA2CKey : ${PA2CKey}"
 				echo -e "(3) ClearKey : ${ClearKey}" 
+				showLinesB
+				echo -e "${ENTER_QUIT}"
 				showLinesA
 				applyLightCyan
 				read -p "- " ANSWER_R
@@ -364,6 +369,8 @@ function openDevSettings(){
 				showLinesB
 				echo -e "(1) BackupPath : ${BackupPath}"
 				echo -e "(2) completeLibraryBackup : ${completeLibraryBackup}"
+				showLinesB
+				echo -e "${ENTER_QUIT}"
 				showLinesA
 				applyLightCyan
 				read -p "- " ANSWER_S
@@ -399,6 +406,8 @@ function openDevSettings(){
 				echo -e "DevSettings > Restore Settings"
 				showLinesB
 				echo -e "(1) skipRestore : ${skipRestore}"
+				showLinesB
+				echo -e "${ENTER_QUIT}"
 				showLinesA
 				applyLightCyan
 				read -p "- " ANSWER_T
@@ -432,6 +441,8 @@ function openDevSettings(){
 				echo -e "(4) ForceInstallUpdate : ${ForceInstallUpdate}"
 				echo -e "(5) runUpdateODS : ${runUpdateODS}"
 				echo -e "(6) updateWithDEBInstall : ${updateWithDEBInstall}"
+				showLinesB
+				echo -e "${ENTER_QUIT}"
 				showLinesA
 				applyLightCyan
 				read -p "- " ANSWER_U
@@ -530,6 +541,8 @@ function openDevSettings(){
 				echo -e "(4) backupUserAppData"
 				echo -e "(5) restoreUserAppData"
 				echo -e "(6) runUpdate"
+				showLinesB
+				echo -e "${ENTER_QUIT}"
 				showLinesA
 				applyLightCyan
 				read -p "- " ANSWER_V
