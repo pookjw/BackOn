@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-334-official
+# BackOn alpha-335-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=334
+TOOL_BUILD_NUM=335
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -211,7 +211,6 @@ function openDevSettings(){
 		echo -e "(4) Restore Settings."
 		echo -e "(5) Update Settings."
 		echo -e "(6) Run function. (All functions not listed.)"
-		showLinesB
 		echo -e "(l) Reload Settings."
 		echo -e "(d) Disable DevSettings."
 		echo -e "(s) Save Settings."
