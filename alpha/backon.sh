@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-335-official
+# BackOn alpha-336-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=335
+TOOL_BUILD_NUM=336
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -1773,8 +1773,8 @@ function showBackupedFilesBackup(){
 	else
 		echo -e "${BACKUPED_USERAPP_DATA}" : ${NO}
 	fi
-	showLinesB
 	if [[ -d "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom" ]]; then
+		showLinesB
 		echo -e "${SHOW_INFO_12}" : ${YES}
 	fi
 	showLinesA
