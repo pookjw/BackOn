@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-329-official
+# BackOn alpha-330-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=329
+TOOL_BUILD_NUM=330
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -27,7 +27,6 @@ function setEnglish(){
 	QUIT="Quit."
 	ENTER_QUIT="Enter 'quit' to quit this menu."
 	ENTER_BACKUP_NAME="Enter backup name that you want to do. (If you want to set backup name to current date and time, enter 'date'.)"
-	ENTER_BACKUP_APP_NAME="Enter app name that you want to backup. Enter 'delete' command to delete backuped backup."
 	NOT_SUPPORTED_FUNCTION="Not supported function."
 	NO_SUCH_FILE_OR_DIRECTORY="No such file or directory."
 	NO_SUCH_FILE="No such file."
@@ -85,6 +84,7 @@ function setEnglish(){
 	SHOW_GUIDE_4="Enter file/folder name that you want to delete backup. If you want to delete all of backup files, enter 'all' command."
 	SHOW_GUIDE_10="Enter file/folder name that you want to restore. If you want to restore all of files, enter 'all' command."
 	SHOW_GUIDE_14="Enter app name that you want to restore."
+	SHOW_GUIDE_15="Enter app name that you want to backup. Enter 'delete' command to delete backuped backup."
 	SHOW_INFO_1="Backup Menu"
 	SHOW_INFO_2="Backup Menu > Backup Cydia sources and packages list"
 	SHOW_INFO_3="Backup Menu > Backup Library"
@@ -121,7 +121,6 @@ function setKorean(){
 	QUIT="종료"
 	ENTER_QUIT="'quit'을 입력하면 이 메뉴를 종료합니다."
 	ENTER_BACKUP_NAME="원하는 백업 이름을 입력해 주세요. ('date'를 입력하면 현재 날짜, 시간을 백업 이름으로 지정합니다.)"
-	ENTER_BACKUP_APP_NAME="백업을 원하는 App 이름을 입력해 주세요. 'delete' 명령어로 백업한 백업 파일을 삭제할 수 있습니다."
 	NOT_SUPPORTED_FUNCTION="지원되지 않는 기능입니다."
 	NO_SUCH_FILE_OR_DIRECTORY="존재하지 않는 파일이나 폴더입니다."
 	NO_SUCH_FILE="존재하지 않는 파일입니다."
@@ -158,7 +157,7 @@ function setKorean(){
 	BACKUPED_CYDIA_SETTINGS="Cydia 설정"
 	BACKUPED_LIBRARY="Library"
 	BACKUPED_USERAPP_DATA="사용자 어플 데이터"
-	SUCCEED_SAVE_BACKUP="백업에 성공했습니다!"
+	SUCCEED_SAVE_BACKUP="백업을 성공했습니다!"
 	OSVER_IS_NOT_MATCHING="백업할 때의 iOS 버전이 현재 기기의 iOS 버전과 일치하지 않습니다. 이것은 문제를 야기할 수 있습니다."
 	WARN_USER_APP_DATA="이 기능은 아직 안정적이지 않기 때문에 제대로 작동하지 않을 수 있습니다."
 	RESTORE_CYDIA_DATA="Cydia 소스, 패키지 복원"
@@ -179,6 +178,7 @@ function setKorean(){
 	SHOW_GUIDE_4="삭제를 원하는 폴더/파일의 이름을 입력하시면 됩니다. 'all'을 입력하면 모두 지울 수 있습니다."
 	SHOW_GUIDE_10="복원을 원하는 폴더/파일의 이름을 입력하시면 됩니다. 'all'을 입력하면 모두 복원할 수 있습니다."
 	SHOW_GUIDE_14="복원을 원하는 어플의 이름을 입력하시면 됩니다."
+	SHOW_GUIDE_15="백업을 원하는 App 이름을 입력해 주세요. 'delete' 명령어로 백업한 백업 파일을 삭제할 수 있습니다."
 	SHOW_INFO_1="백업 메뉴"
 	SHOW_INFO_2="백업 메뉴 > Cydia 소스, 패키지 목록을 백업"
 	SHOW_INFO_3="백업 메뉴 > Library 백업"
@@ -235,7 +235,7 @@ function openDevSettings(){
 				echo -e "(7) DynamicLine : ${DynamicLine}"
 				echo -e "(8) fixDynamicLineIssue : ${fixDynamicLineIssue}"
 				showLinesB
-				echo -e "${ENTER_QUIT}"
+				echo -e "- ${ENTER_QUIT}"
 				showLinesA
 				applyLightCyan
 				read -p "- " ANSWER_Q
@@ -327,7 +327,7 @@ function openDevSettings(){
 				echo -e "(2) PA2CKey : ${PA2CKey}"
 				echo -e "(3) ClearKey : ${ClearKey}" 
 				showLinesB
-				echo -e "${ENTER_QUIT}"
+				echo -e "- ${ENTER_QUIT}"
 				showLinesA
 				applyLightCyan
 				read -p "- " ANSWER_R
@@ -370,7 +370,7 @@ function openDevSettings(){
 				echo -e "(1) BackupPath : ${BackupPath}"
 				echo -e "(2) completeLibraryBackup : ${completeLibraryBackup}"
 				showLinesB
-				echo -e "${ENTER_QUIT}"
+				echo -e "- ${ENTER_QUIT}"
 				showLinesA
 				applyLightCyan
 				read -p "- " ANSWER_S
@@ -407,7 +407,7 @@ function openDevSettings(){
 				showLinesB
 				echo -e "(1) skipRestore : ${skipRestore}"
 				showLinesB
-				echo -e "${ENTER_QUIT}"
+				echo -e "- ${ENTER_QUIT}"
 				showLinesA
 				applyLightCyan
 				read -p "- " ANSWER_T
@@ -442,7 +442,7 @@ function openDevSettings(){
 				echo -e "(5) runUpdateODS : ${runUpdateODS}"
 				echo -e "(6) updateWithDEBInstall : ${updateWithDEBInstall}"
 				showLinesB
-				echo -e "${ENTER_QUIT}"
+				echo -e "- ${ENTER_QUIT}"
 				showLinesA
 				applyLightCyan
 				read -p "- " ANSWER_U
@@ -542,7 +542,7 @@ function openDevSettings(){
 				echo -e "(5) restoreUserAppData"
 				echo -e "(6) runUpdate"
 				showLinesB
-				echo -e "${ENTER_QUIT}"
+				echo -e "- ${ENTER_QUIT}"
 				showLinesA
 				applyLightCyan
 				read -p "- " ANSWER_V
@@ -1279,7 +1279,8 @@ function defineBackupName(){
 		ClearKey
 		showLinesA
 		echo -e "${ENTER_BACKUP_NAME}"
-		echo -e "(${ENTER_QUIT})"
+		showLinesB
+		echo -e "- ${ENTER_QUIT}"
 		showLinesA
 		applyLightCyan
 		read -p "- " ANSWER_B
@@ -1345,6 +1346,7 @@ function showInitialBackupMenu(){
 			echo -e "(3) ${BACKUP_USERAPP_DATA}"
 		fi
 		echo -e "(4) ${SHOW_BACKUPED_FILES}"
+		showLinesB
 		echo -e "(q) ${DISCARD_BACKUP}"
 		echo -e "(s) ${SAVE_BACKUP}"
 		showLinesA
@@ -1433,8 +1435,8 @@ function backupLibrary(){
 			ls /var/mobile/Library
 		fi
 		showLinesB
-		echo -e "(${ENTER_QUIT})"
-		echo -e "(${SHOW_GUIDE_3})"
+		echo -e "- ${ENTER_QUIT}"
+		echo -e "- ${SHOW_GUIDE_3}"
 		showLinesA
 		applyLightCyan
 		read -p "- " ANSWER_E
@@ -1581,8 +1583,8 @@ function backupUserAppData(){
 			echo *.app | cut -d"." -f1
 		done
 		showLinesB
-		echo -e "(${ENTER_QUIT})"
-		echo -e "(${ENTER_BACKUP_APP_NAME})"
+		echo -e "- ${ENTER_QUIT}"
+		echo -e "- ${SHOW_GUIDE_15}"
 		showLinesA
 		applyLightCyan
 		read -p "- " ANSWER_P
@@ -1688,8 +1690,8 @@ function deleteBackup(){
 				ls "/tmp/BackOn/Backup/${BACKUP_NAME}/${1}"
 			fi
 			showLinesB
-			echo -e "(${ENTER_QUIT})"
-			echo -e "(${SHOW_GUIDE_4})"
+			echo -e "- ${ENTER_QUIT}"
+			echo -e "- ${SHOW_GUIDE_4}"
 			showLinesA
 			applyLightCyan
 			read -p "- " ANSWER_J
@@ -1761,15 +1763,21 @@ function showBackupedFilesBackup(){
 	else
 		echo -e "${BACKUPED_CYDIA_SETTINGS} : ${NO}"
 	fi
+	showLinesB
 	if [[ -d "/tmp/BackOn/Backup/${BACKUP_NAME}/Library" ]]; then
 		echo -e "${BACKUPED_LIBRARY} : ${YES}"
 	else
 		echo -e "${BACKUPED_LIBRARY} : ${NO}"
 	fi
+	showLinesB
 	if [[ -d "/tmp/BackOn/Backup/${BACKUP_NAME}/AppData" ]]; then
 		echo -e "${BACKUPED_USERAPP_DATA}" : ${YES}
 	else
 		echo -e "${BACKUPED_USERAPP_DATA}" : ${NO}
+	fi
+	showLinesB
+	if [[ -d "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom" ]]; then
+		echo -e "${SHOW_INFO_12}" : ${YES}
 	fi
 	showLinesA
 	PA2CKey
@@ -1822,7 +1830,8 @@ function defineBackupPath(){
 		ClearKey
 		showLinesA
 		echo -e "${ENTER_BACKUP_PATH}"
-		echo -e "(${ENTER_QUIT})"
+		showLinesB
+		echo -e "- ${ENTER_QUIT}"
 		showLinesA
 		applyLightCyan
 		read -p "- " ANSWER_F
@@ -2193,8 +2202,8 @@ function restoreLibrary(){
 			ls "/tmp/BackOn/Restore/Library"
 		fi
 		showLinesB
-		echo -e "(${ENTER_QUIT})"
-		echo -e "(${SHOW_GUIDE_10})"
+		echo -e "- ${ENTER_QUIT}"
+		echo -e "- ${SHOW_GUIDE_10}"
 		showLinesA
 		applyLightCyan
 		read -p "- " ANSWER_I
@@ -2280,8 +2289,8 @@ function restoreUserAppData(){
 			ls "/tmp/BackOn/Restore/AppData"
 		fi
 		showLinesB
-		echo -e "(${ENTER_QUIT})"
-		echo -e "(${SHOW_GUIDE_14})"
+		echo -e "- ${ENTER_QUIT}"
+		echo -e "- ${SHOW_GUIDE_14}"
 		showLinesA
 		applyLightCyan
 		read -p "- " ANSWER_P
