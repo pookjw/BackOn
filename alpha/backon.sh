@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-326-official
+# BackOn alpha-328-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=326
+TOOL_BUILD_NUM=328
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -66,7 +66,7 @@ function setEnglish(){
 	BACKUPED_USERAPP_DATA="User App Data"
 	SUCCEED_SAVE_BACKUP="Succeed to save backup!"
 	OSVER_IS_NOT_MATCHING="iOS Version of backup is not matching with current iOS Version. It will cause problem."
-	WARN_RESTORE_USER_APP_DATA="This function is not stable yet so it may not work correctly."
+	WARN_USER_APP_DATA="This function is not stable yet so it may not work correctly."
 	RESTORE_CYDIA_DATA="Restore Cydia sources and packages list."
 	RESTORE_SHOW_CYDIA_LIST="Show backuped Cydia packages list."
 	RESTORE_USER_APP_DATA="Restore user applications (App Store app) data."
@@ -90,7 +90,7 @@ function setEnglish(){
 	SHOW_INFO_3="Backup Menu > Backup Library"
 	SHOW_INFO_4="Backup Menu > Backup Library > Delete backup"
 	SHOW_INFO_5="Backup Menu > Show backuped file(s)"
-	SHOW_INFO_6="Backup Menu > Show backuped file(s) > Save backup"
+	SHOW_INFO_6="Backup Menu > Confirm > Save backup"
 	SHOW_INFO_7="Restore Menu"
 	SHOW_INFO_8="Restore Menu > Restore Cydia sources and packages list"
 	SHOW_INFO_9="Restore Menu > Show backuped Cydia packages list."
@@ -102,6 +102,7 @@ function setEnglish(){
 	SHOW_INFO_15="Backup Menu > Backup App Data"
 	SHOW_INFO_16="Backup Menu > Backup App Data > Delete backup"
 	SHOW_INFO_17="Restore Menu > Restore App Data"
+	SHOW_INFO_18="Backup Menu > Confirm"
 }
 
 function setKorean(){
@@ -159,7 +160,7 @@ function setKorean(){
 	BACKUPED_USERAPP_DATA="사용자 어플 데이터"
 	SUCCEED_SAVE_BACKUP="백업에 성공했습니다!"
 	OSVER_IS_NOT_MATCHING="백업할 때의 iOS 버전이 현재 기기의 iOS 버전과 일치하지 않습니다. 이것은 문제를 야기할 수 있습니다."
-	WARN_RESTORE_USER_APP_DATA="이 기능은 아직 안정적이지 않기 때문에 제대로 작동하지 않을 수 있습니다."
+	WARN_USER_APP_DATA="이 기능은 아직 안정적이지 않기 때문에 제대로 작동하지 않을 수 있습니다."
 	RESTORE_CYDIA_DATA="Cydia 소스, 패키지 복원"
 	RESTORE_SHOW_CYDIA_LIST="백업한 Cydia 패키지 목록 보기"
 	RESTORE_USER_APP_DATA="사용자 어플 (App Store 어플) 데이터 복원"
@@ -183,7 +184,7 @@ function setKorean(){
 	SHOW_INFO_3="백업 메뉴 > Library 백업"
 	SHOW_INFO_4="백업 메뉴 > Library 백업 > 백업 삭제"
 	SHOW_INFO_5="백업 메뉴 > 백업한 파일 표시"
-	SHOW_INFO_6="백업 메뉴 > 백업한 파일 표시 > 백업을 저장"
+	SHOW_INFO_6="백업 메뉴 > 확인 > 백업을 저장"
 	SHOW_INFO_7="복원 메뉴"
 	SHOW_INFO_8="복원 메뉴 > Cydia 소스, 패키지 복원"
 	SHOW_INFO_9="복원 메뉴 > 백업한 Cydia 패키지 목록 보기"
@@ -195,6 +196,7 @@ function setKorean(){
 	SHOW_INFO_15="백업 메뉴 > 사용자 어플 데이터 백업"
 	SHOW_INFO_16="백업 메뉴 > 사용자 어플 데이터 백업 > 백업 삭제"
 	SHOW_INFO_17="복원 메뉴 > 사용자 어플 데이터 복원"
+	SHOW_INFO_18="백업 메뉴 > 확인"
 }
 
 function openDevSettings(){
@@ -1324,7 +1326,7 @@ function showInitialBackupMenu(){
 			applyNoColor
 		elif [[ -z "$(ls "${INSTALLED_APP_PATH}")" ]]; then
 			applyRed
-			echo -e "(3) ${BACKUP_USERAPP_DATA} (${NOT_AVAILABLE})"
+			echo -e "(3) ${BACKUP_USERAPP_DATA} (${NOT_INSTALLED_APP})"
 			applyNoColor
 		else
 			echo -e "(3) ${BACKUP_USERAPP_DATA}"
@@ -1354,7 +1356,7 @@ function showInitialBackupMenu(){
 		elif [[ "${ANSWER_C}" == q || "${ANSWER_C}" == quit ]]; then
 			quitTool
 		elif [[ "${ANSWER_C}" == s ]]; then
-			showBackupedFilesBackup
+			showBackupedFilesBackup -confirmtitle
 			saveBackup
 		elif [[ "${ANSWER_C}" == ods ]]; then
 			openDevSettings
@@ -1550,6 +1552,11 @@ function backupUserAppData(){
 	if [[ ! -d "/tmp/BackOn/Backup/${BACKUP_NAME}/AppData" ]]; then
 		mkdir -p "/tmp/BackOn/Backup/${BACKUP_NAME}/AppData"
 	fi
+	ClearKey
+	showLinesA
+	echo -e "${WARN_USER_APP_DATA}"
+	showLinesA
+	PA2CKey
 	while(true); do
 		ClearKey
 		showLinesA
@@ -1715,7 +1722,11 @@ function showBackupedFilesBackup(){
 	removeEmptyBackupFolder
 	ClearKey
 	showLinesA
-	echo -e "${SHOW_INFO_5}"
+	if [[ "${1}" == "-confirmtitle" ]]; then
+		echo -e "${SHOW_INFO_18}"
+	else
+		echo -e "${SHOW_INFO_5}"
+	fi
 	showLinesB
 	if [[ -f "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia/apt.txt" ]]; then
 		echo -e "${BACKUPED_CYDIA_PACKAGES_LIST} : ${YES}"
@@ -2242,7 +2253,7 @@ function restoreLibrary(){
 function restoreUserAppData(){
 	ClearKey
 	showLinesA
-	echo -e "${WARN_RESTORE_USER_APP_DATA}"
+	echo -e "${WARN_USER_APP_DATA}"
 	showLinesA
 	PA2CKey
 	while(true); do
