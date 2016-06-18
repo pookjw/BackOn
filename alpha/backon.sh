@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-330-official
+# BackOn alpha-331-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=330
+TOOL_BUILD_NUM=331
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -2747,7 +2747,7 @@ while(true); do
 	fi
 	echo -e "(q) ${QUIT}"
 	showLinesB
-	echo -e "(${ENTER_TEXT})"
+	echo -e "- ${ENTER_TEXT}"
 	showLinesA
 	applyLightCyan
 	read -p "- " ANSWER_A
