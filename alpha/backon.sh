@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-338-official
+# BackOn alpha-339-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=338
+TOOL_BUILD_NUM=339
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -2043,27 +2043,27 @@ function showInitialRestoreMenu(){
 			echo -e "(2) ${RESTORE_SHOW_CYDIA_LIST} (${NOT_BACKUPED})"
 			applyNoColor
 		fi
+		if [[ -d "/tmp/BackOn/Restore/Library" ]]; then
+			echo -e "(3) ${RESTORE_LIBRARY}"
+		else
+			applyRed
+			echo -e "(3) ${RESTORE_LIBRARY} (${NOT_BACKUPED})"
+			applyNoColor
+		fi
 		if [ "${OSInitialVer}" -ge 8 ]; then
 			applyRed
-			echo -e "(3) ${RESTORE_USER_APP_DATA} (${NOT_SUPPORTED_IOS_VERSION})"
+			echo -e "(4) ${RESTORE_USER_APP_DATA} (${NOT_SUPPORTED_IOS_VERSION})"
 			applyNoColor
 		elif [[ ! -d "/tmp/BackOn/Restore/AppData" ]]; then
 			applyRed
-			echo -e "(3) ${RESTORE_USER_APP_DATA} (${NOT_BACKUPED})"
+			echo -e "(4) ${RESTORE_USER_APP_DATA} (${NOT_BACKUPED})"
 			applyNoColor
 		elif [[ -z "$(ls "${INSTALLED_APP_PATH}")" ]]; then
 			applyRed
-			echo -e "(3) ${RESTORE_USER_APP_DATA} (${NOT_INSTALLED_APP})"
+			echo -e "(4) ${RESTORE_USER_APP_DATA} (${NOT_INSTALLED_APP})"
 			applyNoColor
 		else
-			echo -e "(3) ${RESTORE_USER_APP_DATA}"
-		fi
-		if [[ -d "/tmp/BackOn/Restore/Library" ]]; then
-			echo -e "(4) ${RESTORE_LIBRARY}"
-		else
-			applyRed
-			echo -e "(4) ${RESTORE_LIBRARY} (${NOT_BACKUPED})"
-			applyNoColor
+			echo -e "(4) ${RESTORE_USER_APP_DATA}"
 		fi
 		echo -e "(5) ${REBOOT}"
 		echo -e "(q) ${QUIT}"
@@ -2085,6 +2085,12 @@ function showInitialRestoreMenu(){
 				showNotSupportedFunction
 			fi
 		elif [[ "${ANSWER_H}" == 3 ]]; then
+			if [[ -d "/tmp/BackOn/Restore/Library" ]]; then
+				restoreLibrary
+			else
+				showNotSupportedFunction
+			fi
+		elif [[ "${ANSWER_H}" == 4 ]]; then
 			if [ "${OSInitialVer}" -ge 8 ]; then
 				showNotSupportedFunction
 			elif [[ ! -d "/tmp/BackOn/Restore/AppData" ]]; then
@@ -2093,12 +2099,6 @@ function showInitialRestoreMenu(){
 				showNotSupportedFunction
 			else
 				restoreUserAppData
-			fi
-		elif [[ "${ANSWER_H}" == 4 ]]; then
-			if [[ -d "/tmp/BackOn/Restore/Library" ]]; then
-				restoreLibrary
-			else
-				showNotSupportedFunction
 			fi
 		elif [[ "${ANSWER_H}" == 5 ]]; then
 			rebootDevice
