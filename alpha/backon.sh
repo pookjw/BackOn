@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-341-official
+# BackOn alpha-342-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=341
+TOOL_BUILD_NUM=342
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -2771,7 +2771,7 @@ function runExtensionBackup(){
 						mkdir -p "/tmp/BackOn/${BACKUP_NAME}/$(cat "/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/name")"
 					fi
 					cd "/tmp/BackOn/${BACKUP_NAME}/$(cat "/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/name")"
-					/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/script -backup
+					/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/script -backup ${LANGUAGE}
 					echo -e "${SCRIPT_DONE}"
 					PA2CKey
 					if [[ -z "$(ls "/var/mobile/Library/Preferences/BackOn/Extension")" ]]; then
