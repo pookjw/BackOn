@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-342-official
+# BackOn alpha-343-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=342
+TOOL_BUILD_NUM=343
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -67,6 +67,10 @@ function setEnglish(){
 	BACKUPED_CUSTOM_BACKUP="Custom Backup"
 	SUCCEED_SAVE_BACKUP="Succeed to save backup!"
 	OSVER_IS_NOT_MATCHING="iOS Version of backup is not matching with current iOS Version. It will cause problem."
+	BACKON_OUTDATED="This extension is incompatible with current BackOn version. Please update BackOn."
+	CURRENT_BACKON_VERSION="Current BackOn Version"
+	REQUIRED_BACKON_VERSION="Required Backon Version"
+	OR_LATER="or later."
 	WARN_USER_APP_DATA="This function is not stable yet so it may not work correctly."
 	RESTORE_CYDIA_DATA="Restore Cydia sources and packages list."
 	RESTORE_SHOW_CYDIA_LIST="Show backuped Cydia packages list."
@@ -167,6 +171,10 @@ function setKorean(){
 	BACKUPED_CUSTOM_BACKUP="커스텀 백업"
 	SUCCEED_SAVE_BACKUP="백업을 성공했습니다!"
 	OSVER_IS_NOT_MATCHING="백업할 때의 iOS 버전이 현재 기기의 iOS 버전과 일치하지 않습니다. 이것은 문제를 야기할 수 있습니다."
+	BACKON_OUTDATED="이 extension은 현재 BackOn 버전과 호환되지 않습니다. BackOn을 업데이트 해주세요."
+	CURRENT_BACKON_VERSION="현재 BackOn 버전"
+	REQUIRED_BACKON_VERSION="요구되는 BackOn 버전"
+	OR_LATER="이상"
 	WARN_USER_APP_DATA="이 기능은 아직 안정적이지 않기 때문에 제대로 작동하지 않을 수 있습니다."
 	RESTORE_CYDIA_DATA="Cydia 소스, 패키지 복원"
 	RESTORE_SHOW_CYDIA_LIST="백업한 Cydia 패키지 목록 보기"
@@ -2767,15 +2775,26 @@ function runExtensionBackup(){
 				else
 					chmod +x "/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/script"
 					chmod +x "/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/name"
-					if [[ ! -d "/tmp/BackOn/${BACKUP_NAME}/$(cat "/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/name")" ]]; then
-						mkdir -p "/tmp/BackOn/${BACKUP_NAME}/$(cat "/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/name")"
-					fi
-					cd "/tmp/BackOn/${BACKUP_NAME}/$(cat "/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/name")"
-					/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/script -backup ${LANGUAGE}
-					echo -e "${SCRIPT_DONE}"
-					PA2CKey
-					if [[ -z "$(ls "/var/mobile/Library/Preferences/BackOn/Extension")" ]]; then
-						rm -rf "/tmp/BackOn/${BACKUP_NAME}/$(cat "/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/name")"
+					chmod +x "/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/minVer"
+					if [ "$(cat "/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/minVer")" -gt ${TOOL_BUILD_NUM} ]; then
+						applyRed
+						echo -e "ERROR!"
+						applyNoColor
+						echo -e "${BACKON_OUTDATED}"
+						echo -e "- ${CURRENT_BACKON_VERSION} : ${TOOL_BUILD_NUM}"
+						echo -e "- ${REQUIRED_BACKON_VERSION} : $(cat "/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/minVer") ${OR_LATER}"
+						PA2CKey
+					else
+						if [[ ! -d "/tmp/BackOn/${BACKUP_NAME}/$(cat "/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/name")" ]]; then
+							mkdir -p "/tmp/BackOn/${BACKUP_NAME}/$(cat "/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/name")"
+						fi
+						cd "/tmp/BackOn/${BACKUP_NAME}/$(cat "/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/name")"
+						/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/script -backup ${LANGUAGE}
+						echo -e "${SCRIPT_DONE}"
+						PA2CKey
+						if [[ -z "$(ls "/var/mobile/Library/Preferences/BackOn/Extension")" ]]; then
+							rm -rf "/tmp/BackOn/${BACKUP_NAME}/$(cat "/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/name")"
+						fi
 					fi
 				fi
 			fi
