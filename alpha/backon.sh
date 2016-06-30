@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-346-official
+# BackOn alpha-347-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=346
+TOOL_BUILD_NUM=347
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -2754,7 +2754,7 @@ function runExtension(){
 			echo -e "- ${ENTER_QUIT}"
 			echo -e "- ${SHOW_GUIDE_16}"
 		else
-		ls "/var/mobile/Library/Preferences/BackOn/Extension"
+			ls "/var/mobile/Library/Preferences/BackOn/Extension"
 			showLinesB
 			echo -e "- ${ENTER_QUIT}"
 			echo -e "- ${SHOW_GUIDE_17}"
@@ -2777,27 +2777,25 @@ function runExtension(){
 				echo -e "ERROR!"
 				applyNoColor
 			else
-				chmod +x "/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/script"
-				chmod +x "/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/name"
-				chmod +x "/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/minVer"
-				if [ "$(cat "/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/minVer")" -gt ${TOOL_BUILD_NUM} ]; then
+				EXTENSION_MIN_VER="$(/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/script -minVer)"
+				if [ "${EXTENSION_MIN_VER}" -gt ${TOOL_BUILD_NUM} ]; then
 					applyRed
 					echo -e "ERROR!"
 					applyNoColor
 					echo -e "${BACKON_OUTDATED}"
 					echo -e "- ${CURRENT_BACKON_VERSION} : ${TOOL_BUILD_NUM}"
-					echo -e "- ${REQUIRED_BACKON_VERSION} : $(cat "/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/minVer") ${OR_LATER}"
+					echo -e "- ${REQUIRED_BACKON_VERSION} : ${EXTENSION_MIN_VER} ${OR_LATER}"
 					PA2CKey
 				else
 					if [[ ${1} == "-backup" ]]; then
-						if [[ ! -d "/tmp/BackOn/Backup/${BACKUP_NAME}/$(cat "/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/name")" ]]; then
-							mkdir -p "/tmp/BackOn/Backup/${BACKUP_NAME}/$(cat "/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/name")"
+						if [[ ! -d "/tmp/BackOn/Backup/${BACKUP_NAME}/${ANSWER_W}" ]]; then
+							mkdir -p "/tmp/BackOn/Backup/${BACKUP_NAME}/${ANSWER_W}"
 						fi
-						cd "/tmp/BackOn/Backup/${BACKUP_NAME}/$(cat "/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/name")"
+						cd "/tmp/BackOn/Backup/${BACKUP_NAME}/${ANSWER_W}"
 						CONFRIM_EXTENSION_RUN=YES
 					elif [[ "${1}" == "-restore" ]]; then
-						if [[ -d "/tmp/BackOn/Restore/$(cat "/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/name")" ]]; then
-							cd "/tmp/BackOn/Restore/$(cat "/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/name")"
+						if [[ -d "/tmp/BackOn/Restore/${ANSWER_W}" ]]; then
+							cd "/tmp/BackOn/Restore/${ANSWER_W}"
 							CONFRIM_EXTENSION_RUN=YES
 						else
 							applyRed
@@ -2811,8 +2809,8 @@ function runExtension(){
 						/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/script -backup ${LANGUAGE}
 						echo -e "${SCRIPT_DONE}"
 						PA2CKey
-						if [[ -z "$(ls "/var/mobile/Library/Preferences/BackOn/Extension")" ]]; then
-							rm -rf "/tmp/BackOn/${BACKUP_NAME}/$(cat "/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/name")"
+						if [[ "${1}" == "-backup" && -z "$(ls "/tmp/BackOn/Backup/${BACKUP_NAME}/${ANSWER_W}")"]]; then
+							rm -rf "/tmp/BackOn/Backup/${BACKUP_NAME}/${ANSWER_W}"
 						fi
 					fi
 				fi
