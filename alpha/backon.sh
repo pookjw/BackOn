@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-349-official
+# BackOn alpha-350-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=349
+TOOL_BUILD_NUM=350
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -2776,6 +2776,7 @@ function runExtension(){
 				applyRed
 				echo -e "ERROR!"
 				applyNoColor
+				PA2CKey
 			else
 				chmod +x "/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/script"
 				EXTENSION_MIN_VER="$(/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/script -minVer)"
