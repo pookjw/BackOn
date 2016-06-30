@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-345-official
+# BackOn alpha-346-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=345
+TOOL_BUILD_NUM=346
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -31,6 +31,7 @@ function setEnglish(){
 	NO_SUCH_FILE_OR_DIRECTORY="No such file or directory."
 	NO_SUCH_FILE="No such file."
 	NO_SUCH_APP="No such app."
+	NO_SUCH_EXTENSION="No such extension."
 	NOT_INSTALLED_APP="App is not installed now."
 	NO_INSTALLED_EXTENSION="No installed extension."
 	NOT_EXTENSION_BACKUPED="You didn't backup from this extension so can't run this extension."
@@ -136,6 +137,7 @@ function setKorean(){
 	NO_SUCH_FILE_OR_DIRECTORY="존재하지 않는 파일이나 폴더입니다."
 	NO_SUCH_FILE="존재하지 않는 파일입니다."
 	NO_SUCH_APP="존재하지 않는 어플입니다."
+	NO_SUCH_EXTENSION="존재하지 않는 extension입니다."
 	NOT_INSTALLED_APP="현재 App이 설치되지 않았습니다."
 	NO_INSTALLED_EXTENSION="extension이 설치되지 않았습니다."
 	NOT_EXTENSION_BACKUPED="이 extension으로 백업하시지 않았기 때문에 이 extension을 실행할 수 없습니다."
@@ -2745,7 +2747,9 @@ function runExtension(){
 		echo -e "${SHOW_INFO_19}"
 		showLinesB
 		if [[ ! -d "/var/mobile/Library/Preferences/BackOn/Extension" ]]; then
+			applyRed
 			echo -e "${NO_INSTALLED_EXTENSION}"
+			applyNoColor
 			showLinesB
 			echo -e "- ${ENTER_QUIT}"
 			echo -e "- ${SHOW_GUIDE_16}"
@@ -2813,6 +2817,11 @@ function runExtension(){
 					fi
 				fi
 			fi
+		else
+			applyRed
+			echo -e "${NO_SUCH_EXTENSION}"
+			applyNoColor
+			PA2CKey
 		fi
 	done	
 }
