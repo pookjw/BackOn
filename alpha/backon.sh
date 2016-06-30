@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-339-official
+# BackOn alpha-340-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=339
+TOOL_BUILD_NUM=340
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -32,6 +32,7 @@ function setEnglish(){
 	NO_SUCH_FILE="No such file."
 	NO_SUCH_APP="No such app."
 	NOT_INSTALLED_APP="App is not installed now."
+	NO_INSTALLED_EXTENSION="No installed Extension."
 	NO_SUCH_XBACKUP="I can't find backup file of xBackup. (/var/mobile/Library/xBackup/Backups/backup.bk.zip)"
 	NOTHING_TO_BACKUP="Nothing to backup!"
 	NOTHING_TO_DELETE="Nothing to delete!"
@@ -81,11 +82,14 @@ function setEnglish(){
 	ENTER_NICKNAME="Enter nickname of custom backup that you want to do. (Space bar is not supported.)"
 	ALREADY_EXISTS_WANT_TO_REMOVE="Entered nickname is already exists. Do you want to remove it? (yes/no)"
 	ENTER_FILE_PATH="Enter file/folder path."
+	SCRIPT_DONE="Script Done."
 	SHOW_GUIDE_3="Enter file/folder name that you want to backup. If you want to backup all of files, enter 'all' command. Enter 'delete' command to delete backuped backup."
 	SHOW_GUIDE_4="Enter file/folder name that you want to delete backup. If you want to delete all of backup files, enter 'all' command."
 	SHOW_GUIDE_10="Enter file/folder name that you want to restore. If you want to restore all of files, enter 'all' command."
 	SHOW_GUIDE_14="Enter app name that you want to restore."
 	SHOW_GUIDE_15="Enter app name that you want to backup. Enter 'delete' command to delete backuped backup."
+	SHOW_GUIDE_16="Enter 'manage command to manage extensions."
+	SHOW_GUIDE_17="Enter extension name that you want to run. Enter 'manage' command to manage extensions."
 	SHOW_INFO_1="Backup Menu"
 	SHOW_INFO_2="Backup Menu > Backup Cydia sources and packages list"
 	SHOW_INFO_3="Backup Menu > Backup Library"
@@ -104,6 +108,7 @@ function setEnglish(){
 	SHOW_INFO_16="Backup Menu > Backup App Data > Delete backup"
 	SHOW_INFO_17="Restore Menu > Restore App Data"
 	SHOW_INFO_18="Backup Menu > Confirm"
+	SHOW_INFO_19="Run Extension"
 }
 
 function setKorean(){
@@ -127,6 +132,7 @@ function setKorean(){
 	NO_SUCH_FILE="존재하지 않는 파일입니다."
 	NO_SUCH_APP="존재하지 않는 어플입니다."
 	NOT_INSTALLED_APP="현재 App이 설치되지 않았습니다."
+	NO_INSTALLED_EXTENSION="Extension이 설치되지 않았습니다."
 	NO_SUCH_XBACKUP="xBackup의 백업 파일을 찾을 수 없습니다! (/var/mobile/Library/xBackup/Backups/backup.bk.zip)"
 	NOTHING_TO_BACKUP="백업할 파일이 없습니다!"
 	NOTHING_TO_DELETE="지울 백업 파일이 없습니다!"
@@ -176,11 +182,14 @@ function setKorean(){
 	ENTER_NICKNAME="커스텀 백업할 것의 닉네임을 입력해 주세요. (띄어쓰기는 지원되지 않습니다.)"
 	ALREADY_EXISTS_WANT_TO_REMOVE="입력하신 닉네임은 이미 존재합니다. 기존 것을 제거하시겠습니까? (yes/no)"
 	ENTER_FILE_PATH="파일/폴더 경로를 입력해 주세요."
+	SCRIPT_DONE="Script 완료."
 	SHOW_GUIDE_3="백업을 원하는 폴더/파일의 이름을 입력하시면 됩니다. 'all'을 입력하면 모두 백업할 수 있습니다. 'delete' 명령어로 백업한 백업 파일을 삭제할 수 있습니다."
 	SHOW_GUIDE_4="삭제를 원하는 폴더/파일의 이름을 입력하시면 됩니다. 'all'을 입력하면 모두 지울 수 있습니다."
 	SHOW_GUIDE_10="복원을 원하는 폴더/파일의 이름을 입력하시면 됩니다. 'all'을 입력하면 모두 복원할 수 있습니다."
 	SHOW_GUIDE_14="복원을 원하는 어플의 이름을 입력하시면 됩니다."
 	SHOW_GUIDE_15="백업을 원하는 App 이름을 입력해 주세요. 'delete' 명령어로 백업한 백업 파일을 삭제할 수 있습니다."
+	SHOW_GUIDE_16="'manage' 명령어로 extension을 관리할 수 있습니다."
+	SHOW_GUIDE_17="extension 이름을 입력하시면 실행합니다. 'manage' 명령어로 extension을 관리할 수 있습니다."
 	SHOW_INFO_1="백업 메뉴"
 	SHOW_INFO_2="백업 메뉴 > Cydia 소스, 패키지 목록을 백업"
 	SHOW_INFO_3="백업 메뉴 > Library 백업"
@@ -199,6 +208,7 @@ function setKorean(){
 	SHOW_INFO_16="백업 메뉴 > 사용자 어플 데이터 백업 > 백업 삭제"
 	SHOW_INFO_17="복원 메뉴 > 사용자 어플 데이터 복원"
 	SHOW_INFO_18="백업 메뉴 > 확인"
+	SHOW_INFO_19="Extension 실행"
 }
 
 function openDevSettings(){
@@ -542,6 +552,8 @@ function openDevSettings(){
 				echo -e "(4) backupUserAppData"
 				echo -e "(5) restoreUserAppData"
 				echo -e "(6) runUpdate"
+				echo -e "(7) runExtensionBackup"
+				echo -e "(8) runExtensionRestore"
 				showLinesB
 				echo -e "- ${ENTER_QUIT}"
 				showLinesA
@@ -563,6 +575,10 @@ function openDevSettings(){
 					saveSettings
 					loadSettings
 					runUpdate
+				elif [[ "${ANSWER_V}" == 7 ]]; then
+					runExtensionBackup
+				elif [[ "${ANSWER_V}" == 8 ]]; then
+					runExtensionRestore
 				elif [[ "${ANSWER_V}" == quit || "${ANSWER_V}" == q ]]; then
 					break
 				elif [[ "${ANSWER_V}" == exit ]]; then
@@ -2705,6 +2721,71 @@ function installUpdate_old(){
 	done
 	showLinesA
 	PA2CKey
+}
+
+function runExtensionBackup(){
+	if [[ -d "/tmp/BackOn/Backup/${BACKUP_NAME}" && ! -z "${BACKUP_NAME}" ]]; then
+		if [[ -d "/var/mobile/Library/Preferences/BackOn/Extension" ]]; then
+			if [[ -z "$(ls "/var/mobile/Library/Preferences/BackOn/Extension")" ]]; then
+				rm -rf "/var/mobile/Library/Preferences/BackOn/Extension"
+			fi
+		fi
+		while(true); do
+			ClearKey
+			showLinesA
+			echo -e "${SHOW_INFO_19}"
+			showLinesB
+			if [[ ! -d "/var/mobile/Library/Preferences/BackOn/Extension" ]]; then
+				echo -e "${NO_INSTALLED_EXTENSION}"
+				showLinesB
+				echo -e "- ${ENTER_QUIT}"
+				echo -e "- ${SHOW_GUIDE_16}"
+			else
+				ls "/var/mobile/Library/Preferences/BackOn/Extension"
+				showLinesB
+				echo -e "- ${ENTER_QUIT}"
+				echo -e "- ${SHOW_GUIDE_17}"
+			fi
+			showLinesA
+			read -p "- " ANSWER_W
+
+			if [[ -z "${ANSWER_W}" ]]; then
+				:
+			elif [[ "${ANSWER_W}" == ods ]]; then
+				openDevSettings
+			elif [[ "${ANSWER_W}" == exit ]]; then
+				ExitKey
+			elif [[ "${ANSWER_W}" == q || "${ANSWER_W}" == quit ]]; then
+				break
+			elif [[ "${ANSWER_W}" == manage ]]; then
+				manageExtenstion
+			elif [[ -d "/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}" ]]; then
+				if [[ ! -f "/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/script" ]]; then
+					applyRed
+					echo -e "ERROR!"
+					applyNoColor
+				else
+					chmod +x "/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/script"
+					chmod +x "/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/name"
+					if [[ ! -d "/tmp/BackOn/${BACKUP_NAME}/$(cat "/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/name")" ]]; then
+						mkdir -p "/tmp/BackOn/${BACKUP_NAME}/$(cat "/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/name")"
+					fi
+					cd "/tmp/BackOn/${BACKUP_NAME}/$(cat "/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/name")"
+					/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/script
+					echo -e "${SCRIPT_DONE}"
+					PA2CKey
+					if [[ -z "$(ls "/var/mobile/Library/Preferences/BackOn/Extension")" ]]; then
+						rm -rf "/tmp/BackOn/${BACKUP_NAME}/$(cat "/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/name")"
+					fi
+				fi
+			fi
+		done
+	else
+		applyRed
+		echo -e "ERROR!"
+		applyNoColor
+		PA2CKey
+	fi
 }
 
 ##############################################
