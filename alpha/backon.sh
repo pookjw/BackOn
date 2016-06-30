@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-351-official
+# BackOn alpha-352-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=351
+TOOL_BUILD_NUM=352
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -114,7 +114,8 @@ function setEnglish(){
 	SHOW_INFO_16="Backup Menu > Backup App Data > Delete backup"
 	SHOW_INFO_17="Restore Menu > Restore App Data"
 	SHOW_INFO_18="Backup Menu > Confirm"
-	SHOW_INFO_19="Run Extension"
+	SHOW_INFO_19="Run extension (Backup)"
+	SHOW_INFO_20="Run extension (Restore)"
 }
 
 function setKorean(){
@@ -220,7 +221,8 @@ function setKorean(){
 	SHOW_INFO_16="백업 메뉴 > 사용자 어플 데이터 백업 > 백업 삭제"
 	SHOW_INFO_17="복원 메뉴 > 사용자 어플 데이터 복원"
 	SHOW_INFO_18="백업 메뉴 > 확인"
-	SHOW_INFO_19="Extension 실행"
+	SHOW_INFO_19="extension 실행 (백업)"
+	SHOW_INFO_20="extension 실행 (복원)"
 }
 
 function openDevSettings(){
@@ -2744,7 +2746,11 @@ function runExtension(){
 	while(true); do
 		ClearKey
 		showLinesA
-		echo -e "${SHOW_INFO_19}"
+		if [[ "${1}" == "-backup" ]]; then
+			echo -e "${SHOW_INFO_19}"
+		elif [[ "${1}" == "-restore" ]]; then
+			echo -e "${SHOW_INFO_20}"
+		fi
 		showLinesB
 		if [[ ! -d "/var/mobile/Library/Preferences/BackOn/Extension" ]]; then
 			applyRed
@@ -2763,7 +2769,7 @@ function runExtension(){
 		applyLightCyan
 		read -p "- " ANSWER_W
 		applyNoColor
-		
+
 		if [[ -z "${ANSWER_W}" ]]; then
 			:
 		elif [[ "${ANSWER_W}" == ods ]]; then
