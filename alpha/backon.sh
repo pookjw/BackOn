@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-350-official
+# BackOn alpha-351-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=350
+TOOL_BUILD_NUM=351
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -2760,7 +2760,10 @@ function runExtension(){
 			echo -e "- ${SHOW_GUIDE_17}"
 		fi
 		showLinesA
+		applyLightCyan
 		read -p "- " ANSWER_W
+		applyNoColor
+		
 		if [[ -z "${ANSWER_W}" ]]; then
 			:
 		elif [[ "${ANSWER_W}" == ods ]]; then
