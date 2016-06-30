@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-343-official
+# BackOn alpha-344-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=343
+TOOL_BUILD_NUM=344
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -560,8 +560,8 @@ function openDevSettings(){
 				echo -e "(4) backupUserAppData"
 				echo -e "(5) restoreUserAppData"
 				echo -e "(6) runUpdate"
-				echo -e "(7) runExtensionBackup"
-				echo -e "(8) runExtensionRestore"
+				echo -e "(7) runExtension -backup"
+				echo -e "(8) runExtension -restore"
 				showLinesB
 				echo -e "- ${ENTER_QUIT}"
 				showLinesA
@@ -584,9 +584,9 @@ function openDevSettings(){
 					loadSettings
 					runUpdate
 				elif [[ "${ANSWER_V}" == 7 ]]; then
-					runExtensionBackup
+					runExtension -backup
 				elif [[ "${ANSWER_V}" == 8 ]]; then
-					runExtensionRestore
+					runExtension -restore
 				elif [[ "${ANSWER_V}" == quit || "${ANSWER_V}" == q ]]; then
 					break
 				elif [[ "${ANSWER_V}" == exit ]]; then
@@ -2731,64 +2731,77 @@ function installUpdate_old(){
 	PA2CKey
 }
 
-function runExtensionBackup(){
-	if [[ -d "/tmp/BackOn/Backup/${BACKUP_NAME}" && ! -z "${BACKUP_NAME}" ]]; then
-		if [[ -d "/var/mobile/Library/Preferences/BackOn/Extension" ]]; then
-			if [[ -z "$(ls "/var/mobile/Library/Preferences/BackOn/Extension")" ]]; then
-				rm -rf "/var/mobile/Library/Preferences/BackOn/Extension"
-			fi
+function runExtension(){
+	if [[ -d "/var/mobile/Library/Preferences/BackOn/Extension" ]]; then
+		if [[ -z "$(ls "/var/mobile/Library/Preferences/BackOn/Extension")" ]]; then
+			rm -rf "/var/mobile/Library/Preferences/BackOn/Extension"
 		fi
-		while(true); do
-			ClearKey
-			showLinesA
-			echo -e "${SHOW_INFO_19}"
+	fi
+	while(true); do
+		ClearKey
+		showLinesA
+		echo -e "${SHOW_INFO_19}"
+		showLinesB
+		if [[ ! -d "/var/mobile/Library/Preferences/BackOn/Extension" ]]; then
+			echo -e "${NO_INSTALLED_EXTENSION}"
 			showLinesB
-			if [[ ! -d "/var/mobile/Library/Preferences/BackOn/Extension" ]]; then
-				echo -e "${NO_INSTALLED_EXTENSION}"
-				showLinesB
-				echo -e "- ${ENTER_QUIT}"
-				echo -e "- ${SHOW_GUIDE_16}"
+			echo -e "- ${ENTER_QUIT}"
+			echo -e "- ${SHOW_GUIDE_16}"
+		else
+		ls "/var/mobile/Library/Preferences/BackOn/Extension"
+			showLinesB
+			echo -e "- ${ENTER_QUIT}"
+			echo -e "- ${SHOW_GUIDE_17}"
+		fi
+		showLinesA
+		read -p "- " ANSWER_W
+		if [[ -z "${ANSWER_W}" ]]; then
+			:
+		elif [[ "${ANSWER_W}" == ods ]]; then
+			openDevSettings
+		elif [[ "${ANSWER_W}" == exit ]]; then
+			ExitKey
+		elif [[ "${ANSWER_W}" == q || "${ANSWER_W}" == quit ]]; then
+			break
+		elif [[ "${ANSWER_W}" == manage ]]; then
+			manageExtenstion
+		elif [[ -d "/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}" ]]; then
+			if [[ ! -f "/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/script" ]]; then
+				applyRed
+				echo -e "ERROR!"
+				applyNoColor
 			else
-				ls "/var/mobile/Library/Preferences/BackOn/Extension"
-				showLinesB
-				echo -e "- ${ENTER_QUIT}"
-				echo -e "- ${SHOW_GUIDE_17}"
-			fi
-			showLinesA
-			read -p "- " ANSWER_W
-
-			if [[ -z "${ANSWER_W}" ]]; then
-				:
-			elif [[ "${ANSWER_W}" == ods ]]; then
-				openDevSettings
-			elif [[ "${ANSWER_W}" == exit ]]; then
-				ExitKey
-			elif [[ "${ANSWER_W}" == q || "${ANSWER_W}" == quit ]]; then
-				break
-			elif [[ "${ANSWER_W}" == manage ]]; then
-				manageExtenstion
-			elif [[ -d "/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}" ]]; then
-				if [[ ! -f "/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/script" ]]; then
+				chmod +x "/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/script"
+				chmod +x "/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/name"
+				chmod +x "/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/minVer"
+				if [ "$(cat "/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/minVer")" -gt ${TOOL_BUILD_NUM} ]; then
 					applyRed
 					echo -e "ERROR!"
 					applyNoColor
+					echo -e "${BACKON_OUTDATED}"
+					echo -e "- ${CURRENT_BACKON_VERSION} : ${TOOL_BUILD_NUM}"
+					echo -e "- ${REQUIRED_BACKON_VERSION} : $(cat "/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/minVer") ${OR_LATER}"
+					PA2CKey
 				else
-					chmod +x "/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/script"
-					chmod +x "/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/name"
-					chmod +x "/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/minVer"
-					if [ "$(cat "/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/minVer")" -gt ${TOOL_BUILD_NUM} ]; then
-						applyRed
-						echo -e "ERROR!"
-						applyNoColor
-						echo -e "${BACKON_OUTDATED}"
-						echo -e "- ${CURRENT_BACKON_VERSION} : ${TOOL_BUILD_NUM}"
-						echo -e "- ${REQUIRED_BACKON_VERSION} : $(cat "/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/minVer") ${OR_LATER}"
-						PA2CKey
-					else
-						if [[ ! -d "/tmp/BackOn/${BACKUP_NAME}/$(cat "/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/name")" ]]; then
-							mkdir -p "/tmp/BackOn/${BACKUP_NAME}/$(cat "/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/name")"
+					if [[ ${1} == "-backup" ]]; then
+						if [[ ! -d "/tmp/BackOn/Backup/${BACKUP_NAME}/$(cat "/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/name")" ]]; then
+							mkdir -p "/tmp/BackOn/Backup/${BACKUP_NAME}/$(cat "/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/name")"
 						fi
-						cd "/tmp/BackOn/${BACKUP_NAME}/$(cat "/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/name")"
+						cd "/tmp/BackOn/Backup/${BACKUP_NAME}/$(cat "/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/name")"
+						CONFRIM_EXTENSION_RUN=YES
+					elif [[ "${1}" == "-restore" ]]; then
+						if [[ -d "/tmp/BackOn/Restore/$(cat "/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/name")" ]]; then
+							cd "/tmp/BackOn/Restore/$(cat "/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/name")"
+							CONFRIM_EXTENSION_RUN=YES
+						else
+							applyRed
+							echo -e "${NOT_EXTENSION_BACKUPED}"
+							applyNoColor
+							CONFRIM_EXTENSION_RUN=NO
+							PA2CKey
+						fi
+					fi
+					if [[ ${CONFRIM_EXTENSION_RUN} == YES ]]; then
 						/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/script -backup ${LANGUAGE}
 						echo -e "${SCRIPT_DONE}"
 						PA2CKey
@@ -2798,13 +2811,8 @@ function runExtensionBackup(){
 					fi
 				fi
 			fi
-		done
-	else
-		applyRed
-		echo -e "ERROR!"
-		applyNoColor
-		PA2CKey
-	fi
+		fi
+	done	
 }
 
 ##############################################
