@@ -1,0 +1,48 @@
+#!/bin/sh
+
+# BackOn의 xtension인지 답하는 부분. 반드시 YES 값을 내놔야함.
+if [[ "${1}" == "-isBackOnExtension" ]]; then
+	echo -e "YES"
+	exit 0
+fi
+
+# identifier는 extension 재설치 및 업데이트 때 쓰이는 부분으로, 다른 extension과 겹치면 안 되며 가급적이면 한 번 정한 identifer는 쭉 사용했으면 함.
+if [[ "${1}" == "-identifier" ]]; then
+	echo -e "com.test.backonextension"
+	exit 0
+fi
+
+# extension을 돌리기 위한 최소한의 BackOn을 내놓는 부분으로, 반드시 자연수여야함.
+if [[ "${1}" == "-minVer" ]]; then
+	echo -e "355"
+	exit 0
+fi
+
+# 백업 대상을 입력하는 부분. 이건 BackOn에서 extension을 실행할 때의 명령어로 쓰임.
+if [[ "${1}" == "-backupTarget" ]]; then
+	echo -e "Test"
+	exit 0
+fi
+
+# 여기까진 manageExtension에서의 extension 설치를 위한 과정이고, 아래는 runExtension에서 실행할 때 쓰이는 부분들.
+
+# runExtension에서 이 script를 ./script -backup English 이런 식으로 실행할 거여서, ${2} 부분에 언어가 놓임. English와 Korean만 지원.
+LANGUAGE="${2}"
+# 이 부분은 위에서 지정된 ${LANGUAGE}에 따라 백업 또는 복원 과정에서 출력될 메시지의 언어를 정의하는 부분.
+if [[ "${LANGUAGE}" == English ]]; then
+	MESSAGE="Script Done!"
+elif [[ "${LANGUAGE}" == Korean ]]; then
+	MESSAGE="Script 완료!"
+fi
+
+####################################
+
+if [[ "${1}" == "-backup" ]]; then # 백업할 때 수행할 코드
+	echo -e "$(pwd)"
+	echo -e "${MESSAGE}"
+	exit 0
+elif [[ "${!}" == "-restore" ]]; then # 복원할 때 수행할 코드
+	echo -e "$(pwd)"
+	echo -e "${MESSAGE}"
+	exit 0
+fi
