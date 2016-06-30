@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-354-official
+# BackOn alpha-355-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=354
+TOOL_BUILD_NUM=355
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -2839,6 +2839,7 @@ function manageExtenstion(){
 	echo "구현되지 않은 기능입니다."
 	echo "다만 직접 extension을 설치할 수 있습니다. /var/mobile/Library/Preferences/BackOn/Extension 폴더를 생성하시고 extension 이름(아무거나 쓰셔도 돼요)인 폴더를 생성해주고, 실행해줄 파일을 script로 이름을 바꾸고 생성한 폴더 안에 넣어주고, minVer 파일을 생성해준 뒤 그 파일에 자연수 '1'을 써주면 됩니다."
 	echo "아직 완전하지 않은 기능이며, 언젠가 상세한 가이드를 제작할 예정입니다."
+	PA2CKey
 }
 
 ##############################################
