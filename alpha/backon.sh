@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-355-official
+# BackOn alpha-339-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=355
+TOOL_BUILD_NUM=339
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -31,10 +31,7 @@ function setEnglish(){
 	NO_SUCH_FILE_OR_DIRECTORY="No such file or directory."
 	NO_SUCH_FILE="No such file."
 	NO_SUCH_APP="No such app."
-	NO_SUCH_EXTENSION="No such extension."
 	NOT_INSTALLED_APP="App is not installed now."
-	NO_INSTALLED_EXTENSION="No installed extension."
-	NOT_EXTENSION_BACKUPED="You didn't backup from this extension so can't run this extension."
 	NO_SUCH_XBACKUP="I can't find backup file of xBackup. (/var/mobile/Library/xBackup/Backups/backup.bk.zip)"
 	NOTHING_TO_BACKUP="Nothing to backup!"
 	NOTHING_TO_DELETE="Nothing to delete!"
@@ -69,10 +66,6 @@ function setEnglish(){
 	BACKUPED_CUSTOM_BACKUP="Custom Backup"
 	SUCCEED_SAVE_BACKUP="Succeed to save backup!"
 	OSVER_IS_NOT_MATCHING="iOS Version of backup is not matching with current iOS Version. It will cause problem."
-	BACKON_OUTDATED="This extension is incompatible with current BackOn version. Please update BackOn."
-	CURRENT_BACKON_VERSION="Current BackOn Version"
-	REQUIRED_BACKON_VERSION="Required Backon Version"
-	OR_LATER="or later."
 	WARN_USER_APP_DATA="This function is not stable yet so it may not work correctly."
 	RESTORE_CYDIA_DATA="Restore Cydia sources and packages list."
 	RESTORE_SHOW_CYDIA_LIST="Show backuped Cydia packages list."
@@ -88,14 +81,11 @@ function setEnglish(){
 	ENTER_NICKNAME="Enter nickname of custom backup that you want to do. (Space bar is not supported.)"
 	ALREADY_EXISTS_WANT_TO_REMOVE="Entered nickname is already exists. Do you want to remove it? (yes/no)"
 	ENTER_FILE_PATH="Enter file/folder path."
-	SCRIPT_DONE="Script Done."
 	SHOW_GUIDE_3="Enter file/folder name that you want to backup. If you want to backup all of files, enter 'all' command. Enter 'delete' command to delete backuped backup."
 	SHOW_GUIDE_4="Enter file/folder name that you want to delete backup. If you want to delete all of backup files, enter 'all' command."
 	SHOW_GUIDE_10="Enter file/folder name that you want to restore. If you want to restore all of files, enter 'all' command."
 	SHOW_GUIDE_14="Enter app name that you want to restore."
 	SHOW_GUIDE_15="Enter app name that you want to backup. Enter 'delete' command to delete backuped backup."
-	SHOW_GUIDE_16="Enter 'manage command to manage extensions."
-	SHOW_GUIDE_17="Enter extension name that you want to run. Enter 'manage' command to manage extensions."
 	SHOW_INFO_1="Backup Menu"
 	SHOW_INFO_2="Backup Menu > Backup Cydia sources and packages list"
 	SHOW_INFO_3="Backup Menu > Backup Library"
@@ -114,8 +104,6 @@ function setEnglish(){
 	SHOW_INFO_16="Backup Menu > Backup App Data > Delete backup"
 	SHOW_INFO_17="Restore Menu > Restore App Data"
 	SHOW_INFO_18="Backup Menu > Confirm"
-	SHOW_INFO_19="Run extension (Backup)"
-	SHOW_INFO_20="Run extension (Restore)"
 }
 
 function setKorean(){
@@ -138,10 +126,7 @@ function setKorean(){
 	NO_SUCH_FILE_OR_DIRECTORY="존재하지 않는 파일이나 폴더입니다."
 	NO_SUCH_FILE="존재하지 않는 파일입니다."
 	NO_SUCH_APP="존재하지 않는 어플입니다."
-	NO_SUCH_EXTENSION="존재하지 않는 extension입니다."
 	NOT_INSTALLED_APP="현재 App이 설치되지 않았습니다."
-	NO_INSTALLED_EXTENSION="extension이 설치되지 않았습니다."
-	NOT_EXTENSION_BACKUPED="이 extension으로 백업하시지 않았기 때문에 이 extension을 실행할 수 없습니다."
 	NO_SUCH_XBACKUP="xBackup의 백업 파일을 찾을 수 없습니다! (/var/mobile/Library/xBackup/Backups/backup.bk.zip)"
 	NOTHING_TO_BACKUP="백업할 파일이 없습니다!"
 	NOTHING_TO_DELETE="지울 백업 파일이 없습니다!"
@@ -176,10 +161,6 @@ function setKorean(){
 	BACKUPED_CUSTOM_BACKUP="커스텀 백업"
 	SUCCEED_SAVE_BACKUP="백업을 성공했습니다!"
 	OSVER_IS_NOT_MATCHING="백업할 때의 iOS 버전이 현재 기기의 iOS 버전과 일치하지 않습니다. 이것은 문제를 야기할 수 있습니다."
-	BACKON_OUTDATED="이 extension은 현재 BackOn 버전과 호환되지 않습니다. BackOn을 업데이트 해주세요."
-	CURRENT_BACKON_VERSION="현재 BackOn 버전"
-	REQUIRED_BACKON_VERSION="요구되는 BackOn 버전"
-	OR_LATER="이상"
 	WARN_USER_APP_DATA="이 기능은 아직 안정적이지 않기 때문에 제대로 작동하지 않을 수 있습니다."
 	RESTORE_CYDIA_DATA="Cydia 소스, 패키지 복원"
 	RESTORE_SHOW_CYDIA_LIST="백업한 Cydia 패키지 목록 보기"
@@ -195,14 +176,11 @@ function setKorean(){
 	ENTER_NICKNAME="커스텀 백업할 것의 닉네임을 입력해 주세요. (띄어쓰기는 지원되지 않습니다.)"
 	ALREADY_EXISTS_WANT_TO_REMOVE="입력하신 닉네임은 이미 존재합니다. 기존 것을 제거하시겠습니까? (yes/no)"
 	ENTER_FILE_PATH="파일/폴더 경로를 입력해 주세요."
-	SCRIPT_DONE="Script 완료."
 	SHOW_GUIDE_3="백업을 원하는 폴더/파일의 이름을 입력하시면 됩니다. 'all'을 입력하면 모두 백업할 수 있습니다. 'delete' 명령어로 백업한 백업 파일을 삭제할 수 있습니다."
 	SHOW_GUIDE_4="삭제를 원하는 폴더/파일의 이름을 입력하시면 됩니다. 'all'을 입력하면 모두 지울 수 있습니다."
 	SHOW_GUIDE_10="복원을 원하는 폴더/파일의 이름을 입력하시면 됩니다. 'all'을 입력하면 모두 복원할 수 있습니다."
 	SHOW_GUIDE_14="복원을 원하는 어플의 이름을 입력하시면 됩니다."
 	SHOW_GUIDE_15="백업을 원하는 App 이름을 입력해 주세요. 'delete' 명령어로 백업한 백업 파일을 삭제할 수 있습니다."
-	SHOW_GUIDE_16="'manage' 명령어로 extension을 관리할 수 있습니다."
-	SHOW_GUIDE_17="extension 이름을 입력하시면 실행합니다. 'manage' 명령어로 extension을 관리할 수 있습니다."
 	SHOW_INFO_1="백업 메뉴"
 	SHOW_INFO_2="백업 메뉴 > Cydia 소스, 패키지 목록을 백업"
 	SHOW_INFO_3="백업 메뉴 > Library 백업"
@@ -221,8 +199,6 @@ function setKorean(){
 	SHOW_INFO_16="백업 메뉴 > 사용자 어플 데이터 백업 > 백업 삭제"
 	SHOW_INFO_17="복원 메뉴 > 사용자 어플 데이터 복원"
 	SHOW_INFO_18="백업 메뉴 > 확인"
-	SHOW_INFO_19="extension 실행 (백업)"
-	SHOW_INFO_20="extension 실행 (복원)"
 }
 
 function openDevSettings(){
@@ -566,8 +542,6 @@ function openDevSettings(){
 				echo -e "(4) backupUserAppData"
 				echo -e "(5) restoreUserAppData"
 				echo -e "(6) runUpdate"
-				echo -e "(7) runExtension -backup"
-				echo -e "(8) runExtension -restore"
 				showLinesB
 				echo -e "- ${ENTER_QUIT}"
 				showLinesA
@@ -589,10 +563,6 @@ function openDevSettings(){
 					saveSettings
 					loadSettings
 					runUpdate
-				elif [[ "${ANSWER_V}" == 7 ]]; then
-					runExtension -backup
-				elif [[ "${ANSWER_V}" == 8 ]]; then
-					runExtension -restore
 				elif [[ "${ANSWER_V}" == quit || "${ANSWER_V}" == q ]]; then
 					break
 				elif [[ "${ANSWER_V}" == exit ]]; then
@@ -2734,111 +2704,6 @@ function installUpdate_old(){
 		fi
 	done
 	showLinesA
-	PA2CKey
-}
-
-function runExtension(){
-	if [[ -d "/var/mobile/Library/Preferences/BackOn/Extension" ]]; then
-		if [[ -z "$(ls "/var/mobile/Library/Preferences/BackOn/Extension")" ]]; then
-			rm -rf "/var/mobile/Library/Preferences/BackOn/Extension"
-		fi
-	fi
-	while(true); do
-		ClearKey
-		showLinesA
-		if [[ "${1}" == "-backup" ]]; then
-			echo -e "${SHOW_INFO_19}"
-		elif [[ "${1}" == "-restore" ]]; then
-			echo -e "${SHOW_INFO_20}"
-		fi
-		showLinesB
-		if [[ ! -d "/var/mobile/Library/Preferences/BackOn/Extension" ]]; then
-			applyRed
-			echo -e "${NO_INSTALLED_EXTENSION}"
-			applyNoColor
-			showLinesB
-			echo -e "- ${ENTER_QUIT}"
-			echo -e "- ${SHOW_GUIDE_16}"
-		else
-			ls "/var/mobile/Library/Preferences/BackOn/Extension"
-			showLinesB
-			echo -e "- ${ENTER_QUIT}"
-			echo -e "- ${SHOW_GUIDE_17}"
-		fi
-		showLinesA
-		applyLightCyan
-		read -p "- " ANSWER_W
-		applyNoColor
-
-		if [[ -z "${ANSWER_W}" ]]; then
-			:
-		elif [[ "${ANSWER_W}" == ods ]]; then
-			openDevSettings
-		elif [[ "${ANSWER_W}" == exit ]]; then
-			ExitKey
-		elif [[ "${ANSWER_W}" == q || "${ANSWER_W}" == quit ]]; then
-			break
-		elif [[ "${ANSWER_W}" == manage ]]; then
-			manageExtenstion
-		elif [[ -d "/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}" ]]; then
-			if [[ ! -f "/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/script" ]]; then
-				applyRed
-				echo -e "ERROR!"
-				applyNoColor
-				PA2CKey
-			else
-				chmod +x "/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/script"
-				EXTENSION_MIN_VER="$(cat /var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/minVer)"
-				if [ "${EXTENSION_MIN_VER}" -gt ${TOOL_BUILD_NUM} ]; then
-					applyRed
-					echo -e "ERROR!"
-					applyNoColor
-					echo -e "${BACKON_OUTDATED}"
-					echo -e "- ${CURRENT_BACKON_VERSION} : ${TOOL_BUILD_NUM}"
-					echo -e "- ${REQUIRED_BACKON_VERSION} : ${EXTENSION_MIN_VER} ${OR_LATER}"
-					PA2CKey
-				else
-					if [[ ${1} == "-backup" ]]; then
-						if [[ ! -d "/tmp/BackOn/Backup/${BACKUP_NAME}/${ANSWER_W}" ]]; then
-							mkdir -p "/tmp/BackOn/Backup/${BACKUP_NAME}/${ANSWER_W}"
-						fi
-						cd "/tmp/BackOn/Backup/${BACKUP_NAME}/${ANSWER_W}"
-						CONFRIM_EXTENSION_RUN=YES
-					elif [[ "${1}" == "-restore" ]]; then
-						if [[ -d "/tmp/BackOn/Restore/${ANSWER_W}" ]]; then
-							cd "/tmp/BackOn/Restore/${ANSWER_W}"
-							CONFRIM_EXTENSION_RUN=YES
-						else
-							applyRed
-							echo -e "${NOT_EXTENSION_BACKUPED}"
-							applyNoColor
-							CONFRIM_EXTENSION_RUN=NO
-							PA2CKey
-						fi
-					fi
-					if [[ ${CONFRIM_EXTENSION_RUN} == YES ]]; then
-						/var/mobile/Library/Preferences/BackOn/Extension/${ANSWER_W}/script -backup ${LANGUAGE}
-						echo -e "${SCRIPT_DONE}"
-						PA2CKey
-						if [[ "${1}" == "-backup" && -z "$(ls "/tmp/BackOn/Backup/${BACKUP_NAME}/${ANSWER_W}")" ]]; then
-							rm -rf "/tmp/BackOn/Backup/${BACKUP_NAME}/${ANSWER_W}"
-						fi
-					fi
-				fi
-			fi
-		else
-			applyRed
-			echo -e "${NO_SUCH_EXTENSION}"
-			applyNoColor
-			PA2CKey
-		fi
-	done
-}
-
-function manageExtenstion(){
-	echo "구현되지 않은 기능입니다."
-	echo "다만 직접 extension을 설치할 수 있습니다. /var/mobile/Library/Preferences/BackOn/Extension 폴더를 생성하시고 extension 이름(아무거나 쓰셔도 돼요)인 폴더를 생성해주고, 실행해줄 파일을 script로 이름을 바꾸고 생성한 폴더 안에 넣어주고, minVer 파일을 생성해준 뒤 그 파일에 자연수 '1'을 써주면 됩니다."
-	echo "아직 완전하지 않은 기능이며, 언젠가 상세한 가이드를 제작할 예정입니다."
 	PA2CKey
 }
 
