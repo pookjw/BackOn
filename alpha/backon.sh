@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-357-official
+# BackOn alpha-358-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=357
+TOOL_BUILD_NUM=358
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -2439,8 +2439,8 @@ function customBackup(){
 				done
 			fi
 			showLinesB
-			echo -e "${ENTER_QUIT}"
-			echo -e "${ENTER_NICKNAME}"
+			echo -e "- ${ENTER_QUIT}"
+			echo -e "- ${ENTER_NICKNAME}"
 			showLinesA
 			applyLightCyan
 			read -p "- " ANSWER_M
@@ -2477,7 +2477,7 @@ function customBackup(){
 					showLinesB
 					echo -e "${ENTER_FILE_PATH}"
 					showLinesB
-					echo -e "${ENTER_QUIT}"
+					echo -e "- ${ENTER_QUIT}"
 					showLinesA
 					applyLightCyan
 					read -p "- " ANSWER_N
@@ -2541,7 +2541,7 @@ function customRestore(){
 				applyNoColor
 			done
 			showLinesB
-			echo -e "${ENTER_QUIT}"
+			echo -e "- ${ENTER_QUIT}"
 			showLinesA
 			applyLightCyan
 			read -p "- " ANSWER_O
