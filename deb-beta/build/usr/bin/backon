@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn beta-327-official
+# BackOn beta-359-official
 TOOL_BUILD_TYPE=beta
-TOOL_BUILD_NUM=327
+TOOL_BUILD_NUM=359
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -27,7 +27,6 @@ function setEnglish(){
 	QUIT="Quit."
 	ENTER_QUIT="Enter 'quit' to quit this menu."
 	ENTER_BACKUP_NAME="Enter backup name that you want to do. (If you want to set backup name to current date and time, enter 'date'.)"
-	ENTER_BACKUP_APP_NAME="Enter app name that you want to backup. Enter 'delete' command to delete backuped backup."
 	NOT_SUPPORTED_FUNCTION="Not supported function."
 	NO_SUCH_FILE_OR_DIRECTORY="No such file or directory."
 	NO_SUCH_FILE="No such file."
@@ -43,6 +42,7 @@ function setEnglish(){
 	BACKUP_CYDIA_DATA="Backup Cydia sources and packages."
 	BACKUP_LIBRARY="Backup Library."
 	BACKUP_USERAPP_DATA="Backup user applications (App Store app) data."
+	CUSTOM_BACKUP="Custom backup."
 	SHOW_BACKUPED_FILES="Show backuped file(s)."
 	DISCARD_BACKUP="Discard backup."
 	SAVE_BACKUP="Save backup."
@@ -64,13 +64,15 @@ function setEnglish(){
 	BACKUPED_CYDIA_SETTINGS="Cydia Settings"
 	BACKUPED_LIBRARY="Library"
 	BACKUPED_USERAPP_DATA="User App Data"
+	BACKUPED_CUSTOM_BACKUP="Custom Backup"
 	SUCCEED_SAVE_BACKUP="Succeed to save backup!"
 	OSVER_IS_NOT_MATCHING="iOS Version of backup is not matching with current iOS Version. It will cause problem."
-	WARN_RESTORE_USER_APP_DATA="This function is not stable yet so it may not work correctly."
+	WARN_USER_APP_DATA="This function is not stable yet so it may not work correctly."
 	RESTORE_CYDIA_DATA="Restore Cydia sources and packages list."
 	RESTORE_SHOW_CYDIA_LIST="Show backuped Cydia packages list."
 	RESTORE_USER_APP_DATA="Restore user applications (App Store app) data."
 	RESTORE_LIBRARY="Restore Library."
+	CUSTOM_RESTORE="Custom Restore."
 	REBOOT="Reboot."
 	RESTORING="Restoring..."
 	REFRESHING_SOURCES="Refreshing Cydia sources..."
@@ -85,12 +87,13 @@ function setEnglish(){
 	SHOW_GUIDE_4="Enter file/folder name that you want to delete backup. If you want to delete all of backup files, enter 'all' command."
 	SHOW_GUIDE_10="Enter file/folder name that you want to restore. If you want to restore all of files, enter 'all' command."
 	SHOW_GUIDE_14="Enter app name that you want to restore."
+	SHOW_GUIDE_15="Enter app name that you want to backup. Enter 'delete' command to delete backuped backup."
 	SHOW_INFO_1="Backup Menu"
 	SHOW_INFO_2="Backup Menu > Backup Cydia sources and packages list"
 	SHOW_INFO_3="Backup Menu > Backup Library"
 	SHOW_INFO_4="Backup Menu > Backup Library > Delete backup"
 	SHOW_INFO_5="Backup Menu > Show backuped file(s)"
-	SHOW_INFO_6="Backup Menu > Show backuped file(s) > Save backup"
+	SHOW_INFO_6="Backup Menu > Confirm > Save backup"
 	SHOW_INFO_7="Restore Menu"
 	SHOW_INFO_8="Restore Menu > Restore Cydia sources and packages list"
 	SHOW_INFO_9="Restore Menu > Show backuped Cydia packages list."
@@ -102,6 +105,7 @@ function setEnglish(){
 	SHOW_INFO_15="Backup Menu > Backup App Data"
 	SHOW_INFO_16="Backup Menu > Backup App Data > Delete backup"
 	SHOW_INFO_17="Restore Menu > Restore App Data"
+	SHOW_INFO_18="Backup Menu > Confirm"
 }
 
 function setKorean(){
@@ -120,7 +124,6 @@ function setKorean(){
 	QUIT="종료"
 	ENTER_QUIT="'quit'을 입력하면 이 메뉴를 종료합니다."
 	ENTER_BACKUP_NAME="원하는 백업 이름을 입력해 주세요. ('date'를 입력하면 현재 날짜, 시간을 백업 이름으로 지정합니다.)"
-	ENTER_BACKUP_APP_NAME="백업을 원하는 App 이름을 입력해 주세요. 'delete' 명령어로 백업한 백업 파일을 삭제할 수 있습니다."
 	NOT_SUPPORTED_FUNCTION="지원되지 않는 기능입니다."
 	NO_SUCH_FILE_OR_DIRECTORY="존재하지 않는 파일이나 폴더입니다."
 	NO_SUCH_FILE="존재하지 않는 파일입니다."
@@ -136,6 +139,7 @@ function setKorean(){
 	BACKUP_CYDIA_DATA="Cydia 소스, 패키지를 백업"
 	BACKUP_LIBRARY="Library 백업"
 	BACKUP_USERAPP_DATA="사용자 어플 (App Store 어플) 데이터 백업"
+	CUSTOM_BACKUP="커스텀 백업"
 	SHOW_BACKUPED_FILES="백업한 파일 보기"
 	DISCARD_BACKUP="백업을 취소하고 종료"
 	SAVE_BACKUP="백업을 저장"
@@ -157,13 +161,15 @@ function setKorean(){
 	BACKUPED_CYDIA_SETTINGS="Cydia 설정"
 	BACKUPED_LIBRARY="Library"
 	BACKUPED_USERAPP_DATA="사용자 어플 데이터"
-	SUCCEED_SAVE_BACKUP="백업에 성공했습니다!"
+	BACKUPED_CUSTOM_BACKUP="커스텀 백업"
+	SUCCEED_SAVE_BACKUP="백업을 성공했습니다!"
 	OSVER_IS_NOT_MATCHING="백업할 때의 iOS 버전이 현재 기기의 iOS 버전과 일치하지 않습니다. 이것은 문제를 야기할 수 있습니다."
-	WARN_RESTORE_USER_APP_DATA="이 기능은 아직 안정적이지 않기 때문에 제대로 작동하지 않을 수 있습니다."
+	WARN_USER_APP_DATA="이 기능은 아직 안정적이지 않기 때문에 제대로 작동하지 않을 수 있습니다."
 	RESTORE_CYDIA_DATA="Cydia 소스, 패키지 복원"
 	RESTORE_SHOW_CYDIA_LIST="백업한 Cydia 패키지 목록 보기"
 	RESTORE_USER_APP_DATA="사용자 어플 (App Store 어플) 데이터 복원"
 	RESTORE_LIBRARY="Library 복원"
+	CUSTOM_RESTORE="커스텀 복원"
 	REBOOT="재부팅"
 	RESTORING="복원 중..."
 	REFRESHING_SOURCES="Cydia 소스 새로고침 중..."
@@ -178,12 +184,13 @@ function setKorean(){
 	SHOW_GUIDE_4="삭제를 원하는 폴더/파일의 이름을 입력하시면 됩니다. 'all'을 입력하면 모두 지울 수 있습니다."
 	SHOW_GUIDE_10="복원을 원하는 폴더/파일의 이름을 입력하시면 됩니다. 'all'을 입력하면 모두 복원할 수 있습니다."
 	SHOW_GUIDE_14="복원을 원하는 어플의 이름을 입력하시면 됩니다."
+	SHOW_GUIDE_15="백업을 원하는 App 이름을 입력해 주세요. 'delete' 명령어로 백업한 백업 파일을 삭제할 수 있습니다."
 	SHOW_INFO_1="백업 메뉴"
 	SHOW_INFO_2="백업 메뉴 > Cydia 소스, 패키지 목록을 백업"
 	SHOW_INFO_3="백업 메뉴 > Library 백업"
 	SHOW_INFO_4="백업 메뉴 > Library 백업 > 백업 삭제"
 	SHOW_INFO_5="백업 메뉴 > 백업한 파일 표시"
-	SHOW_INFO_6="백업 메뉴 > 백업한 파일 표시 > 백업을 저장"
+	SHOW_INFO_6="백업 메뉴 > 확인 > 백업을 저장"
 	SHOW_INFO_7="복원 메뉴"
 	SHOW_INFO_8="복원 메뉴 > Cydia 소스, 패키지 복원"
 	SHOW_INFO_9="복원 메뉴 > 백업한 Cydia 패키지 목록 보기"
@@ -195,6 +202,7 @@ function setKorean(){
 	SHOW_INFO_15="백업 메뉴 > 사용자 어플 데이터 백업"
 	SHOW_INFO_16="백업 메뉴 > 사용자 어플 데이터 백업 > 백업 삭제"
 	SHOW_INFO_17="복원 메뉴 > 사용자 어플 데이터 복원"
+	SHOW_INFO_18="백업 메뉴 > 확인"
 }
 
 function openDevSettings(){
@@ -231,6 +239,8 @@ function openDevSettings(){
 				echo -e "(6) applyColorScheme : ${applyColorScheme}"
 				echo -e "(7) DynamicLine : ${DynamicLine}"
 				echo -e "(8) fixDynamicLineIssue : ${fixDynamicLineIssue}"
+				showLinesB
+				echo -e "- ${ENTER_QUIT}"
 				showLinesA
 				applyLightCyan
 				read -p "- " ANSWER_Q
@@ -261,6 +271,8 @@ function openDevSettings(){
 						showLinesB
 						echo -e "(1) English"
 						echo -e "(2) Korean (한국어)"
+						showLinesB
+						echo -e "- ${ENTER_QUIT}"
 						showLinesA
 						applyLightCyan
 						read -p "- " ANSWER_G
@@ -321,6 +333,8 @@ function openDevSettings(){
 				echo -e "(1) ExitKey : ${ExitKey}"
 				echo -e "(2) PA2CKey : ${PA2CKey}"
 				echo -e "(3) ClearKey : ${ClearKey}" 
+				showLinesB
+				echo -e "- ${ENTER_QUIT}"
 				showLinesA
 				applyLightCyan
 				read -p "- " ANSWER_R
@@ -362,6 +376,9 @@ function openDevSettings(){
 				showLinesB
 				echo -e "(1) BackupPath : ${BackupPath}"
 				echo -e "(2) completeLibraryBackup : ${completeLibraryBackup}"
+				echo -e "(3) showHiddenBackupMenu : ${showHiddenBackupMenu}"
+				showLinesB
+				echo -e "- ${ENTER_QUIT}"
 				showLinesA
 				applyLightCyan
 				read -p "- " ANSWER_S
@@ -380,6 +397,12 @@ function openDevSettings(){
 					else
 						completeLibraryBackup=YES
 					fi
+				elif [[ "${ANSWER_S}" == 3 ]]; then
+					if [[ "${showHiddenBackupMenu}" == YES ]]; then
+						showHiddenBackupMenu=NO
+					else
+						showHiddenBackupMenu=YES
+					fi
 				elif [[ "${ANSWER_S}" == quit || "${ANSWER_S}" == q ]]; then
 					break
 				elif [[ "${ANSWER_S}" == exit ]]; then
@@ -397,6 +420,9 @@ function openDevSettings(){
 				echo -e "DevSettings > Restore Settings"
 				showLinesB
 				echo -e "(1) skipRestore : ${skipRestore}"
+				echo -e "(2) showHiddenRestoreMenu : ${showHiddenRestoreMenu}"
+				showLinesB
+				echo -e "- ${ENTER_QUIT}"
 				showLinesA
 				applyLightCyan
 				read -p "- " ANSWER_T
@@ -407,6 +433,12 @@ function openDevSettings(){
 						skipRestore=NO
 					else
 						skipRestore=YES
+					fi
+				elif [[ "${ANSWER_T}" == 2 ]]; then
+					if [[ "${showHiddenRestoreMenu}" == YES ]]; then
+						showHiddenRestoreMenu=NO
+					else
+						showHiddenRestoreMenu=YES
 					fi
 				elif [[ "${ANSWER_T}" == quit || "${ANSWER_T}" == q ]]; then
 					break
@@ -428,8 +460,9 @@ function openDevSettings(){
 				echo -e "(2) UpdaterVersion : ${UpdaterVersion}"
 				echo -e "(3) UpdateBuildType : ${UpdateBuildType}"
 				echo -e "(4) ForceInstallUpdate : ${ForceInstallUpdate}"
-				echo -e "(5) runUpdateODS : ${runUpdateODS}"
-				echo -e "(6) updateWithDEBInstall : ${updateWithDEBInstall}"
+				echo -e "(5) updateWithDEBInstall : ${updateWithDEBInstall}"
+				showLinesB
+				echo -e "- ${ENTER_QUIT}"
 				showLinesA
 				applyLightCyan
 				read -p "- " ANSWER_U
@@ -495,12 +528,6 @@ function openDevSettings(){
 						ForceInstallUpdate=YES
 					fi
 				elif [[ "${ANSWER_U}" == 5 ]]; then
-					if [[ "${runUpdateODS}" == YES ]]; then
-						runUpdateODS=NO
-					else
-						runUpdateODS=YES
-					fi
-				elif [[ "${ANSWER_U}" == 6 ]]; then
 					if [[ "${updateWithDEBInstall}" == YES ]]; then
 						updateWithDEBInstall=NO
 					else
@@ -528,6 +555,8 @@ function openDevSettings(){
 				echo -e "(4) backupUserAppData"
 				echo -e "(5) restoreUserAppData"
 				echo -e "(6) runUpdate"
+				showLinesB
+				echo -e "- ${ENTER_QUIT}"
 				showLinesA
 				applyLightCyan
 				read -p "- " ANSWER_V
@@ -911,13 +940,14 @@ function saveSettings(){
 	echo -e "${ClearKey}" >> /var/mobile/Library/Preferences/BackOn/DevSettings/ClearKey
 	echo -e "${setDefaultLanguage}" >> /var/mobile/Library/Preferences/BackOn/DevSettings/setDefaultLanguage
 	echo -e "${detailFileListView}" >> /var/mobile/Library/Preferences/BackOn/DevSettings/detailFileListView
-	echo -e "${runUpdateODS}" >> /var/mobile/Library/Preferences/BackOn/DevSettings/runUpdateODS
 	echo -e "${applyColorScheme}" >> /var/mobile/Library/Preferences/BackOn/DevSettings/applyColorScheme
 	echo -e "${DynamicLine}" >> /var/mobile/Library/Preferences/BackOn/DevSettings/DynamicLine
 	echo -e "${UpdaterVersion}" >> /var/mobile/Library/Preferences/BackOn/DevSettings/UpdaterVersion
 	echo -e "${updateWithDEBInstall}" >> /var/mobile/Library/Preferences/BackOn/DevSettings/updateWithDEBInstall
 	echo -e "${completeLibraryBackup}" >> /var/mobile/Library/Preferences/BackOn/DevSettings/completeLibraryBackup
 	echo -e "${fixDynamicLineIssue}" >> /var/mobile/Library/Preferences/BackOn/DevSettings/fixDynamicLineIssue
+	echo -e "${showHiddenBackupMenu}" >> /var/mobile/Library/Preferences/BackOn/DevSettings/showHiddenBackupMenu
+	echo -e "${showHiddenRestoreMenu}" >> /var/mobile/Library/Preferences/BackOn/DevSettings/showHiddenRestoreMenu
 }
 
 
@@ -982,11 +1012,6 @@ function loadSettings(){
 	else
 		detailFileListView=NO
 	fi
-	if [[ -f "/var/mobile/Library/Preferences/BackOn/DevSettings/runUpdateODS" ]]; then
-		runUpdateODS="$(cat "/var/mobile/Library/Preferences/BackOn/DevSettings/runUpdateODS")"
-	else
-		runUpdateODS=NO
-	fi
 	if [[ -f "/var/mobile/Library/Preferences/BackOn/DevSettings/applyColorScheme" ]]; then
 		applyColorScheme="$(cat "/var/mobile/Library/Preferences/BackOn/DevSettings/applyColorScheme")"
 	else
@@ -1016,6 +1041,16 @@ function loadSettings(){
 		fixDynamicLineIssue="$(cat "/var/mobile/Library/Preferences/BackOn/DevSettings/fixDynamicLineIssue")"
 	else
 		fixDynamicLineIssue=NO
+	fi
+	if [[ -f "/var/mobile/Library/Preferences/BackOn/DevSettings/showHiddenBackupMenu" ]]; then
+		showHiddenBackupMenu="$(cat "/var/mobile/Library/Preferences/BackOn/DevSettings/showHiddenBackupMenu")"
+	else
+		showHiddenBackupMenu=NO
+	fi
+	if [[ -f "/var/mobile/Library/Preferences/BackOn/DevSettings/showHiddenRestoreMenu" ]]; then
+		showHiddenRestoreMenu="$(cat "/var/mobile/Library/Preferences/BackOn/DevSettings/showHiddenRestoreMenu")"
+	else
+		showHiddenRestoreMenu=NO
 	fi
 }
 
@@ -1264,7 +1299,8 @@ function defineBackupName(){
 		ClearKey
 		showLinesA
 		echo -e "${ENTER_BACKUP_NAME}"
-		echo -e "(${ENTER_QUIT})"
+		showLinesB
+		echo -e "- ${ENTER_QUIT}"
 		showLinesA
 		applyLightCyan
 		read -p "- " ANSWER_B
@@ -1318,18 +1354,21 @@ function showInitialBackupMenu(){
 		showLinesB
 		echo -e "(1) ${BACKUP_CYDIA_DATA}"
 		echo -e "(2) ${BACKUP_LIBRARY}"
-		if [ "${OSInitialVer}" -ge 8 ]; then
-			applyRed
-			echo -e "(3) ${BACKUP_USERAPP_DATA} (${NOT_SUPPORTED_IOS_VERSION})"
-			applyNoColor
-		elif [[ -z "$(ls "${INSTALLED_APP_PATH}")" ]]; then
-			applyRed
-			echo -e "(3) ${BACKUP_USERAPP_DATA} (${NOT_AVAILABLE})"
-			applyNoColor
-		else
-			echo -e "(3) ${BACKUP_USERAPP_DATA}"
+		if [[ "${showHiddenBackupMenu}" == YES ]]; then
+			if [ "${OSInitialVer}" -ge 8 ]; then
+				applyRed
+				echo -e "(3) ${BACKUP_USERAPP_DATA} (${NOT_SUPPORTED_IOS_VERSION})"
+				applyNoColor
+			elif [[ -z "$(ls "${INSTALLED_APP_PATH}")" ]]; then
+				applyRed
+				echo -e "(3) ${BACKUP_USERAPP_DATA} (${NOT_INSTALLED_APP})"
+				applyNoColor
+			else
+				echo -e "(3) ${BACKUP_USERAPP_DATA}"
+			fi
+			echo -e "(4) ${CUSTOM_BACKUP}"
 		fi
-		echo -e "(4) ${SHOW_BACKUPED_FILES}"
+		echo -e "(l) ${SHOW_BACKUPED_FILES}"
 		echo -e "(q) ${DISCARD_BACKUP}"
 		echo -e "(s) ${SAVE_BACKUP}"
 		showLinesA
@@ -1342,19 +1381,29 @@ function showInitialBackupMenu(){
 		elif [[ "${ANSWER_C}" == 2 ]]; then
 			backupLibrary
 		elif [[ "${ANSWER_C}" == 3 ]]; then
-			if [ "${OSInitialVer}" -ge 8 ]; then
-				showNotSupportedFunction
-			elif [[  -z "$(ls "${INSTALLED_APP_PATH}")" ]]; then
-				showNotSupportedFunction
+			if [[ "${showHiddenBackupMenu}" == YES ]]; then
+				if [ "${OSInitialVer}" -ge 8 ]; then
+					showNotSupportedFunction
+				elif [[  -z "$(ls "${INSTALLED_APP_PATH}")" ]]; then
+					showNotSupportedFunction
+				else
+					backupUserAppData
+				fi
 			else
-				backupUserAppData
+				showNotSupportedFunction
 			fi
 		elif [[ "${ANSWER_C}" == 4 ]]; then
+			if [[ "${showHiddenBackupMenu}" == YES ]]; then
+				customBackup
+			else
+				showNotSupportedFunction
+			fi
+		elif [[ "${ANSWER_C}" == l ]]; then
 			showBackupedFilesBackup
 		elif [[ "${ANSWER_C}" == q || "${ANSWER_C}" == quit ]]; then
 			quitTool
 		elif [[ "${ANSWER_C}" == s ]]; then
-			showBackupedFilesBackup
+			showBackupedFilesBackup -confirmtitle
 			saveBackup
 		elif [[ "${ANSWER_C}" == ods ]]; then
 			openDevSettings
@@ -1418,8 +1467,8 @@ function backupLibrary(){
 			ls /var/mobile/Library
 		fi
 		showLinesB
-		echo -e "(${ENTER_QUIT})"
-		echo -e "(${SHOW_GUIDE_3})"
+		echo -e "- ${ENTER_QUIT}"
+		echo -e "- ${SHOW_GUIDE_3}"
 		showLinesA
 		applyLightCyan
 		read -p "- " ANSWER_E
@@ -1550,6 +1599,11 @@ function backupUserAppData(){
 	if [[ ! -d "/tmp/BackOn/Backup/${BACKUP_NAME}/AppData" ]]; then
 		mkdir -p "/tmp/BackOn/Backup/${BACKUP_NAME}/AppData"
 	fi
+	ClearKey
+	showLinesA
+	echo -e "${WARN_USER_APP_DATA}"
+	showLinesA
+	PA2CKey
 	while(true); do
 		ClearKey
 		showLinesA
@@ -1561,8 +1615,8 @@ function backupUserAppData(){
 			echo *.app | cut -d"." -f1
 		done
 		showLinesB
-		echo -e "(${ENTER_QUIT})"
-		echo -e "(${ENTER_BACKUP_APP_NAME})"
+		echo -e "- ${ENTER_QUIT}"
+		echo -e "- ${SHOW_GUIDE_15}"
 		showLinesA
 		applyLightCyan
 		read -p "- " ANSWER_P
@@ -1668,8 +1722,8 @@ function deleteBackup(){
 				ls "/tmp/BackOn/Backup/${BACKUP_NAME}/${1}"
 			fi
 			showLinesB
-			echo -e "(${ENTER_QUIT})"
-			echo -e "(${SHOW_GUIDE_4})"
+			echo -e "- ${ENTER_QUIT}"
+			echo -e "- ${SHOW_GUIDE_4}"
 			showLinesA
 			applyLightCyan
 			read -p "- " ANSWER_J
@@ -1715,7 +1769,11 @@ function showBackupedFilesBackup(){
 	removeEmptyBackupFolder
 	ClearKey
 	showLinesA
-	echo -e "${SHOW_INFO_5}"
+	if [[ "${1}" == "-confirmtitle" ]]; then
+		echo -e "${SHOW_INFO_18}"
+	else
+		echo -e "${SHOW_INFO_5}"
+	fi
 	showLinesB
 	if [[ -f "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia/apt.txt" ]]; then
 		echo -e "${BACKUPED_CYDIA_PACKAGES_LIST} : ${YES}"
@@ -1742,10 +1800,17 @@ function showBackupedFilesBackup(){
 	else
 		echo -e "${BACKUPED_LIBRARY} : ${NO}"
 	fi
-	if [[ -d "/tmp/BackOn/Backup/${BACKUP_NAME}/AppData" ]]; then
-		echo -e "${BACKUPED_USERAPP_DATA}" : ${YES}
-	else
-		echo -e "${BACKUPED_USERAPP_DATA}" : ${NO}
+	if [[ "${showHiddenBackupMenu}" == YES ]]; then
+		if [[ -d "/tmp/BackOn/Backup/${BACKUP_NAME}/AppData" ]]; then
+			echo -e "${BACKUPED_USERAPP_DATA}" : ${YES}
+		else
+			echo -e "${BACKUPED_USERAPP_DATA}" : ${NO}
+		fi
+		if [[ -d "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom" ]]; then
+			echo -e "${BACKUPED_CUSTOM_BACKUP}" : ${YES}
+		else
+			echo -e "${BACKUPED_CUSTOM_BACKUP}" : ${NO}
+		fi
 	fi
 	showLinesA
 	PA2CKey
@@ -1798,7 +1863,8 @@ function defineBackupPath(){
 		ClearKey
 		showLinesA
 		echo -e "${ENTER_BACKUP_PATH}"
-		echo -e "(${ENTER_QUIT})"
+		showLinesB
+		echo -e "- ${ENTER_QUIT}"
 		showLinesA
 		applyLightCyan
 		read -p "- " ANSWER_F
@@ -2010,29 +2076,38 @@ function showInitialRestoreMenu(){
 			echo -e "(2) ${RESTORE_SHOW_CYDIA_LIST} (${NOT_BACKUPED})"
 			applyNoColor
 		fi
-		if [ "${OSInitialVer}" -ge 8 ]; then
-			applyRed
-			echo -e "(3) ${RESTORE_USER_APP_DATA} (${NOT_SUPPORTED_IOS_VERSION})"
-			applyNoColor
-		elif [[ ! -d "/tmp/BackOn/Restore/AppData" ]]; then
-			applyRed
-			echo -e "(3) ${RESTORE_USER_APP_DATA} (${NOT_BACKUPED})"
-			applyNoColor
-		elif [[ -z "$(ls "${INSTALLED_APP_PATH}")" ]]; then
-			applyRed
-			echo -e "(3) ${RESTORE_USER_APP_DATA} (${NOT_INSTALLED_APP})"
-			applyNoColor
-		else
-			echo -e "(3) ${RESTORE_USER_APP_DATA}"
-		fi
 		if [[ -d "/tmp/BackOn/Restore/Library" ]]; then
-			echo -e "(4) ${RESTORE_LIBRARY}"
+			echo -e "(3) ${RESTORE_LIBRARY}"
 		else
 			applyRed
-			echo -e "(4) ${RESTORE_LIBRARY} (${NOT_BACKUPED})"
+			echo -e "(3) ${RESTORE_LIBRARY} (${NOT_BACKUPED})"
 			applyNoColor
 		fi
-		echo -e "(5) ${REBOOT}"
+		if [[ "${showHiddenRestoreMenu}" == YES ]]; then
+			if [ "${OSInitialVer}" -ge 8 ]; then
+				applyRed
+				echo -e "(4) ${RESTORE_USER_APP_DATA} (${NOT_SUPPORTED_IOS_VERSION})"
+				applyNoColor
+			elif [[ ! -d "/tmp/BackOn/Restore/AppData" ]]; then
+				applyRed
+				echo -e "(4) ${RESTORE_USER_APP_DATA} (${NOT_BACKUPED})"
+				applyNoColor
+			elif [[ -z "$(ls "${INSTALLED_APP_PATH}")" ]]; then
+				applyRed
+				echo -e "(4) ${RESTORE_USER_APP_DATA} (${NOT_INSTALLED_APP})"
+				applyNoColor
+			else
+				echo -e "(4) ${RESTORE_USER_APP_DATA}"
+			fi
+			if [[ -d "/tmp/BackOn/Restore/Custom" ]]; then
+				echo -e "(5) ${CUSTOM_RESTORE}"
+			else
+				applyRed
+				echo -e "(5) ${CUSTOM_RESTORE} (${NOT_BACKUPED})"
+				applyNoColor
+			fi
+		fi
+		echo -e "(r) ${REBOOT}"
 		echo -e "(q) ${QUIT}"
 		showLinesA
 		applyLightCyan
@@ -2052,22 +2127,36 @@ function showInitialRestoreMenu(){
 				showNotSupportedFunction
 			fi
 		elif [[ "${ANSWER_H}" == 3 ]]; then
-			if [ "${OSInitialVer}" -ge 8 ]; then
-				showNotSupportedFunction
-			elif [[ ! -d "/tmp/BackOn/Restore/AppData" ]]; then
-				showNotSupportedFunction
-			elif [[ -z "$(ls "${INSTALLED_APP_PATH}")" ]]; then
-				showNotSupportedFunction
-			else
-				restoreUserAppData
-			fi
-		elif [[ "${ANSWER_H}" == 4 ]]; then
 			if [[ -d "/tmp/BackOn/Restore/Library" ]]; then
 				restoreLibrary
 			else
 				showNotSupportedFunction
 			fi
+		elif [[ "${ANSWER_H}" == 4 ]]; then
+			if [[ "${showHiddenRestoreMenu}" == YES ]]; then
+				if [ "${OSInitialVer}" -ge 8 ]; then
+					showNotSupportedFunction
+				elif [[ ! -d "/tmp/BackOn/Restore/AppData" ]]; then
+					showNotSupportedFunction
+				elif [[ -z "$(ls "${INSTALLED_APP_PATH}")" ]]; then
+					showNotSupportedFunction
+				else
+					restoreUserAppData
+				fi
+			else
+				showNotSupportedFunction
+			fi
 		elif [[ "${ANSWER_H}" == 5 ]]; then
+			if [[ "${showHiddenRestoreMenu}" == YES ]]; then
+				if [[ -d "/tmp/BackOn/Restore/Custom" ]]; then
+					customRestore
+				else
+					showNotSupportedFunction
+				fi
+			else
+				showNotSupportedFunction
+			fi
+		elif [[ "${ANSWER_H}" == r ]]; then
 			rebootDevice
 		elif [[ "${ANSWER_H}" == q || "${ANSWER_H}" == quit ]]; then
 			quitTool
@@ -2169,8 +2258,8 @@ function restoreLibrary(){
 			ls "/tmp/BackOn/Restore/Library"
 		fi
 		showLinesB
-		echo -e "(${ENTER_QUIT})"
-		echo -e "(${SHOW_GUIDE_10})"
+		echo -e "- ${ENTER_QUIT}"
+		echo -e "- ${SHOW_GUIDE_10}"
 		showLinesA
 		applyLightCyan
 		read -p "- " ANSWER_I
@@ -2242,7 +2331,7 @@ function restoreLibrary(){
 function restoreUserAppData(){
 	ClearKey
 	showLinesA
-	echo -e "${WARN_RESTORE_USER_APP_DATA}"
+	echo -e "${WARN_USER_APP_DATA}"
 	showLinesA
 	PA2CKey
 	while(true); do
@@ -2256,8 +2345,8 @@ function restoreUserAppData(){
 			ls "/tmp/BackOn/Restore/AppData"
 		fi
 		showLinesB
-		echo -e "(${ENTER_QUIT})"
-		echo -e "(${SHOW_GUIDE_14})"
+		echo -e "- ${ENTER_QUIT}"
+		echo -e "- ${SHOW_GUIDE_14}"
 		showLinesA
 		applyLightCyan
 		read -p "- " ANSWER_P
@@ -2326,6 +2415,9 @@ function rebootDevice(){
 
 function customBackup(){
 	if [[ -d "/tmp/BackOn/Backup/${BACKUP_NAME}" && ! -z "${BACKUP_NAME}" ]]; then
+		if [[ -f "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom" ]]; then
+			rm "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom"
+		fi
 		if [[ ! -d "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom" ]]; then
 			mkdir -p "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom"
 		fi
@@ -2347,7 +2439,8 @@ function customBackup(){
 				done
 			fi
 			showLinesB
-			echo -e "${ENTER_NICKNAME}"
+			echo -e "- ${ENTER_QUIT}"
+			echo -e "- ${ENTER_NICKNAME}"
 			showLinesA
 			applyLightCyan
 			read -p "- " ANSWER_M
@@ -2383,6 +2476,8 @@ function customBackup(){
 					echo -e "${SHOW_INFO_13}"
 					showLinesB
 					echo -e "${ENTER_FILE_PATH}"
+					showLinesB
+					echo -e "- ${ENTER_QUIT}"
 					showLinesA
 					applyLightCyan
 					read -p "- " ANSWER_N
@@ -2445,6 +2540,8 @@ function customRestore(){
 				echo -e "(`cat "/tmp/BackOn/Restore/Custom/${Name}/path"` | `cat "/tmp/BackOn/Restore/Custom/${Name}/type"`)"
 				applyNoColor
 			done
+			showLinesB
+			echo -e "- ${ENTER_QUIT}"
 			showLinesA
 			applyLightCyan
 			read -p "- " ANSWER_O
@@ -2567,7 +2664,6 @@ function installUpdate(){
 					rm -rf "/tmp/BackOn/Update/info"
 				fi
 				mkdir -p "/tmp/BackOn/Update/info"
-				echo -e "${runUpdateODS}" >> "/tmp/BackOn/Update/info/runUpdateODS"
 				echo -e "${UpdateBuildType}" >> "/tmp/BackOn/Update/info/UpdateBuildType"
 				echo -e "${updateWithDEBInstall}" >> "/tmp/BackOn/Update/info/updateWithDEBInstall"
 				echo -e "${UpdaterVersion}" >> "/tmp/BackOn/Update/info/UpdaterVersion"
@@ -2714,7 +2810,7 @@ while(true); do
 	fi
 	echo -e "(q) ${QUIT}"
 	showLinesB
-	echo -e "(${ENTER_TEXT})"
+	echo -e "- ${ENTER_TEXT}"
 	showLinesA
 	applyLightCyan
 	read -p "- " ANSWER_A
