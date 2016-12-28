@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-356-official
+# BackOn alpha-357-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=356
+TOOL_BUILD_NUM=357
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -392,16 +392,16 @@ function openDevSettings(){
 						BackupPath=/var/mobile/Media
 					fi
 				elif [[ "${ANSWER_S}" == 2 ]]; then
-					if [[ "${showHiddenBackupMenu}" == YES ]]; then
-						showHiddenBackupMenu=NO
-					else
-						showHiddenBackupMenu=YES
-					fi
-				elif [[ "${ANSWER_S}" == 3 ]]; then
 					if [[ "${completeLibraryBackup}" == YES ]]; then
 						completeLibraryBackup=NO
 					else
 						completeLibraryBackup=YES
+					fi
+				elif [[ "${ANSWER_S}" == 3 ]]; then
+					if [[ "${showHiddenBackupMenu}" == YES ]]; then
+						showHiddenBackupMenu=NO
+					else
+						showHiddenBackupMenu=YES
 					fi
 				elif [[ "${ANSWER_S}" == quit || "${ANSWER_S}" == q ]]; then
 					break
@@ -1795,21 +1795,22 @@ function showBackupedFilesBackup(){
 	else
 		echo -e "${BACKUPED_CYDIA_SETTINGS} : ${NO}"
 	fi
-	showLinesB
 	if [[ -d "/tmp/BackOn/Backup/${BACKUP_NAME}/Library" ]]; then
 		echo -e "${BACKUPED_LIBRARY} : ${YES}"
 	else
 		echo -e "${BACKUPED_LIBRARY} : ${NO}"
 	fi
-	showLinesB
-	if [[ -d "/tmp/BackOn/Backup/${BACKUP_NAME}/AppData" ]]; then
-		echo -e "${BACKUPED_USERAPP_DATA}" : ${YES}
-	else
-		echo -e "${BACKUPED_USERAPP_DATA}" : ${NO}
-	fi
-	if [[ -d "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom" ]]; then
-		showLinesB
-		echo -e "${BACKUPED_CUSTOM_BACKUP}" : ${YES}
+	if [[ "${showHiddenBackupMenu}" == YES ]]; then
+		if [[ -d "/tmp/BackOn/Backup/${BACKUP_NAME}/AppData" ]]; then
+			echo -e "${BACKUPED_USERAPP_DATA}" : ${YES}
+		else
+			echo -e "${BACKUPED_USERAPP_DATA}" : ${NO}
+		fi
+		if [[ -d "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom" ]]; then
+			echo -e "${BACKUPED_CUSTOM_BACKUP}" : ${YES}
+		else
+			echo -e "${BACKUPED_CUSTOM_BACKUP}" : ${NO}
+		fi
 	fi
 	showLinesA
 	PA2CKey
@@ -2438,6 +2439,7 @@ function customBackup(){
 				done
 			fi
 			showLinesB
+			echo -e "${ENTER_QUIT}"
 			echo -e "${ENTER_NICKNAME}"
 			showLinesA
 			applyLightCyan
@@ -2474,6 +2476,8 @@ function customBackup(){
 					echo -e "${SHOW_INFO_13}"
 					showLinesB
 					echo -e "${ENTER_FILE_PATH}"
+					showLinesB
+					echo -e "${ENTER_QUIT}"
 					showLinesA
 					applyLightCyan
 					read -p "- " ANSWER_N
@@ -2536,6 +2540,8 @@ function customRestore(){
 				echo -e "(`cat "/tmp/BackOn/Restore/Custom/${Name}/path"` | `cat "/tmp/BackOn/Restore/Custom/${Name}/type"`)"
 				applyNoColor
 			done
+			showLinesB
+			echo -e "${ENTER_QUIT}"
 			showLinesA
 			applyLightCyan
 			read -p "- " ANSWER_O
