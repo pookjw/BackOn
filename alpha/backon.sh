@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-375-official
+# BackOn alpha-376-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=375
+TOOL_BUILD_NUM=376
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -296,6 +296,8 @@ function openDevSettings(){
 						elif [[ "${ANSWER_G}" == q || "${ANSWER_G}" == quit ]]; then
 							backTitleBar
 							break
+						else
+							showNotSupportedFunction
 						fi
 					done
 				elif [[ "${ANSWER_Q}" == 5 ]]; then
@@ -542,6 +544,8 @@ function openDevSettings(){
 						elif [[ "${ANSWER_E}" == q || "${ANSWER_E}" == quit ]]; then
 							backTitleBar
 							break
+						else
+							showNotSupportedFunction
 						fi
 					done
 				elif [[ "${ANSWER_U}" == 4 ]]; then
