@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-365-official
+# BackOn alpha-366-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=365
+TOOL_BUILD_NUM=366
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -206,10 +206,12 @@ function setKorean(){
 }
 
 function openDevSettings(){
+	addTitleBar "DevSettings"
 	while(true); do
 		ClearKey
 		showLinesA
-		echo -e "DevSettings - ${TOOL_BUILD_TYPE}-${TOOL_BUILD_NUM}-${TOOL_RELEASE}"
+		showTitleBar
+		echo -e "Build info : ${TOOL_BUILD_TYPE}-${TOOL_BUILD_NUM}-${TOOL_RELEASE}"
 		showLinesB
 		echo -e "(1) General Settings."
 		echo -e "(2) Key Settings."
@@ -226,10 +228,11 @@ function openDevSettings(){
 		applyNoColor
 
 		if [[ "${ANSWER_D}" == 1 ]]; then
+			addTitleBar "General Settings"
 			while(true); do
 				ClearKey
 				showLinesA
-				echo -e "DevSettings > General Settings"
+				showTitleBar
 				showLinesB
 				echo -e "(1) showLog : ${showLog}"
 				echo -e "(2) OSVer : ${OSVer} (iOS ${OSInitialVer})"
@@ -264,10 +267,11 @@ function openDevSettings(){
 				elif [[ "${ANSWER_Q}" == 3 ]]; then
 					switchLanguage
 				elif [[ "${ANSWER_Q}" == 4 ]]; then
+					addTitleBar "setDefaultLanguage"
 					while(true); do
 						ClearKey
 						showLinesA
-						echo -e "DevSettings > General Settings > setDefaultLanguage"
+						showTitleBar
 						showLinesB
 						echo -e "(1) English"
 						echo -e "(2) Korean (한국어)"
@@ -280,13 +284,16 @@ function openDevSettings(){
 
 						if [[ "${ANSWER_G}" == 1 ]]; then
 							setDefaultLanguage=English
+							backTitleBar
 							break
 						elif [[ "${ANSWER_G}" == 2 ]]; then
 							setDefaultLanguage=Korean
+							backTitleBar
 							break
 						elif [[ "${ANSWER_G}" == exit ]]; then
 							ExitKey
 						elif [[ "${ANSWER_G}" == q || "${ANSWER_G}" == quit ]]; then
+							backTitleBar
 							break
 						fi
 					done
@@ -315,6 +322,7 @@ function openDevSettings(){
 						fixDynamicLineIssue=YES
 					fi
 				elif [[ "${ANSWER_Q}" == quit || "${ANSWER_Q}" == q ]]; then
+					backTitleBar
 					break
 				elif [[ "${ANSWER_Q}" == exit ]]; then
 					ExitKey
@@ -325,10 +333,11 @@ function openDevSettings(){
 				fi
 			done
 		elif [[ "${ANSWER_D}" == 2 ]]; then
+			addTitleBar "Key Settings"
 			while(true); do
 				ClearKey
 				showLinesA
-				echo -e "DevSettings > Key Settings"
+				showTitleBar
 				showLinesB
 				echo -e "(1) ExitKey : ${ExitKey}"
 				echo -e "(2) PA2CKey : ${PA2CKey}"
@@ -359,6 +368,7 @@ function openDevSettings(){
 						ClearKey=YES
 					fi
 				elif [[ "${ANSWER_R}" == quit || "${ANSWER_R}" == q ]]; then
+					backTitleBar
 					break
 				elif [[ "${ANSWER_R}" == exit ]]; then
 					ExitKey
@@ -369,10 +379,11 @@ function openDevSettings(){
 				fi
 			done
 		elif [[ "${ANSWER_D}" == 3 ]]; then
+			addTitleBar "Backup Settings"
 			while(true); do
 				ClearKey
 				showLinesA
-				echo -e "DevSettings > Backup Settings"
+				showTitleBar
 				showLinesB
 				echo -e "(1) BackupPath : ${BackupPath}"
 				echo -e "(2) completeLibraryBackup : ${completeLibraryBackup}"
@@ -404,6 +415,7 @@ function openDevSettings(){
 						showHiddenBackupMenu=YES
 					fi
 				elif [[ "${ANSWER_S}" == quit || "${ANSWER_S}" == q ]]; then
+					backTitleBar
 					break
 				elif [[ "${ANSWER_S}" == exit ]]; then
 					ExitKey
@@ -414,10 +426,11 @@ function openDevSettings(){
 				fi
 			done
 		elif [[ "${ANSWER_D}" == 4 ]]; then
+			addTitleBar "Restore Settings"
 			while(true); do
 				ClearKey
 				showLinesA
-				echo -e "DevSettings > Restore Settings"
+				showTitleBar
 				showLinesB
 				echo -e "(1) skipRestore : ${skipRestore}"
 				echo -e "(2) showHiddenRestoreMenu : ${showHiddenRestoreMenu}"
@@ -441,6 +454,7 @@ function openDevSettings(){
 						showHiddenRestoreMenu=YES
 					fi
 				elif [[ "${ANSWER_T}" == quit || "${ANSWER_T}" == q ]]; then
+					backTitleBar
 					break
 				elif [[ "${ANSWER_T}" == exit ]]; then
 					ExitKey
@@ -451,10 +465,11 @@ function openDevSettings(){
 				fi
 			done
 		elif [[ "${ANSWER_D}" == 5 ]]; then
+			addTitleBar "Update Settings"
 			while(true); do
 				ClearKey
 				showLinesA
-				echo -e "DevSettings > Update Settings"
+				showTitleBar
 				showLinesB
 				echo -e "(1) UpdateURL : ${UpdateURL}"
 				echo -e "(2) UpdaterVersion : ${UpdaterVersion}"
@@ -493,10 +508,11 @@ function openDevSettings(){
 						UpdaterVersion=2
 					fi
 				elif [[ "${ANSWER_U}" == 3 ]]; then
+					addTitleBar "UpdateBuildType"
 					while(true); do
 						ClearKey
 						showLinesA
-						echo -e "DevSettings > Update Settings > UpdateBuildType"
+						showTitleBar
 						showLinesB
 						echo -e "(1) alpha"
 						echo -e "(2) beta"
@@ -510,16 +526,20 @@ function openDevSettings(){
 
 						if [[ "${ANSWER_E}" == 1 ]]; then
 							UpdateBuildType=alpha
+							backTitleBar
 							break
 						elif [[ "${ANSWER_E}" == 2 ]]; then
 							UpdateBuildType=beta
+							backTitleBar
 							break
 						elif [[ "${ANSWER_E}" == 3 ]]; then
 							UpdateBuildType=stable
+							backTitleBar
 							break
 						elif [[ ${ANSWER_E} == exit ]]; then
 							ExitKey
 						elif [[ "${ANSWER_E}" == q || "${ANSWER_E}" == quit ]]; then
+							backTitleBar
 							break
 						fi
 					done
@@ -536,6 +556,7 @@ function openDevSettings(){
 						updateWithDEBInstall=YES
 					fi
 				elif [[ "${ANSWER_U}" == quit || "${ANSWER_U}" == q ]]; then
+					backTitleBar
 					break
 				elif [[ "${ANSWER_U}" == exit ]]; then
 					ExitKey
@@ -546,10 +567,11 @@ function openDevSettings(){
 				fi
 			done
 		elif [[ "${ANSWER_D}" == 6 ]]; then
+			addTitleBar "Run function"
 			while(true); do
 				ClearKey
 				showLinesA
-				echo -e "DevSettings > Run function"
+				showTitleBar
 				showLinesB
 				echo -e "(1) openDevSettings_obsolete"
 				echo -e "(2) customBackup"
@@ -580,11 +602,10 @@ function openDevSettings(){
 					loadSettings
 					runUpdate
 				elif [[ "${ANSWER_V}" == 7 ]]; then
+					addTitleBar "Test TitleBar"
 					while(true); do
 						ClearKey
 						showLinesA
-						echo -e "DevSettings > Run function > Test TitleBar"
-						showLinesB
 						showTitleBar
 						showLinesB
 						echo -e "(1) addTitleBar"
@@ -602,6 +623,7 @@ function openDevSettings(){
 						elif [[ "${ANSWER_W}" == 2 ]]; then
 							backTitleBar
 						elif [[ "${ANSWER_W}" == quit || "${ANSWER_W}" == q ]]; then
+							backTitleBar
 							break
 						elif [[ "${ANSWER_W}" == exit ]]; then
 							ExitKey
@@ -610,6 +632,7 @@ function openDevSettings(){
 						fi
 					done
 				elif [[ "${ANSWER_V}" == quit || "${ANSWER_V}" == q ]]; then
+					backTitleBar
 					break
 				elif [[ "${ANSWER_V}" == exit ]]; then
 					ExitKey
