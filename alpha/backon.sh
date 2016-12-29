@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-360-official
+# BackOn alpha-361-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=360
+TOOL_BUILD_NUM=361
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -557,6 +557,7 @@ function openDevSettings(){
 				echo -e "(4) backupUserAppData"
 				echo -e "(5) restoreUserAppData"
 				echo -e "(6) runUpdate"
+				echo -e "(7) Test TitleBar"
 				showLinesB
 				echo -e "- ${ENTER_QUIT}"
 				showLinesA
@@ -578,6 +579,34 @@ function openDevSettings(){
 					saveSettings
 					loadSettings
 					runUpdate
+				elif [[ "${ANSWER_V}" == 7 ]]; then
+					while(true); do
+						ClearKey
+						showLinesA
+						showTitleBar
+						showLinesB
+						echo -e "(1) addTitleBar"
+						echo -e "(2) backTitleBar"
+						showLinesB
+						echo -e "- ${ENTER_QUIT}"
+						showLinesA
+						applyLightCyan
+						read -p "- " ANSWER_W
+						applyNoColor
+
+						if [[ "${ANSWER_W}" == 1 ]]; then
+							read -p "Query : " ANSWER_X
+							addTitleBar "${ANSWER_X}"
+						elif [[ "${ANSWER_W}" == 2 ]]; then
+							backTitleBar
+						elif [[ "${ANSWER_W}" == quit || "${ANSWER_W}" == q ]]; then
+							break
+						elif [[ "${ANSWER_W}" == exit ]]; then
+							ExitKey
+						elif [[ -z "${ANSWER_W}" ]]; then
+							:
+						fi
+					done
 				elif [[ "${ANSWER_V}" == quit || "${ANSWER_V}" == q ]]; then
 					break
 				elif [[ "${ANSWER_V}" == exit ]]; then
@@ -1076,7 +1105,7 @@ function showLinesA(){
 		COLS=`tput cols`
 		while [[ ! ${PRINTED_COUNTS} == $COLS ]]; do
 	   		echo -e -n "*"
-	 		PRINTED_COUNTS=$(($PRINTED_COUNTS+1))
+	 		PRINTED_COUNTS=$((${PRINTED_COUNTS}+1))
 		done
 		if [[ ! "${fixDynamicLineIssue}" == YES ]]; then
 			echo -e
@@ -1100,6 +1129,24 @@ function showLinesB(){
 	else
 		echo -e "---------------"
 	fi
+}
+
+function showTitleBar(){
+	if [[ -f "/tmp/BackOn/TitleBar/${TITLE_NUM}" ]]; then
+		cat "/tmp/BackOn/TitleBar/${TITLE_NUM}"
+	fi
+}
+
+function addTitleBar(){
+	if [[ ! -z "${1}" ]]; then
+		TITLE_NUM=$((${TITLE_NUM}+1))
+		echo "${1}" >> "/tmp/BackOn/TitleBar/${TITLE_NUM}"
+	fi
+}
+
+function backTitleBar(){
+	rm "/tmp/BackOn/TitleBar/${TITLE_NUM}"
+	TITLE_NUM=$((${TITLE_NUM}-1))
 }
 
 function showYESNO(){
@@ -2785,6 +2832,7 @@ OSVer="$(sw_vers -productVersion)"
 setOSInitialVer
 setAppPath
 UpdateURL="https://github.com/pookjw/BackOn/archive/master.zip"
+TITLE_NUM=0
 if [[ -d "/tmp/BackOn" ]]; then
 	rm -rf "/tmp/BackOn"
 fi
