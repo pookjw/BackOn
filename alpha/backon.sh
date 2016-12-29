@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-362-official
+# BackOn alpha-363-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=362
+TOOL_BUILD_NUM=363
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -1141,8 +1141,12 @@ function showTitleBar(){
 
 function addTitleBar(){
 	if [[ ! -z "${1}" ]]; then
-		TITLE_NUM=$((${TITLE_NUM}+1))
-		echo "${1}" >> "/tmp/BackOn/TitleBar/${TITLE_NUM}"
+		if [[ "${TITLE_NUM}" == 0 ]]; then
+			echo "${1}" >> "/tmp/BackOn/TitleBar/${TITLE_NUM}"
+			TITLE_NUM=$((${TITLE_NUM}+1))
+		else
+			echo "$(showTitleBar) > ${1}" >> "/tmp/BackOn/TitleBar/$((TITLE_NUM=$((${TITLE_NUM}+1)); echo "${TITLE_NUM}"))"
+		fi
 	fi
 }
 
@@ -2839,6 +2843,7 @@ if [[ -d "/tmp/BackOn" ]]; then
 	rm -rf "/tmp/BackOn"
 fi
 mkdir -p "/tmp/BackOn/TitleBar"
+echo -e >> "/tmp/BackOn/TitleBar/${TITLE_NUM}"
 if [[ "${1}" == "-ods" ]]; then
 	openDevSettings
 elif [[ "${1}" == "-update" ]]; then
