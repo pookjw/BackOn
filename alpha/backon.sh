@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-376-official
+# BackOn alpha-377-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=376
+TOOL_BUILD_NUM=377
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -1161,7 +1161,7 @@ function showLinesA(){
 			echo -e
 		fi
 	else
-		echo -e "***************"
+		echo -e "*****************************************************"
 	fi
 }
 
@@ -1177,7 +1177,7 @@ function showLinesB(){
 			echo -e
 		fi
 	else
-		echo -e "---------------"
+		echo -e "-----------------------------------------------------"
 	fi
 }
 
