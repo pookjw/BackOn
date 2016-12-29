@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-371-official
+# BackOn alpha-372-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=371
+TOOL_BUILD_NUM=372
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -1924,6 +1924,7 @@ function showBackupedFilesBackup(){
 		fi
 	fi
 	showLinesA
+	backTitleBar
 	PA2CKey
 }
 
@@ -2722,10 +2723,13 @@ function showUpdaterVersion(){
 }
 
 function installUpdate(){
+	addTitleBar "${CHECK_FOR_UPDATES}"
 	ClearKey
 	local COUNT=0
-	while [[ ! "$COUNT" == 3 ]]; do
+	while [[ ! "${COUNT}" == 3 ]]; do
 		showLinesA
+		showTitleBar
+		showLinesB
 		if [[ "${showLog}" == YES ]]; then
 			showUpdaterVersion
 		fi
@@ -2807,10 +2811,13 @@ function installUpdate(){
 }
 
 function installUpdate_old(){
+	addTitleBar "${CHECK_FOR_UPDATES}"
 	ClearKey
 	local COUNT=0
-	while [[ ! "$COUNT" == 3 ]]; do
+	while [[ ! "${COUNT}" == 3 ]]; do
 		showLinesA
+		showLinesB
+		showLinesB
 		if [[ "${showLog}" == YES ]]; then
 			showUpdaterVersion
 		fi
