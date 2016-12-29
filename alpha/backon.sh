@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-368-official
+# BackOn alpha-369-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=368
+TOOL_BUILD_NUM=369
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -2873,7 +2873,6 @@ if [[ -d "/tmp/BackOn" ]]; then
 	rm -rf "/tmp/BackOn"
 fi
 mkdir -p "/tmp/BackOn/TitleBar"
-echo -e >> "/tmp/BackOn/TitleBar/${TITLE_NUM}"
 if [[ "${1}" == "-ods" ]]; then
 	openDevSettings
 elif [[ "${1}" == "-update" ]]; then
