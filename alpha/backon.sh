@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-358-official
+# BackOn alpha-360-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=358
+TOOL_BUILD_NUM=360
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -501,6 +501,8 @@ function openDevSettings(){
 						echo -e "(1) alpha"
 						echo -e "(2) beta"
 						echo -e "(3) stable"
+						showLinesB
+						echo -e "${ENTER_QUIT}"
 						showLinesA
 						applyLightCyan
 						read -p "- " ANSWER_E
