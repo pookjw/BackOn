@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-369-official
+# BackOn alpha-370-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=369
+TOOL_BUILD_NUM=370
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -580,7 +580,7 @@ function openDevSettings(){
 				echo -e "(4) backupUserAppData"
 				echo -e "(5) restoreUserAppData"
 				echo -e "(6) runUpdate"
-				echo -e "(7) Test TitleBar"
+				echo -e "(7) Test TitleBar."
 				showLinesB
 				echo -e "- ${ENTER_QUIT}"
 				showLinesA
@@ -611,6 +611,7 @@ function openDevSettings(){
 						showLinesB
 						echo -e "(1) addTitleBar"
 						echo -e "(2) backTitleBar"
+						echo -e "(3) Show TitleBar file list."
 						showLinesB
 						echo -e "- ${ENTER_QUIT}"
 						showLinesA
@@ -619,9 +620,25 @@ function openDevSettings(){
 						applyNoColor
 
 						if [[ "${ANSWER_W}" == 1 ]]; then
+							applyLightCyan
 							read -p "Query : " ANSWER_X
+							applyNoColor
 							addTitleBar "${ANSWER_X}"
 						elif [[ "${ANSWER_W}" == 2 ]]; then
+							backTitleBar
+						elif [[ "${ANSWER_W}" == 3 ]]; then
+							addTitleBar "Show TitleBar file list"
+							ClearKey
+							showLinesA
+							showTitleBar
+							showLinesB
+							if [[ "${detailFileListView}" == YES ]]; then
+								ls -l "/tmp/BackOn/TitleBar"
+							else
+								ls "/tmp/BackOn/TitleBar"
+							fi
+							showLinesA
+							PA2CKey
 							backTitleBar
 						elif [[ "${ANSWER_W}" == quit || "${ANSWER_W}" == q ]]; then
 							backTitleBar
@@ -1431,11 +1448,12 @@ function defineBackupName(){
 }
 
 function showInitialBackupMenu(){
+	addTitleBar "${SHOW_INFO_1}"
 	while(true); do
 		removeEmptyBackupFolder
 		ClearKey
 		showLinesA
-		echo -e "${SHOW_INFO_1}"
+		showTitleBar
 		showLinesB
 		echo -e "(1) ${BACKUP_CYDIA_DATA}"
 		echo -e "(2) ${BACKUP_LIBRARY}"
@@ -1503,9 +1521,10 @@ function showInitialBackupMenu(){
 }
 
 function backupCydiaData(){
+	addTitleBar "${SHOW_INFO_2}"
 	ClearKey
 	showLinesA
-	echo -e "${SHOW_INFO_2}"
+	showTitleBar
 	showLinesB
 	killCydia
 	echo -e "${BACKING_UP}"
@@ -1532,6 +1551,7 @@ function backupCydiaData(){
 	fi
 	showLinesA
 	PA2CKey
+	backTitleBar
 }
 
 function backupLibrary(){
@@ -1541,10 +1561,11 @@ function backupLibrary(){
 	if [[ ! -d "/tmp/BackOn/Backup/${BACKUP_NAME}/Library" ]]; then
 		mkdir -p "/tmp/BackOn/Backup/${BACKUP_NAME}/Library"
 	fi
+	addTitleBar "${SHOW_INFO_3}"
 	while(true); do
 		ClearKey
 		showLinesA
-		echo -e "${SHOW_INFO_3}"
+		showTitleBar
 		showLinesB
 		if [[ "${detailFileListView}" == YES ]]; then
 			ls -l /var/mobile/Library
@@ -1640,6 +1661,7 @@ function backupLibrary(){
 				PA2CKey
 			elif [[ "${ANSWER_E}" == quit || "${ANSWER_E}" == q ]]; then
 				removeEmptyBackupFolder
+				backTitleBar
 				break
 			elif [[ "${ANSWER_E}" == ods ]]; then
 				openDevSettings
@@ -1684,15 +1706,18 @@ function backupUserAppData(){
 	if [[ ! -d "/tmp/BackOn/Backup/${BACKUP_NAME}/AppData" ]]; then
 		mkdir -p "/tmp/BackOn/Backup/${BACKUP_NAME}/AppData"
 	fi
+	addTitleBar "${SHOW_INFO_15}"
 	ClearKey
 	showLinesA
+	showTitleBar
+	showLinesB
 	echo -e "${WARN_USER_APP_DATA}"
 	showLinesA
 	PA2CKey
 	while(true); do
 		ClearKey
 		showLinesA
-		echo -e "${SHOW_INFO_15}"
+		showTitleBar
 		showLinesB
 		cd "${INSTALLED_APP_PATH}"
 		for NAME in $(ls); do
@@ -1712,6 +1737,7 @@ function backupUserAppData(){
 		elif [[ "${ANSWER_P}" == exit ]]; then
 			ExitKey
 		elif [[ "${ANSWER_P}" == quit || ${ANSWER_P} == q ]]; then
+			backTitleBar
 			break
 		elif [[ "${ANSWER_P}" == delete ]]; then
 			deleteBackup AppData
@@ -1776,30 +1802,28 @@ function deleteBackup(){
 		echo -e "ERROR!"
 		applyNoColor
 	else
+		if [[ "${1}" == Library ]]; then
+			addTitleBar "${SHOW_INFO_4}"
+		elif [[ "${1}" == AppData ]]; then
+			addTitleBar "${SHOW_INFO_16}"
+		fi
 		while(true); do
 			if [[ -z "$(ls "/tmp/BackOn/Backup/${BACKUP_NAME}/${1}")" ]]; then
 				ClearKey
 				showLinesA
-				if [[ "${1}" == Library ]]; then
-					echo -e "${SHOW_INFO_4}"
-				elif [[ "${1}" == AppData ]]; then
-					echo -e "${SHOW_INFO_16}"
-				fi
+				showTitleBar
 				showLinesB
 				applyRed
 				echo -e "${NOTHING_TO_DELETE}"
 				applyNoColor
 				showLinesA
 				PA2CKey
+				backTitleBar
 				break
 			fi
 			ClearKey
 			showLinesA
-			if [[ "${1}" == Library ]]; then
-				echo -e "${SHOW_INFO_4}"
-			elif [[ "${1}" == AppData ]]; then
-				echo -e "${SHOW_INFO_16}"
-			fi
+			showTitleBar
 			showLinesB
 			if [[ "${detailFileListView}" == YES ]]; then
 				ls -l "/tmp/BackOn/Backup/${BACKUP_NAME}/${1}"
@@ -1824,6 +1848,7 @@ function deleteBackup(){
 					echo -e "${DONE}"
 					PA2CKey
 				elif [[ "${ANSWER_J}" == q || "${ANSWER_J}" == quit ]]; then
+					backTitleBar
 					break
 				elif  [[ "${ANSWER_J}" == ods ]]; then
 					openDevSettings
@@ -1852,13 +1877,14 @@ function deleteBackup(){
 
 function showBackupedFilesBackup(){
 	removeEmptyBackupFolder
+	if [[ "${1}" == "-confirmtitle" ]]; then
+		addTitleBar "${SHOW_INFO_18}"
+	else
+		addTitleBar "${SHOW_INFO_5}"
+	fi
 	ClearKey
 	showLinesA
-	if [[ "${1}" == "-confirmtitle" ]]; then
-		echo -e "${SHOW_INFO_18}"
-	else
-		echo -e "${SHOW_INFO_5}"
-	fi
+	showTitleBar
 	showLinesB
 	if [[ -f "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia/apt.txt" ]]; then
 		echo -e "${BACKUPED_CYDIA_PACKAGES_LIST} : ${YES}"
@@ -1903,15 +1929,17 @@ function showBackupedFilesBackup(){
 
 function saveBackup(){
 	removeEmptyBackupFolder
+	addTitleBar "${SHOW_INFO_6}"
 	ClearKey
 	showLinesA
-	echo -e "${SHOW_INFO_6}"
+	showTitleBar
 	showLinesB
 	if [[ -z "$(ls /tmp/BackOn/Backup/${BACKUP_NAME})" ]]; then
 		applyRed
 		echo -e "${NOTHING_TO_BACKUP}"
 		applyNoColor
 		showLinesA
+		backTitleBar
 		PA2CKey
 	else
 		cd /tmp/BackOn/Backup/${BACKUP_NAME}
