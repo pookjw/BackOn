@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-363-official
+# BackOn alpha-365-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=363
+TOOL_BUILD_NUM=365
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -1142,10 +1142,11 @@ function showTitleBar(){
 function addTitleBar(){
 	if [[ ! -z "${1}" ]]; then
 		if [[ "${TITLE_NUM}" == 0 ]]; then
-			echo "${1}" >> "/tmp/BackOn/TitleBar/${TITLE_NUM}"
 			TITLE_NUM=$((${TITLE_NUM}+1))
+			echo "${1}" >> "/tmp/BackOn/TitleBar/${TITLE_NUM}"
 		else
-			echo "$(showTitleBar) > ${1}" >> "/tmp/BackOn/TitleBar/$((TITLE_NUM=$((${TITLE_NUM}+1)); echo "${TITLE_NUM}"))"
+			echo "$(showTitleBar) > ${1}" >> "/tmp/BackOn/TitleBar/$((${TITLE_NUM}+1))"
+			TITLE_NUM=$((${TITLE_NUM}+1))
 		fi
 	fi
 }
