@@ -88,7 +88,6 @@ function Update2(){
 function showInfo(){
 	applyPurple
 	echo -e "UpdaterVersion : ${UpdaterVersion}"
-	echo -e "runUpdateODS : ${runUpdateODS}"
 	echo -e "UpdateBuildType : ${UpdateBuildType}"
 	echo -e "updateWithDEBInstall : ${updateWithDEBInstall}"
 	echo -e "showLog : ${showLog}"
