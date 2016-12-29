@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-370-official
+# BackOn alpha-371-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=370
+TOOL_BUILD_NUM=371
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -89,23 +89,23 @@ function setEnglish(){
 	SHOW_GUIDE_14="Enter app name that you want to restore."
 	SHOW_GUIDE_15="Enter app name that you want to backup. Enter 'delete' command to delete backuped backup."
 	SHOW_INFO_1="Backup Menu"
-	SHOW_INFO_2="Backup Menu > Backup Cydia sources and packages list"
-	SHOW_INFO_3="Backup Menu > Backup Library"
-	SHOW_INFO_4="Backup Menu > Backup Library > Delete backup"
-	SHOW_INFO_5="Backup Menu > Show backuped file(s)"
-	SHOW_INFO_6="Backup Menu > Confirm > Save backup"
+	SHOW_INFO_2="Backup Cydia sources and packages list"
+	SHOW_INFO_3="Backup Library"
+	SHOW_INFO_4="Delete backup"
+	SHOW_INFO_5="Show backuped file(s)"
+	SHOW_INFO_6="Save backup"
 	SHOW_INFO_7="Restore Menu"
-	SHOW_INFO_8="Restore Menu > Restore Cydia sources and packages list"
-	SHOW_INFO_9="Restore Menu > Show backuped Cydia packages list."
-	SHOW_INFO_10="Restore Menu > Restore Library"
-	SHOW_INFO_11="Restore Menu > Restore Library > Restore all of Library."
+	SHOW_INFO_8="Restore Cydia sources and packages list"
+	SHOW_INFO_9="Show backuped Cydia packages list."
+	SHOW_INFO_10="Restore Library"
+	SHOW_INFO_11="Restore all of Library."
 	SHOW_INFO_12="Custom Backup"
-	SHOW_INFO_13="Custom Backup > Detect backup target"
+	SHOW_INFO_13="Detect backup target"
 	SHOW_INFO_14="Custom Restore"
-	SHOW_INFO_15="Backup Menu > Backup App Data"
-	SHOW_INFO_16="Backup Menu > Backup App Data > Delete backup"
-	SHOW_INFO_17="Restore Menu > Restore App Data"
-	SHOW_INFO_18="Backup Menu > Confirm"
+	SHOW_INFO_15="Backup App Data"
+	SHOW_INFO_16="Backup App Data > Delete backup"
+	SHOW_INFO_17="Restore App Data"
+	SHOW_INFO_18="Confirm"
 }
 
 function setKorean(){
@@ -186,23 +186,23 @@ function setKorean(){
 	SHOW_GUIDE_14="복원을 원하는 어플의 이름을 입력하시면 됩니다."
 	SHOW_GUIDE_15="백업을 원하는 App 이름을 입력해 주세요. 'delete' 명령어로 백업한 백업 파일을 삭제할 수 있습니다."
 	SHOW_INFO_1="백업 메뉴"
-	SHOW_INFO_2="백업 메뉴 > Cydia 소스, 패키지 목록을 백업"
-	SHOW_INFO_3="백업 메뉴 > Library 백업"
-	SHOW_INFO_4="백업 메뉴 > Library 백업 > 백업 삭제"
-	SHOW_INFO_5="백업 메뉴 > 백업한 파일 표시"
-	SHOW_INFO_6="백업 메뉴 > 확인 > 백업을 저장"
+	SHOW_INFO_2="Cydia 소스, 패키지 목록을 백업"
+	SHOW_INFO_3="Library 백업"
+	SHOW_INFO_4="백업 삭제"
+	SHOW_INFO_5="백업한 파일 표시"
+	SHOW_INFO_6="백업을 저장"
 	SHOW_INFO_7="복원 메뉴"
-	SHOW_INFO_8="복원 메뉴 > Cydia 소스, 패키지 복원"
-	SHOW_INFO_9="복원 메뉴 > 백업한 Cydia 패키지 목록 보기"
-	SHOW_INFO_10="복원 메뉴 > Library 복원"
-	SHOW_INFO_11="복원 메뉴 > Library 복원 > Library 모두 복원"
+	SHOW_INFO_8="Cydia 소스, 패키지 복원"
+	SHOW_INFO_9="업한 Cydia 패키지 목록 보기"
+	SHOW_INFO_10="Library 복원"
+	SHOW_INFO_11="Library 모두 복원"
 	SHOW_INFO_12="커스텀 백업"
-	SHOW_INFO_13="커스텀 백업 > 백업 대상 입력"
+	SHOW_INFO_13="백업 대상 입력"
 	SHOW_INFO_14="커스텀 복원"
-	SHOW_INFO_15="백업 메뉴 > 사용자 어플 데이터 백업"
-	SHOW_INFO_16="백업 메뉴 > 사용자 어플 데이터 백업 > 백업 삭제"
-	SHOW_INFO_17="복원 메뉴 > 사용자 어플 데이터 복원"
-	SHOW_INFO_18="백업 메뉴 > 확인"
+	SHOW_INFO_15="사용자 어플 데이터 백업"
+	SHOW_INFO_16="백업 삭제"
+	SHOW_INFO_17="사용자 어플 데이터 복원"
+	SHOW_INFO_18="확인"
 }
 
 function openDevSettings(){
