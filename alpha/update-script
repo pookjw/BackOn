@@ -1,13 +1,4 @@
 #!/bin/sh
-if [[ -f "/tmp/BackOn/Update/info/runUpdateODS" ]]; then
-	runUpdateODS="$(cat "/tmp/BackOn/Update/info/runUpdateODS")"
-else
-	if [[ -f "/var/mobile/Library/Preferences/BackOn/runUpdateODS" ]]; then
-		runUpdateODS="$(cat "/var/mobile/Library/Preferences/BackOn/runUpdateODS")"
-	else
-		runUpdateODS=NO
-	fi
-fi
 if [[ -f "/tmp/BackOn/Update/info/UpdateBuildType" ]]; then
 	UpdateBuildType="$(cat "/tmp/BackOn/Update/info/UpdateBuildType")"
 fi
