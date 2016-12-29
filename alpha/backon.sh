@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-366-official
+# BackOn alpha-367-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=366
+TOOL_BUILD_NUM=367
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -211,7 +211,6 @@ function openDevSettings(){
 		ClearKey
 		showLinesA
 		showTitleBar
-		echo -e "Build info : ${TOOL_BUILD_TYPE}-${TOOL_BUILD_NUM}-${TOOL_RELEASE}"
 		showLinesB
 		echo -e "(1) General Settings."
 		echo -e "(2) Key Settings."
@@ -222,6 +221,8 @@ function openDevSettings(){
 		echo -e "(l) Reload Settings."
 		echo -e "(d) Disable DevSettings."
 		echo -e "(s) Save Settings."
+		showLinesB
+		echo -e "Build info : ${TOOL_BUILD_TYPE}-${TOOL_BUILD_NUM}-${TOOL_RELEASE}"
 		showLinesA
 		applyLightCyan
 		read -p "- " ANSWER_D
@@ -629,6 +630,7 @@ function openDevSettings(){
 							ExitKey
 						elif [[ -z "${ANSWER_W}" ]]; then
 							:
+						else showNotSupportedFunction
 						fi
 					done
 				elif [[ "${ANSWER_V}" == quit || "${ANSWER_V}" == q ]]; then
@@ -647,10 +649,12 @@ function openDevSettings(){
 		elif [[ "${ANSWER_D}" == d ]]; then
 			rm -rf /var/mobile/Library/Preferences/BackOn/DevSettings
 			loadSettings
+			backTitleBar
 			break
 		elif [[ "${ANSWER_D}" == s ]]; then
 			saveSettings
 			loadSettings
+			backTitleBar
 			break
 		elif [[ "${ANSWER_D}" == exit ]]; then
 			ExitKey
@@ -1175,7 +1179,9 @@ function addTitleBar(){
 }
 
 function backTitleBar(){
-	rm "/tmp/BackOn/TitleBar/${TITLE_NUM}"
+	if [[ -f "/tmp/BackOn/TitleBar/${TITLE_NUM}" ]]; then
+		rm "/tmp/BackOn/TitleBar/${TITLE_NUM}"
+	fi
 	TITLE_NUM=$((${TITLE_NUM}-1))
 }
 
