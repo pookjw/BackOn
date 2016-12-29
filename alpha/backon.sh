@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-373-official
+# BackOn alpha-374-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=373
+TOOL_BUILD_NUM=374
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -193,7 +193,7 @@ function setKorean(){
 	SHOW_INFO_6="백업을 저장"
 	SHOW_INFO_7="복원 메뉴"
 	SHOW_INFO_8="Cydia 소스, 패키지 복원"
-	SHOW_INFO_9="업한 Cydia 패키지 목록 보기"
+	SHOW_INFO_9="백업한 Cydia 패키지 목록 보기"
 	SHOW_INFO_10="Library 복원"
 	SHOW_INFO_11="Library 모두 복원"
 	SHOW_INFO_12="커스텀 백업"
