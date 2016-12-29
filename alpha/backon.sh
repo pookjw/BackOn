@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-374-official
+# BackOn alpha-375-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=374
+TOOL_BUILD_NUM=375
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -2829,6 +2829,7 @@ function installUpdate(){
 		fi
 	done
 	showLinesA
+	backTitleBar
 	PA2CKey
 }
 
@@ -2906,6 +2907,7 @@ function installUpdate_old(){
 		fi
 	done
 	showLinesA
+	backTitleBar
 	PA2CKey
 }
 
