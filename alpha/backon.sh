@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-372-official
+# BackOn alpha-373-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=372
+TOOL_BUILD_NUM=373
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -1203,10 +1203,11 @@ function backTitleBar(){
 }
 
 function showYESNO(){
+	addTitleBar "${1}"
 	while(true); do
 		ClearKey
 		showLinesA
-		echo -e "${1}"
+		showTitleBar
 		if [[ ! -z "${2}" ]]; then
 			showLinesB
 			echo -e "${2}"
@@ -1220,9 +1221,11 @@ function showYESNO(){
 			:
 		elif [[ "${ANSWER_YESNO}" == yes ]]; then
 			ANSWER_YESNO=YES
+			backTitleBar
 			break
 		elif [[ "${ANSWER_YESNO}" == no ]]; then
 			ANSWER_YESNO=NO
+			backTitleBar
 			break
 		elif [[ "${ANSWER_YESNO}" == ods ]]; then
 			openDevSettings
@@ -1924,7 +1927,9 @@ function showBackupedFilesBackup(){
 		fi
 	fi
 	showLinesA
-	backTitleBar
+	if [[ ! "${1}" == "-confirmtitle" ]]; then
+		backTitleBar
+	fi
 	PA2CKey
 }
 
@@ -2175,11 +2180,12 @@ function checkiOSVerMatching(){
 }
 
 function showInitialRestoreMenu(){
+	addTitleBar "${SHOW_INFO_7}"
 	while(true); do
 		removeEmptyRestoreFolder
 		ClearKey
 		showLinesA
-		echo -e "${SHOW_INFO_7}"
+		showTitleBar
 		showLinesB
 		if [[ -d "/tmp/BackOn/Restore/Cydia" ]]; then
 			echo -e "(1) ${RESTORE_CYDIA_DATA}"
@@ -2287,9 +2293,10 @@ function showInitialRestoreMenu(){
 }
 
 function restoreCydia(){
+	addTitleBar "${SHOW_INFO_8}"
 	ClearKey
 	showLinesA
-	echo -e "${SHOW_INFO_8}"
+	showTitleBar
 	showLinesB
 	if [[ "${skipRestore}" == YES ]]; then
 		echo -e "Skipped."
@@ -2347,24 +2354,28 @@ function restoreCydia(){
 		echo -e "${DONE}"
 	fi
 	showLinesA
+	backTitleBar
 	PA2CKey
 }
 
 function showBackupedFilesRestore(){
+	addTitleBar "${SHOW_INFO_9}"
 	ClearKey
 	showLinesA
-	echo -e "${SHOW_INFO_9}"
+	showTitleBar
 	showLinesB
 	cat "/tmp/BackOn/Restore/Cydia/apt.txt"
 	showLinesA
+	backTitleBar
 	PA2CKey
 }
 
 function restoreLibrary(){
+	addTitleBar "${SHOW_INFO_10}"
 	while(true); do
 		ClearKey
 		showLinesA
-		echo -e "${SHOW_INFO_10}"
+		showTitleBar
 		showLinesB
 		if [[ "${detailFileListView}" == YES ]]; then
 			ls -l "/tmp/BackOn/Restore/Library"
@@ -2382,6 +2393,7 @@ function restoreLibrary(){
 		if [[ "${ANSWER_I}" == ods ]]; then
 			openDevSettings
 		elif [[ "${ANSWER_I}" == q || "${ANSWER_I}" == quit ]]; then
+			backTitleBar
 			break
 		elif [[ "${ANSWER_I}" == exit ]]; then
 			ExitKey
@@ -2443,15 +2455,18 @@ function restoreLibrary(){
 }
 
 function restoreUserAppData(){
+	addTitleBar "${SHOW_INFO_17}"
 	ClearKey
 	showLinesA
+	showTitleBar
+	showLinesB
 	echo -e "${WARN_USER_APP_DATA}"
 	showLinesA
 	PA2CKey
 	while(true); do
 		ClearKey
 		showLinesA
-		echo -e "${SHOW_INFO_17}"
+		showTitleBar
 		showLinesB
 		if [[ "${detailFileListView}" == YES ]]; then
 			ls -l "/tmp/BackOn/Restore/AppData"
@@ -2469,6 +2484,7 @@ function restoreUserAppData(){
 		if [[ "${ANSWER_P}" == ods ]]; then
 			openDevSettings
 		elif [[ "${ANSWER_P}" == q || "${ANSWER_P}" == quit ]]; then
+			backTitleBar
 			break
 		elif [[ "${ANSWER_P}" == exit ]]; then
 			ExitKey
@@ -2535,10 +2551,11 @@ function customBackup(){
 		if [[ ! -d "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom" ]]; then
 			mkdir -p "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom"
 		fi
+		addTitleBar "${SHOW_INFO_12}"
 		while(true); do
 			ClearKey
 			showLinesA
-			echo -e "${SHOW_INFO_12}"
+			showTitleBar
 			showLinesB
 			if [[ -z "$(ls "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom")" ]]; then
 				applyRed
@@ -2568,6 +2585,7 @@ function customBackup(){
 				ExitKey
 			elif [[ "${ANSWER_M}" == quit || "${ANSWER_M}" == q ]]; then
 				removeEmptyBackupFolder
+				backTitleBar
 				break
 			elif [[ -d "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${ANSWER_M}" ]]; then
 				showYESNO "${ALREADY_EXISTS_WANT_TO_REMOVE}"
@@ -2584,10 +2602,11 @@ function customBackup(){
 				fi
 			elif [[ ! -d "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${ANSWER_M}" ]]; then
 				mkdir -p "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${ANSWER_M}/Backup"
+				addTitleBar "${SHOW_INFO_13}"
 				while(true); do
 					ClearKey
 					showLinesA
-					echo -e "${SHOW_INFO_13}"
+					showTitleBar
 					showLinesB
 					echo -e "${ENTER_FILE_PATH}"
 					showLinesB
@@ -2605,6 +2624,7 @@ function customBackup(){
 						ExitKey
 					elif [[ "${ANSWER_N}" == quit || "${ANSWER_N}" == q ]]; then
 						rm -rf "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${ANSWER_M}"
+						backTitleBar
 						break
 					elif [[ -f "${ANSWER_N}" ]]; then
 						echo -e "${BACKING_UP}"
@@ -2643,10 +2663,11 @@ function customBackup(){
 
 function customRestore(){
 	if [[ -d "/tmp/BackOn/Restore/Custom" ]]; then
+		addTitleBar "${SHOW_INFO_14}"
 		while(true); do
 			ClearKey
 			showLinesA
-			echo -e "${SHOW_INFO_14}"
+			showTitleBar
 			showLinesB
 			for Name in `ls "/tmp/BackOn/Restore/Custom"`; do
 				echo -e -n "${Name} "
@@ -2668,6 +2689,7 @@ function customRestore(){
 			elif [[ "${ANSWER_O}" == exit ]]; then
 				ExitKey
 			elif [[ "${ANSWER_O}" == quit || "${ANSWER_O}" == q ]]; then
+				backTitleBar
 				break
 			elif [[ -d "/tmp/BackOn/Restore/Custom/${ANSWER_O}" ]]; then
 				if [[ "${skipRestore}" == YES ]]; then
