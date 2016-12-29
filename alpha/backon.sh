@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-361-official
+# BackOn alpha-362-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=361
+TOOL_BUILD_NUM=362
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -583,6 +583,8 @@ function openDevSettings(){
 					while(true); do
 						ClearKey
 						showLinesA
+						echo -e "DevSettings > Run function > Test TitleBar"
+						showLinesB
 						showTitleBar
 						showLinesB
 						echo -e "(1) addTitleBar"
@@ -2836,7 +2838,7 @@ TITLE_NUM=0
 if [[ -d "/tmp/BackOn" ]]; then
 	rm -rf "/tmp/BackOn"
 fi
-mkdir -p /tmp/BackOn
+mkdir -p "/tmp/BackOn/TitleBar"
 if [[ "${1}" == "-ods" ]]; then
 	openDevSettings
 elif [[ "${1}" == "-update" ]]; then
