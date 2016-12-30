@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-378-official
+# BackOn alpha-379-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=378
+TOOL_BUILD_NUM=379
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -2645,6 +2645,7 @@ function customBackup(){
 						echo -e "file" >> "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${ANSWER_M}/type"
 						echo -e "${DONE}"
 						PA2CKey
+						backTitlBar
 						break
 					elif [[ -d "${ANSWER_N}" ]]; then
 						echo -e "${BACKING_UP}"
@@ -2653,6 +2654,7 @@ function customBackup(){
 						echo -e "folder" >> "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${ANSWER_M}/type"
 						echo -e "${DONE}"
 						PA2CKey
+						backTitleBar
 						break
 					else
 						applyRed
