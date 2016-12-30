@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-380-official
+# BackOn alpha-381-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=380
+TOOL_BUILD_NUM=381
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -58,6 +58,7 @@ function setEnglish(){
 	YES="YES"
 	NO="NO"
 	CANCELED="Canceled."
+	CONFIRM="Confirm"
 	BACKUPED_CYDIA_PACKAGES_LIST="Cydia packages list"
 	BACKUPED_CYDIA_SOURCE="Cydia source"
 	BACKUPED_CYDIA_METADATA="Cydia metadata"
@@ -155,6 +156,7 @@ function setKorean(){
 	YES="예"
 	NO="아니오"
 	CANCELED="취소되었습니다."
+	CONFIRM="확인"
 	BACKUPED_CYDIA_PACKAGES_LIST="Cydia 패키지 목록"
 	BACKUPED_CYDIA_SOURCE="Cydia 소스"
 	BACKUPED_CYDIA_METADATA="Cydia metadata"
@@ -2600,7 +2602,7 @@ function customBackup(){
 				backTitleBar
 				break
 			elif [[ -d "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${ANSWER_M}" ]]; then
-				showYESNO "${ALREADY_EXISTS_WANT_TO_REMOVE}"
+				showYESNO "${CONFIRM}" "${ALREADY_EXISTS_WANT_TO_REMOVE}"
 				if [[ "${ANSWER_YESNO}" == YES ]]; then
 					echo -e "${REMOVING}"
 					rm -rf "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${ANSWER_M}"
