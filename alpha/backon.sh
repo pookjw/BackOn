@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-381-official
+# BackOn alpha-382-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=381
+TOOL_BUILD_NUM=382
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -2719,7 +2719,7 @@ function customRestore(){
 						PA2CKey
 					elif [[ "$(cat "/tmp/BackOn/Restore/Custom/${ANSWER_O}/type")" == folder ]]; then
 						echo -e "${RESTORING}"
-						cp -r "/tmp/BackOn/Restore/Custom/${ANSWER_O}/Backup/`ls "/tmp/BackOn/Restore/Custom/${ANSWER_O}/Backup"`" "`cat "/tmp/BackOn/Restore/Custom/${ANSWER_O}/path"`"
+						cp -r "/tmp/BackOn/Restore/Custom/${ANSWER_O}/Backup/`ls "/tmp/BackOn/Restore/Custom/${ANSWER_O}/Backup"`" "`cat "/tmp/BackOn/Restore/Custom/${ANSWER_O}/path"`/.."
 						echo -e "${DONE}"
 						PA2CKey
 					else
