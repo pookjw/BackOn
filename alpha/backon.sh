@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-382-official
+# BackOn alpha-383-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=382
+TOOL_BUILD_NUM=383
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -2855,7 +2855,7 @@ function installUpdate_old(){
 	local COUNT=0
 	while [[ ! "${COUNT}" == 3 ]]; do
 		showLinesA
-		showLinesB
+		showTitleBar
 		showLinesB
 		if [[ "${showLog}" == YES ]]; then
 			showUpdaterVersion
