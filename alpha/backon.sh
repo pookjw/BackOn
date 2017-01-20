@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-384-official
+# BackOn alpha-385-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=384
+TOOL_BUILD_NUM=385
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -17,7 +17,8 @@ function setEnglish(){
 	NOT_IOS="This is not iOS."
 	CHOOSE_LANGUAGE="Choose language"
 	CLOSE_TOOL="Quit BackOn."
-	ENTER_TEXT="Enter a command(1, 2, 3, 4, q) that you want to do."
+	ENTER_COMMAND_1="Enter a command(1, 2, q)."
+	ENTER_COMMAND_2="Enter a command(1, 2, 3, 4, q) that you want to do."
 	CREATE_BACKUP="Create backup."
 	RESTORE_FROM_BACKUP="Restore from backup."
 	CHECK_FOR_UPDATES="Check for updates."
@@ -117,7 +118,8 @@ function setKorean(){
 	NOT_IOS="실행된 기기는 iOS가 아닙니다."
 	CHOOSE_LANGUAGE="언어 선택"
 	CLOSE_TOOL="BackOn 종료"
-	ENTER_TEXT="명령어(1, 2, 3, 4, q)를 입력해 주세요."
+	ENTER_COMMAND_1="명령어(1, 2, q)를 입력해 주세요."
+	ENTER_COMMAND_2="명령어(1, 2, 3, 4, q)를 입력해 주세요."
 	CREATE_BACKUP="백업 생성"
 	RESTORE_FROM_BACKUP="백업에서 복원"
 	CHECK_FOR_UPDATES="업데이트 확인"
@@ -1148,6 +1150,11 @@ function loadSettings(){
 		showHiddenRestoreMenu="$(cat "/var/mobile/Library/Preferences/BackOn/DevSettings/showHiddenRestoreMenu")"
 	else
 		showHiddenRestoreMenu=NO
+	fi
+	if [[ -f "/var/mobile/Library/Preferences/BackOn/DevSettings/skipChooseLanguage" ]]; then
+		skipChooseLanguage="$(cat "/var/mobile/Library/Preferences/BackOn/DevSettings/skipChooseLanguage")"
+	else
+		skipChooseLanguage=NO
 	fi
 }
 
@@ -2967,40 +2974,44 @@ if [[ "${1}" == "-ods" ]]; then
 elif [[ "${1}" == "-update" ]]; then
 	runUpdate
 fi
-addTitleBar "${CHOOSE_LANGUAGE}"
-while(true); do
-	ClearKey
-	showLinesA
-	showTitleBar
-	showLinesB
-	echo -e "(1) English"
-	echo -e "(2) Korean (한국어)"
-	echo -e "(q) ${CLOSE_TOOL}"
-	showLinesB
-	applyLightCyan
-	read -p "- " ANSWER_Y
-	applyNoColor
+if [[ "${}skipChooseLanguage" == NO ]]; then
+	addTitleBar "${CHOOSE_LANGUAGE}"
+	while(true); do
+		ClearKey
+		showLinesA
+		showTitleBar
+		showLinesB
+		echo -e "(1) English"
+		echo -e "(2) Korean (한국어)"
+		echo -e "(q) ${CLOSE_TOOL}"
+		showLinesB
+		echo -e "- ${ENTER_COMMAND_1}"
+		showLinesB
+		applyLightCyan
+		read -p "- " ANSWER_Y
+		applyNoColor
 
-	if [[ "${ANSWER_Y}" == 1 ]]; then
-		setEnglish
-		backTitleBar
-		break
-	elif [[ "${ANSWER_Y}" == 2 ]]; then
-		setKorean
-		backTitleBar
-		break
-	elif [[ "${ANSWER_Y}" == q || "${ANSWER_Y}" == quit ]]; then
-		quitTool
-	elif [[ "${ANSWER_Y}" == ods ]]; then
-		openDevSettings
-	elif [[ "${ANSWER_Y}" == exit ]]; then
-		ExitKey
-	elif [[ -z "${ANSWER_Y}" ]]; then
-		:
-	else
-		showNotSupportedFunction
-	fi
-done
+		if [[ "${ANSWER_Y}" == 1 ]]; then
+			setEnglish
+			backTitleBar
+			break
+		elif [[ "${ANSWER_Y}" == 2 ]]; then
+			setKorean
+			backTitleBar
+			break
+		elif [[ "${ANSWER_Y}" == q || "${ANSWER_Y}" == quit ]]; then
+			quitTool
+		elif [[ "${ANSWER_Y}" == ods ]]; then
+			openDevSettings
+		elif [[ "${ANSWER_Y}" == exit ]]; then
+			ExitKey
+		elif [[ -z "${ANSWER_Y}" ]]; then
+			:
+		else
+			showNotSupportedFunction
+		fi
+	done
+fi
 while(true); do
 	ClearKey
 	showLinesA
@@ -3019,7 +3030,7 @@ while(true); do
 	fi
 	echo -e "(q) ${QUIT}"
 	showLinesB
-	echo -e "- ${ENTER_TEXT}"
+	echo -e "- ${ENTER_COMMAND_2}"
 	showLinesA
 	applyLightCyan
 	read -p "- " ANSWER_A
