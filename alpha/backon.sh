@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-386-official
+# BackOn alpha-385-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=386
+TOOL_BUILD_NUM=385
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -110,7 +110,6 @@ function setEnglish(){
 	SHOW_INFO_16="Backup App Data > Delete backup"
 	SHOW_INFO_17="Restore App Data"
 	SHOW_INFO_18="Confirm"
-	SHOW_INFO_19="Check for updates"
 }
 
 function setKorean(){
@@ -212,7 +211,6 @@ function setKorean(){
 	SHOW_INFO_16="백업 삭제"
 	SHOW_INFO_17="사용자 어플 데이터 복원"
 	SHOW_INFO_18="확인"
-	SHOW_INFO_19="업데이트 확인"
 }
 
 function openDevSettings(){
@@ -313,7 +311,7 @@ function openDevSettings(){
 							showNotSupportedFunction
 						fi
 					done
-				elif [[ "${ANSWER_Q}" == 5 ]]; then
+				elif [[ "${ANSWER_O}" == 5 ]]; then
 					if [[ "${skipChooseLanguage}" == YES ]]; then
 						skipChooseLanguage=NO
 					else
@@ -2784,7 +2782,7 @@ function showUpdaterVersion(){
 }
 
 function installUpdate(){
-	addTitleBar "${SHOW_INFO_19}"
+	addTitleBar "${CHECK_FOR_UPDATES}"
 	ClearKey
 	local COUNT=0
 	while [[ ! "${COUNT}" == 3 ]]; do
@@ -2873,7 +2871,7 @@ function installUpdate(){
 }
 
 function installUpdate_old(){
-	addTitleBar "${SHOW_INFO_19}"
+	addTitleBar "${CHECK_FOR_UPDATES}"
 	ClearKey
 	local COUNT=0
 	while [[ ! "${COUNT}" == 3 ]]; do
@@ -2976,7 +2974,7 @@ if [[ "${1}" == "-ods" ]]; then
 elif [[ "${1}" == "-update" ]]; then
 	runUpdate
 fi
-if [[ "${skipChooseLanguage}" == NO ]]; then
+if [[ "${}skipChooseLanguage" == NO ]]; then
 	addTitleBar "${CHOOSE_LANGUAGE}"
 	while(true); do
 		ClearKey

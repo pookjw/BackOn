@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn beta-359-official
+# BackOn beta-387-official
 TOOL_BUILD_TYPE=beta
-TOOL_BUILD_NUM=359
+TOOL_BUILD_NUM=387
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -15,7 +15,10 @@ function setEnglish(){
 	LANGUAGE="English"
 	NOT_RUN_AS_ROOT="You didn't run as root! Please enter root password. (Initial password is 'alpine')"
 	NOT_IOS="This is not iOS."
-	ENTER_TEXT="Enter a command(1, 2, 3, 4, q) that you want to do."
+	CHOOSE_LANGUAGE="Choose language"
+	CLOSE_TOOL="Quit BackOn."
+	ENTER_COMMAND_1="Enter a command(1, 2, q)."
+	ENTER_COMMAND_2="Enter a command(1, 2, 3, 4, q) that you want to do."
 	CREATE_BACKUP="Create backup."
 	RESTORE_FROM_BACKUP="Restore from backup."
 	CHECK_FOR_UPDATES="Check for updates."
@@ -58,6 +61,7 @@ function setEnglish(){
 	YES="YES"
 	NO="NO"
 	CANCELED="Canceled."
+	CONFIRM="Confirm"
 	BACKUPED_CYDIA_PACKAGES_LIST="Cydia packages list"
 	BACKUPED_CYDIA_SOURCE="Cydia source"
 	BACKUPED_CYDIA_METADATA="Cydia metadata"
@@ -89,30 +93,34 @@ function setEnglish(){
 	SHOW_GUIDE_14="Enter app name that you want to restore."
 	SHOW_GUIDE_15="Enter app name that you want to backup. Enter 'delete' command to delete backuped backup."
 	SHOW_INFO_1="Backup Menu"
-	SHOW_INFO_2="Backup Menu > Backup Cydia sources and packages list"
-	SHOW_INFO_3="Backup Menu > Backup Library"
-	SHOW_INFO_4="Backup Menu > Backup Library > Delete backup"
-	SHOW_INFO_5="Backup Menu > Show backuped file(s)"
-	SHOW_INFO_6="Backup Menu > Confirm > Save backup"
+	SHOW_INFO_2="Backup Cydia sources and packages list"
+	SHOW_INFO_3="Backup Library"
+	SHOW_INFO_4="Delete backup"
+	SHOW_INFO_5="Show backuped file(s)"
+	SHOW_INFO_6="Save backup"
 	SHOW_INFO_7="Restore Menu"
-	SHOW_INFO_8="Restore Menu > Restore Cydia sources and packages list"
-	SHOW_INFO_9="Restore Menu > Show backuped Cydia packages list."
-	SHOW_INFO_10="Restore Menu > Restore Library"
-	SHOW_INFO_11="Restore Menu > Restore Library > Restore all of Library."
+	SHOW_INFO_8="Restore Cydia sources and packages list"
+	SHOW_INFO_9="Show backuped Cydia packages list."
+	SHOW_INFO_10="Restore Library"
+	SHOW_INFO_11="Restore all of Library."
 	SHOW_INFO_12="Custom Backup"
-	SHOW_INFO_13="Custom Backup > Detect backup target"
+	SHOW_INFO_13="Detect backup target"
 	SHOW_INFO_14="Custom Restore"
-	SHOW_INFO_15="Backup Menu > Backup App Data"
-	SHOW_INFO_16="Backup Menu > Backup App Data > Delete backup"
-	SHOW_INFO_17="Restore Menu > Restore App Data"
-	SHOW_INFO_18="Backup Menu > Confirm"
+	SHOW_INFO_15="Backup App Data"
+	SHOW_INFO_16="Backup App Data > Delete backup"
+	SHOW_INFO_17="Restore App Data"
+	SHOW_INFO_18="Confirm"
+	SHOW_INFO_19="Check for updates"
 }
 
 function setKorean(){
 	LANGUAGE="Korean"
 	NOT_RUN_AS_ROOT="root로 로그인되지 않았습니다! root 비밀번호를 입력해 주세요. (초기 비밀번호는 'alpine'입니다.)"
 	NOT_IOS="실행된 기기는 iOS가 아닙니다."
-	ENTER_TEXT="명령어(1, 2, 3, 4, q)를 입력해 주세요."
+	CHOOSE_LANGUAGE="언어 선택"
+	CLOSE_TOOL="BackOn 종료"
+	ENTER_COMMAND_1="명령어(1, 2, q)를 입력해 주세요."
+	ENTER_COMMAND_2="명령어(1, 2, 3, 4, q)를 입력해 주세요."
 	CREATE_BACKUP="백업 생성"
 	RESTORE_FROM_BACKUP="백업에서 복원"
 	CHECK_FOR_UPDATES="업데이트 확인"
@@ -155,6 +163,7 @@ function setKorean(){
 	YES="예"
 	NO="아니오"
 	CANCELED="취소되었습니다."
+	CONFIRM="확인"
 	BACKUPED_CYDIA_PACKAGES_LIST="Cydia 패키지 목록"
 	BACKUPED_CYDIA_SOURCE="Cydia 소스"
 	BACKUPED_CYDIA_METADATA="Cydia metadata"
@@ -186,30 +195,32 @@ function setKorean(){
 	SHOW_GUIDE_14="복원을 원하는 어플의 이름을 입력하시면 됩니다."
 	SHOW_GUIDE_15="백업을 원하는 App 이름을 입력해 주세요. 'delete' 명령어로 백업한 백업 파일을 삭제할 수 있습니다."
 	SHOW_INFO_1="백업 메뉴"
-	SHOW_INFO_2="백업 메뉴 > Cydia 소스, 패키지 목록을 백업"
-	SHOW_INFO_3="백업 메뉴 > Library 백업"
-	SHOW_INFO_4="백업 메뉴 > Library 백업 > 백업 삭제"
-	SHOW_INFO_5="백업 메뉴 > 백업한 파일 표시"
-	SHOW_INFO_6="백업 메뉴 > 확인 > 백업을 저장"
+	SHOW_INFO_2="Cydia 소스, 패키지 목록을 백업"
+	SHOW_INFO_3="Library 백업"
+	SHOW_INFO_4="백업 삭제"
+	SHOW_INFO_5="백업한 파일 표시"
+	SHOW_INFO_6="백업을 저장"
 	SHOW_INFO_7="복원 메뉴"
-	SHOW_INFO_8="복원 메뉴 > Cydia 소스, 패키지 복원"
-	SHOW_INFO_9="복원 메뉴 > 백업한 Cydia 패키지 목록 보기"
-	SHOW_INFO_10="복원 메뉴 > Library 복원"
-	SHOW_INFO_11="복원 메뉴 > Library 복원 > Library 모두 복원"
+	SHOW_INFO_8="Cydia 소스, 패키지 복원"
+	SHOW_INFO_9="백업한 Cydia 패키지 목록 보기"
+	SHOW_INFO_10="Library 복원"
+	SHOW_INFO_11="Library 모두 복원"
 	SHOW_INFO_12="커스텀 백업"
-	SHOW_INFO_13="커스텀 백업 > 백업 대상 입력"
+	SHOW_INFO_13="백업 대상 입력"
 	SHOW_INFO_14="커스텀 복원"
-	SHOW_INFO_15="백업 메뉴 > 사용자 어플 데이터 백업"
-	SHOW_INFO_16="백업 메뉴 > 사용자 어플 데이터 백업 > 백업 삭제"
-	SHOW_INFO_17="복원 메뉴 > 사용자 어플 데이터 복원"
-	SHOW_INFO_18="백업 메뉴 > 확인"
+	SHOW_INFO_15="사용자 어플 데이터 백업"
+	SHOW_INFO_16="백업 삭제"
+	SHOW_INFO_17="사용자 어플 데이터 복원"
+	SHOW_INFO_18="확인"
+	SHOW_INFO_19="업데이트 확인"
 }
 
 function openDevSettings(){
+	addTitleBar "DevSettings"
 	while(true); do
 		ClearKey
 		showLinesA
-		echo -e "DevSettings - ${TOOL_BUILD_TYPE}-${TOOL_BUILD_NUM}-${TOOL_RELEASE}"
+		showTitleBar
 		showLinesB
 		echo -e "(1) General Settings."
 		echo -e "(2) Key Settings."
@@ -220,25 +231,29 @@ function openDevSettings(){
 		echo -e "(l) Reload Settings."
 		echo -e "(d) Disable DevSettings."
 		echo -e "(s) Save Settings."
+		showLinesB
+		echo -e "Build info : ${TOOL_BUILD_TYPE}-${TOOL_BUILD_NUM}-${TOOL_RELEASE}"
 		showLinesA
 		applyLightCyan
 		read -p "- " ANSWER_D
 		applyNoColor
 
 		if [[ "${ANSWER_D}" == 1 ]]; then
+			addTitleBar "General Settings"
 			while(true); do
 				ClearKey
 				showLinesA
-				echo -e "DevSettings > General Settings"
+				showTitleBar
 				showLinesB
 				echo -e "(1) showLog : ${showLog}"
 				echo -e "(2) OSVer : ${OSVer} (iOS ${OSInitialVer})"
 				echo -e "(3) switchLanguage (Current : ${LANGUAGE})"
 				echo -e "(4) setDefaultLanguage : ${setDefaultLanguage}"
-				echo -e "(5) detailFileListView : ${detailFileListView}"
-				echo -e "(6) applyColorScheme : ${applyColorScheme}"
-				echo -e "(7) DynamicLine : ${DynamicLine}"
-				echo -e "(8) fixDynamicLineIssue : ${fixDynamicLineIssue}"
+				echo -e "(5) skipChooseLanguage : ${skipChooseLanguage}"
+				echo -e "(6) detailFileListView : ${detailFileListView}"
+				echo -e "(7) applyColorScheme : ${applyColorScheme}"
+				echo -e "(8) DynamicLine : ${DynamicLine}"
+				echo -e "(9) fixDynamicLineIssue : ${fixDynamicLineIssue}"
 				showLinesB
 				echo -e "- ${ENTER_QUIT}"
 				showLinesA
@@ -264,10 +279,11 @@ function openDevSettings(){
 				elif [[ "${ANSWER_Q}" == 3 ]]; then
 					switchLanguage
 				elif [[ "${ANSWER_Q}" == 4 ]]; then
+					addTitleBar "setDefaultLanguage"
 					while(true); do
 						ClearKey
 						showLinesA
-						echo -e "DevSettings > General Settings > setDefaultLanguage"
+						showTitleBar
 						showLinesB
 						echo -e "(1) English"
 						echo -e "(2) Korean (한국어)"
@@ -280,41 +296,55 @@ function openDevSettings(){
 
 						if [[ "${ANSWER_G}" == 1 ]]; then
 							setDefaultLanguage=English
+							backTitleBar
 							break
 						elif [[ "${ANSWER_G}" == 2 ]]; then
 							setDefaultLanguage=Korean
+							backTitleBar
 							break
 						elif [[ "${ANSWER_G}" == exit ]]; then
 							ExitKey
 						elif [[ "${ANSWER_G}" == q || "${ANSWER_G}" == quit ]]; then
+							backTitleBar
 							break
+						elif [[ -z "${ANSWER_G}" ]]; then
+							:
+						else
+							showNotSupportedFunction
 						fi
 					done
 				elif [[ "${ANSWER_Q}" == 5 ]]; then
+					if [[ "${skipChooseLanguage}" == YES ]]; then
+						skipChooseLanguage=NO
+					else
+						skipChooseLanguage=YES
+					fi
+				elif [[ "${ANSWER_Q}" == 6 ]]; then
 					if [[ "${detailFileListView}" == YES ]]; then
 						detailFileListView=NO
 					else
 						detailFileListView=YES
 					fi
-				elif [[ "${ANSWER_Q}" == 6 ]]; then
+				elif [[ "${ANSWER_Q}" == 7 ]]; then
 					if [[ "${applyColorScheme}" == YES ]]; then
 						applyColorScheme=NO
 					else
 						applyColorScheme=YES
 					fi
-				elif [[ "${ANSWER_Q}" == 7 ]]; then
+				elif [[ "${ANSWER_Q}" == 8 ]]; then
 					if [[ "${DynamicLine}" == YES ]]; then
 						DynamicLine=NO
 					else
 						DynamicLine=YES
 					fi
-				elif [[ "${ANSWER_Q}" == 8 ]]; then
+				elif [[ "${ANSWER_Q}" == 9 ]]; then
 					if [[ "${fixDynamicLineIssue}" == YES ]]; then
 						fixDynamicLineIssue=NO
 					else
 						fixDynamicLineIssue=YES
 					fi
 				elif [[ "${ANSWER_Q}" == quit || "${ANSWER_Q}" == q ]]; then
+					backTitleBar
 					break
 				elif [[ "${ANSWER_Q}" == exit ]]; then
 					ExitKey
@@ -325,10 +355,11 @@ function openDevSettings(){
 				fi
 			done
 		elif [[ "${ANSWER_D}" == 2 ]]; then
+			addTitleBar "Key Settings"
 			while(true); do
 				ClearKey
 				showLinesA
-				echo -e "DevSettings > Key Settings"
+				showTitleBar
 				showLinesB
 				echo -e "(1) ExitKey : ${ExitKey}"
 				echo -e "(2) PA2CKey : ${PA2CKey}"
@@ -359,6 +390,7 @@ function openDevSettings(){
 						ClearKey=YES
 					fi
 				elif [[ "${ANSWER_R}" == quit || "${ANSWER_R}" == q ]]; then
+					backTitleBar
 					break
 				elif [[ "${ANSWER_R}" == exit ]]; then
 					ExitKey
@@ -369,10 +401,11 @@ function openDevSettings(){
 				fi
 			done
 		elif [[ "${ANSWER_D}" == 3 ]]; then
+			addTitleBar "Backup Settings"
 			while(true); do
 				ClearKey
 				showLinesA
-				echo -e "DevSettings > Backup Settings"
+				showTitleBar
 				showLinesB
 				echo -e "(1) BackupPath : ${BackupPath}"
 				echo -e "(2) completeLibraryBackup : ${completeLibraryBackup}"
@@ -404,6 +437,7 @@ function openDevSettings(){
 						showHiddenBackupMenu=YES
 					fi
 				elif [[ "${ANSWER_S}" == quit || "${ANSWER_S}" == q ]]; then
+					backTitleBar
 					break
 				elif [[ "${ANSWER_S}" == exit ]]; then
 					ExitKey
@@ -414,10 +448,11 @@ function openDevSettings(){
 				fi
 			done
 		elif [[ "${ANSWER_D}" == 4 ]]; then
+			addTitleBar "Restore Settings"
 			while(true); do
 				ClearKey
 				showLinesA
-				echo -e "DevSettings > Restore Settings"
+				showTitleBar
 				showLinesB
 				echo -e "(1) skipRestore : ${skipRestore}"
 				echo -e "(2) showHiddenRestoreMenu : ${showHiddenRestoreMenu}"
@@ -441,6 +476,7 @@ function openDevSettings(){
 						showHiddenRestoreMenu=YES
 					fi
 				elif [[ "${ANSWER_T}" == quit || "${ANSWER_T}" == q ]]; then
+					backTitleBar
 					break
 				elif [[ "${ANSWER_T}" == exit ]]; then
 					ExitKey
@@ -451,10 +487,11 @@ function openDevSettings(){
 				fi
 			done
 		elif [[ "${ANSWER_D}" == 5 ]]; then
+			addTitleBar "Update Settings"
 			while(true); do
 				ClearKey
 				showLinesA
-				echo -e "DevSettings > Update Settings"
+				showTitleBar
 				showLinesB
 				echo -e "(1) UpdateURL : ${UpdateURL}"
 				echo -e "(2) UpdaterVersion : ${UpdaterVersion}"
@@ -493,14 +530,17 @@ function openDevSettings(){
 						UpdaterVersion=2
 					fi
 				elif [[ "${ANSWER_U}" == 3 ]]; then
+					addTitleBar "UpdateBuildType"
 					while(true); do
 						ClearKey
 						showLinesA
-						echo -e "DevSettings > Update Settings > UpdateBuildType"
+						showTitleBar
 						showLinesB
 						echo -e "(1) alpha"
 						echo -e "(2) beta"
 						echo -e "(3) stable"
+						showLinesB
+						echo -e "${ENTER_QUIT}"
 						showLinesA
 						applyLightCyan
 						read -p "- " ANSWER_E
@@ -508,17 +548,23 @@ function openDevSettings(){
 
 						if [[ "${ANSWER_E}" == 1 ]]; then
 							UpdateBuildType=alpha
+							backTitleBar
 							break
 						elif [[ "${ANSWER_E}" == 2 ]]; then
 							UpdateBuildType=beta
+							backTitleBar
 							break
 						elif [[ "${ANSWER_E}" == 3 ]]; then
 							UpdateBuildType=stable
+							backTitleBar
 							break
 						elif [[ ${ANSWER_E} == exit ]]; then
 							ExitKey
 						elif [[ "${ANSWER_E}" == q || "${ANSWER_E}" == quit ]]; then
+							backTitleBar
 							break
+						else
+							showNotSupportedFunction
 						fi
 					done
 				elif [[ "${ANSWER_U}" == 4 ]]; then
@@ -534,6 +580,7 @@ function openDevSettings(){
 						updateWithDEBInstall=YES
 					fi
 				elif [[ "${ANSWER_U}" == quit || "${ANSWER_U}" == q ]]; then
+					backTitleBar
 					break
 				elif [[ "${ANSWER_U}" == exit ]]; then
 					ExitKey
@@ -544,10 +591,11 @@ function openDevSettings(){
 				fi
 			done
 		elif [[ "${ANSWER_D}" == 6 ]]; then
+			addTitleBar "Run function"
 			while(true); do
 				ClearKey
 				showLinesA
-				echo -e "DevSettings > Run function"
+				showTitleBar
 				showLinesB
 				echo -e "(1) openDevSettings_obsolete"
 				echo -e "(2) customBackup"
@@ -555,6 +603,7 @@ function openDevSettings(){
 				echo -e "(4) backupUserAppData"
 				echo -e "(5) restoreUserAppData"
 				echo -e "(6) runUpdate"
+				echo -e "(7) Test TitleBar."
 				showLinesB
 				echo -e "- ${ENTER_QUIT}"
 				showLinesA
@@ -576,7 +625,56 @@ function openDevSettings(){
 					saveSettings
 					loadSettings
 					runUpdate
+				elif [[ "${ANSWER_V}" == 7 ]]; then
+					addTitleBar "Test TitleBar"
+					while(true); do
+						ClearKey
+						showLinesA
+						showTitleBar
+						showLinesB
+						echo -e "(1) addTitleBar"
+						echo -e "(2) backTitleBar"
+						echo -e "(3) Show TitleBar file list."
+						showLinesB
+						echo -e "- ${ENTER_QUIT}"
+						showLinesA
+						applyLightCyan
+						read -p "- " ANSWER_W
+						applyNoColor
+
+						if [[ "${ANSWER_W}" == 1 ]]; then
+							applyLightCyan
+							read -p "Query : " ANSWER_X
+							applyNoColor
+							addTitleBar "${ANSWER_X}"
+						elif [[ "${ANSWER_W}" == 2 ]]; then
+							backTitleBar
+						elif [[ "${ANSWER_W}" == 3 ]]; then
+							addTitleBar "Show TitleBar file list"
+							ClearKey
+							showLinesA
+							showTitleBar
+							showLinesB
+							if [[ "${detailFileListView}" == YES ]]; then
+								ls -l "/tmp/BackOn/TitleBar"
+							else
+								ls "/tmp/BackOn/TitleBar"
+							fi
+							showLinesA
+							PA2CKey
+							backTitleBar
+						elif [[ "${ANSWER_W}" == quit || "${ANSWER_W}" == q ]]; then
+							backTitleBar
+							break
+						elif [[ "${ANSWER_W}" == exit ]]; then
+							ExitKey
+						elif [[ -z "${ANSWER_W}" ]]; then
+							:
+						else showNotSupportedFunction
+						fi
+					done
 				elif [[ "${ANSWER_V}" == quit || "${ANSWER_V}" == q ]]; then
+					backTitleBar
 					break
 				elif [[ "${ANSWER_V}" == exit ]]; then
 					ExitKey
@@ -591,10 +689,12 @@ function openDevSettings(){
 		elif [[ "${ANSWER_D}" == d ]]; then
 			rm -rf /var/mobile/Library/Preferences/BackOn/DevSettings
 			loadSettings
+			backTitleBar
 			break
 		elif [[ "${ANSWER_D}" == s ]]; then
 			saveSettings
 			loadSettings
+			backTitleBar
 			break
 		elif [[ "${ANSWER_D}" == exit ]]; then
 			ExitKey
@@ -948,6 +1048,7 @@ function saveSettings(){
 	echo -e "${fixDynamicLineIssue}" >> /var/mobile/Library/Preferences/BackOn/DevSettings/fixDynamicLineIssue
 	echo -e "${showHiddenBackupMenu}" >> /var/mobile/Library/Preferences/BackOn/DevSettings/showHiddenBackupMenu
 	echo -e "${showHiddenRestoreMenu}" >> /var/mobile/Library/Preferences/BackOn/DevSettings/showHiddenRestoreMenu
+	echo -e "${skipChooseLanguage}" >> /var/mobile/Library/Preferences/BackOn/DevSettings/skipChooseLanguage
 }
 
 
@@ -1052,6 +1153,11 @@ function loadSettings(){
 	else
 		showHiddenRestoreMenu=NO
 	fi
+	if [[ -f "/var/mobile/Library/Preferences/BackOn/DevSettings/skipChooseLanguage" ]]; then
+		skipChooseLanguage="$(cat "/var/mobile/Library/Preferences/BackOn/DevSettings/skipChooseLanguage")"
+	else
+		skipChooseLanguage=NO
+	fi
 }
 
 function setOSInitialVer(){
@@ -1074,13 +1180,17 @@ function showLinesA(){
 		COLS=`tput cols`
 		while [[ ! ${PRINTED_COUNTS} == $COLS ]]; do
 	   		echo -e -n "*"
-	 		PRINTED_COUNTS=$(($PRINTED_COUNTS+1))
+	 		PRINTED_COUNTS=$((${PRINTED_COUNTS}+1))
 		done
 		if [[ ! "${fixDynamicLineIssue}" == YES ]]; then
 			echo -e
 		fi
 	else
-		echo -e "***************"
+		if [[ "${fixDynamicLineIssue}" == YES ]]; then
+			echo -n -e "*****************************************************"
+		else
+			echo -e "*****************************************************"
+		fi
 	fi
 }
 
@@ -1096,15 +1206,45 @@ function showLinesB(){
 			echo -e
 		fi
 	else
-		echo -e "---------------"
+		if [[ "${fixDynamicLineIssue}" == YES ]]; then
+			echo -n -e "-----------------------------------------------------"
+		else
+			echo -e "-----------------------------------------------------"
+		fi
 	fi
 }
 
+function showTitleBar(){
+	if [[ -f "/tmp/BackOn/TitleBar/${TITLE_NUM}" ]]; then
+		cat "/tmp/BackOn/TitleBar/${TITLE_NUM}"
+	fi
+}
+
+function addTitleBar(){
+	if [[ ! -z "${1}" ]]; then
+		if [[ -z "$(ls "/tmp/BackOn/TitleBar")" ]]; then
+			TITLE_NUM=$((${TITLE_NUM}+1))
+			echo "${1}" >> "/tmp/BackOn/TitleBar/${TITLE_NUM}"
+		else
+			echo "$(showTitleBar) > ${1}" >> "/tmp/BackOn/TitleBar/$((${TITLE_NUM}+1))"
+			TITLE_NUM=$((${TITLE_NUM}+1))
+		fi
+	fi
+}
+
+function backTitleBar(){
+	if [[ -f "/tmp/BackOn/TitleBar/${TITLE_NUM}" ]]; then
+		rm "/tmp/BackOn/TitleBar/${TITLE_NUM}"
+	fi
+	TITLE_NUM=$((${TITLE_NUM}-1))
+}
+
 function showYESNO(){
+	addTitleBar "${1}"
 	while(true); do
 		ClearKey
 		showLinesA
-		echo -e "${1}"
+		showTitleBar
 		if [[ ! -z "${2}" ]]; then
 			showLinesB
 			echo -e "${2}"
@@ -1118,9 +1258,11 @@ function showYESNO(){
 			:
 		elif [[ "${ANSWER_YESNO}" == yes ]]; then
 			ANSWER_YESNO=YES
+			backTitleBar
 			break
 		elif [[ "${ANSWER_YESNO}" == no ]]; then
 			ANSWER_YESNO=NO
+			backTitleBar
 			break
 		elif [[ "${ANSWER_YESNO}" == ods ]]; then
 			openDevSettings
@@ -1346,11 +1488,12 @@ function defineBackupName(){
 }
 
 function showInitialBackupMenu(){
+	addTitleBar "${SHOW_INFO_1}"
 	while(true); do
 		removeEmptyBackupFolder
 		ClearKey
 		showLinesA
-		echo -e "${SHOW_INFO_1}"
+		showTitleBar
 		showLinesB
 		echo -e "(1) ${BACKUP_CYDIA_DATA}"
 		echo -e "(2) ${BACKUP_LIBRARY}"
@@ -1418,9 +1561,10 @@ function showInitialBackupMenu(){
 }
 
 function backupCydiaData(){
+	addTitleBar "${SHOW_INFO_2}"
 	ClearKey
 	showLinesA
-	echo -e "${SHOW_INFO_2}"
+	showTitleBar
 	showLinesB
 	killCydia
 	echo -e "${BACKING_UP}"
@@ -1447,6 +1591,7 @@ function backupCydiaData(){
 	fi
 	showLinesA
 	PA2CKey
+	backTitleBar
 }
 
 function backupLibrary(){
@@ -1456,10 +1601,11 @@ function backupLibrary(){
 	if [[ ! -d "/tmp/BackOn/Backup/${BACKUP_NAME}/Library" ]]; then
 		mkdir -p "/tmp/BackOn/Backup/${BACKUP_NAME}/Library"
 	fi
+	addTitleBar "${SHOW_INFO_3}"
 	while(true); do
 		ClearKey
 		showLinesA
-		echo -e "${SHOW_INFO_3}"
+		showTitleBar
 		showLinesB
 		if [[ "${detailFileListView}" == YES ]]; then
 			ls -l /var/mobile/Library
@@ -1555,6 +1701,7 @@ function backupLibrary(){
 				PA2CKey
 			elif [[ "${ANSWER_E}" == quit || "${ANSWER_E}" == q ]]; then
 				removeEmptyBackupFolder
+				backTitleBar
 				break
 			elif [[ "${ANSWER_E}" == ods ]]; then
 				openDevSettings
@@ -1599,15 +1746,18 @@ function backupUserAppData(){
 	if [[ ! -d "/tmp/BackOn/Backup/${BACKUP_NAME}/AppData" ]]; then
 		mkdir -p "/tmp/BackOn/Backup/${BACKUP_NAME}/AppData"
 	fi
+	addTitleBar "${SHOW_INFO_15}"
 	ClearKey
 	showLinesA
+	showTitleBar
+	showLinesB
 	echo -e "${WARN_USER_APP_DATA}"
 	showLinesA
 	PA2CKey
 	while(true); do
 		ClearKey
 		showLinesA
-		echo -e "${SHOW_INFO_15}"
+		showTitleBar
 		showLinesB
 		cd "${INSTALLED_APP_PATH}"
 		for NAME in $(ls); do
@@ -1627,6 +1777,7 @@ function backupUserAppData(){
 		elif [[ "${ANSWER_P}" == exit ]]; then
 			ExitKey
 		elif [[ "${ANSWER_P}" == quit || ${ANSWER_P} == q ]]; then
+			backTitleBar
 			break
 		elif [[ "${ANSWER_P}" == delete ]]; then
 			deleteBackup AppData
@@ -1691,30 +1842,28 @@ function deleteBackup(){
 		echo -e "ERROR!"
 		applyNoColor
 	else
+		if [[ "${1}" == Library ]]; then
+			addTitleBar "${SHOW_INFO_4}"
+		elif [[ "${1}" == AppData ]]; then
+			addTitleBar "${SHOW_INFO_16}"
+		fi
 		while(true); do
 			if [[ -z "$(ls "/tmp/BackOn/Backup/${BACKUP_NAME}/${1}")" ]]; then
 				ClearKey
 				showLinesA
-				if [[ "${1}" == Library ]]; then
-					echo -e "${SHOW_INFO_4}"
-				elif [[ "${1}" == AppData ]]; then
-					echo -e "${SHOW_INFO_16}"
-				fi
+				showTitleBar
 				showLinesB
 				applyRed
 				echo -e "${NOTHING_TO_DELETE}"
 				applyNoColor
 				showLinesA
 				PA2CKey
+				backTitleBar
 				break
 			fi
 			ClearKey
 			showLinesA
-			if [[ "${1}" == Library ]]; then
-				echo -e "${SHOW_INFO_4}"
-			elif [[ "${1}" == AppData ]]; then
-				echo -e "${SHOW_INFO_16}"
-			fi
+			showTitleBar
 			showLinesB
 			if [[ "${detailFileListView}" == YES ]]; then
 				ls -l "/tmp/BackOn/Backup/${BACKUP_NAME}/${1}"
@@ -1739,6 +1888,7 @@ function deleteBackup(){
 					echo -e "${DONE}"
 					PA2CKey
 				elif [[ "${ANSWER_J}" == q || "${ANSWER_J}" == quit ]]; then
+					backTitleBar
 					break
 				elif  [[ "${ANSWER_J}" == ods ]]; then
 					openDevSettings
@@ -1767,13 +1917,14 @@ function deleteBackup(){
 
 function showBackupedFilesBackup(){
 	removeEmptyBackupFolder
+	if [[ "${1}" == "-confirmtitle" ]]; then
+		addTitleBar "${SHOW_INFO_18}"
+	else
+		addTitleBar "${SHOW_INFO_5}"
+	fi
 	ClearKey
 	showLinesA
-	if [[ "${1}" == "-confirmtitle" ]]; then
-		echo -e "${SHOW_INFO_18}"
-	else
-		echo -e "${SHOW_INFO_5}"
-	fi
+	showTitleBar
 	showLinesB
 	if [[ -f "/tmp/BackOn/Backup/${BACKUP_NAME}/Cydia/apt.txt" ]]; then
 		echo -e "${BACKUPED_CYDIA_PACKAGES_LIST} : ${YES}"
@@ -1813,20 +1964,25 @@ function showBackupedFilesBackup(){
 		fi
 	fi
 	showLinesA
+	if [[ ! "${1}" == "-confirmtitle" ]]; then
+		backTitleBar
+	fi
 	PA2CKey
 }
 
 function saveBackup(){
 	removeEmptyBackupFolder
+	addTitleBar "${SHOW_INFO_6}"
 	ClearKey
 	showLinesA
-	echo -e "${SHOW_INFO_6}"
+	showTitleBar
 	showLinesB
 	if [[ -z "$(ls /tmp/BackOn/Backup/${BACKUP_NAME})" ]]; then
 		applyRed
 		echo -e "${NOTHING_TO_BACKUP}"
 		applyNoColor
 		showLinesA
+		backTitleBar
 		PA2CKey
 	else
 		cd /tmp/BackOn/Backup/${BACKUP_NAME}
@@ -2061,11 +2217,12 @@ function checkiOSVerMatching(){
 }
 
 function showInitialRestoreMenu(){
+	addTitleBar "${SHOW_INFO_7}"
 	while(true); do
 		removeEmptyRestoreFolder
 		ClearKey
 		showLinesA
-		echo -e "${SHOW_INFO_7}"
+		showTitleBar
 		showLinesB
 		if [[ -d "/tmp/BackOn/Restore/Cydia" ]]; then
 			echo -e "(1) ${RESTORE_CYDIA_DATA}"
@@ -2173,9 +2330,10 @@ function showInitialRestoreMenu(){
 }
 
 function restoreCydia(){
+	addTitleBar "${SHOW_INFO_8}"
 	ClearKey
 	showLinesA
-	echo -e "${SHOW_INFO_8}"
+	showTitleBar
 	showLinesB
 	if [[ "${skipRestore}" == YES ]]; then
 		echo -e "Skipped."
@@ -2233,24 +2391,28 @@ function restoreCydia(){
 		echo -e "${DONE}"
 	fi
 	showLinesA
+	backTitleBar
 	PA2CKey
 }
 
 function showBackupedFilesRestore(){
+	addTitleBar "${SHOW_INFO_9}"
 	ClearKey
 	showLinesA
-	echo -e "${SHOW_INFO_9}"
+	showTitleBar
 	showLinesB
 	cat "/tmp/BackOn/Restore/Cydia/apt.txt"
 	showLinesA
+	backTitleBar
 	PA2CKey
 }
 
 function restoreLibrary(){
+	addTitleBar "${SHOW_INFO_10}"
 	while(true); do
 		ClearKey
 		showLinesA
-		echo -e "${SHOW_INFO_10}"
+		showTitleBar
 		showLinesB
 		if [[ "${detailFileListView}" == YES ]]; then
 			ls -l "/tmp/BackOn/Restore/Library"
@@ -2268,6 +2430,7 @@ function restoreLibrary(){
 		if [[ "${ANSWER_I}" == ods ]]; then
 			openDevSettings
 		elif [[ "${ANSWER_I}" == q || "${ANSWER_I}" == quit ]]; then
+			backTitleBar
 			break
 		elif [[ "${ANSWER_I}" == exit ]]; then
 			ExitKey
@@ -2329,15 +2492,18 @@ function restoreLibrary(){
 }
 
 function restoreUserAppData(){
+	addTitleBar "${SHOW_INFO_17}"
 	ClearKey
 	showLinesA
+	showTitleBar
+	showLinesB
 	echo -e "${WARN_USER_APP_DATA}"
 	showLinesA
 	PA2CKey
 	while(true); do
 		ClearKey
 		showLinesA
-		echo -e "${SHOW_INFO_17}"
+		showTitleBar
 		showLinesB
 		if [[ "${detailFileListView}" == YES ]]; then
 			ls -l "/tmp/BackOn/Restore/AppData"
@@ -2355,6 +2521,7 @@ function restoreUserAppData(){
 		if [[ "${ANSWER_P}" == ods ]]; then
 			openDevSettings
 		elif [[ "${ANSWER_P}" == q || "${ANSWER_P}" == quit ]]; then
+			backTitleBar
 			break
 		elif [[ "${ANSWER_P}" == exit ]]; then
 			ExitKey
@@ -2421,10 +2588,11 @@ function customBackup(){
 		if [[ ! -d "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom" ]]; then
 			mkdir -p "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom"
 		fi
+		addTitleBar "${SHOW_INFO_12}"
 		while(true); do
 			ClearKey
 			showLinesA
-			echo -e "${SHOW_INFO_12}"
+			showTitleBar
 			showLinesB
 			if [[ -z "$(ls "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom")" ]]; then
 				applyRed
@@ -2454,9 +2622,10 @@ function customBackup(){
 				ExitKey
 			elif [[ "${ANSWER_M}" == quit || "${ANSWER_M}" == q ]]; then
 				removeEmptyBackupFolder
+				backTitleBar
 				break
 			elif [[ -d "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${ANSWER_M}" ]]; then
-				showYESNO "${ALREADY_EXISTS_WANT_TO_REMOVE}"
+				showYESNO "${CONFIRM}" "${ALREADY_EXISTS_WANT_TO_REMOVE}"
 				if [[ "${ANSWER_YESNO}" == YES ]]; then
 					echo -e "${REMOVING}"
 					rm -rf "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${ANSWER_M}"
@@ -2470,10 +2639,11 @@ function customBackup(){
 				fi
 			elif [[ ! -d "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${ANSWER_M}" ]]; then
 				mkdir -p "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${ANSWER_M}/Backup"
+				addTitleBar "${SHOW_INFO_13}"
 				while(true); do
 					ClearKey
 					showLinesA
-					echo -e "${SHOW_INFO_13}"
+					showTitleBar
 					showLinesB
 					echo -e "${ENTER_FILE_PATH}"
 					showLinesB
@@ -2491,6 +2661,7 @@ function customBackup(){
 						ExitKey
 					elif [[ "${ANSWER_N}" == quit || "${ANSWER_N}" == q ]]; then
 						rm -rf "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${ANSWER_M}"
+						backTitleBar
 						break
 					elif [[ -f "${ANSWER_N}" ]]; then
 						echo -e "${BACKING_UP}"
@@ -2499,6 +2670,7 @@ function customBackup(){
 						echo -e "file" >> "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${ANSWER_M}/type"
 						echo -e "${DONE}"
 						PA2CKey
+						backTitleBar
 						break
 					elif [[ -d "${ANSWER_N}" ]]; then
 						echo -e "${BACKING_UP}"
@@ -2507,6 +2679,7 @@ function customBackup(){
 						echo -e "folder" >> "/tmp/BackOn/Backup/${BACKUP_NAME}/Custom/${ANSWER_M}/type"
 						echo -e "${DONE}"
 						PA2CKey
+						backTitleBar
 						break
 					else
 						applyRed
@@ -2529,10 +2702,11 @@ function customBackup(){
 
 function customRestore(){
 	if [[ -d "/tmp/BackOn/Restore/Custom" ]]; then
+		addTitleBar "${SHOW_INFO_14}"
 		while(true); do
 			ClearKey
 			showLinesA
-			echo -e "${SHOW_INFO_14}"
+			showTitleBar
 			showLinesB
 			for Name in `ls "/tmp/BackOn/Restore/Custom"`; do
 				echo -e -n "${Name} "
@@ -2554,6 +2728,7 @@ function customRestore(){
 			elif [[ "${ANSWER_O}" == exit ]]; then
 				ExitKey
 			elif [[ "${ANSWER_O}" == quit || "${ANSWER_O}" == q ]]; then
+				backTitleBar
 				break
 			elif [[ -d "/tmp/BackOn/Restore/Custom/${ANSWER_O}" ]]; then
 				if [[ "${skipRestore}" == YES ]]; then
@@ -2567,7 +2742,7 @@ function customRestore(){
 						PA2CKey
 					elif [[ "$(cat "/tmp/BackOn/Restore/Custom/${ANSWER_O}/type")" == folder ]]; then
 						echo -e "${RESTORING}"
-						cp -r "/tmp/BackOn/Restore/Custom/${ANSWER_O}/Backup/`ls "/tmp/BackOn/Restore/Custom/${ANSWER_O}/Backup"`" "`cat "/tmp/BackOn/Restore/Custom/${ANSWER_O}/path"`"
+						cp -r "/tmp/BackOn/Restore/Custom/${ANSWER_O}/Backup/`ls "/tmp/BackOn/Restore/Custom/${ANSWER_O}/Backup"`" "`cat "/tmp/BackOn/Restore/Custom/${ANSWER_O}/path"`/.."
 						echo -e "${DONE}"
 						PA2CKey
 					else
@@ -2609,10 +2784,13 @@ function showUpdaterVersion(){
 }
 
 function installUpdate(){
+	addTitleBar "${SHOW_INFO_19}"
 	ClearKey
 	local COUNT=0
-	while [[ ! "$COUNT" == 3 ]]; do
+	while [[ ! "${COUNT}" == 3 ]]; do
 		showLinesA
+		showTitleBar
+		showLinesB
 		if [[ "${showLog}" == YES ]]; then
 			showUpdaterVersion
 		fi
@@ -2690,14 +2868,18 @@ function installUpdate(){
 		fi
 	done
 	showLinesA
+	backTitleBar
 	PA2CKey
 }
 
 function installUpdate_old(){
+	addTitleBar "${SHOW_INFO_19}"
 	ClearKey
 	local COUNT=0
-	while [[ ! "$COUNT" == 3 ]]; do
+	while [[ ! "${COUNT}" == 3 ]]; do
 		showLinesA
+		showTitleBar
+		showLinesB
 		if [[ "${showLog}" == YES ]]; then
 			showUpdaterVersion
 		fi
@@ -2764,6 +2946,7 @@ function installUpdate_old(){
 		fi
 	done
 	showLinesA
+	backTitleBar
 	PA2CKey
 }
 
@@ -2783,14 +2966,53 @@ OSVer="$(sw_vers -productVersion)"
 setOSInitialVer
 setAppPath
 UpdateURL="https://github.com/pookjw/BackOn/archive/master.zip"
+TITLE_NUM=0
 if [[ -d "/tmp/BackOn" ]]; then
 	rm -rf "/tmp/BackOn"
 fi
-mkdir -p /tmp/BackOn
+mkdir -p "/tmp/BackOn/TitleBar"
 if [[ "${1}" == "-ods" ]]; then
 	openDevSettings
 elif [[ "${1}" == "-update" ]]; then
 	runUpdate
+fi
+if [[ "${skipChooseLanguage}" == NO ]]; then
+	addTitleBar "${CHOOSE_LANGUAGE}"
+	while(true); do
+		ClearKey
+		showLinesA
+		showTitleBar
+		showLinesB
+		echo -e "(1) English"
+		echo -e "(2) Korean (한국어)"
+		echo -e "(q) ${CLOSE_TOOL}"
+		showLinesB
+		echo -e "- ${ENTER_COMMAND_1}"
+		showLinesB
+		applyLightCyan
+		read -p "- " ANSWER_Y
+		applyNoColor
+
+		if [[ "${ANSWER_Y}" == 1 ]]; then
+			setEnglish
+			backTitleBar
+			break
+		elif [[ "${ANSWER_Y}" == 2 ]]; then
+			setKorean
+			backTitleBar
+			break
+		elif [[ "${ANSWER_Y}" == q || "${ANSWER_Y}" == quit ]]; then
+			quitTool
+		elif [[ "${ANSWER_Y}" == ods ]]; then
+			openDevSettings
+		elif [[ "${ANSWER_Y}" == exit ]]; then
+			ExitKey
+		elif [[ -z "${ANSWER_Y}" ]]; then
+			:
+		else
+			showNotSupportedFunction
+		fi
+	done
 fi
 while(true); do
 	ClearKey
@@ -2810,7 +3032,7 @@ while(true); do
 	fi
 	echo -e "(q) ${QUIT}"
 	showLinesB
-	echo -e "- ${ENTER_TEXT}"
+	echo -e "- ${ENTER_COMMAND_2}"
 	showLinesA
 	applyLightCyan
 	read -p "- " ANSWER_A

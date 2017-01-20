@@ -224,3 +224,11 @@ BackOn을 수정해서 배포할 땐 **'TOOL_RELEASE'**에 unofficial 표기를 
 # beta-359 (2016-12-29)
 
 - (Fixed) 코드 정리
+
+# beta-387 (2017-01-21)
+
+- (Added) 실행 초기 화면에 언어 선택 기능 추가
+
+- (Fixed) 상단 TitleBar를 좀 더 정확하게 표시되도록 변경
+
+- (Fixed) customRestore 폴더 복원 문제 해결
