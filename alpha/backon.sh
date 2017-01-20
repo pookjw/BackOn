@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-383-official
+# BackOn alpha-384-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=383
+TOOL_BUILD_NUM=384
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -15,6 +15,8 @@ function setEnglish(){
 	LANGUAGE="English"
 	NOT_RUN_AS_ROOT="You didn't run as root! Please enter root password. (Initial password is 'alpine')"
 	NOT_IOS="This is not iOS."
+	CHOOSE_LANGUAGE="Choose language"
+	CLOSE_TOOL="Quit BackOn."
 	ENTER_TEXT="Enter a command(1, 2, 3, 4, q) that you want to do."
 	CREATE_BACKUP="Create backup."
 	RESTORE_FROM_BACKUP="Restore from backup."
@@ -113,6 +115,8 @@ function setKorean(){
 	LANGUAGE="Korean"
 	NOT_RUN_AS_ROOT="root로 로그인되지 않았습니다! root 비밀번호를 입력해 주세요. (초기 비밀번호는 'alpine'입니다.)"
 	NOT_IOS="실행된 기기는 iOS가 아닙니다."
+	CHOOSE_LANGUAGE="언어 선택"
+	CLOSE_TOOL="BackOn 종료"
 	ENTER_TEXT="명령어(1, 2, 3, 4, q)를 입력해 주세요."
 	CREATE_BACKUP="백업 생성"
 	RESTORE_FROM_BACKUP="백업에서 복원"
@@ -241,10 +245,11 @@ function openDevSettings(){
 				echo -e "(2) OSVer : ${OSVer} (iOS ${OSInitialVer})"
 				echo -e "(3) switchLanguage (Current : ${LANGUAGE})"
 				echo -e "(4) setDefaultLanguage : ${setDefaultLanguage}"
-				echo -e "(5) detailFileListView : ${detailFileListView}"
-				echo -e "(6) applyColorScheme : ${applyColorScheme}"
-				echo -e "(7) DynamicLine : ${DynamicLine}"
-				echo -e "(8) fixDynamicLineIssue : ${fixDynamicLineIssue}"
+				echo -e "(5) skipChooseLanguage : ${skipChooseLanguage}"
+				echo -e "(6) detailFileListView : ${detailFileListView}"
+				echo -e "(7) applyColorScheme : ${applyColorScheme}"
+				echo -e "(8) DynamicLine : ${DynamicLine}"
+				echo -e "(9) fixDynamicLineIssue : ${fixDynamicLineIssue}"
 				showLinesB
 				echo -e "- ${ENTER_QUIT}"
 				showLinesA
@@ -298,29 +303,37 @@ function openDevSettings(){
 						elif [[ "${ANSWER_G}" == q || "${ANSWER_G}" == quit ]]; then
 							backTitleBar
 							break
+						elif [[ -z "${ANSWER_G}" ]]; then
+							:
 						else
 							showNotSupportedFunction
 						fi
 					done
-				elif [[ "${ANSWER_Q}" == 5 ]]; then
+				elif [[ "${ANSWER_O}" == 5 ]]; then
+					if [[ "${skipChooseLanguage}" == YES ]]; then
+						skipChooseLanguage=NO
+					else
+						skipChooseLanguage=YES
+					fi
+				elif [[ "${ANSWER_Q}" == 6 ]]; then
 					if [[ "${detailFileListView}" == YES ]]; then
 						detailFileListView=NO
 					else
 						detailFileListView=YES
 					fi
-				elif [[ "${ANSWER_Q}" == 6 ]]; then
+				elif [[ "${ANSWER_Q}" == 7 ]]; then
 					if [[ "${applyColorScheme}" == YES ]]; then
 						applyColorScheme=NO
 					else
 						applyColorScheme=YES
 					fi
-				elif [[ "${ANSWER_Q}" == 7 ]]; then
+				elif [[ "${ANSWER_Q}" == 8 ]]; then
 					if [[ "${DynamicLine}" == YES ]]; then
 						DynamicLine=NO
 					else
 						DynamicLine=YES
 					fi
-				elif [[ "${ANSWER_Q}" == 8 ]]; then
+				elif [[ "${ANSWER_Q}" == 9 ]]; then
 					if [[ "${fixDynamicLineIssue}" == YES ]]; then
 						fixDynamicLineIssue=NO
 					else
@@ -1031,6 +1044,7 @@ function saveSettings(){
 	echo -e "${fixDynamicLineIssue}" >> /var/mobile/Library/Preferences/BackOn/DevSettings/fixDynamicLineIssue
 	echo -e "${showHiddenBackupMenu}" >> /var/mobile/Library/Preferences/BackOn/DevSettings/showHiddenBackupMenu
 	echo -e "${showHiddenRestoreMenu}" >> /var/mobile/Library/Preferences/BackOn/DevSettings/showHiddenRestoreMenu
+	echo -e "${skipChooseLanguage}" >> /var/mobile/Library/Preferences/BackOn/DevSettings/skipChooseLanguage
 }
 
 
@@ -2953,6 +2967,40 @@ if [[ "${1}" == "-ods" ]]; then
 elif [[ "${1}" == "-update" ]]; then
 	runUpdate
 fi
+addTitleBar "${CHOOSE_LANGUAGE}"
+while(true); do
+	ClearKey
+	showLinesA
+	showTitleBar
+	showLinesB
+	echo -e "(1) English"
+	echo -e "(2) Korean (한국어)"
+	echo -e "(q) ${CLOSE_TOOL}"
+	showLinesB
+	applyLightCyan
+	read -p "- " ANSWER_Y
+	applyNoColor
+
+	if [[ "${ANSWER_Y}" == 1 ]]; then
+		setEnglish
+		backTitleBar
+		break
+	elif [[ "${ANSWER_Y}" == 2 ]]; then
+		setKorean
+		backTitleBar
+		break
+	elif [[ "${ANSWER_Y}" == q || "${ANSWER_Y}" == quit ]]; then
+		quitTool
+	elif [[ "${ANSWER_Y}" == ods ]]; then
+		openDevSettings
+	elif [[ "${ANSWER_Y}" == exit ]]; then
+		ExitKey
+	elif [[ -z "${ANSWER_Y}" ]]; then
+		:
+	else
+		showNotSupportedFunction
+	fi
+done
 while(true); do
 	ClearKey
 	showLinesA
