@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn beta-393-official
+# BackOn beta-394-official
 TOOL_BUILD_TYPE=beta
-TOOL_BUILD_NUM=393
+TOOL_BUILD_NUM=394
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################

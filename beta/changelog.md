@@ -236,3 +236,7 @@ BackOn을 수정해서 배포할 땐 **'TOOL_RELEASE'**에 unofficial 표기를 
 # beta-393 (2017-01-27)
 
 - (Fixed) 설치 오류 문제를 포함한 버그 수정.
+
+# beta-394 (2017-01-27)
+
+- (Fixed) 버전 오류 해결.
