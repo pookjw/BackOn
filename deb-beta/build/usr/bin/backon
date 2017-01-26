@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn beta-387-official
+# BackOn beta-393-official
 TOOL_BUILD_TYPE=beta
-TOOL_BUILD_NUM=387
+TOOL_BUILD_NUM=393
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -563,6 +563,8 @@ function openDevSettings(){
 						elif [[ "${ANSWER_E}" == q || "${ANSWER_E}" == quit ]]; then
 							backTitleBar
 							break
+						elif [[ -z "${ANSWER_E}" ]]; then
+							:
 						else
 							showNotSupportedFunction
 						fi
@@ -1777,6 +1779,7 @@ function backupUserAppData(){
 		elif [[ "${ANSWER_P}" == exit ]]; then
 			ExitKey
 		elif [[ "${ANSWER_P}" == quit || ${ANSWER_P} == q ]]; then
+			removeEmptyBackupFolder
 			backTitleBar
 			break
 		elif [[ "${ANSWER_P}" == delete ]]; then
@@ -1982,6 +1985,7 @@ function saveBackup(){
 		echo -e "${NOTHING_TO_BACKUP}"
 		applyNoColor
 		showLinesA
+		backTitleBar
 		backTitleBar
 		PA2CKey
 	else
@@ -2430,6 +2434,7 @@ function restoreLibrary(){
 		if [[ "${ANSWER_I}" == ods ]]; then
 			openDevSettings
 		elif [[ "${ANSWER_I}" == q || "${ANSWER_I}" == quit ]]; then
+			removeEmptyRestoreFolder
 			backTitleBar
 			break
 		elif [[ "${ANSWER_I}" == exit ]]; then

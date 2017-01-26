@@ -69,6 +69,7 @@ function Update2(){
 		showInfo
 	fi
 	if [[ "${updateWithDEBInstall}" == YES && ! "${UpdateBuildType}" == alpha ]]; then
+		killCydia
 		if [[ "${showLog}" == YES ]]; then
 			applyPurple
 			dpkg -i "/tmp/BackOn/Update/master/BackOn-master/deb-${UpdateBuildType}/${UpdateBuildType}-${UpdateBuildVersion}.deb"

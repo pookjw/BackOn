@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-391-official
+# BackOn alpha-392-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=391
+TOOL_BUILD_NUM=392
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -2434,7 +2434,7 @@ function restoreLibrary(){
 		if [[ "${ANSWER_I}" == ods ]]; then
 			openDevSettings
 		elif [[ "${ANSWER_I}" == q || "${ANSWER_I}" == quit ]]; then
-			remo
+			removeEmptyRestoreFolder
 			backTitleBar
 			break
 		elif [[ "${ANSWER_I}" == exit ]]; then
