@@ -4,9 +4,9 @@
 # kidjinwoo@me.com
 # GitHub : https://github.com/pookjw
 ##############################################
-# BackOn alpha-390-official
+# BackOn alpha-391-official
 TOOL_BUILD_TYPE=alpha
-TOOL_BUILD_NUM=390
+TOOL_BUILD_NUM=391
 TOOL_RELEASE=official
 # If you're planning to create unofficial build, please change TOOL_RELEASE value.
 ##############################################
@@ -1779,6 +1779,7 @@ function backupUserAppData(){
 		elif [[ "${ANSWER_P}" == exit ]]; then
 			ExitKey
 		elif [[ "${ANSWER_P}" == quit || ${ANSWER_P} == q ]]; then
+			removeEmptyBackupFolder
 			backTitleBar
 			break
 		elif [[ "${ANSWER_P}" == delete ]]; then
@@ -2433,6 +2434,7 @@ function restoreLibrary(){
 		if [[ "${ANSWER_I}" == ods ]]; then
 			openDevSettings
 		elif [[ "${ANSWER_I}" == q || "${ANSWER_I}" == quit ]]; then
+			remo
 			backTitleBar
 			break
 		elif [[ "${ANSWER_I}" == exit ]]; then
